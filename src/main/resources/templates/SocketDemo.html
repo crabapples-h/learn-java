@@ -13,7 +13,7 @@
                 //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
                 var randomId = Math.round(Math.random()*100000000)
                 console.log(randomId)
-                socket = new WebSocket(("ws://localhost:5555/websocket/"+randomId).replace("http","ws"));
+                socket = new WebSocket(("ws://localhost:9090/websocket/"+randomId).replace("http","ws"));
                 //打开事件
                 socket.onopen = function() {
                     console.log("Socket 已打开");

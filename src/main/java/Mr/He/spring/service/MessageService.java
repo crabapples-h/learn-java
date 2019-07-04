@@ -13,13 +13,11 @@ public class MessageService {
     @Autowired
     private WebSocketServer webSocketServer;
 
-    public void publishApp(String message, String sid) {
+    public void sendMessage(String message, String sid) {
         Session session = webSocketServer.webSocketMap.get(sid);
         if (session == null) {
             return;
         }
-
         webSocketServer.sendMessage(session, "发往客户端的消息-->" + message);
     }
-
 }
