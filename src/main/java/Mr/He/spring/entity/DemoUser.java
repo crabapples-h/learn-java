@@ -4,19 +4,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * @author wishforyou.xia@gmail.com
  * @date 2019/7/4 14:51
  *
- * Entity 这是一个和数据库表相关联的类
+ * Entity 表示这是一个和数据库表相关联的类
+ * Table name = "demo_user" 设置表名为 demo_user
  */
 @Entity
+@Table(name = "demo_user")
 public class DemoUser{
     public DemoUser() {
     }
