@@ -1,11 +1,14 @@
 package Mr.He.spring.entity;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 /**
  * @author wishforyou.xia@gmail.com
@@ -27,7 +30,8 @@ public class User{
      * GeneratedValue 自增长
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     /**
@@ -41,6 +45,20 @@ public class User{
      */
     @Column(nullable = false)
     private Integer age;
+
+    /**
+     * 创建时间
+     * columnDefinition 设置默认值为当前时间
+     */
+    @Column(columnDefinition = "timestamp default current_timestamp comment '创建时间'")
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     * columnDefinition 设置默认值为当前时间，随每次更新数据时更新时间
+     */
+    @Column(columnDefinition = "timestamp default current_timestamp on update current_timestamp comment '修改时间'")
+    private LocalDateTime updateTime;
 
 
     public String getId() {
@@ -65,6 +83,22 @@ public class User{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
