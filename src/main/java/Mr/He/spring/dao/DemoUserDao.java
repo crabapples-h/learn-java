@@ -12,7 +12,7 @@ import java.util.List;
  * @author wishforyou.xia@gmail.com
  * @date 2019/7/4 14:51
  */
-public interface UserDao extends JpaRepository<User, Serializable> {
+public interface DemoUserDao extends JpaRepository<User, Serializable> {
     User findByName(String name);
 
     User findByNameAndAge(String name, Integer age);

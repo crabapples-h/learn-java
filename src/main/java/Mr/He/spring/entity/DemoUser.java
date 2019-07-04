@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
  * Entity 这是一个和数据库表相关联的类
  */
 @Entity
-public class User{
-    public User() {
+public class DemoUser{
+    public DemoUser() {
     }
 
-    public User(String name, Integer age) {
+    public DemoUser(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
