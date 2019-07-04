@@ -1,4 +1,4 @@
-package Mr.He.aes;
+package Mr.He;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -12,7 +12,7 @@ import java.util.Base64;
  * @author wishforyou.xia@gmail.com
  * @date 2019/7/3 23:24
  */
-public class AesDemo{
+public class AesDemo {
     private static final String STRING = "missyou";
 
     public static void main(String[] args) throws Exception {

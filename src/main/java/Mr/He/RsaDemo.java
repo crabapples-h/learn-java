@@ -1,4 +1,4 @@
-package Mr.He.rsa;
+package Mr.He;
 
 import javax.crypto.Cipher;
 import java.security.*;
