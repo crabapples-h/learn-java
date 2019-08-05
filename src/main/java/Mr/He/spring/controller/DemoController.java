@@ -3,8 +3,13 @@ package Mr.He.spring.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author hequan@gogpay.cn
- * @date 2019/7/4 15:22
+ * TODO 
+ * 
+ * @author Mr.He
+ * @date 2019/8/5 22:51
+ * e-mail wishforyou.xia@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 @RestController
 public class DemoController {

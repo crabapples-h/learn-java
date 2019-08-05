@@ -8,8 +8,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * @author wishforyou.xia@gmail.com
+ * TODO
+ *
+ * @author Mr.He
  * @date 2019/7/4 14:51
+ * e-mail wishforyou.xia@gmail.com
+ * qq 294046317
+ * pc-name 29404
  *
  * Entity 表示这是一个和数据库表相关联的类
  * Table name = "demo_user" 设置表名为 demo_user

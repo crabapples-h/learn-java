@@ -9,8 +9,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author wishforyou.xia@gmail.com
- * @date 2019/7/4 14:51
+ * TODO JPA中SQL和HQL演示
+ * 
+ * @author Mr.He
+ * @date 2019/7/4 1422:51
+ * e-mail wishforyou.xia@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 public interface DemoUserDao extends JpaRepository<DemoUser, Serializable> {
     DemoUser findByName(String name);

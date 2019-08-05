@@ -7,9 +7,13 @@ import ch.ethz.ssh2.Session;
 import java.io.*;
 
 /**
- * java连接linux
- * @author hequan@gogpay.cn
+ * TODO java连接linux
+ *
+ * @author Mr.He
  * @date 2019/7/4 16:24
+ * e-mail wishforyou.xia@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 public class LinuxSession {
     public static void main(String[] args) throws IOException {

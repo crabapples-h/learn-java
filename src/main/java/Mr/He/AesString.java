@@ -9,9 +9,13 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
- * AES加密演示
- * @author wishforyou.xia@gmail.com
+ * TODO AES加密字符串演示
+ *
+ * @author Mr.He
  * @date 2019/7/3 23:24
+ * e-mail wishforyou.xia@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 public class AesString {
     private static final String KEY = "123456";
