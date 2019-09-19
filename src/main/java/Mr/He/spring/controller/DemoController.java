@@ -25,6 +25,11 @@ public class DemoController {
     public String helloDemo(){
         return "hello world";
     }
+
+    /**
+     * @RequestBody 表示从请求体中获取数据
+     * @Valid 表示需要验证对应属性
+     */
     @PostMapping("/postUser")
     public UserDTO postDemo(@RequestBody @Valid UserDTO userDto){
         logger.info("提交的参数:{}",userDto);
