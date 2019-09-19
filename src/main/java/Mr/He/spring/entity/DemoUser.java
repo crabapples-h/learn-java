@@ -2,6 +2,8 @@ package Mr.He.spring.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,6 +23,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "demo_user")
+@Getter
+@Setter
 public class DemoUser{
     public DemoUser() {
     }
@@ -30,7 +34,7 @@ public class DemoUser{
         this.age = age;
     }
     /**
-     * Id 主键
+     * Id uuid主键
      * GeneratedValue 自增长
      */
     @Id
@@ -63,47 +67,6 @@ public class DemoUser{
      */
     @Column(columnDefinition = "timestamp default current_timestamp on update current_timestamp comment '修改时间'")
     private LocalDateTime updateTime;
-
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
 
     @Override
     public String toString() {

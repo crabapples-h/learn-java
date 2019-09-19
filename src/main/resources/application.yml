@@ -1,19 +1,23 @@
+dadaBaseUrl: 'rm-wz94indt9bn0jjf13po.mysql.rds.aliyuncs.com'
+dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull'
+dataBaseDriveV8: 'com.mysql.cj.jdbc.Driver'
+dataBaseDriveV5: 'com.mysql.jdbc.Driver'
 server:
   port: 9090
 
 spring :
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.10.9.18:3306/he-study?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull
-    password: demo
-    username: demo
+    driverClassName: ${dataBaseDriveV5}
+    url: jdbc:mysql://${dadaBaseUrl}:3306/he-study?useSSL=false
+    username: learn
+    password: Hq123456789
   #    type: com.alibaba.druid.pool.DruidDataSource
   #    driverClassName: com.mysql.jdbc.Driver
   jpa:
     #是否在控制台显示数据库语句
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
