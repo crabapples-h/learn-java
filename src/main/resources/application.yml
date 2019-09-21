@@ -3,21 +3,29 @@ dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shan
 dataBaseDriveV8: 'com.mysql.cj.jdbc.Driver'
 dataBaseDriveV5: 'com.mysql.jdbc.Driver'
 server:
+  #启动端口
   port: 9090
 
 spring :
   datasource:
+    #mysql驱动
     driverClassName: ${dataBaseDriveV5}
+    #mysql地址
     url: jdbc:mysql://${dadaBaseUrl}:3306/he-study?useSSL=false
+    #mysql用户名
     username: learn
+    #mysql密码
     password: Hq123456789
   #    type: com.alibaba.druid.pool.DruidDataSource
   #    driverClassName: com.mysql.jdbc.Driver
   jpa:
     #是否在控制台显示数据库语句
     show-sql: true
+    #每次启动时如何操作对应表
     hibernate:
       ddl-auto: update
   thymeleaf:
+    #thymeleaf模板引擎路径
     prefix: classpath:templates/
+    #thymeleaf模板后缀
     suffix: .html

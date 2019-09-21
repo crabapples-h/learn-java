@@ -57,8 +57,7 @@ public class DemoController extends BaseController {
     }
 
     /**
-     * TODO 测试使用不同的校验组校验参数
-     * 根据参数中的type判断使用哪个校验组
+     * TODO 测试使用不同的校验组校验参数，根据参数中的type判断使用哪个校验组
      */
     @PostMapping("/postDemo2")
     public ResponseDTO postDemo2(@RequestBody DemoPostDTO2 demoPostDTO2){
