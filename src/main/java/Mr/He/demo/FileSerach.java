@@ -1,4 +1,4 @@
-package Mr.He;
+package Mr.He.demo;
 
 /**
  * TODO

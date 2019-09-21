@@ -1,4 +1,4 @@
-package Mr.He;
+package Mr.He.demo;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.ConnectionInfo;
