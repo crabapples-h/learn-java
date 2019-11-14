@@ -1,6 +1,7 @@
 package Mr.He.demo;
 
 import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.util.Base64;
 import java.util.HashMap;
@@ -49,7 +50,8 @@ public class RsaDemo {
     private static String encode(Key key) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE,key);
-        byte[] encodeByte = cipher.doFinal(STRING.getBytes("UTF-8"));
+
+        byte[] encodeByte = cipher.doFinal(STRING.getBytes(StandardCharsets.UTF_8));
         byte[] base64Byte = Base64.getEncoder().encode(encodeByte);
         String string = new String(base64Byte);
         return string;

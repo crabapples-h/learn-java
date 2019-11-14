@@ -18,10 +18,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 @SpringBootApplication
 public class DemoApplication {
-    private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        logger.info(">>>>>>>>服务启动成功>>>>>>>>>");
+        LOGGER.info(">>>>>>>>服务启动成功>>>>>>>>>");
     }
-
 }

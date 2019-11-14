@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
  * qq 294046317
  * pc-name 29404
  */
-@Getter
 @Setter
 public class DemoPostDTO2 {
     @Null(message = "ID必须为空",groups = {IsNull.class})
@@ -30,6 +29,18 @@ public class DemoPostDTO2 {
     @Max(value = 1, message = "类型错误")
     @NotEmpty(message = "类型不能为空")
     private int type;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getType() {
+        return type;
+    }
 
     @Override
     public String toString() {

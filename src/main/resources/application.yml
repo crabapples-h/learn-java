@@ -1,4 +1,4 @@
-dadaBaseUrl: 'rm-wz94indt9bn0jjf13po.mysql.rds.aliyuncs.com'
+dadaBaseUrl: 'mysql.crabapples.cn'
 dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull'
 dataBaseDriveV8: 'com.mysql.cj.jdbc.Driver'
 dataBaseDriveV5: 'com.mysql.jdbc.Driver'

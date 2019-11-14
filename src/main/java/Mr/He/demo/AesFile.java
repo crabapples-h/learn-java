@@ -16,6 +16,7 @@ import java.security.SecureRandom;
  * qq 294046317
  * pc-name 29404
  */
+
 public class AesFile {
     /**
      * 用于生成密钥的种子
