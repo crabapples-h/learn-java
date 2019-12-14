@@ -20,23 +20,9 @@ import java.util.Base64;
  * qq 294046317
  * pc-name 29404
  */
-public class AesString {
-    private static final Logger logger = LoggerFactory.getLogger(AesString.class);
+public class AesStringDemo {
+    private static final Logger logger = LoggerFactory.getLogger(AesStringDemo.class);
     private static final String KEY = "123456";
-
-    /**
-     * 用于将密钥种子转换为KEY
-     * @param seed 密钥种子
-     * @return 密钥
-     * @throws Exception 生成密钥可能出现的异常
-     */
-    private static Key createKey(String seed) throws Exception{
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(128,new SecureRandom(seed.getBytes()));
-        SecretKey secretKey = keyGenerator.generateKey();
-        return secretKey;
-    }
-
     /**
      *
      * @param keyString 密钥
@@ -81,5 +67,18 @@ public class AesString {
         }catch (Exception e){
             throw e;
         }
+    }
+
+    /**
+     * 用于将密钥种子转换为KEY
+     * @param seed 密钥种子
+     * @return 密钥
+     * @throws Exception 生成密钥可能出现的异常
+     */
+    private static Key createKey(String seed) throws Exception{
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+        keyGenerator.init(128,new SecureRandom(seed.getBytes()));
+        SecretKey secretKey = keyGenerator.generateKey();
+        return secretKey;
     }
 }

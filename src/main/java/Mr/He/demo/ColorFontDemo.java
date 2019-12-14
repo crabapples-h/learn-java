@@ -3,7 +3,7 @@ package Mr.He.demo;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ColorFont {
+public class ColorFontDemo {
     public static void main(String[] args) {
         String str = "\033[1;31m hello world \033[0m";
 

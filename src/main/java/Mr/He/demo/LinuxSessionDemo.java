@@ -15,7 +15,7 @@ import java.io.*;
  * qq 294046317
  * pc-name 29404
  */
-public class LinuxSession {
+public class LinuxSessionDemo {
     public static void main(String[] args) throws IOException {
         Connection connection = new Connection("192.168.89.131",22);
         connection.connect();

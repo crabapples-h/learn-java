@@ -1,12 +1,12 @@
-package Mr.He.demo;
+package Mr.He.spring.common.utils;
 
+import org.apache.commons.codec.binary.Base32;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base32;
 
 /**
  * TODO google身份验证器
@@ -18,7 +18,7 @@ import org.apache.commons.codec.binary.Base32;
  * pc-name root
  */
 
-public class GoogleAuthenticatorSimple {
+public class GoogleAuthenticatorSimpleUtils {
     // 生成的key长度( Generate secret key length)
     private static final int KEY_LENGTH = 10;
 

@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream;
  * qq 294046317
  * pc-name 29404
  */
-public class ZipFile {
+public class ZipFileDemo {
     public static void main(String[] args) {
 //        ZipOutputStream
     }

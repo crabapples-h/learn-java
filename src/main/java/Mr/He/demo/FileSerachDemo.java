@@ -9,6 +9,6 @@ package Mr.He.demo;
  * qq 294046317
  * pc-name 29404
  */
-public class FileSerach {
+public class FileSerachDemo {
 
 }

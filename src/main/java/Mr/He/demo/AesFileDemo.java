@@ -20,8 +20,8 @@ import java.security.SecureRandom;
  * pc-name 29404
  */
 
-public class AesFile {
-    private static final Logger logger = LoggerFactory.getLogger(AesFile.class);
+public class AesFileDemo {
+    private static final Logger logger = LoggerFactory.getLogger(AesFileDemo.class);
 
     /**
      * 用于生成密钥的种子
@@ -37,8 +37,7 @@ public class AesFile {
     private static Key createKey(String seed) throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(128, new SecureRandom(seed.getBytes()));
-        SecretKey secretKey = keyGenerator.generateKey();
-        return secretKey;
+        return keyGenerator.generateKey();
     }
 
     /**
