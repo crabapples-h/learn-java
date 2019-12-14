@@ -1,5 +1,8 @@
 package Mr.He.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,12 +15,14 @@ import java.security.SecureRandom;
  *
  * @author Mr.He
  * @date 2019/8/5 21:37
- * e-mail wishforyou.xia@gmail.com
+ * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */
 
 public class AesFile {
+    private static final Logger logger = LoggerFactory.getLogger(AesFile.class);
+
     /**
      * 用于生成密钥的种子
      */

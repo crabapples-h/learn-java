@@ -1,5 +1,8 @@
 package Mr.He.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,11 +16,12 @@ import java.util.Base64;
  *
  * @author Mr.He
  * @date 2019/7/3 23:24
- * e-mail wishforyou.xia@gmail.com
+ * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */
 public class AesString {
+    private static final Logger logger = LoggerFactory.getLogger(AesString.class);
     private static final String KEY = "123456";
 
     /**

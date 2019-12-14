@@ -1,5 +1,8 @@
 package Mr.He.demo;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.Cipher;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -9,25 +12,23 @@ import java.util.Map;
 
 /**
  * RSA加密演示
- * @author wishforyou.xia@gmail.com
+ * @author crabapples.cn@gmail.com
  * @date 2019/7/3 23:22
  */
 public class RsaDemo {
+    private static final Logger logger = LoggerFactory.getLogger(RsaDemo.class);
     private static final String STRING = "missyou";
 
     public static void main(String[] args) throws Exception {
         Map<String, Key> keyMap = createKey();
         String publicKeyString = keyToString(keyMap.get("publicKay"));
         String privateKeyString = keyToString(keyMap.get("privateKey"));
-        System.out.println("公钥：" + publicKeyString);
-        System.out.println("私钥：" + privateKeyString);
-
+        logger.info("公钥：[{}]",publicKeyString);
+        logger.info("私钥：[{}]",privateKeyString);
         String encodeStr = encode(keyMap.get("publicKay"));
-        System.err.println("加密后的字符串为:" + encodeStr);
-
+        logger.info("加密后的字符串为：[{}]",encodeStr);
         String decodeStr = decode(keyMap.get("privateKey"),encodeStr);
-        System.out.println("还原后的字符串为:" + decodeStr);
-
+        logger.info("还原后的字符串为：[{}]",decodeStr);
     }
 
     private static String decode(Key key,String encodeStr) throws Exception {

@@ -11,16 +11,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  *
  * @author Mr.He
  * @date 2019/8/5 22:53
- * e-mail wishforyou.xia@gmail.com
+ * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */
 @EnableJpaAuditing
 @SpringBootApplication
 public class DemoApplication {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-        LOGGER.info(">>>>>>>>服务启动成功>>>>>>>>>");
+        logger.info(">>>>>>>>服务启动成功>>>>>>>>>");
     }
 }

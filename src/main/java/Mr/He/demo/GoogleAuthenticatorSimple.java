@@ -7,15 +7,18 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.codec.binary.Base64;
 
 /**
- * google身份验证器，java服务端实现
+ * TODO google身份验证器
  *
- * @author yangbo
- * @version 创建时间：2017年8月14日 上午10:10:02
+ * @author Mr.He
+ * @date 12/14/19 7:12 PM
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name root
  */
-public class GoogleAuthenticator {
+
+public class GoogleAuthenticatorSimple {
     // 生成的key长度( Generate secret key length)
     private static final int KEY_LENGTH = 10;
 
@@ -49,13 +52,10 @@ public class GoogleAuthenticator {
         SecureRandom sr = null;
         try {
             sr = SecureRandom.getInstance(RANDOM_NUMBER_ALGORITHM);
-            System.err.println(sr);
-            sr.setSeed(Base64.decodeBase64(SEED));
             byte[] buffer = sr.generateSeed(KEY_LENGTH);
             Base32 codec = new Base32();
             byte[] bEncodedKey = codec.encode(buffer);
-            String encodedKey = new String(bEncodedKey);
-            return encodedKey;
+            return new String(bEncodedKey);
         } catch (NoSuchAlgorithmException e) {
 // should never occur... configuration error
         }
