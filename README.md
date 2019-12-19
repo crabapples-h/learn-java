@@ -9,10 +9,11 @@
 * 20190920
     * 加入jsr303校验演示 
 * 20190921
-    * 加入异常类 `ApplicationException`
+    * 加入异常类 `ApplicationException.java`
 * 20191114
     * 修改日志类名
 * 20191213
-    * 加入Google令牌工具 `GoogleAuthenticatorSimpleUtils`
-    *
+    * 加入Google令牌工具 `GoogleAuthenticatorSimpleUtils.java`
+* 20191220
+    * 加入单例模式相关测试 `package pattern23.singleton.*`
     
