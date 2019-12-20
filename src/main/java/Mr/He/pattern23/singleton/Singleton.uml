@@ -3,84 +3,84 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="0.0" y="0.0">Mr.He.pattern23.singleton.Singleton02</node>
-    <node x="735.0" y="0.0">Mr.He.pattern23.singleton.Singleton01</node>
-    <node x="245.0" y="0.0">Mr.He.pattern23.singleton.Singleton04</node>
+    <node x="245.0" y="0.0">Mr.He.pattern23.singleton.Singleton02</node>
+    <node x="941.0" y="0.0">Mr.He.pattern23.singleton.Singleton01</node>
+    <node x="0.0" y="0.0">Mr.He.pattern23.singleton.Singleton04</node>
     <node x="490.0" y="0.0">Mr.He.pattern23.singleton.Singleton03</node>
-    <node x="4.5" y="415.0">Mr.He.pattern23.singleton.Singleton06</node>
-    <node x="980.0" y="12.0">Mr.He.pattern23.singleton.Singleton05</node>
-    <node x="0.0" y="571.0">Mr.He.pattern23.singleton.Client02</node>
-    <node x="405.5" y="252.0">Mr.He.pattern23.singleton.Client01</node>
-    <node x="603.5" y="192.0">Mr.He.pattern23.singleton.Client03</node>
+    <node x="4.5" y="451.0">Mr.He.pattern23.singleton.Singleton06</node>
+    <node x="735.0" y="14.5">Mr.He.pattern23.singleton.Singleton05</node>
+    <node x="0.0" y="620.0">Mr.He.pattern23.singleton.Client02</node>
+    <node x="621.0" y="272.5">Mr.He.pattern23.singleton.Client01</node>
+    <node x="388.0" y="200.0">Mr.He.pattern23.singleton.Client03</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton05">
-      <point x="71.20000000000005" y="-29.0" />
-      <point x="565.7" y="162.0" />
-      <point x="1026.25" y="162.0" />
-      <point x="-46.25" y="29.0" />
-    </edge>
     <edge source="Mr.He.pattern23.singleton.Client02" target="Mr.He.pattern23.singleton.Singleton06">
-      <point x="0.0" y="-53.0" />
-      <point x="0.0" y="53.0" />
+      <point x="0.0" y="-59.5" />
+      <point x="0.0" y="59.5" />
     </edge>
-    <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton03">
-      <point x="0.0" y="-89.0" />
-      <point x="710.5" y="102.0" />
-      <point x="658.75" y="102.0" />
-      <point x="56.25" y="41.0" />
+    <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton05">
+      <point x="35.799999999999955" y="-30.5" />
+      <point x="746.3" y="160.0" />
+      <point x="874.5" y="160.0" />
+      <point x="46.5" y="30.5" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton01">
-      <point x="35.60000000000002" y="-29.0" />
-      <point x="530.1" y="142.0" />
-      <point x="791.25" y="142.0" />
-      <point x="-56.25" y="41.0" />
+      <point x="71.60000000000002" y="-30.5" />
+      <point x="782.1" y="180.0" />
+      <point x="1109.75" y="180.0" />
+      <point x="56.25" y="45.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton03">
+      <point x="0.0" y="-103.0" />
+      <point x="494.5" y="140.0" />
+      <point x="546.25" y="140.0" />
+      <point x="-56.25" y="45.0" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton04">
-      <point x="-42.80000000000001" y="-89.0" />
-      <point x="667.6999999999999" y="112.0" />
-      <point x="413.75" y="112.0" />
-      <point x="56.25" y="41.0" />
+      <point x="-85.19999999999993" y="-103.0" />
+      <point x="409.30000000000007" y="180.0" />
+      <point x="56.25" y="180.0" />
+      <point x="-56.25" y="45.0" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton02">
-      <point x="-71.20000000000005" y="-29.0" />
-      <point x="423.29999999999995" y="172.0" />
-      <point x="56.25" y="172.0" />
-      <point x="-56.25" y="41.0" />
-    </edge>
-    <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton05">
-      <point x="85.60000000000002" y="-89.0" />
-      <point x="796.1" y="172.0" />
-      <point x="1118.75" y="172.0" />
-      <point x="46.25" y="29.0" />
+      <point x="-35.80000000000001" y="-30.5" />
+      <point x="674.6999999999999" y="120.0" />
+      <point x="413.75" y="120.0" />
+      <point x="56.25" y="45.0" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton03">
-      <point x="0.0" y="-29.0" />
-      <point x="494.5" y="132.0" />
-      <point x="546.25" y="132.0" />
-      <point x="-56.25" y="41.0" />
+      <point x="0.0" y="-30.5" />
+      <point x="710.5" y="110.0" />
+      <point x="658.75" y="110.0" />
+      <point x="56.25" y="45.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton05">
+      <point x="42.60000000000002" y="-103.0" />
+      <point x="537.1" y="150.0" />
+      <point x="781.5" y="150.0" />
+      <point x="-46.5" y="30.5" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client01" target="Mr.He.pattern23.singleton.Singleton04">
-      <point x="-35.60000000000002" y="-29.0" />
-      <point x="458.9" y="162.0" />
-      <point x="301.25" y="162.0" />
-      <point x="-56.25" y="41.0" />
+      <point x="-71.60000000000002" y="-30.5" />
+      <point x="638.9" y="130.0" />
+      <point x="168.75" y="130.0" />
+      <point x="56.25" y="45.0" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton01">
-      <point x="42.80000000000001" y="-89.0" />
-      <point x="753.3" y="152.0" />
-      <point x="903.75" y="152.0" />
-      <point x="56.25" y="41.0" />
+      <point x="85.20000000000005" y="-103.0" />
+      <point x="579.7" y="170.0" />
+      <point x="997.25" y="170.0" />
+      <point x="-56.25" y="45.0" />
     </edge>
     <edge source="Mr.He.pattern23.singleton.Client03" target="Mr.He.pattern23.singleton.Singleton02">
-      <point x="-85.60000000000002" y="-89.0" />
-      <point x="624.9" y="122.0" />
-      <point x="168.75" y="122.0" />
-      <point x="56.25" y="41.0" />
+      <point x="-42.59999999999991" y="-103.0" />
+      <point x="451.9000000000001" y="170.0" />
+      <point x="301.25" y="170.0" />
+      <point x="-56.25" y="45.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.8177905308464849" x="582.5" y="338.5" />
+  <settings layout="Hierarchic Group" zoom="0.7404479578392622" x="583.0" y="369.5" />
   <SelectedNodes />
   <Categories>
     <Category>Methods</Category>
