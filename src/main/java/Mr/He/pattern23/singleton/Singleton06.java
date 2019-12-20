@@ -22,8 +22,7 @@ public class Singleton06 implements Serializable {
     private static Singleton06 instance = new Singleton06();
     private Singleton06() {
         if(instance != null){
-            System.err.println("禁止通过反射创建多个实例");
-//            throw new RuntimeException("禁止通过反射创建多个实例");
+            throw new RuntimeException("禁止通过反射创建多个实例");
         }
     }
 
@@ -40,6 +39,6 @@ public class Singleton06 implements Serializable {
      * @throws ObjectStreamException 反序列化异常
      */
     private Object readResolve() throws ObjectStreamException {
-        return instance;
+        throw new RuntimeException("禁止通过反序列化创建多个实例");
     }
 }
