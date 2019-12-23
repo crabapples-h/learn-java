@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="150.0" y="118.0">Mr.He.pattern23.factory.factorymethod.FlowerFactory</node>
+    <node x="289.7916666666667" y="0.0">Mr.He.pattern23.factory.factorymethod.Flower</node>
+    <node x="348.7386363636363" y="334.0">Mr.He.pattern23.factory.factorymethod.Client</node>
+    <node x="369.0" y="118.0">Mr.He.pattern23.factory.factorymethod.Crabapple</node>
+    <node x="320.69696969696975" y="226.0">Mr.He.pattern23.factory.factorymethod.CrabappleFactory</node>
+    <node x="0.0" y="118.0">Mr.He.pattern23.factory.factorymethod.Rose</node>
+    <node x="39.73863636363632" y="226.0">Mr.He.pattern23.factory.factorymethod.RoseFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Mr.He.pattern23.factory.factorymethod.Client" target="Mr.He.pattern23.factory.factorymethod.RoseFactory">
+      <point x="-59.333333333333314" y="-29.0" />
+      <point x="378.405303030303" y="309.0" />
+      <point x="139.23863636363632" y="309.0" />
+      <point x="0.0" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.Rose" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="0.0" y="-29.0" />
+      <point x="-29.5" y="39.0" />
+      <point x="300.5416666666667" y="78.0" />
+      <point x="-53.75" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.RoseFactory" target="Mr.He.pattern23.factory.factorymethod.Rose">
+      <point x="-66.33333333333326" y="-29.0" />
+      <point x="72.90530303030306" y="201.0" />
+      <point x="64.5" y="201.0" />
+      <point x="0.0" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.CrabappleFactory" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="69.33333333333331" y="-29.0" />
+      <point x="494.030303030303" y="201.0" />
+      <point x="529.2386363636364" y="201.0" />
+      <point x="529.2386363636364" y="88.0" />
+      <point x="386.5416666666667" y="88.0" />
+      <point x="32.25" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.RoseFactory" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="5.6843418860808015E-14" y="-29.0" />
+      <point x="139.5" y="88.0" />
+      <point x="322.0416666666667" y="88.0" />
+      <point x="-32.25" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.CrabappleFactory" target="Mr.He.pattern23.factory.factorymethod.Crabapple">
+      <point x="0.0" y="-29.0" />
+      <point x="424.69696969696975" y="201.0" />
+      <point x="438.0" y="201.0" />
+      <point x="0.0" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.Crabapple" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="0.0" y="-29.0" />
+      <point x="438.0" y="98.0" />
+      <point x="365.0416666666667" y="98.0" />
+      <point x="10.75" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.FlowerFactory" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="0.0" y="-29.0" />
+      <point x="249.5" y="98.0" />
+      <point x="343.5416666666667" y="98.0" />
+      <point x="-10.75" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.Client" target="Mr.He.pattern23.factory.factorymethod.Flower">
+      <point x="59.33333333333337" y="-29.0" />
+      <point x="497.0719696969697" y="309.0" />
+      <point x="556.125" y="309.0" />
+      <point x="556.125" y="78.0" />
+      <point x="408.0416666666667" y="78.0" />
+      <point x="53.75" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.RoseFactory" target="Mr.He.pattern23.factory.factorymethod.FlowerFactory">
+      <point x="66.33333333333337" y="-29.0" />
+      <point x="205.5719696969697" y="201.0" />
+      <point x="199.75" y="201.0" />
+      <point x="-49.75" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.Client" target="Mr.He.pattern23.factory.factorymethod.CrabappleFactory">
+      <point x="5.6843418860808015E-14" y="-29.0" />
+      <point x="437.7386363636364" y="309.0" />
+      <point x="424.69696969696975" y="309.0" />
+      <point x="0.0" y="29.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.factorymethod.CrabappleFactory" target="Mr.He.pattern23.factory.factorymethod.FlowerFactory">
+      <point x="-69.33333333333331" y="-29.0" />
+      <point x="355.3636363636364" y="201.0" />
+      <point x="299.25" y="201.0" />
+      <point x="49.75" y="29.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="247.0" y="144.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
