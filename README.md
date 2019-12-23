@@ -16,4 +16,7 @@
     * 加入Google令牌工具 `GoogleAuthenticatorSimpleUtils.java`
 * 20191220
     * 加入单例模式相关测试 `package pattern23.singleton.*`
+* 20191224
+    * 加入简单工厂模式测试
+    * 加入工厂方法模式测试 
     
