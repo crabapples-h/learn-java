@@ -19,10 +19,10 @@ public class CrabappleFactory implements FlowerFactory {
         return new Crabapple();
     }
     public static class Crabapple implements Flower {
-        Logger logger = LoggerFactory.getLogger(this.getClass());
+        private Logger logger = LoggerFactory.getLogger(this.getClass());
         @Override
         public void show(){
-            logger.info("这是海棠:{}",this);
+            logger.info("这是海棠:[{}]",this);
         }
     }
 }

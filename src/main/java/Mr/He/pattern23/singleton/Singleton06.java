@@ -18,7 +18,7 @@ import java.io.Serializable;
  * 线程安全,效率高,不能延时加载
  */
 public class Singleton06 implements Serializable {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static Singleton06 instance = new Singleton06();
     private Singleton06() {
         if(instance != null){
@@ -30,7 +30,7 @@ public class Singleton06 implements Serializable {
         return instance;
     }
     public void doSomething(){
-        logger.info("hello,{}", instance);
+        logger.info("hello,[{}]", instance);
     }
 
     /**

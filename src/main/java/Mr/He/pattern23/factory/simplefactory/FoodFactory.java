@@ -24,17 +24,17 @@ public class FoodFactory {
     }
 
     public static class Orange implements Food{
-        Logger logger = LoggerFactory.getLogger(this.getClass());
+        private Logger logger = LoggerFactory.getLogger(this.getClass());
         @Override
         public void eat(){
-            logger.info("吃东西:{}",this);
+            logger.info("吃橙子:[{}]",this);
         }
     }
     public static class Peach implements Food{
-        Logger logger = LoggerFactory.getLogger(this.getClass());
+        private Logger logger = LoggerFactory.getLogger(this.getClass());
         @Override
         public void eat(){
-            logger.info("吃东西:{}",this);
+            logger.info("吃梨:[{}]",this);
         }
     }
 }

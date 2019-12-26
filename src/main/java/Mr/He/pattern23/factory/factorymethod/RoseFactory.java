@@ -18,10 +18,10 @@ public class RoseFactory implements FlowerFactory{
         return new Rose();
     }
     static class Rose implements Flower{
-        Logger logger = LoggerFactory.getLogger(this.getClass());
+        private Logger logger = LoggerFactory.getLogger(this.getClass());
         @Override
         public void show(){
-            logger.info("这是玫瑰:{}",this);
+            logger.info("这是玫瑰:[{}]",this);
         }
     }
 }

@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public enum Singleton05 {
     INSTANCE;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     public void doSomething(){
-        logger.info("hello,{}", INSTANCE);
+        logger.info("hello,[{}]", INSTANCE);
     }
 }

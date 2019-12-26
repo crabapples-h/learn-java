@@ -23,6 +23,6 @@ public class Singleton01{
         return instance;
     }
     public void doSomething(){
-        logger.info("hello,{}", instance);
+        logger.info("hello,[{}]", instance);
     }
 }
