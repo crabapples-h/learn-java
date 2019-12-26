@@ -19,4 +19,5 @@
 * 20191224
     * 加入简单工厂模式测试 `package pattern23.factory.simplefactory.*`
     * 加入工厂方法模式测试 `package pattern23.factoey.factorymethod.*`
-    
+* 20191227
+    * 加入抽象工厂模式测试 `package pattern23.factoey.abstractFactory.*`
