@@ -1,5 +1,8 @@
 package Mr.He.pattern23.factory.factorymethod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * TODO 工厂模式-工厂方法模式
  *
@@ -14,4 +17,12 @@ public class RoseFactory implements FlowerFactory{
     public Flower createFlower() {
         return new Rose();
     }
+    static class Rose implements Flower{
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        @Override
+        public void show(){
+            logger.info("这是玫瑰:{}",this);
+        }
+    }
 }
+

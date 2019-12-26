@@ -13,5 +13,7 @@ public class Client {
     public static void main(String[] args) {
         Flower flower = new CrabappleFactory().createFlower();
         Flower rose = new RoseFactory().createFlower();
+        flower.show();
+        rose.show();
     }
 }

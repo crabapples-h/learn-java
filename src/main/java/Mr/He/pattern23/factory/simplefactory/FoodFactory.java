@@ -1,5 +1,8 @@
 package Mr.He.pattern23.factory.simplefactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * TODO 工厂模式-简单工厂模式(静态工厂模式)
  *
@@ -18,5 +21,20 @@ public class FoodFactory {
     }
     public static Food getPeach(){
         return new Peach();
+    }
+
+    public static class Orange implements Food{
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        @Override
+        public void eat(){
+            logger.info("吃东西:{}",this);
+        }
+    }
+    public static class Peach implements Food{
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        @Override
+        public void eat(){
+            logger.info("吃东西:{}",this);
+        }
     }
 }
