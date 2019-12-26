@@ -10,10 +10,10 @@ package Mr.He.pattern23.factory.abstractFactory;
  * pc-name root
  */
 public class BookFactory {
-    static Book.ChineseBook buyChineseBook (){
+    static Book buyChineseBook (){
         return new Book.ChineseBook();
     }
-    static Book.MathBook buyMathBook (){
+    static Book buyMathBook (){
         return new Book.MathBook();
     }
 }
