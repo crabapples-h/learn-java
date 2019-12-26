@@ -61,7 +61,7 @@ public class Client02 {
     public static void deserializationDemo() throws Exception {
         Singleton06 singleton06_1 = Singleton06.getInstance();
         logger.info("Hello:{}",singleton06_1);
-        File file = new File("SingletonDemoFile");
+        File file = new File("SingletonDemoFile.temp");
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(singleton06_1);
