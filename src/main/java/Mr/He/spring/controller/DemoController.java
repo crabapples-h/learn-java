@@ -7,6 +7,9 @@ import Mr.He.spring.dto.ResponseDTO;
 import Mr.He.spring.groups.IsNotNull;
 import Mr.He.spring.groups.IsNull;
 import Mr.He.spring.service.DemoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,28 +20,34 @@ import javax.validation.Valid;
 
 /**
  * TODO 一个演示的controller
- * 
+ *
  * @author Mr.He
  * @date 2019/8/5 22:51
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */
+@Api("用户信息管理")
 @RestController
-@RequestMapping("demo")
+@RequestMapping(value = "/api")
 public class DemoController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
-    @Autowired
-    DemoService demoService;
+    private DemoService demoService;
+
+    public DemoController(DemoService demoService) {
+        this.demoService = demoService;
+    }
 
     @GetMapping("/hello")
-    public String helloDemo(){
-        return "hello world";
+    @ApiOperation(value = "hello,world测试", notes = "这个是一个测试接口")
+    @ApiImplicitParam(name = "name", value = "这个是参数", required = true, dataType = "String", paramType = "query")
+    public String helloDemo(@RequestParam String name){
+        return name + " say: hello world";
     }
 
     /**
-     * TODO 测试从ResquestBody中获取数据并验证
+     * TODO 测试从RequestBody中获取数据并验证
      * @RequestBody 表示从请求体中获取数据
      * @Valid 表示需要验证对应属性
      *
@@ -46,6 +55,7 @@ public class DemoController extends BaseController {
      * 可通过bindingResult.hasErrors()判断参数校验是否通过
      */
     @PostMapping("/postDemo1")
+    @ApiOperation(value = "属性校验测试", notes = "属性校验测试接口")
     public ResponseDTO postDemo1(@Valid @RequestBody DemoPostDTO1 demoPost1DTO1, BindingResult bindingResult){
         logger.info("提交的参数:{}",demoPost1DTO1);
         if(bindingResult.hasErrors()){
