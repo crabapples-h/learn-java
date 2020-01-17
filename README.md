@@ -21,3 +21,6 @@
     * 加入工厂方法模式测试 `package pattern23.factoey.factorymethod.*`
 * 20191227
     * 加入抽象工厂模式测试 `package pattern23.factoey.abstractFactory.*`
+* 20200117
+    * 加入swagger测试 `package Mr.He.spring.config.Swagger2Config.java`
+
