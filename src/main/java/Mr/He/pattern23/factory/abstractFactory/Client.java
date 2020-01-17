@@ -13,8 +13,10 @@ public class Client {
     public static void main(String[] args) {
         Book chineseBook = ChineseFactory.buyBook();
         Book mathBook = MathFactory.buyBook();
+
         Pen chinesePen = ChineseFactory.buyPen();
         Pen mathPen = MathFactory.buyPen();
+
         chineseBook.read();
         mathBook.read();
         chinesePen.write();
