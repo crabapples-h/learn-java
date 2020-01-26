@@ -1,4 +1,4 @@
-package Mr.He.spring.service;
+package Mr.He.spring.service.websocket;
 
 import Mr.He.spring.config.CustomSpringConfigurator;
 import org.springframework.stereotype.Component;
