@@ -1,6 +1,10 @@
 package Mr.He.spring.common;
 
+import Mr.He.spring.dto.ResponseDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -15,7 +19,9 @@ import java.util.Set;
  * qq 294046317
  * pc-name 29404
  */
+
 public abstract class BaseController {
+    private Logger logger = LoggerFactory.getLogger(BaseController.class);
     @Autowired
     private Validator validator;
 
@@ -28,5 +34,11 @@ public abstract class BaseController {
         for (ConstraintViolation constraintViolation : constraintViolations ) {
            throw new ApplicationException(constraintViolation.getMessageTemplate());
         }
+    }
+
+    @ExceptionHandler
+    protected ResponseDTO exceptionHandler(Exception e){
+        logger.error("出现异常:[{}]",e.getMessage(),e);
+        return ResponseDTO.returnCustom(500,e.getMessage(),null);
     }
 }

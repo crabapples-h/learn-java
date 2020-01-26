@@ -29,7 +29,7 @@ import javax.validation.Valid;
  */
 @Api("用户信息管理")
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/demo")
 public class DemoController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(DemoController.class);

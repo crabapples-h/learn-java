@@ -14,6 +14,13 @@ import lombok.Getter;
  */
 @Getter
 public class ResponseDTO{
+    enum Status{
+        SUCCESS(200),
+        ERROR(500);
+        int code;
+        Status(int code) {
+        }
+    }
 
     private static final int SUCCESS = 200;
     private static final int ERROR = 500;
@@ -22,20 +29,29 @@ public class ResponseDTO{
     private Object data;
     private long time;
 
-    private ResponseDTO(int status, String message, Object data) {
-        this.status = status;
+    private ResponseDTO(Status status, String message, Object data) {
+        this.status = status.code;
+        this.message = message;
+        this.data = data;
+        this.time = System.currentTimeMillis();
+    }
+    private ResponseDTO(int code, String message, Object data) {
+        this.status = code;
         this.message = message;
         this.data = data;
         this.time = System.currentTimeMillis();
     }
     public static ResponseDTO returnSuccess(String message, Object data){
-        return new ResponseDTO(SUCCESS,message,data);
+        return new ResponseDTO(Status.SUCCESS,message,data);
     }
     public static ResponseDTO returnSuccess(String message){
-        return new ResponseDTO(SUCCESS,message,null);
+        return new ResponseDTO(Status.SUCCESS,message,null);
     }
     public static ResponseDTO returnError(String message){
-        return new ResponseDTO(ERROR,message,null);
+        return new ResponseDTO(Status.ERROR,message,null);
+    }
+    public static ResponseDTO returnCustom(int status, String message, Object data){
+        return new ResponseDTO(Status.SUCCESS,message,data);
     }
     @Override
     public String toString() {

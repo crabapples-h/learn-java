@@ -1,7 +1,7 @@
 package Mr.He.spring.controller;
 
 import Mr.He.spring.entity.WebsocketMessage;
-import Mr.He.spring.service.MessageService;
+import Mr.He.spring.service.websocket.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/websocket/")
 public class WebSocketController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
+
+    public WebSocketController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
     @RequestMapping("index")
     public String index() {

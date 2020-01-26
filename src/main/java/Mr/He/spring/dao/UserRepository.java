@@ -4,6 +4,7 @@ import Mr.He.spring.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,7 +18,8 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-public interface UserDao extends JpaRepository<User, Serializable> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Serializable> {
     User findByName(String name);
 
     User findByNameAndAge(String name, Integer age);

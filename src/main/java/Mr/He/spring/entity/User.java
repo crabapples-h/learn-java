@@ -1,6 +1,7 @@
 package Mr.He.spring.entity;
 
 import Mr.He.spring.common.BaseEntity;
+import Mr.He.spring.groups.IsNotNull;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
@@ -8,6 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -37,12 +40,14 @@ public class User extends BaseEntity {
      * Column length=30 数据字段长度为30
      */
     @Column(length = 30)
+    @NotBlank(message = "姓名不能为空", groups = IsNotNull.class)
     private String name;
 
     /**
      * Column nullable = false 数据字段不能为空
      */
-    @Column(columnDefinition = "int (2) default 0 not null")
+    @Column(columnDefinition = "int (3) default 0 not null")
+    @NotNull(message = "年龄不能为空", groups = IsNotNull.class)
     private Integer age;
 
     @Override
