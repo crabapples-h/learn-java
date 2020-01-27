@@ -1,4 +1,4 @@
-package Mr.He.spring.config;
+package Mr.He.spring.common.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;

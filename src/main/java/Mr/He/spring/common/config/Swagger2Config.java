@@ -1,4 +1,4 @@
-package Mr.He.spring.config;
+package Mr.He.spring.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +11,15 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * TODO Swagger配置类
+ *
+ * @author Mr.He
+ * 2020/1/27 11:59
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name 29404
+ */
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
