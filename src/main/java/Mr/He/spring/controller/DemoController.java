@@ -26,7 +26,7 @@ import javax.validation.Valid;
  * qq 294046317
  * pc-name 29404
  */
-@Api("用户信息管理")
+@Api("测试接口")
 @RestController
 @RequestMapping(value = "/api/demo")
 public class DemoController extends BaseController {

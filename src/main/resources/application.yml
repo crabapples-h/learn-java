@@ -9,7 +9,7 @@ spring :
   jpa:
     show-sql: true #是否在控制台显示数据库语句
     hibernate:
-      ddl-auto: create #每次启动时如何操作对应表
+      ddl-auto: update #每次启动时如何操作对应表
     database-platform: org.hibernate.dialect.MySQL8Dialect #设置jpa方言为mysql
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径

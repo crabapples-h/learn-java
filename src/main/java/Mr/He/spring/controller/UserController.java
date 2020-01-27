@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * TODO 用户管理接口类
  *
@@ -48,10 +50,19 @@ public class UserController extends BaseController {
     @ApiOperation(value = "修改用户", notes = "修改用户接口")
     public ResponseDTO editUser(@RequestBody UserForm form){
         logger.info("收到请求->修改用户:[{}]",form);
-        super.validator(form, Mr.He.spring.common.groups.IsNotNull.class);
+        super.validator(form, IsNotNull.class);
         User user = userService.editUser(form);
         logger.info("用户修改完成->用户信息:[{}]",user);
         return ResponseDTO.returnSuccess("操作成功",user);
+    }
+
+    @PostMapping("/delUser")
+    @ApiOperation(value = "删除用户", notes = "删除用户接口")
+    public ResponseDTO delUser(@RequestBody @NotBlank String id){
+        logger.info("收到请求->删除用户:[{}]",id);
+        userService.delUser(id);
+        logger.info("用户删除完成");
+        return ResponseDTO.returnSuccess("操作成功");
     }
 
 }

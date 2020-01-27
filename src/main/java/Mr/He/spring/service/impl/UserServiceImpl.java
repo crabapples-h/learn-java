@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         }
         throw new ApplicationException("用户不存在");
     }
+
+    @Override
+    public void delUser(String id) {
+        userRepository.delUser(id);
+    }
 }

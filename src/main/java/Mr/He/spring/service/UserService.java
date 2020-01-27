@@ -21,4 +21,8 @@ public interface UserService {
      * 修改用户
      */
     User editUser(UserForm form);
+    /**
+     * 删除用户
+     */
+    void delUser(String id);
 }

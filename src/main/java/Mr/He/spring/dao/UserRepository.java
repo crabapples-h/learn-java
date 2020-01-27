@@ -2,6 +2,7 @@ package Mr.He.spring.dao;
 
 import Mr.He.spring.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,9 +21,9 @@ import java.util.List;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Serializable> {
-    User findByName(String name);
+    List<User> findByName(String name);
 
-    User findByNameAndAge(String name, Integer age);
+    List<User> findByNameAndAge(String name, Integer age);
 
     List<User> findByNameLike(String name);
 
@@ -42,4 +43,8 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
      */
     @Query(value = "select * from user where name = ?1 and age = ?2", nativeQuery = true)
     List<User> findBySQL(String name, Integer age);
+
+    @Query("update User set delFlag = 1 where id=:name")
+    @Modifying
+    void delUser(@Param("name")String id);
 }
