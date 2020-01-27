@@ -38,7 +38,6 @@ public abstract class BaseEntity {
     @GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-
     /**
      * 创建时间
      * columnDefinition 设置默认值为当前时间
@@ -47,6 +46,12 @@ public abstract class BaseEntity {
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss E")
     private LocalDateTime createTime;
+
+    /**
+     * 删除标记 (0:正常 1:删除)
+     */
+    @Column(columnDefinition = "bit(1) default 0 not null comment '删除标记'")
+    private int delFlag;
 
     /**
      * 更新时间

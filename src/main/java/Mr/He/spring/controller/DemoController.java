@@ -1,9 +1,9 @@
 package Mr.He.spring.controller;
 
 import Mr.He.spring.common.BaseController;
-import Mr.He.spring.dto.DemoPostDTO1;
-import Mr.He.spring.dto.DemoPostDTO2;
 import Mr.He.spring.dto.ResponseDTO;
+import Mr.He.spring.form.DemoPostForm1;
+import Mr.He.spring.form.DemoPostForm2;
 import Mr.He.spring.groups.IsNotNull;
 import Mr.He.spring.groups.IsNull;
 import Mr.He.spring.service.DemoService;
@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,26 +55,26 @@ public class DemoController extends BaseController {
      */
     @PostMapping("/postDemo1")
     @ApiOperation(value = "属性校验测试", notes = "属性校验测试接口")
-    public ResponseDTO postDemo1(@Valid @RequestBody DemoPostDTO1 demoPost1DTO1, BindingResult bindingResult){
-        logger.info("提交的参数:{}",demoPost1DTO1);
+    public ResponseDTO postDemo1(@Valid @RequestBody DemoPostForm1 demoPostForm, BindingResult bindingResult){
+        logger.info("提交的参数:{}",demoPostForm);
         if(bindingResult.hasErrors()){
             String errorMessage = bindingResult.getFieldErrors().get(0).getDefaultMessage();
             logger.error("验证信息:{}", errorMessage);
             return ResponseDTO.returnError(errorMessage);
         }
-        return ResponseDTO.returnSuccess("成功",demoPost1DTO1);
+        return ResponseDTO.returnSuccess("成功",demoPostForm);
     }
 
     /**
      * TODO 测试使用不同的校验组校验参数，根据参数中的type判断使用哪个校验组
      */
     @PostMapping("/postDemo2")
-    public ResponseDTO postDemo2(@RequestBody DemoPostDTO2 demoPostDTO2){
+    public ResponseDTO postDemo2(@RequestBody DemoPostForm2 demoPostForm){
         try {
-            if (demoPostDTO2.getType() == 0) {
-                super.validator(demoPostDTO2, IsNull.class);
+            if (demoPostForm.getType() == 0) {
+                super.validator(demoPostForm, IsNull.class);
             } else {
-                super.validator(demoPostDTO2, IsNotNull.class);
+                super.validator(demoPostForm, IsNotNull.class);
             }
             return ResponseDTO.returnSuccess("收到");
         }catch (Exception e){
