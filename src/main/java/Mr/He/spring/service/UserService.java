@@ -3,6 +3,8 @@ package Mr.He.spring.service;
 import Mr.He.spring.entity.User;
 import Mr.He.spring.form.UserForm;
 
+import java.util.List;
+
 /**
  * TODO 用户Service接口
  *
@@ -25,4 +27,8 @@ public interface UserService {
      * 删除用户
      */
     void delUser(String id);
+
+    List<User> findByName(String name);
+
+    List<User> findByHQL(String name);
 }

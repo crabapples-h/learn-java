@@ -1,6 +1,7 @@
 package Mr.He.spring.form;
 
 import Mr.He.spring.common.groups.IsAdd;
+import Mr.He.spring.common.groups.IsDelete;
 import Mr.He.spring.common.groups.IsEdit;
 import Mr.He.spring.entity.User;
 import lombok.Data;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Null;
 @Data
 public class UserForm {
     @NotBlank(message = "id不能为空", groups = IsEdit.class)
+    @NotBlank(message = "id不能为空", groups = IsDelete.class)
     @Null(message = "id必须为空", groups = IsAdd.class)
     private String id;
 

@@ -1,6 +1,9 @@
 package Mr.He.spring.controller;
 
 import Mr.He.spring.common.BaseController;
+import Mr.He.spring.common.groups.IsAdd;
+import Mr.He.spring.common.groups.IsDelete;
+import Mr.He.spring.common.groups.IsEdit;
 import Mr.He.spring.dto.ResponseDTO;
 import Mr.He.spring.entity.User;
 import Mr.He.spring.form.UserForm;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -40,7 +44,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "添加用户", notes = "添加用户接口")
     public ResponseDTO addUser(@RequestBody UserForm form){
         logger.info("收到请求->添加用户:[{}]",form);
-        super.validator(form, IsNotNull.class);
+        super.validator(form, IsAdd.class);
         User user = userService.addUser(form);
         logger.info("用户添加完成->用户信息:[{}]",user);
         return ResponseDTO.returnSuccess("添加成功",user);
@@ -50,7 +54,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "修改用户", notes = "修改用户接口")
     public ResponseDTO editUser(@RequestBody UserForm form){
         logger.info("收到请求->修改用户:[{}]",form);
-        super.validator(form, IsNotNull.class);
+        super.validator(form, IsEdit.class);
         User user = userService.editUser(form);
         logger.info("用户修改完成->用户信息:[{}]",user);
         return ResponseDTO.returnSuccess("操作成功",user);
@@ -58,9 +62,10 @@ public class UserController extends BaseController {
 
     @PostMapping("/delUser")
     @ApiOperation(value = "删除用户", notes = "删除用户接口")
-    public ResponseDTO delUser(@RequestBody @NotBlank String id){
-        logger.info("收到请求->删除用户:[{}]",id);
-        userService.delUser(id);
+    public ResponseDTO delUser(@RequestBody UserForm form){
+        super.validator(form, IsDelete.class);
+        logger.info("收到请求->删除用户:[{}]",form.getId());
+        userService.delUser(form.getId());
         logger.info("用户删除完成");
         return ResponseDTO.returnSuccess("操作成功");
     }

@@ -1,8 +1,7 @@
 package Mr.He.spring.jpa;
 
-import Mr.He.spring.dao.UserRepository;
 import Mr.He.spring.entity.User;
-import org.junit.Assert;
+import Mr.He.spring.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,15 @@ import java.util.List;
 @ActiveProfiles("dev")
 public class JpaTest {
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     @Test
     public void case1() {
-        List<User> users = userRepository.findByName("kitty");
-        System.err.println(users);
-        users.forEach(System.out::println);
+        List<User> names = userService.findByName("kitty");
+        List<User> hqls = userService.findByHQL("kitty");
+        System.err.println(names);
+        System.err.println(hqls);
+        names.forEach(System.out::println);
+        hqls.forEach(System.out::println);
     }
 }
 

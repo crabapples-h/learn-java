@@ -7,6 +7,9 @@ import Mr.He.spring.form.UserForm;
 import Mr.He.spring.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 /**
  * TODO 用户Service实现
  *
@@ -38,7 +41,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delUser(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            throw new ApplicationException("用户不存在");
+        }
         userRepository.delUser(id);
+    }
+
+    @Override
+    public List<User> findByName(String name) {
+        return userRepository.findByName(name);
+    }
+
+    @Override
+    public List<User> findByHQL(String name) {
+        return userRepository.findByHQL(name);
     }
 }

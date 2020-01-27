@@ -50,6 +50,13 @@ public class User extends BaseEntity {
     @NotNull(message = "年龄不能为空", groups = IsNotNull.class)
     private Integer age;
 
+    /**
+     * 状态标记 0:正常 1:禁用
+     */
+    @Column(columnDefinition = "bit(1) default 0 not null comment '状态标记'")
+    @NotBlank(message = "状态不能为空", groups = IsNotNull.class)
+    private int status;
+
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);
