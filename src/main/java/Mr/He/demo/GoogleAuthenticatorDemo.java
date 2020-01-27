@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * TODO 谷歌令牌验证演示
  *
  * @author Mr.He
- * @date 12/14/19 7:36 PM
+ * 12/14/19 7:36 PM
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

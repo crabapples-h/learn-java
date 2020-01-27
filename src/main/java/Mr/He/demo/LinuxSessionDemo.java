@@ -1,7 +1,6 @@
 package Mr.He.demo;
 
 import ch.ethz.ssh2.Connection;
-import ch.ethz.ssh2.ConnectionInfo;
 import ch.ethz.ssh2.Session;
 
 import java.io.*;
@@ -10,7 +9,7 @@ import java.io.*;
  * TODO java连接linux
  *
  * @author Mr.He
- * @date 2019/7/4 16:24
+ * 2019/7/4 16:24
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404

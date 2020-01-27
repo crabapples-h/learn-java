@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -14,9 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RSA加密演示
- * @author crabapples.cn@gmail.com
- * @date 2019/7/3 22:49
+ * TODO RSA加密演示
+ *
+ * @author Mr.He
+ * 2019/7/3 22:49
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 public class Rsa1Demo {
     private static final Logger logger = LoggerFactory.getLogger(Rsa1Demo.class);
@@ -44,9 +49,8 @@ public class Rsa1Demo {
      * 随机生成密钥对
      * @param seed 种子
      * @return 生成的秘钥对
-     * @throws NoSuchAlgorithmException
      */
-    public static Map createKey(String seed) throws NoSuchAlgorithmException {
+    public static Map<String, Key> createKey(String seed) throws NoSuchAlgorithmException {
         // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
         // 初始化密钥对生成器，密钥大小为96-1024位
@@ -78,7 +82,7 @@ public class Rsa1Demo {
         //RSA加密
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        return Base64.encodeBase64String(cipher.doFinal(content.getBytes("UTF-8")));
+        return Base64.encodeBase64String(cipher.doFinal(content.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
@@ -91,7 +95,7 @@ public class Rsa1Demo {
      */
     private static String decrypt(String content, String privateKey) throws Exception{
         //64位解码加密后的字符串
-        byte[] inputByte = Base64.decodeBase64(content.getBytes("UTF-8"));
+        byte[] inputByte = Base64.decodeBase64(content.getBytes(StandardCharsets.UTF_8));
         //base64编码的私钥
         byte[] decoded = Base64.decodeBase64(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));

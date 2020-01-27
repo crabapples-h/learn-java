@@ -11,9 +11,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RSA加密演示
- * @author crabapples.cn@gmail.com
- * @date 2019/7/3 23:22
+ * TODO RSA加密演示
+ *
+ * @author Mr.He
+ * 2019/7/3 23:22
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name 29404
  */
 public class RsaDemo {
     private static final Logger logger = LoggerFactory.getLogger(RsaDemo.class);
@@ -37,10 +41,10 @@ public class RsaDemo {
      * @param key 私钥
      * @param encodeStr 需要解密的字符串
      * @return 解密之后的字符串
-     * @throws Exception
+     * @throws Exception 解密过程中可能出现异常
      */
     private static String decode(Key key,String encodeStr) throws Exception {
-        /**
+        /*
          * 使用字符串作为密钥时需要转回key
          * String keyString = new String(Base64.getEncoder().encode(key.getEncoded()));
          * byte[] keyByte = Base64.getDecoder().decode(keyString);
@@ -58,7 +62,7 @@ public class RsaDemo {
      * 执行加密操作
      * @param key 公钥
      * @return 加密后的字符串
-     * @throws Exception
+     * @throws Exception 加密过程中可能出现异常
      */
     private static String encode(Key key,String content) throws Exception {
         Cipher cipher = Cipher.getInstance("RSA");
