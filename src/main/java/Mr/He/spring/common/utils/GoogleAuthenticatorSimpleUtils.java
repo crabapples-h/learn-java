@@ -12,7 +12,7 @@ import java.security.SecureRandom;
  * TODO google身份验证器
  *
  * @author Mr.He
- *  12/14/19 7:12 PM
+ * 12/14/19 7:12 PM
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

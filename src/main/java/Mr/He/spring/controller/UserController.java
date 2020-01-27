@@ -9,21 +9,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
- * TODO
+ * TODO 用户管理接口类
  *
  * @author Mr.He
  * 2020/1/27 2:09
- * e-mail wishforyou.xia@gmail.com
+ * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */

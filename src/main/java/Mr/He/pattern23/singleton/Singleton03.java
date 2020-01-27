@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * TODO 单例模式-双重检测锁(由于jvm底层模型原因,可能会出问题,不建议使用)
  *
  * @author Mr.He
- *  12/19/19
+ * 12/19/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root
