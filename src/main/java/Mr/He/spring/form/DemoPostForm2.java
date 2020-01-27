@@ -1,4 +1,4 @@
-package Mr.He.spring.dto;
+package Mr.He.spring.form;
 
 import Mr.He.spring.groups.IsNotNull;
 import Mr.He.spring.groups.IsNull;
@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.validation.constraints.*;
 
 /**
- * TODO 测试参数验证的DTO
+ * TODO 测试参数验证的Form
  *
  * @author Mr.He
  * 2019/9/21 18:46
@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
  * pc-name 29404
  */
 @Setter
-public class DemoPostDTO2 {
+public class DemoPostForm2 {
     @Null(message = "ID必须为空",groups = {IsNull.class})
     @NotNull(message = "ID不能为空",groups = {IsNotNull.class})
     private String id;

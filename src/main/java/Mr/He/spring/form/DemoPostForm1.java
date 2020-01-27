@@ -1,4 +1,4 @@
-package Mr.He.spring.dto;
+package Mr.He.spring.form;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * TODO 测试参数验证的DTO
+ * TODO 测试参数验证的Form
  *
  * @author Mr.He
  * 2019/9/19 23:46
@@ -19,7 +19,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class DemoPostDTO1 {
+public class DemoPostForm1 {
     /**
      * 必须为空
      */
