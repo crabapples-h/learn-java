@@ -4,7 +4,7 @@ package Mr.He.spring.common;
  * TODO 应用异常类
  *
  * @author Mr.He
- * @date 2019/9/21 20:54
+  * 2019/9/21 20:54
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404

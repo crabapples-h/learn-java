@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * TODO 工厂模式-简单工厂模式(静态工厂模式)
  *
  * @author Mr.He
- * @date 12/20/19
+ * 12/20/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

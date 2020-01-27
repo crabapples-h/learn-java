@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * TODO 单例模式测试客户端（测试五种方式在多线程环境下效率）
  *
  * @author Mr.He
- * @date 12/19/19
+ *  12/19/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * TODO springBoot主启动类
  *
  * @author Mr.He
- * @date 2019/8/5 22:53
+ * 2019/8/5 22:53
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404

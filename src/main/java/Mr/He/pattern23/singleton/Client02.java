@@ -11,7 +11,7 @@ import java.lang.reflect.Constructor;
  * TODO 单例模式测试客户端（使用反射破解单例模式）
  *
  * @author Mr.He
- * @date 12/19/19
+ * 12/19/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

@@ -12,7 +12,7 @@ import java.util.Date;
  * TODO 测试参数验证的DTO
  *
  * @author Mr.He
- * @date 2019/9/19 23:46
+ * 2019/9/19 23:46
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404

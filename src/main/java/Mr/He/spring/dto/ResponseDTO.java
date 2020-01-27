@@ -7,7 +7,7 @@ import lombok.Getter;
  * TODO 通用返回值DTO
  *
  * @author Mr.He
- * @date 2019/9/21 17:45
+ * 2019/9/21 17:45
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404

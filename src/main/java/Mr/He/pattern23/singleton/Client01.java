@@ -5,7 +5,7 @@ package Mr.He.pattern23.singleton;
  * TODO 单例模式测试客户端
  *
  * @author Mr.He
- * @date 12/19/19
+ * 12/19/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

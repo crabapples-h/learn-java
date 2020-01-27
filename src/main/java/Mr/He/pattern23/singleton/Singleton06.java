@@ -10,7 +10,7 @@ import java.io.Serializable;
  * TODO 单例模式-懒汉式(防止反射破解单例模式)
  *
  * @author Mr.He
- * @date 12/20/19
+ *  12/20/19
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root

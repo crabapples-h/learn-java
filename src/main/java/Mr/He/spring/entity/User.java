@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * TODO 用户实体类
  *
  * @author Mr.He
- * @date 2019/7/4 14:51
+  * 2019/7/4 14:51
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
