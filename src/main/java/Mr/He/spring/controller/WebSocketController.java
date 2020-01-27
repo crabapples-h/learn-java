@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * qq 294046317
  * pc-name 29404
  */
-@Controller
-@RequestMapping("/websocket/")
+//@Controller
+//@RequestMapping("/websocket/")
 public class WebSocketController {
 
     private final MessageService messageService;

@@ -19,8 +19,11 @@ import javax.websocket.Session;
 @Service
 public class MessageService {
 
-    @Autowired
     private WebSocketServer webSocketServer;
+
+    public MessageService(WebSocketServer webSocketServer) {
+        this.webSocketServer = webSocketServer;
+    }
 
     public void sendMessage(String message, String sid) {
         Session session = webSocketServer.webSocketMap.get(sid);
