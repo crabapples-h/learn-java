@@ -3,6 +3,7 @@ package Mr.He.spring.controller;
 import Mr.He.spring.common.BaseController;
 import Mr.He.spring.dto.ResponseDTO;
 import Mr.He.spring.entity.User;
+import Mr.He.spring.form.UserForm;
 import Mr.He.spring.groups.IsNotNull;
 import Mr.He.spring.service.UserService;
 import io.swagger.annotations.Api;
@@ -35,12 +36,22 @@ public class UserController extends BaseController {
 
     @PostMapping("/addUser")
     @ApiOperation(value = "添加用户", notes = "添加用户接口")
-    public ResponseDTO addUser(@RequestBody User user){
-        logger.info("收到请求->添加用户:[{}]",user);
-        super.validator(user, IsNotNull.class);
-        User newUser = userService.addUser(user);
-        logger.info("用户添加完成->用户信息:[{}]",newUser);
-        return ResponseDTO.returnSuccess("添加成功",newUser);
+    public ResponseDTO addUser(@RequestBody UserForm form){
+        logger.info("收到请求->添加用户:[{}]",form);
+        super.validator(form, IsNotNull.class);
+        User user = userService.addUser(form);
+        logger.info("用户添加完成->用户信息:[{}]",user);
+        return ResponseDTO.returnSuccess("添加成功",user);
+    }
+
+    @PostMapping("/editUser")
+    @ApiOperation(value = "修改用户", notes = "修改用户接口")
+    public ResponseDTO editUser(@RequestBody UserForm form){
+        logger.info("收到请求->修改用户:[{}]",form);
+        super.validator(form, Mr.He.spring.common.groups.IsNotNull.class);
+        User user = userService.editUser(form);
+        logger.info("用户修改完成->用户信息:[{}]",user);
+        return ResponseDTO.returnSuccess("操作成功",user);
     }
 
 }

@@ -1,6 +1,6 @@
 package Mr.He.spring.service.websocket;
 
-import Mr.He.spring.config.CustomSpringConfigurator;
+import Mr.He.spring.common.config.CustomSpringConfigurator;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;

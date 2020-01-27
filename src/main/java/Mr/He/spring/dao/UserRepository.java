@@ -29,19 +29,17 @@ public interface UserRepository extends JpaRepository<User, Serializable> {
     /**
      * 使用hql查询
      * @param name @Param里的name
-     * @return
+     * @return 查询到的结果集
      */
-    @Query("from User u where u.name=:name")
-    User findByHQL(@Param("name") String name);
+    @Query("from User user where user.name=:name")
+    List<User> findByHQL(@Param("name") String name);
 
     /**
      * 使用sql查询
      * @param name  ?1表示第一个参数
      * @param age   ?2表示第二个参数
-     * @return
+     * @return 查询到的结果集
      */
     @Query(value = "select * from user where name = ?1 and age = ?2", nativeQuery = true)
-    User findBySQL(String name, Integer age);
-
-
+    List<User> findBySQL(String name, Integer age);
 }

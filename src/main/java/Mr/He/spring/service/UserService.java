@@ -1,6 +1,7 @@
 package Mr.He.spring.service;
 
 import Mr.He.spring.entity.User;
+import Mr.He.spring.form.UserForm;
 
 /**
  * TODO 用户Service接口
@@ -14,7 +15,10 @@ import Mr.He.spring.entity.User;
 public interface UserService {
     /**
      * 添加用户
-     * @return
      */
-    User addUser(User user);
+    User addUser(UserForm form);
+    /**
+     * 修改用户
+     */
+    User editUser(UserForm form);
 }
