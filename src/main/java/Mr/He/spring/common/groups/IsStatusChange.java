@@ -1,7 +1,7 @@
 package Mr.He.spring.common.groups;
 
 /**
- * TODO 用于属性校验的校验组-删除
+ * TODO 用于属性校验的校验组-状态操作
  *
  * @author Mr.He
  * 1/27/20 6:38 PM
@@ -9,5 +9,5 @@ package Mr.He.spring.common.groups;
  * qq 294046317
  * pc-name root
  */
-public interface IsDelete {
+public interface IsStatusChange {
 }

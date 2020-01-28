@@ -25,3 +25,5 @@
     * 加入swagger测试 `package Mr.He.spring.common.config.Swagger2Config.java`
 * 20200127
     * 加入jpa测试crud 
+* 20200129
+    * 用户操作相关逻辑实现 

@@ -27,13 +27,12 @@ public class JpaTest {
     @Autowired
     UserService userService;
     @Test
-    public void case1() {
-        List<User> names = userService.findByName("kitty");
-        List<User> hqls = userService.findByHQL("kitty");
-        System.err.println(names);
-        System.err.println(hqls);
-        names.forEach(System.out::println);
-        hqls.forEach(System.out::println);
+    public void jpaTest() {
+        List<User> sql = userService.findBySQL("kitty");
+        List<User> hql = userService.findByHQL("kitty");
+        sql.forEach(System.out::println);
+        System.out.println("------------分割线-------------");
+        hql.forEach(System.out::println);
     }
 }
 

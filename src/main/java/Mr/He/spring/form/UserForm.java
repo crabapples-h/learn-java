@@ -1,15 +1,13 @@
 package Mr.He.spring.form;
 
-import Mr.He.spring.common.groups.IsAdd;
-import Mr.He.spring.common.groups.IsDelete;
-import Mr.He.spring.common.groups.IsEdit;
+import Mr.He.spring.common.groups.*;
 import Mr.He.spring.entity.User;
+import Mr.He.spring.groups.IsNotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 
 /**
  * TODO 用户信息提交Form
@@ -23,21 +21,23 @@ import javax.validation.constraints.Null;
 @Data
 public class UserForm {
     @NotBlank(message = "id不能为空", groups = IsEdit.class)
-    @NotBlank(message = "id不能为空", groups = IsDelete.class)
+    @NotBlank(message = "id不能为空", groups = IsStatusChange.class)
     @Null(message = "id必须为空", groups = IsAdd.class)
     private String id;
 
-    /**
-     * Column length=30 数据字段长度为30
-     */
-    @Column(length = 30)
+    @Length(max = 32 ,message = "长度错误",groups = {IsCheckLength.class, IsLogin.class})
+    @NotBlank(message = "用户名不能为空", groups = {IsNotNull.class, IsLogin.class})
+    private String username;
+
+    @Length(max = 32 ,message = "长度错误",groups = {IsCheckLength.class, IsLogin.class})
+    @NotBlank(message = "密码不能为空", groups = {IsNotNull.class, IsLogin.class})
+    private String password;
+
+    @Length(max = 32)
     @NotBlank(message = "姓名不能为空", groups = {IsAdd.class,IsEdit.class})
     private String name;
 
-    /**
-     * Column nullable = false 数据字段不能为空
-     */
-    @Column(columnDefinition = "int (3) default 0 not null")
+    @Length(max = 3)
     @NotNull(message = "年龄不能为空", groups = {IsAdd.class,IsEdit.class})
     private Integer age;
 
@@ -46,6 +46,8 @@ public class UserForm {
         user.setId(this.id);
         user.setName(this.name);
         user.setAge(this.age);
+        user.setUsername(this.username);
+        user.setPassword(this.password);
         return user;
     }
 }

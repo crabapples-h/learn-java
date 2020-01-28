@@ -1,3 +1,4 @@
+aesKey: "crabapples"
 server:
   port: 9090 #启动端口
   servlet:

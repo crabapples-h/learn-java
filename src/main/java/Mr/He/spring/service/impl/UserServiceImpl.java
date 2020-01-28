@@ -7,11 +7,13 @@ import Mr.He.spring.form.UserForm;
 import Mr.He.spring.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.PrePersist;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * TODO 用户Service实现
+ * TODO 用户相关服务实现类
  *
  * @author Mr.He
  * 2020/1/27 2:10
@@ -22,6 +24,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -34,7 +37,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User editUser(UserForm form) {
         User user = userRepository.findById(form.getId()).orElse(null);
-        if(user != null){
+        if (user != null) {
             return userRepository.save(form.toEntity());
         }
         throw new ApplicationException("用户不存在");
@@ -44,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delUser(String id) {
         User user = userRepository.findById(id).orElse(null);
-        if(user == null){
+        if (user == null) {
             throw new ApplicationException("用户不存在");
         }
         userRepository.delUser(id);
@@ -58,5 +61,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findByHQL(String name) {
         return userRepository.findByHQL(name);
+    }
+
+    @Override
+    public List<User> findBySQL(String name) {
+        return userRepository.findBySQL(name);
+    }
+
+    @Override
+    @Transactional
+    public void unActiveUser(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new ApplicationException("用户不存在");
+        }
+        userRepository.unActiveUser(id);
+    }
+
+    @Override
+    @Transactional
+    public void activeUser(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new ApplicationException("用户不存在");
+        }
+        userRepository.activeUser(id);
+    }
+
+    @Override
+    public Optional<User> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag) {
+        return userRepository.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, status, delFlag);
     }
 }

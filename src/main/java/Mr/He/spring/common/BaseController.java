@@ -27,9 +27,9 @@ public abstract class BaseController {
 
     /**
      * 属性校验的方法
-     * @param object
+     * @param object 需要验证的对象
      */
-    protected <T> void validator(Object object,Class<T> ... groups){
+    protected final void validator(Object object, Class<?>... groups){
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object,groups);
         for (ConstraintViolation constraintViolation : constraintViolations ) {
            throw new ApplicationException(constraintViolation.getMessageTemplate());
@@ -39,6 +39,6 @@ public abstract class BaseController {
     @ExceptionHandler
     protected ResponseDTO exceptionHandler(Exception e){
         logger.error("出现异常:[{}]",e.getMessage(),e);
-        return ResponseDTO.returnCustom(500,e.getMessage(),null);
+        return ResponseDTO.returnError("操作失败",e.getMessage());
     }
 }
