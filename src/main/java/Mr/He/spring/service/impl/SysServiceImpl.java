@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * TODO 系统相关服务实现类
@@ -32,6 +30,7 @@ public class SysServiceImpl implements SysService {
     private String aesKey;
     private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
     private UserService userService;
+    private RedisT dsf;
 
     public SysServiceImpl(UserService userService) {
         this.userService = userService;
