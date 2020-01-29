@@ -15,6 +15,14 @@ spring :
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径
     suffix: .html #thymeleaf模板后缀
+  redis:
+    host: linux.crabapples.cn
+    port: 6379
+    password: crabapples
+    database: 0
+    jedis:
+      pool:
+        max-active: 10
 
 logging:
   pattern:

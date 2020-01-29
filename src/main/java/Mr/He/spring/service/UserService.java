@@ -2,6 +2,7 @@ package Mr.He.spring.service;
 
 import Mr.He.spring.entity.User;
 import Mr.He.spring.form.UserForm;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,5 +54,6 @@ public interface UserService {
      */
     void activeUser(String id);
 
+    @Cacheable()
     Optional<User> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
 }

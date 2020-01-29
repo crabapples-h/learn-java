@@ -9,7 +9,9 @@ import Mr.He.spring.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
@@ -30,10 +32,11 @@ public class SysServiceImpl implements SysService {
     private String aesKey;
     private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
     private UserService userService;
-    private RedisT dsf;
+    private RedisTemplate redisTemplate;
 
-    public SysServiceImpl(UserService userService) {
+    public SysServiceImpl(UserService userService, RedisTemplate redisTemplate) {
         this.userService = userService;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
