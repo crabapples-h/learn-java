@@ -1,7 +1,7 @@
-package Mr.He.spring.jpa;
+package cn.crabapples.spring.jpa;
 
-import Mr.He.spring.entity.User;
-import Mr.He.spring.service.UserService;
+import cn.crabapples.spring.entity.User;
+import cn.crabapples.spring.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

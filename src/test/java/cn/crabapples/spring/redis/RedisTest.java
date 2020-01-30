@@ -1,4 +1,4 @@
-package Mr.He.spring.redis;
+package cn.crabapples.spring.redis;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO
+ * TODO redis单元测试
  *
  * @author Mr.He
  * 1/29/20 3:25 PM
@@ -21,13 +21,14 @@ import java.util.concurrent.TimeUnit;
  */
 @SpringBootTest
 @ActiveProfiles("dev")
-@RunWith(SpringRunner.class)
+//@ContextConfiguration("classpath:application-dev.yml")
+@RunWith(SpringJUnit4ClassRunner.class)
 public class RedisTest {
     @Autowired
     RedisTemplate redisTemplate;
     @Test
     public void case1(){
-        redisTemplate.opsForValue().set("crabapples","hello,world",10, TimeUnit.MINUTES);
-
+        System.err.println(redisTemplate.opsForValue().setIfAbsent("crabapples","hello,world",3, TimeUnit.MINUTES));
+        System.err.println(redisTemplate.opsForValue().get("crabapples"));
     }
 }
