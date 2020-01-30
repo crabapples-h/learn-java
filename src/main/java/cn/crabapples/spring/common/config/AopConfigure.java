@@ -1,4 +1,4 @@
-package cn.crabapples.spring.common;
+package cn.crabapples.spring.common.config;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -28,5 +28,5 @@
 * 20200129
     * 用户操作相关逻辑实现
 * 20200130
-    * service加入切面拦截 `cn.crabapples.spring.common.AopConfigure.java`
+    * service加入切面拦截 `cn.crabapples.spring.config.AopConfigure.java`
 
