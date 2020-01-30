@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 /**
- * TODO
+ * TODO service切面拦截
  *
  * @author Mr.He
  * 2020/1/30 18:07
@@ -20,7 +20,7 @@ import org.springframework.core.annotation.Order;
 @Configuration
 @Order(50)
 //@SuppressWarnings("unchecked")
-public class Aop {
+public class AopConfigure {
     private static final String SERVICE_AOP = "execution(* cn.crabapples.spring.service.*.*(..))";
 
     @Pointcut(SERVICE_AOP)
