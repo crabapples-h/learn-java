@@ -10,10 +10,10 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * TODO 系统相关接口
@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@ResponseBody
-@RequestMapping(value = "/api/sys")
 @Api("系统管理")
 public class SysController extends BaseController {
 
@@ -38,6 +36,7 @@ public class SysController extends BaseController {
         this.sysService = sysService;
     }
     @PostMapping("/login")
+    @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO login(@RequestBody UserForm form){
         logger.info("收到请求->用户登陆:[{}]",form);
@@ -45,5 +44,13 @@ public class SysController extends BaseController {
         String token = sysService.login(form);
         logger.info("登录成功->用户信息:[{}]",token);
         return ResponseDTO.returnSuccess("操作成功",token);
+    }
+
+    @GetMapping("/index")
+//    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
+//    public String index(HttpServletRequest request, HttpServletResponse response){
+    public String index(){
+        logger.info("收到请求->进入主页");
+        return "index.html";
     }
 }

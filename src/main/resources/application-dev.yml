@@ -16,8 +16,8 @@ spring :
   datasource:
     driverClassName: ${dataBaseDriveV8} #数据库驱动
     url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-    username: learn #数据库用户名
-    password: learn #数据库密码
+    username: root #数据库用户名
+    password: root #数据库密码
 #    dbcp2:
 #      driver-class-name: ${dataBaseDriveV8}
 #      url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
