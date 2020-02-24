@@ -13,7 +13,7 @@ public class WebSocketConfigure {
     }
 
     @Bean
-    public CustomSpringConfigurator customSpringConfigurator() {
-        return new CustomSpringConfigurator();
+    public CustomSpringConfigure customSpringConfigurator() {
+        return new CustomSpringConfigure();
     }
 }

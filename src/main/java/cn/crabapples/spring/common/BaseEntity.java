@@ -1,6 +1,6 @@
 package cn.crabapples.spring.common;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,7 +42,7 @@ public abstract class BaseEntity implements Serializable {
      */
     @Column(columnDefinition = "timestamp default current_timestamp comment '创建时间'")
     @CreatedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
     private LocalDateTime createTime;
 
     /**
@@ -57,6 +57,6 @@ public abstract class BaseEntity implements Serializable {
      */
     @Column(columnDefinition = "timestamp default current_timestamp on update current_timestamp comment '修改时间'")
     @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
     private LocalDateTime updateTime;
 }

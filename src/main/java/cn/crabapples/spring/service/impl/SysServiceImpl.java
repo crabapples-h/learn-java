@@ -10,11 +10,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
+import java.util.concurrent.TimeUnit;
 
 /**
  * TODO 系统相关服务实现类
@@ -26,17 +27,20 @@ import javax.crypto.Cipher;
  * pc-name 29404
  */
 @Service
+@CacheConfig(cacheNames = "user:")
 public class SysServiceImpl implements SysService {
 
-    @Value("${aesKey}")
+    @Value("${crabapples.aesKey}")
     private String aesKey;
     private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
-    private UserService userService;
-    private RedisTemplate redisTemplate;
+    @Value("${crabapples.token}")
+    private String TOKEN = "crabapples:token:";
+    private final UserService userService;
+    private final StringRedisTemplate stringRedisTemplate;
 
-    public SysServiceImpl(UserService userService, RedisTemplate redisTemplate) {
+    public SysServiceImpl(UserService userService, StringRedisTemplate stringRedisTemplate) {
         this.userService = userService;
-        this.redisTemplate = redisTemplate;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     /**
@@ -46,7 +50,7 @@ public class SysServiceImpl implements SysService {
      *  例: userLogin::${#p0.username}
      */
     @Override
-    @Cacheable(key = "#p0.username", value = {"userLogin"})
+//    @Cacheable(key = "#p0.username")
     public String login(UserForm form) {
         try {
             String username = form.getUsername();
@@ -61,8 +65,13 @@ public class SysServiceImpl implements SysService {
                 throw new ApplicationException("用户名或密码错");
             }
             String token = DigestUtils.md5Hex(user.getId() + System.currentTimeMillis()).toUpperCase();
+            String tokenKey = TOKEN + user.getId();
             logger.info("登录成功->token:[{}],", token);
-            return token;
+            Boolean aBoolean = stringRedisTemplate.opsForValue().setIfAbsent(tokenKey,token, 10, TimeUnit.MINUTES);
+            if(null == aBoolean){
+                aBoolean = false;
+            }
+            return aBoolean ? token : stringRedisTemplate.opsForValue().get(tokenKey);
         } catch (Exception e) {
             logger.warn("登录失败:[{}]", e.getMessage(), e);
             throw new ApplicationException("登录失败:" + e.getMessage());

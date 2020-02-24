@@ -1,6 +1,6 @@
 package cn.crabapples.spring.service.websocket;
 
-import cn.crabapples.spring.common.config.CustomSpringConfigurator;
+import cn.crabapples.spring.common.config.CustomSpringConfigure;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@ServerEndpoint(value = "/websocket/{sid}", configurator = CustomSpringConfigurator.class)
+@ServerEndpoint(value = "/websocket/{sid}", configurator = CustomSpringConfigure.class)
 public class WebSocketServer {
 
     public ConcurrentHashMap<String, Session> webSocketMap = new ConcurrentHashMap<>(16);

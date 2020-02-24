@@ -1,4 +1,7 @@
-aesKey: "crabapples"
+crabapples:
+  aesKey: "crabapples"
+  token: "crabapples:token"
+
 server:
   port: 9090 #启动端口
   servlet:
@@ -21,9 +24,12 @@ spring :
     port: 6379
 #    password: crabapples
     database: 0
+  cache:
     jedis:
       pool:
         max-active: 10
+    redis:
+      time-to-live: 60000
 
 logging:
   pattern:
