@@ -19,13 +19,6 @@ spring :
     prefix: classpath:templates/ #thymeleaf模板引擎路径
     cache: false
 #    suffix: .html #thymeleaf模板后缀
-    suffix: .html #thymeleaf模板后缀
-  redis:
-    host: localhost
-#    host: linux.crabapples.cn
-    port: 6379
-#    password: crabapples
-    database: 0
   cache:
     jedis:
       pool:

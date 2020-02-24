@@ -26,11 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@Api("测试")
 public class TestController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(TestController.class);
-    private static final String PREFIX = "crabapples/";
+    private final String PREFIX = "crabapples/";
 
 
     @GetMapping("/welcome1")
@@ -41,13 +40,13 @@ public class TestController extends BaseController {
 
     @GetMapping("/memberList")
     public String memberList(){
-        logger.info("收到请求->member-list");
+        logger.info("收到请求->memberList");
         return PREFIX + "member-list";
     }
 
     @GetMapping("/memberList1")
     public String memberList1(){
-        logger.info("收到请求->member-list1");
+        logger.info("收到请求->memberList1");
         return PREFIX + "member-list1";
     }
 

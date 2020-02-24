@@ -11,7 +11,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import java.time.Duration;
 
 /**
- * TODO
+ * TODO springCache配置类
  *
  * @author Mr.He
  * 2020/1/29 10:12

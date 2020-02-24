@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="x-admin-sm">
-
 <head>
 	<meta charset="UTF-8">
 	<title>欢迎页面-X-admin2.2</title>
@@ -16,7 +15,7 @@
 	<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 	<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	<script data-th-src="@{/js/vue.js}"></script>
+<!--	<script data-th-src="@{/js/vue.js}"></script>-->
 </head>
 
 <body>
@@ -81,8 +80,7 @@
 </script>
 <script type="text/html" id="switchTpl">
 	<!-- 这里的checked的状态只是演示 -->
-	<input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.id==
-	       10003 ? 'checked': ''}} >
+	<input type="checkbox" name="sex" value="{{d.id}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{d.id===10003?'checked':''}} >
 </script>
 <script>layui.use('laydate',
     function () {
@@ -98,8 +96,10 @@
             elem: '#end' //指定元素
         });
 
-    });</script>
-<script>layui.use('table',
+    });
+</script>
+<script>
+	layui.use('table',
     function () {
         var table = layui.table;
 
@@ -134,12 +134,4 @@
                 ;
             });
     });</script>
-<script>var _hmt = _hmt || [];
-(function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
-})();</script>
-
 </html>
