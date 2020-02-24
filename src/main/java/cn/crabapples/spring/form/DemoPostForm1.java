@@ -39,7 +39,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ApiModel
-@ToString
 public class DemoPostForm1 {
     /**
      * 必须为空
