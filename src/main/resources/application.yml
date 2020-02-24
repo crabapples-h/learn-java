@@ -4,8 +4,8 @@ crabapples:
 
 server:
   port: 9090 #启动端口
-  servlet:
-    context-path: /learn #应用名
+#  servlet:
+#    context-path: /learn #应用名
 
 spring :
   profiles:
@@ -17,6 +17,8 @@ spring :
     database-platform: org.hibernate.dialect.MySQL8Dialect #设置jpa方言为mysql
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径
+    cache: false
+#    suffix: .html #thymeleaf模板后缀
     suffix: .html #thymeleaf模板后缀
   redis:
     host: localhost
