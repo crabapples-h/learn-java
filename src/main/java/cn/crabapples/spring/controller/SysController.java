@@ -35,6 +35,13 @@ public class SysController extends BaseController {
     public SysController(SysService sysService) {
         this.sysService = sysService;
     }
+
+    @GetMapping("/")
+    public String index(){
+        logger.info("收到请求->进入主页");
+        return "index";
+    }
+
     @PostMapping("/login")
     @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
@@ -46,11 +53,5 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess("操作成功",token);
     }
 
-    @GetMapping("/index")
-//    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-//    public String index(HttpServletRequest request, HttpServletResponse response){
-    public String index(){
-        logger.info("收到请求->进入主页");
-        return "index.html";
-    }
+
 }
