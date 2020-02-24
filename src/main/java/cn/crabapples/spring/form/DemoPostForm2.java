@@ -1,22 +1,23 @@
 package cn.crabapples.spring.form;
 
-import cn.crabapples.spring.groups.IsNotNull;
-import cn.crabapples.spring.groups.IsNull;
+import cn.crabapples.spring.common.groups.IsNotNull;
+import cn.crabapples.spring.common.groups.IsNull;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
 
 /**
- * TODO 测试参数验证的Form
+ * TODO 测试参数验证的DTO
  *
  * @author Mr.He
- * 2019/9/21 18:46
+ * @date 2019/9/21 18:46
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
  */
 @Setter
+//@Api
 public class DemoPostForm2 {
     @Null(message = "ID必须为空",groups = {IsNull.class})
     @NotNull(message = "ID不能为空",groups = {IsNotNull.class})
