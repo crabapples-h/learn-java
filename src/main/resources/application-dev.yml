@@ -8,7 +8,6 @@
 #  redis:
 #    host: localhost
 #    port: 6379
-#    password: crabapples
 #    database: 0
 #    jedis:
 #      pool:

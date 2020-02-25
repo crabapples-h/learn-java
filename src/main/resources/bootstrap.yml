@@ -6,12 +6,14 @@ server:
   port: 9090 #启动端口
 #  servlet:
 #    context-path: /learn #应用名
-nacos:
-  config:
-    server-addr: 'linux.crabapples.cn:8848'
 spring:
   application:
     name: learn
+  cloud:
+    nacos:
+      config:
+        server-addr: 'linux.crabapples.cn:8848'
+        file-extension: yml
   profiles:
     active: dev #激活的配置文件
   jpa:
