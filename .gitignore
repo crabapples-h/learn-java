@@ -30,4 +30,5 @@ HELP.md
 
 ### Custom ###
 /SingletonDemoFile.temp
-/resources/*-prod.*
+*-prod.yml
+*-prod.properties
