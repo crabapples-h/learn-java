@@ -6,8 +6,12 @@ server:
   port: 9090 #启动端口
 #  servlet:
 #    context-path: /learn #应用名
-
+nacos:
+  config:
+    server-addr: 'localhost:8848'
 spring :
+  application:
+    name: learn
   profiles:
     active: dev #激活的配置文件
   jpa:
@@ -17,8 +21,8 @@ spring :
     database-platform: org.hibernate.dialect.MySQL8Dialect #设置jpa方言为mysql
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径
+    #suffix: .html #thymeleaf模板后缀
     cache: false
-#    suffix: .html #thymeleaf模板后缀
   cache:
     jedis:
       pool:
@@ -29,3 +33,4 @@ spring :
 logging:
   pattern:
     level: info
+
