@@ -1,6 +1,7 @@
 package cn.crabapples.spring.common.config;
 
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ import java.time.Duration;
  * pc-name 29404
  */
 @Configuration
-//@CacheConfig
+@CacheConfig
 @EnableCaching
 public class RedisCacheConfigure {
     private final RedisConnectionFactory redisConnectionFactory;
@@ -34,7 +35,7 @@ public class RedisCacheConfigure {
         // 默认缓存一天 86400秒
 
         RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(10L))
+                .entryTtl(Duration.ofSeconds(60*10))
                 .disableCachingNullValues();
         return RedisCacheManager.builder(redisConnectionFactory).cacheDefaults(defaultCacheConfig).build();
 

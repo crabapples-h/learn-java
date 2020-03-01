@@ -3,6 +3,7 @@ package cn.crabapples.spring.controller;
 import cn.crabapples.spring.common.BaseController;
 import cn.crabapples.spring.common.groups.IsLogin;
 import cn.crabapples.spring.dto.ResponseDTO;
+import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * TODO 系统相关接口
@@ -50,5 +53,14 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess("操作成功",token);
     }
 
+    @PostMapping("/getSysMenus")
+    @ResponseBody
+//    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
+    public ResponseDTO getSysMenus(String auth){
+        logger.info("收到请求->获取菜单列表");
+        List<SysMenu> menus = sysService.getSysMenus(auth);
+        logger.info("获取菜单列表成功:[{}]",menus);
+        return ResponseDTO.returnSuccess("操作成功",menus);
+    }
 
 }

@@ -1,5 +1,6 @@
 package cn.crabapples.spring.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,12 +47,6 @@ public abstract class BaseEntity implements Serializable {
     private LocalDateTime createTime;
 
     /**
-     * 删除标记 (0:正常 1:删除)
-     */
-    @Column(columnDefinition = "bit(1) default 0 not null comment '删除标记'")
-    private int delFlag;
-
-    /**
      * 更新时间
      * columnDefinition 设置默认值为当前时间，随每次更新数据时更新时间
      */
@@ -59,4 +54,15 @@ public abstract class BaseEntity implements Serializable {
     @LastModifiedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
     private LocalDateTime updateTime;
+
+    /**
+     * 删除标记 (0:正常 1:删除)
+     */
+    @Column(columnDefinition = "bit(1) default 0 not null comment '删除标记'")
+    private int delFlag;
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
 }

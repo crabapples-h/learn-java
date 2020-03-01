@@ -21,7 +21,7 @@ import java.util.Optional;
  * pc-name 29404
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Serializable> {
+public interface UserRepository extends JpaRepository<User, String> {
     /**
      * 测试方法-使用hql查询
      * @param name @Param里的name

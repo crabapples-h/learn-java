@@ -92,20 +92,27 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
         </dependency>
-        <!--swagger依赖-->
+
+        {# 属性配置依赖 #}
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        {# swagger依赖 #}
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.6.1</version>
         </dependency>
-        <!--swagger依赖-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.6.1</version>
         </dependency>
 
-        <!--elasticSearch依赖-->
+        {# elasticSearch依赖 #}
         <!--        <dependency>-->
         <!--            <groupId>org.elasticsearch.client</groupId>-->
         <!--            <artifactId>transport</artifactId>-->
@@ -122,7 +129,7 @@
         <!--            <version>7.5.0</version>-->
         <!--        </dependency>-->
 
-        <!--redis依赖-->
+        {# redis依赖 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -133,7 +140,8 @@
         <!--            <artifactId>spring-boot-devtools</artifactId>-->
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
-        <!--google令牌依赖-->
+
+        {# google令牌依赖 #}
         <dependency>
             <groupId>com.warrenstrange</groupId>
             <artifactId>googleauth</artifactId>
@@ -146,19 +154,19 @@
             <version>1.10</version>
         </dependency>
 
-        <!--springBootJpa依赖-->
+        {# springbootJpa依赖 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!--springbootWeb依赖-->
+        {# springbootWeb依赖 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--mysql依赖-->
+        {# mysql驱动 #}
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -166,49 +174,49 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!--springboot单元测试依赖-->
+        {# springboot单元测试 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!--junit单元测试依赖-->
+        {# junit单元测试依赖 #}
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!--springboot自动配置依赖-->
+        {# springboot自动配置依赖 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>2.1.5.RELEASE</version>
         </dependency>
 
-        <!--fastJson依赖-->
+        {# fastJson #}
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
 
-        <!--lombok工具-->
+        {# lombok工具 #}
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.16</version>
         </dependency>
 
-        <!--webSocket依赖-->
+        {# webSocket依赖 #}
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
             <version>5.1.6.RELEASE</version>
         </dependency>
 
-        <!--thymeleaf模板引擎ui来-->
+        {# thymeleaf模板引擎 #}
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>

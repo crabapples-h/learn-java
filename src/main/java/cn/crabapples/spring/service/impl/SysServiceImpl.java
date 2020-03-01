@@ -1,7 +1,10 @@
 package cn.crabapples.spring.service.impl;
 
 import cn.crabapples.spring.common.ApplicationException;
+import cn.crabapples.spring.common.config.ApplicationConfigure;
 import cn.crabapples.spring.common.utils.AesUtils;
+import cn.crabapples.spring.dao.SysRepository;
+import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.entity.User;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
@@ -10,11 +13,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,30 +31,42 @@ import java.util.concurrent.TimeUnit;
  * pc-name 29404
  */
 @Service
-@CacheConfig(cacheNames = "user:")
+//@CacheConfig(cacheNames = "user:")
 public class SysServiceImpl implements SysService {
 
-    @Value("${crabapples.aesKey}")
-    private String aesKey;
     private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
-    @Value("${crabapples.token}")
-    private String TOKEN = "crabapples:token:";
+    private String aesKey;
+    private String tokenPrefix;
+    private Long tokenCacheTime;
+
     private final UserService userService;
+
+    private final SysRepository sysRepository;
+
     private final StringRedisTemplate stringRedisTemplate;
 
-    public SysServiceImpl(UserService userService, StringRedisTemplate stringRedisTemplate) {
+    public SysServiceImpl(ApplicationConfigure applicationConfigure,
+                          UserService userService,
+                          SysRepository sysRepository,
+                          StringRedisTemplate stringRedisTemplate) {
         this.userService = userService;
+        this.sysRepository = sysRepository;
         this.stringRedisTemplate = stringRedisTemplate;
+        this.aesKey = applicationConfigure.AES_KEY;
+        this.tokenPrefix = applicationConfigure.TOKEN_PREFIX;
+        this.tokenCacheTime = applicationConfigure.TOKEN_CACHE_TIME;
     }
 
     /**
      * Cacheable
-     *  key: redis中key的值
-     *  value: redis中key的前缀
-     *  例: userLogin::${#p0.username}
+     * key: redis中key的值
+     * value: redis中key的前缀
+     * 例:
+     * key::value:tom
+     * userLogin::${#p0.username}
      */
+//    @Cacheable(value = "login:token", key = "#p0.username")
     @Override
-//    @Cacheable(key = "#p0.username")
     public String login(UserForm form) {
         try {
             String username = form.getUsername();
@@ -60,15 +76,16 @@ public class SysServiceImpl implements SysService {
             }
             password = AesUtils.doFinal(aesKey, password, Cipher.ENCRYPT_MODE);
             logger.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-            User user = userService.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, 1,1).orElse(null);
-            if(user == null){
+            User user = userService.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, 1, 1).orElse(null);
+            if (user == null) {
                 throw new ApplicationException("用户名或密码错");
             }
             String token = DigestUtils.md5Hex(user.getId() + System.currentTimeMillis()).toUpperCase();
-            String tokenKey = TOKEN + user.getId();
-            logger.info("登录成功->token:[{}],", token);
-            Boolean aBoolean = stringRedisTemplate.opsForValue().setIfAbsent(tokenKey,token, 10, TimeUnit.MINUTES);
-            if(null == aBoolean){
+            String tokenKey = tokenPrefix + user.getId();
+            Boolean aBoolean = stringRedisTemplate.opsForValue().setIfAbsent(tokenKey, token, tokenCacheTime, TimeUnit.MINUTES);
+            Long time = stringRedisTemplate.getExpire(tokenKey);
+            logger.info("登录成功->token:[{}],token过期剩余时间为:[{}]秒,", token, time);
+            if (null == aBoolean) {
                 aBoolean = false;
             }
             return aBoolean ? token : stringRedisTemplate.opsForValue().get(tokenKey);
@@ -76,5 +93,11 @@ public class SysServiceImpl implements SysService {
             logger.warn("登录失败:[{}]", e.getMessage(), e);
             throw new ApplicationException("登录失败:" + e.getMessage());
         }
+    }
+
+    @Cacheable(key = "auth")
+    @Override
+    public List<SysMenu> getSysMenus(String auth) {
+        return sysRepository.findAll();
     }
 }

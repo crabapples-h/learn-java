@@ -30,7 +30,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "127.0.0.1:8848"))
+@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 @NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
 //@EnableNacosDiscovery
 //@EnableDiscoveryClient
