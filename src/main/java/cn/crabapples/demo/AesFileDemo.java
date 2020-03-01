@@ -36,7 +36,13 @@ public class AesFileDemo {
      */
     private static Key createKey(String seed) throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(128, new SecureRandom(seed.getBytes()));
+        /*
+         * Linux下默认的算法是“NativePRNG”
+         * windows下默认是“SHA1PRNG”（sun提供的算法）
+         */
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        secureRandom.setSeed(seed.getBytes());
+        keyGenerator.init(128, secureRandom);
         return keyGenerator.generateKey();
     }
 
