@@ -1,6 +1,6 @@
 crabapples:
   AES_KEY: "crabapples"
-  TOKEN_PREFIX: "crabapples:token"
+  REDIS_PREFIX: "crabapples"
   TOKEN_CACHE_TIME: 30
 
 server:
