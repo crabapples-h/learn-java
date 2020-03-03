@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Setter
 public class ApplicationConfigure {
     public String AES_KEY;
-    public String TOKEN_PREFIX;
+    public String REDIS_PREFIX;
     public Long TOKEN_CACHE_TIME;
 
     @Override

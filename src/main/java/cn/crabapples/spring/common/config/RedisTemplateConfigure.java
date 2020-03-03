@@ -20,17 +20,19 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisTemplateConfigure {
     @Bean
-    public RedisTemplate<String,Object> redisTemplate (RedisConnectionFactory redisConnectionFactory,FastJsonConfig fastJsonConfig){
-        RedisTemplate<String,Object> redisTemplate = new RedisTemplate();
-        FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-        fastJsonRedisSerializer.setFastJsonConfig(fastJsonConfig);
-        redisTemplate.setValueSerializer(fastJsonRedisSerializer);
-        redisTemplate.setKeySerializer(fastJsonRedisSerializer);
-//        redisTemplate.setDefaultSerializer(new StringRedisSerializer());
-//        redisTemplate.setStringSerializer(new StringRedisSerializer());
-//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-//        redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
+        // 字符串Key序列化
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        // 对象值序列化
+        FastJsonRedisSerializer<Object> objectRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
+        redisTemplate.setValueSerializer(objectRedisSerializer);
+        redisTemplate.setHashValueSerializer(objectRedisSerializer);
+
+        redisTemplate.setDefaultSerializer(objectRedisSerializer);
         return redisTemplate;
     }
 }

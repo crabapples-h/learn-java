@@ -1,6 +1,9 @@
 package cn.crabapples.spring.common.config;
 
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FastJsonConfigure {
     @Bean
-    public FastJsonConfig fastJsonConfig(){
+    public FastJsonConfig fastJsonConfig() {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss E");
         return fastJsonConfig;
