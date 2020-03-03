@@ -4,6 +4,7 @@ import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.form.UserForm;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO 系统相关服务
@@ -17,8 +18,9 @@ import java.util.List;
 public interface SysService {
     /**
      * 用户登录
+     * @return
      */
-    String login(UserForm form);
+    Map<String, String> login(UserForm form);
 
     /**
      * 获取系统菜单
