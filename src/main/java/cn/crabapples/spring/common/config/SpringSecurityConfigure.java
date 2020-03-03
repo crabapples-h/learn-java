@@ -1,6 +1,5 @@
 package cn.crabapples.spring.common.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnablerConfiguration;
 
 /**
