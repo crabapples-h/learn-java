@@ -28,13 +28,11 @@
   layui.use('form', function () {
     let form = layui.form;
     layer.msg('玩命卖萌中', function () {
-      //关闭后的操作
+      //弹窗关闭后的操作
     });
-    //监听提交
+    //layUi监听提交
     form.on('submit(login)', function (data) {
       let loginForm = $('#loginForm').serializeObject()
-      console.log(loginForm.username)
-      console.log(loginForm.password)
       vue.login(loginForm)
       return false;
     });

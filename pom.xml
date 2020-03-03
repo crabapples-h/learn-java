@@ -61,6 +61,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <!--SpringSecurity模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- SpringBoot Nacos依赖 配置文件:application -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
