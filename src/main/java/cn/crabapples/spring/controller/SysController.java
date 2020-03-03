@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * TODO 系统相关接口
@@ -36,26 +37,49 @@ public class SysController extends BaseController {
         this.sysService = sysService;
     }
 
+    /**
+     * 进入登录页面
+     * @return 返回登录页面html
+     */
     @GetMapping("/")
+    public String toIndex(){
+        logger.info("收到请求->进入主页");
+        return "login";
+    }
+
+    /**
+     * 进入主页面
+     * @return 登录后的主页面
+     */
+    @GetMapping("/index")
     public String index(){
         logger.info("收到请求->进入主页");
         return "index";
     }
 
+    /**
+     * 发起登录请求
+     * @param form 用户名和密码
+     * @return 登录成功返回token
+     */
     @PostMapping("/login")
     @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO login(@RequestBody UserForm form){
         logger.info("收到请求->用户登陆:[{}]",form);
         super.validator(form, IsLogin.class);
-        String token = sysService.login(form);
-        logger.info("登录成功->用户信息:[{}]",token);
-        return ResponseDTO.returnSuccess("操作成功",token);
+        Map<String,String> tokenInfo = sysService.login(form);
+        logger.info("登录成功->用户信息:[{}]",tokenInfo);
+        return ResponseDTO.returnSuccess("操作成功",tokenInfo);
     }
 
-    @PostMapping("/getSysMenus")
+    /**
+     * 获取系统菜单
+     * @param auth 登录授权信息
+     * @return 返回当前用户拥有的系统菜单
+     */
+    @GetMapping("/getSysMenus")
     @ResponseBody
-//    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO getSysMenus(String auth){
         logger.info("收到请求->获取菜单列表");
         List<SysMenu> menus = sysService.getSysMenus(auth);
