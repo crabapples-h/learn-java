@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;
 import java.security.SecureRandom;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * TODO AES加密文件演示
@@ -22,7 +24,6 @@ import java.security.SecureRandom;
 
 public class AesFileDemo {
     private static final Logger logger = LoggerFactory.getLogger(AesFileDemo.class);
-
     /**
      * 用于生成密钥的种子
      */
@@ -30,6 +31,7 @@ public class AesFileDemo {
 
     /**
      * 用于将密钥种子转换为KEY
+     *
      * @param seed 密钥种子
      * @return 密钥
      * @throws Exception 生成密钥可能出现的异常
@@ -43,15 +45,16 @@ public class AesFileDemo {
         SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
         secureRandom.setSeed(seed.getBytes());
         keyGenerator.init(128, secureRandom);
-        return keyGenerator.generateKey();
+        SecretKey secretKey = keyGenerator.generateKey();
+        logger.debug("生成的key为:[{}],种子为:[{}]",secretKey,seed);
+        return secretKey;
     }
 
     /**
-     *
-     * @param keyString 密钥
+     * @param keyString  密钥
      * @param sourceFile 需要加/解密的文件
      * @param targetPath 文件输出路径
-     * @param type 需要执行的操作(加/解密)
+     * @param type       需要执行的操作(加/解密)
      * @return 输出的文件
      * @throws Exception 运行过程中可能出现的异常
      */
@@ -65,7 +68,7 @@ public class AesFileDemo {
         /*
          * 判断输出路径是否存在
          */
-        if(!path.exists()){
+        if (!path.exists()) {
             path.mkdir();
         }
         /*
@@ -81,6 +84,8 @@ public class AesFileDemo {
          * 当操作类型为加密时
          */
         if (type == Cipher.ENCRYPT_MODE) {
+            logger.info("需要执行[加密]操作的文件:[{}]", sourceFile.getAbsolutePath());
+
             /*
              * 初始化Cipher为加密
              */
@@ -94,6 +99,7 @@ public class AesFileDemo {
             }
             cipherInputStream.close();
         } else if (type == Cipher.DECRYPT_MODE) {
+            logger.info("需要执行[解密]操作的文件:[{}]", sourceFile.getAbsolutePath());
             /*
              * 初始化Cipher为解密
              */
@@ -106,7 +112,7 @@ public class AesFileDemo {
                 cipherOutputStream.write(data, 0, i);
             }
             cipherOutputStream.close();
-        }else{
+        } else {
             /*
              * 当输入的类型不匹配加/解密时抛出异常
              */
@@ -114,6 +120,8 @@ public class AesFileDemo {
         }
         fileInputStream.close();
         fileOutputStream.close();
-        return targetFile.getAbsolutePath();
+        String outputFile = targetFile.getAbsolutePath();
+        logger.info("操作完成后的文件为:[{}]",outputFile);
+        return outputFile;
     }
 }
