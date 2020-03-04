@@ -8,6 +8,8 @@ import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -68,6 +70,8 @@ public class SysController extends BaseController {
     public ResponseDTO login(@RequestBody UserForm form){
         logger.info("收到请求->用户登陆:[{}]",form);
         super.validator(form, IsLogin.class);
+        Subject subject = SecurityUtils.getSubject();
+        System.err.println(subject);
         Map<String,String> tokenInfo = sysService.login(form);
         logger.info("登录成功->用户信息:[{}]",tokenInfo);
         return ResponseDTO.returnSuccess("操作成功",tokenInfo);
