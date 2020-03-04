@@ -22,7 +22,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect #设置jpa方言为mysql
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径
-    #suffix: .html #thymeleaf模板后缀
+#    suffix: .html #thymeleaf模板后缀
     cache: false
     mode: HTML5
   cache:
