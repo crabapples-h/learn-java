@@ -1,6 +1,6 @@
 package cn.crabapples.spring.common.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnablerConfiguration;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
  * TODO
@@ -11,5 +11,5 @@ import org.springframework.boot.autoconfigure.security.servlet.WebSecurityEnable
  * qq 294046317
  * pc-name 29404
  */
-public class SpringSecurityConfigure extends WebSecurityEnablerConfiguration {
+public class SpringSecurityConfigure extends WebSecurityConfigurerAdapter {
 }
