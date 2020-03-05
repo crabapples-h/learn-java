@@ -1,12 +1,12 @@
-package cn.crabapples.spring.controller;
+package cn.crabapples.spring.test.controller;
 
 import cn.crabapples.spring.common.BaseController;
+import cn.crabapples.spring.common.groups.IsNotNull;
+import cn.crabapples.spring.common.groups.IsNull;
 import cn.crabapples.spring.dto.ResponseDTO;
-import cn.crabapples.spring.form.DemoPostForm1;
-import cn.crabapples.spring.form.DemoPostForm2;
-import cn.crabapples.spring.groups.IsNotNull;
-import cn.crabapples.spring.groups.IsNull;
-import cn.crabapples.spring.service.DemoService;
+import cn.crabapples.spring.test.form.DemoPostForm1;
+import cn.crabapples.spring.test.form.DemoPostForm2;
+import cn.crabapples.spring.test.service.ServiceTest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -28,14 +28,14 @@ import javax.validation.Valid;
  */
 @Api("测试接口")
 @RestController
-@RequestMapping(value = "/api/demo")
-public class DemoController extends BaseController {
+@RequestMapping(value = "/api/test")
+public class ControllerTest extends BaseController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DemoController.class);
-    private DemoService demoService;
+    private static final Logger logger = LoggerFactory.getLogger(ControllerTest.class);
+    private ServiceTest serviceTest;
 
-    public DemoController(DemoService demoService) {
-        this.demoService = demoService;
+    public ControllerTest(ServiceTest serviceTest) {
+        this.serviceTest = serviceTest;
     }
 
     @GetMapping("/hello")

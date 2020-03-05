@@ -1,4 +1,4 @@
-package cn.crabapples.spring.form;
+package cn.crabapples.spring.test.form;
 
 import cn.crabapples.spring.common.groups.IsNotNull;
 import cn.crabapples.spring.common.groups.IsNull;

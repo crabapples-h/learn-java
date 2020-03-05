@@ -1,7 +1,7 @@
 package cn.crabapples.spring.jpa;
 
-import cn.crabapples.spring.entity.User;
-import cn.crabapples.spring.service.UserService;
+import cn.crabapples.spring.entity.SysUser;
+import cn.crabapples.spring.test.service.UserServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ import java.util.List;
 @ActiveProfiles("dev")
 public class JpaTest {
     @Autowired
-    UserService userService;
+    UserServiceTest userServiceTest;
     @Test
     public void jpaTest() {
-        List<User> sql = userService.findBySQL("kitty");
-        List<User> hql = userService.findByHQL("kitty");
+        List<SysUser> sql = userServiceTest.findBySQL("kitty");
+        List<SysUser> hql = userServiceTest.findByHQL("kitty");
         sql.forEach(System.out::println);
         System.out.println("------------分割线-------------");
         hql.forEach(System.out::println);

@@ -1,19 +1,10 @@
-package cn.crabapples.spring.controller;
+package cn.crabapples.spring.test.controller;
 
 import cn.crabapples.spring.common.BaseController;
-import cn.crabapples.spring.common.groups.IsLogin;
-import cn.crabapples.spring.dto.ResponseDTO;
-import cn.crabapples.spring.form.UserForm;
-import cn.crabapples.spring.service.SysService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * TODO 系统相关接口

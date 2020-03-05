@@ -1,8 +1,7 @@
 package cn.crabapples.spring.form;
 
 import cn.crabapples.spring.common.groups.*;
-import cn.crabapples.spring.entity.User;
-import cn.crabapples.spring.groups.IsNotNull;
+import cn.crabapples.spring.entity.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,8 +44,8 @@ public class UserForm {
     @NotNull(message = "年龄不能为空", groups = {IsAdd.class,IsEdit.class})
     private Integer age;
 
-    public User toEntity(){
-        User user = new User();
+    public SysUser toEntity(){
+        SysUser user = new SysUser();
         user.setId(this.id);
         user.setName(this.name);
         user.setAge(this.age);

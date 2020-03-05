@@ -4,12 +4,19 @@ import cn.crabapples.spring.common.ApplicationException;
 import cn.crabapples.spring.common.config.ApplicationConfigure;
 import cn.crabapples.spring.common.utils.AesUtils;
 import cn.crabapples.spring.dao.SysRepository;
+import cn.crabapples.spring.dto.ResponseDTO;
 import cn.crabapples.spring.entity.SysMenu;
-import cn.crabapples.spring.entity.User;
+import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import cn.crabapples.spring.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -44,12 +51,12 @@ public class SysServiceImpl implements SysService {
 
     private final SysRepository sysRepository;
 
-    private final RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     public SysServiceImpl(ApplicationConfigure applicationConfigure,
                           UserService userService,
                           SysRepository sysRepository,
-                          RedisTemplate<String,Object> redisTemplate) {
+                          RedisTemplate<String, Object> redisTemplate) {
         this.userService = userService;
         this.sysRepository = sysRepository;
         this.redisTemplate = redisTemplate;
@@ -60,16 +67,20 @@ public class SysServiceImpl implements SysService {
 
     /**
      * Cacheable
-     * key: redis中key的值
-     * value: redis中key的前缀
-     * 例:
-     * key::value:tom
-     * userLogin::${#p0.username}
-     * @return
+     * * key: redis中key的值
+     * * value: redis中key的前缀
+     * * 例:
+     * * key::value:tom
+     * * userLogin::${#p0.username}
+     * <p>
+     * 用户登录验证
+     *
+     * @param form 用户信息
+     * @return token
      */
 //    @Cacheable(value = "login:token", key = "#p0.username")
     @Override
-    public Map<String, String> login(UserForm form) {
+    public ResponseDTO login(UserForm form) {
         try {
             String username = form.getUsername();
             String password = form.getPassword();
@@ -78,28 +89,51 @@ public class SysServiceImpl implements SysService {
             }
             password = AesUtils.doFinal(aesKey, password, Cipher.ENCRYPT_MODE);
             logger.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-            User user = userService.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, 1, 1).orElse(null);
+            shiroCheckLogin(username, password);
+            SysUser user = shiroCheckLogin(username, password);
             if (user == null) {
-                throw new ApplicationException("用户名或密码错");
+                return ResponseDTO.returnError("用户名或密码错");
             }
             String token = DigestUtils.md5Hex(user.getId() + System.currentTimeMillis()).toUpperCase();
             String tokenKey = redisPrefix + ":loginToken:" + user.getId();
-            Map<String,String> tokenInfo = new HashMap<>(2);
-            tokenInfo.put("token",token);
-            Boolean aBoolean = redisTemplate.opsForValue().setIfAbsent(tokenKey, tokenInfo, tokenCacheTime, TimeUnit.MINUTES);
+            Map<String, String> tokenInfo = new HashMap<>(2);
+            tokenInfo.put("token", token);
+            Boolean redisSetStatus = redisTemplate.opsForValue().setIfAbsent(tokenKey, tokenInfo, tokenCacheTime, TimeUnit.MINUTES);
             Long time = redisTemplate.getExpire(tokenKey);
-            logger.info("登录成功->token:[{}],token过期剩余时间为:[{}]秒,", tokenInfo, time);
-            if (null == aBoolean) {
-                aBoolean = false;
-            }
-            return aBoolean ? tokenInfo : (Map<String,String>)redisTemplate.opsForValue().get(tokenKey);
+            logger.info("登录成功->redis缓存设置状态:[{}],token:[{}],token过期剩余时间为:[{}]秒,", redisSetStatus, tokenInfo, time);
+            return ResponseDTO.returnSuccess("登录成功", tokenInfo);
         } catch (Exception e) {
             logger.warn("登录失败:[{}]", e.getMessage(), e);
-            throw new ApplicationException("登录失败:" + e.getMessage());
+            return ResponseDTO.returnError(e.getMessage());
         }
     }
 
-    @Cacheable(value= "crabapples:sysMenus",key = "#auth")
+    /**
+     * shiro认证
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return
+     */
+    private SysUser shiroCheckLogin(String username, String password) {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            subject.login(token);
+            SysUser user = (SysUser) subject.getPrincipal();
+            subject.getSession().setAttribute("user", user);
+            return user;
+        } catch (IncorrectCredentialsException e) {
+            logger.warn("shiro认证失败,密码错误:[{}]", e.getMessage());
+        } catch (UnknownAccountException e) {
+            logger.warn("shiro认证失败,用户不存在:[{}]", e.getMessage());
+        } catch (Exception e) {
+            logger.error("shiro认证失败", e);
+        }
+        return null;
+    }
+
+    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
     public List<SysMenu> getSysMenus(String auth) {
         return sysRepository.findAll();

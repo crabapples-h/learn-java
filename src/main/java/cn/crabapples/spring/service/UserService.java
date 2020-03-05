@@ -1,10 +1,11 @@
 package cn.crabapples.spring.service;
 
-import cn.crabapples.spring.entity.User;
+import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * TODO 用户相关服务
@@ -16,32 +17,35 @@ import java.util.Optional;
  * pc-name 29404
  */
 public interface UserService {
-    /**
-     * 测试方法-使用hql查询
-     */
-    List<User> findByHQL(String name);
 
     /**
-     * 测试方法-使用sql查询
+     * 根据 [用户名] 查询用户
+     * @param username 用户名
+     * @return 查询到的用户
      */
-    List<User> findBySQL(String name);
+    Optional<SysUser> findByUsername(String username);
 
     /**
      * 添加用户
      */
-    User addUser(UserForm form);
+    SysUser addUser(UserForm form);
 
     /**
      * 修改用户
      */
-    User editUser(UserForm form);
+    SysUser editUser(UserForm form);
 
     /**
      * 删除用户
      */
     void delUser(String id);
 
-    List<User> findByName(String name);
+    /**
+     * 根据 [姓名] 查找用户
+     * @param name 姓名
+     * @return 查找到的用户列表
+     */
+    List<SysUser> findByName(String name);
 
     /**
      * 禁用用户
@@ -53,5 +57,14 @@ public interface UserService {
      */
     void activeUser(String id);
 
-    Optional<User> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
+    /**
+     * 根据 [用户名] [密码] [状态] [删除标记] 查询用户
+     * @param username 用户名
+     * @param password 密码
+     * @param status 状态
+     * @param delFlag 删除标记
+     * @return 查询到的用户
+     */
+    Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
+
 }

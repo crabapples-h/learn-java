@@ -68,13 +68,11 @@ public class SysController extends BaseController {
     @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO login(@RequestBody UserForm form){
-        logger.info("收到请求->用户登陆:[{}]",form);
+        logger.info("收到请求->用户登陆验证:[{}]",form);
         super.validator(form, IsLogin.class);
-        Subject subject = SecurityUtils.getSubject();
-        System.err.println(subject);
-        Map<String,String> tokenInfo = sysService.login(form);
-        logger.info("登录成功->用户信息:[{}]",tokenInfo);
-        return ResponseDTO.returnSuccess("操作成功",tokenInfo);
+        ResponseDTO responseDTO = sysService.login(form);
+        logger.info("登录验证结束->用户信息:[{}]",responseDTO);
+        return responseDTO;
     }
 
     /**

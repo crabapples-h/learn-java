@@ -2,7 +2,7 @@ package cn.crabapples.spring.service.impl;
 
 import cn.crabapples.spring.common.ApplicationException;
 import cn.crabapples.spring.dao.UserRepository;
-import cn.crabapples.spring.entity.User;
+import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.UserService;
 import org.springframework.stereotype.Service;
@@ -28,14 +28,24 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * 根据 [用户名] 查询用户
+     * @param username 用户名
+     * @return 查询到的用户
+     */
     @Override
-    public User addUser(UserForm form) {
+    public Optional<SysUser> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public SysUser addUser(UserForm form) {
         return userRepository.save(form.toEntity());
     }
 
     @Override
-    public User editUser(UserForm form) {
-        User user = userRepository.findById(form.getId()).orElse(null);
+    public SysUser editUser(UserForm form) {
+        SysUser user = userRepository.findById(form.getId()).orElse(null);
         if (user != null) {
             return userRepository.save(form.toEntity());
         }
@@ -45,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void delUser(String id) {
-        User user = userRepository.findById(id).orElse(null);
+        SysUser user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new ApplicationException("用户不存在");
         }
@@ -53,24 +63,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByName(String name) {
+    public List<SysUser> findByName(String name) {
         return userRepository.findByName(name);
-    }
-
-    @Override
-    public List<User> findByHQL(String name) {
-        return userRepository.findByHQL(name);
-    }
-
-    @Override
-    public List<User> findBySQL(String name) {
-        return userRepository.findBySQL(name);
     }
 
     @Override
     @Transactional
     public void unActiveUser(String id) {
-        User user = userRepository.findById(id).orElse(null);
+        SysUser user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new ApplicationException("用户不存在");
         }
@@ -80,15 +80,25 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void activeUser(String id) {
-        User user = userRepository.findById(id).orElse(null);
+        SysUser user = userRepository.findById(id).orElse(null);
         if (user == null) {
             throw new ApplicationException("用户不存在");
         }
         userRepository.activeUser(id);
     }
 
+    /**
+     * 根据[用户名] [密码] [状态] [删除标记] 查询用户
+     * @param username 用户名
+     * @param password 密码
+     * @param status 状态
+     * @param delFlag 删除标记
+     * @return 查询到的用户
+     */
     @Override
-    public Optional<User> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag) {
+    public Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag) {
         return userRepository.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, status, delFlag);
     }
+
+
 }

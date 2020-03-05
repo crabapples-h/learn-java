@@ -1,13 +1,12 @@
 package cn.crabapples.spring.dao;
 
-import cn.crabapples.spring.entity.User;
+import cn.crabapples.spring.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,61 +20,69 @@ import java.util.Optional;
  * pc-name 29404
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<SysUser, String> {
     /**
-     * 测试方法-使用hql查询
-     * @param name @Param里的name
-     * @return 查询到的结果集
+     * 根据 [用户名] 查询用户
+     * @param username 用户名
+     * @return 查询到的用户
      */
-    @Query("from User user where user.name=:name")
-    List<User> findByHQL(@Param("name") String name);
+    Optional<SysUser> findByUsername(String username);
 
     /**
-     * 测试方法-使用sql查询
-     * @param name  ?1表示第一个参数
-     * @return 查询到的结果集
+     * 根据姓名查询
+     * @param name 姓名
+     * @return 查询到的用户集合
      */
-    @Query(value = "select * from user where name = ?1", nativeQuery = true)
-    List<User> findBySQL(String name);
-
-    /**
-     * 根据名字查询
-     */
-    List<User> findByName(String name);
+    List<SysUser> findByName(String name);
 
     /**
      * 根据名字和年龄查询
+     * @param name 姓名
+     * @param age 年龄
+     * @return 查询到的用户集合
      */
-    List<User> findByNameAndAge(String name, Integer age);
+    List<SysUser> findByNameAndAge(String name, Integer age);
 
     /**
-     * 根据名字模糊查询
+     * 根据姓名模糊查询
+     * @param name 姓名
+     * @return 查询到的用户集合
      */
-    List<User> findByNameLike(String name);
+    List<SysUser> findByNameLike(String name);
 
     /**
      * 删除用户
+     * @param id 用户ID
      */
-    @Query("update User set delFlag = 1 where id=:name")
+    @Query("update SysUser set delFlag = 1 where id=:name")
     @Modifying
     void delUser(@Param("name")String id);
 
     /**
      * 禁用用户
+     * @param id 用户ID
      */
-    @Query("update User set status = 1 where id = :id")
+    @Query("update SysUser set status = 1 where id = :id")
     @Modifying
     void unActiveUser(@Param("id")String id);
 
     /**
      * 激活用户
+     * @param id 用户ID
      */
-    @Query("update User set status = 0 where id = :id")
+    @Query("update SysUser set status = 0 where id = :id")
     @Modifying
     void activeUser(@Param("id") String id);
 
     /**
-     * 根据用户名、密码、用户状态、删除标记查询
+     * 根据[用户名] [密码] [状态] [删除标记] 查询用户
+     * @param username 用户名
+     * @param password 密码
+     * @param status 状态
+     * @param delFlag 删除标记
+     * @return 查询到的用户
      */
-    Optional<User> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
+    Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
+
+
 }

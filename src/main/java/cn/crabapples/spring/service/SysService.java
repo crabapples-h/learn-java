@@ -1,5 +1,6 @@
 package cn.crabapples.spring.service;
 
+import cn.crabapples.spring.dto.ResponseDTO;
 import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.form.UserForm;
 
@@ -18,9 +19,9 @@ import java.util.Map;
 public interface SysService {
     /**
      * 用户登录
-     * @return
+     * @return 登录成功后返回的登录信息
      */
-    Map<String, String> login(UserForm form);
+    ResponseDTO login(UserForm form);
 
     /**
      * 获取系统菜单

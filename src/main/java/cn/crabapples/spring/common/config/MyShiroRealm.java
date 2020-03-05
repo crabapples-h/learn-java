@@ -1,12 +1,16 @@
 package cn.crabapples.spring.common.config;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import cn.crabapples.spring.entity.SysUser;
+import cn.crabapples.spring.service.UserService;
+import cn.crabapples.spring.test.controller.ControllerTest;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
+
 
 /**
  * TODO shiro配置
@@ -19,8 +23,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MyShiroRealm extends AuthorizingRealm {
+    private static final Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
+    private UserService userService;
+
+    public MyShiroRealm(UserService userService) {
+        this.userService = userService;
+    }
+
     /**
-     * 授权的方法
+     * shiro授权调用的方法
+     *
      * @param principalCollection
      * @return
      */
@@ -31,14 +43,21 @@ public class MyShiroRealm extends AuthorizingRealm {
     }
 
     /**
-     * 认证的方法
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
+     * shiro认证调用的方法
+     * @param authenticationToken shiro认证的token
+     * @return 用户认证信息
+     * @throws AuthenticationException IncorrectCredentialsException密码错误 UnknownAccountException用户名错误
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.err.println("认证");
-        return null;
+        String username = authenticationToken.getPrincipal().toString();
+        logger.debug("开始对:[{}]执行shiro认证", username);
+        SysUser user = userService.findByUsername(username).orElse(null);
+        if (null == user) {
+            throw new UnknownAccountException("用户不存在");
+        }
+        String password = user.getPassword();
+        logger.debug("用户:[{}]shiro认证结束", username);
+        return new SimpleAuthenticationInfo(user, password, this.getName());
     }
 }

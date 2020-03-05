@@ -1,11 +1,10 @@
-package cn.crabapples.spring.form;
+package cn.crabapples.spring.test.form;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.validation.constraints.*;
 import java.util.Calendar;

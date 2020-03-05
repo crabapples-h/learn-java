@@ -1,4 +1,4 @@
-package cn.crabapples.spring.service;
+package cn.crabapples.spring.test.service;
 
 /**
  * TODO
@@ -9,5 +9,5 @@ package cn.crabapples.spring.service;
  * qq 294046317
  * pc-name 29404
  */
-public interface DemoService {
+public interface ServiceTest {
 }
