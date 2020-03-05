@@ -3,8 +3,10 @@ package cn.crabapples.spring.dao;
 import cn.crabapples.spring.entity.SysMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
- * TODO
+ * TODO 系统菜单持久层
  *
  * @author Mr.He
  * 3/2/20 12:15 AM
@@ -13,4 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * pc-name root
  */
 public interface SysRepository extends JpaRepository<SysMenu,String> {
+    List<SysMenu> findByParentIdIsNull();
+
+    List<SysMenu> findByParentId(String parentId);
 }
