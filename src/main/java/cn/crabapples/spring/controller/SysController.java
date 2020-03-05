@@ -50,16 +50,6 @@ public class SysController extends BaseController {
     }
 
     /**
-     * 进入主页面
-     * @return 登录后的主页面
-     */
-    @GetMapping("/index")
-    public String index(){
-        logger.info("收到请求->进入主页");
-        return "index";
-    }
-
-    /**
      * 发起登录请求
      * @param form 用户名和密码
      * @return 登录成功返回token
@@ -76,15 +66,25 @@ public class SysController extends BaseController {
     }
 
     /**
+     * 进入主页面
+     * @return 登录后的主页面
+     */
+    @GetMapping("/index")
+    public String index(){
+        logger.info("收到请求->进入主页");
+        return "index";
+    }
+
+    /**
      * 获取系统菜单
      * @param auth 登录授权信息
      * @return 返回当前用户拥有的系统菜单
      */
     @GetMapping("/getSysMenus")
     @ResponseBody
-    public ResponseDTO getSysMenus(String auth){
+    public ResponseDTO getSysMenus(){
         logger.info("收到请求->获取菜单列表");
-        List<SysMenu> menus = sysService.getSysMenus(auth);
+        List<SysMenu> menus = sysService.getSysMenus();
         logger.info("获取菜单列表成功:[{}]",menus);
         return ResponseDTO.returnSuccess("操作成功",menus);
     }

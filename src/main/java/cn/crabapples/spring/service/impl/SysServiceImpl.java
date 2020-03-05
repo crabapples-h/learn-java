@@ -133,9 +133,12 @@ public class SysServiceImpl implements SysService {
         return null;
     }
 
-    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
+//    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public List<SysMenu> getSysMenus(String auth) {
+    public List<SysMenu> getSysMenus() {
+        Subject subject = SecurityUtils.getSubject();
+        Object object = subject.getSession().getAttribute("user");
+        System.err.println(object);
         return sysRepository.findAll();
     }
 }

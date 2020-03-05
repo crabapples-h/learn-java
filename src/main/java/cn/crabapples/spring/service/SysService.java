@@ -26,5 +26,5 @@ public interface SysService {
     /**
      * 获取系统菜单
      */
-    List<SysMenu> getSysMenus(String auth);
+    List<SysMenu> getSysMenus();
 }
