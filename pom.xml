@@ -29,17 +29,23 @@
         <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
         <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
         <shiro.version>1.4.0</shiro.version>
+        <thymeleafShiro.version>2.0.0</thymeleafShiro.version>
     </properties>
 
     <dependencies>
+        <!-- thymeleafShiro -->
+        <dependency>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>${thymeleafShiro.version}</version>
+        </dependency>
+
         <!-- shiroSpring -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-
-
 
         <!-- SpringBoot Nacos依赖 配置文件:application -->
         <dependency>
