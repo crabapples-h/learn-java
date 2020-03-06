@@ -2,7 +2,6 @@ package cn.crabapples.spring.common.config;
 
 import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.service.UserService;
-import cn.crabapples.spring.test.controller.ControllerTest;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -22,11 +21,11 @@ import org.springframework.context.annotation.Configuration;
  * pc-name 29404
  */
 @Configuration
-public class MyShiroRealm extends AuthorizingRealm {
-    private static final Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
+public class ShiroRealm extends AuthorizingRealm {
+    private static final Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
     private UserService userService;
 
-    public MyShiroRealm(UserService userService) {
+    public ShiroRealm(UserService userService) {
         this.userService = userService;
     }
 

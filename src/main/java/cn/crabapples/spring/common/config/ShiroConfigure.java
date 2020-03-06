@@ -1,15 +1,13 @@
 package cn.crabapples.spring.common.config;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * TODO shiro配置类
@@ -22,26 +20,49 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ShiroConfigure {
+    ShiroRealm shiroRealm;
+
+    public ShiroConfigure(ShiroRealm shiroRealm) {
+        this.shiroRealm = shiroRealm;
+    }
+
     /**
+     * shiro过滤器
+     *
      * 添加创建securityManager的工厂类注入Bean
      * @return ShiroFilterFactoryBean
      */
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager){
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        return shiroFilterFactoryBean;
+        ShiroFilterFactoryBean shiroFilterFactory = new ShiroFilterFactoryBean();
+        shiroFilterFactory.setSecurityManager(securityManager);
+        Map<String,String> filterMap = new HashMap<>();
+        filterMap.put("/**","authc");
+        filterMap.put("/login","anon");
+
+        filterMap.put("/js/**","anon");
+        filterMap.put("/css/**","anon");
+        filterMap.put("/X-admin/css/**","anon");
+        filterMap.put("/X-admin/js/**","anon");
+        filterMap.put("/X-admin/images/**","anon");
+        filterMap.put("/X-admin/fonts/**","anon");
+        filterMap.put("/X-admin/lib/**","anon");
+
+
+        shiroFilterFactory.setFilterChainDefinitionMap(filterMap);
+        shiroFilterFactory.setLoginUrl("/");
+        return shiroFilterFactory;
     }
 
     /**
      * 创建securityManager类注入的Bean
      * @return DefaultWebSecurityManager
      */
-    @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(MyShiroRealm shiroRealm){
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(shiroRealm);
-        return defaultWebSecurityManager;
+    @Bean
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(ShiroRealm shiroRealm){
+        DefaultWebSecurityManager webSecurityManager = new DefaultWebSecurityManager();
+        webSecurityManager.setRealm(shiroRealm);
+        return webSecurityManager;
     }
 
 //    /**
@@ -53,27 +74,3 @@ public class ShiroConfigure {
 //        return new MyShiroRealm();
 //    }
 }
-//class MyShiroRealm extends AuthorizingRealm {
-//    /**
-//     * 授权的方法
-//     * @param principalCollection
-//     * @return
-//     */
-//    @Override
-//    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-//        System.err.println("授权");
-//        return null;
-//    }
-//
-//    /**
-//     * 认证的方法
-//     * @param authenticationToken
-//     * @return
-//     * @throws AuthenticationException
-//     */
-//    @Override
-//    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-//        System.err.println("认证");
-//        return null;
-//    }
-//}
