@@ -23,6 +23,9 @@ import java.util.List;
 @Getter
 @Entity
 public class SysMenu extends BaseEntity {
+    @Column(columnDefinition = "int(4) default -1 comment '菜单排序号'")
+    private Integer sort;
+
     @Column(columnDefinition = "varchar(64) comment '菜单图标'")
     private String icon;
 
@@ -32,10 +35,10 @@ public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "varchar(64) comment '菜单链接'")
     private String url;
 
-    @Column(columnDefinition = "int(2) comment '菜单类型 1:菜单树 2:菜单 3:外部链接'")
-    private String menuType;
+    @Column(columnDefinition = "int(2) default 0 comment '菜单类型 0: 根菜单 1:菜单树 2:菜单 3:外部链接'")
+    private Integer menuType;
 
-    @Column(columnDefinition = "varchar(64) comment '上级菜单id'")
+    @Column(columnDefinition = "varchar(64) default null comment '上级菜单id'")
     private String parentId;
 
     @Transient

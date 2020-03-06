@@ -5,7 +5,7 @@
 >
 <head>
   <title>X-admin</title>
-	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <header data-th-include="common :: meta"></header>
   <header data-th-replace="common :: javascript"></header>
   <header data-th-replace="common :: style"></header>
@@ -77,25 +77,25 @@
         <ul class="sub-menu">
           <li v-for="item in item.children">
             <!-- 生成目录 -->
-            <a href="javascript:;" v-if="item.menuType === 1">
+            <a href="javascript:;" v-if="item.menuType === '1'">
               <i class="iconfont">&#xe70b;</i>
               <cite>{{item.name}}</cite>
               <i class="iconfont nav_right">&#xe697;</i>
             </a>
-            <ul class="sub-menu" v-if="item.menuType === 1">
+            <ul class="sub-menu" v-if="item.menuType === '1'">
               <li v-for="item in item.children">
-                <a @click="item.onclick(item.name, item.url)">
+                <a @click="menuOnClick(item.name, item.url)">
                   <i class="iconfont">&#xe6a7;</i>
                   <cite>{{item.name}}</cite></a>
               </li>
             </ul>
             <!-- 生成菜单 -->
-            <a @click="item.onclick(item.name, item.url)" v-if="item.menuType === 2">
+            <a @click="menuOnClick(item.name, item.url)" v-if="item.menuType === '2'">
               <i class="iconfont">&#xe6a7;</i>
               <cite>{{item.name}}</cite>
             </a>
             <!-- 生成链接 -->
-            <a :href="item.url" target="_blank" v-if="item.menuType === 3">
+            <a :href="item.url" target="_blank" v-if="item.menuType === '3'">
               <i class="iconfont">&#xe6a7;</i>
               <cite>{{item.name}}</cite>
             </a>
@@ -560,8 +560,8 @@
     },
     mounted() {
       this.getMenus()
-      if(this.isDebug){
-       this.menus = this.menusDemo
+      if (this.isDebug) {
+        this.menus = this.menusDemo
       }
     },
     methods: {
@@ -569,16 +569,39 @@
         const _this = this
         axios.get('/getSysMenus').then(response => {
           const result = response.data
-          if(result.status !== 200){
+          if (result.status !== 200) {
             layer.msg(result.message)
             return
           }
-          _this.menus = result.data
-          console.log(_this.menus)
+          let menus = this.createMenus(result.data).sort((a,b)=>{return a.sort - b.sort})
+          _this.menus = menus
         }).catch(function (error) {
-              // 请求失败处理
-              console.log(error);
-            });
+          // 请求失败处理
+          console.log(error);
+        });
+      },
+      createMenus(arrays) {
+        let menus = []
+        arrays.forEach(e => {
+              menus.push({
+                id: `${e.id}`,
+                sort: `${e.sort}`,
+                icon: `${e.icon}`,
+                name: `${e.name}`,
+                url: `${e.url}`,
+                menuType: `${e.menuType}`,
+                onclick: (name, url) => {
+                  xadmin.add_tab(name, url)
+                },
+                children: this.createMenus(e.children).sort((a,b)=>{return a.sort - b.sort}),
+              })
+            }
+        )
+        return menus
+      },
+      menuOnClick(name, url) {
+        console.log(name, url)
+        xadmin.add_tab(name, url)
       }
     }
   })

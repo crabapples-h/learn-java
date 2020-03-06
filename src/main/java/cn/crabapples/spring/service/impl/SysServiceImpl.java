@@ -1,6 +1,5 @@
 package cn.crabapples.spring.service.impl;
 
-import cn.crabapples.spring.common.ApplicationException;
 import cn.crabapples.spring.common.config.ApplicationConfigure;
 import cn.crabapples.spring.common.utils.AesUtils;
 import cn.crabapples.spring.dao.SysRepository;
@@ -12,14 +11,12 @@ import cn.crabapples.spring.service.SysService;
 import cn.crabapples.spring.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -145,12 +142,11 @@ public class SysServiceImpl implements SysService {
         return menus;
     }
 
-    public List<SysMenu> insertChildrenMenus(List<SysMenu> menus) {
+    private void insertChildrenMenus(List<SysMenu> menus) {
         menus.forEach(e->{
             List<SysMenu> children = sysRepository.findByParentId(e.getId());
             insertChildrenMenus(children);
             e.setChildren(children);
         });
-        return menus;
     }
 }
