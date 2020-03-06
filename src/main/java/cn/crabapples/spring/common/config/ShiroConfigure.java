@@ -1,6 +1,6 @@
 package cn.crabapples.spring.common.config;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -65,12 +65,11 @@ public class ShiroConfigure {
         return webSecurityManager;
     }
 
-//    /**
-//     * 创建自定义realm域类的注入bean
-//     * @return
-//     */
-//    @Bean(name = "shiroRealm")
-//    public MyShiroRealm getMyShiroRealm(){
-//        return new MyShiroRealm();
-//    }
+    /**
+     *
+     */
+    @Bean
+    public ShiroDialect getShiroDialect (){
+        return new ShiroDialect();
+    }
 }
