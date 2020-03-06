@@ -1,11 +1,9 @@
 package cn.crabapples.spring.service;
 
 import cn.crabapples.spring.dto.ResponseDTO;
-import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.form.UserForm;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * TODO 系统相关服务
@@ -25,6 +23,7 @@ public interface SysService {
 
     /**
      * 获取系统菜单
+     * @return
      */
-    List<SysMenu> getSysMenus();
+    Set<? extends Object> getSysMenus();
 }

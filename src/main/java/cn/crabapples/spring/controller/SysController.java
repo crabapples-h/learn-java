@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * TODO 系统相关接口
@@ -77,14 +78,13 @@ public class SysController extends BaseController {
 
     /**
      * 获取系统菜单
-     * @param auth 登录授权信息
      * @return 返回当前用户拥有的系统菜单
      */
     @GetMapping("/getSysMenus")
     @ResponseBody
     public ResponseDTO getSysMenus(){
         logger.info("收到请求->获取菜单列表");
-        List<SysMenu> menus = sysService.getSysMenus();
+        Set<?> menus = sysService.getSysMenus();
         logger.info("获取菜单列表成功:[{}]",menus);
         return ResponseDTO.returnSuccess("操作成功",menus);
     }

@@ -67,4 +67,6 @@ public interface UserService {
      */
     Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
 
+    List<SysUser> findAll();
+
 }

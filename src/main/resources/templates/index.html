@@ -573,6 +573,8 @@
             layer.msg(result.message)
             return
           }
+          console.log(result.data)
+
           let menus = this.createMenus(result.data).sort((a,b)=>{return a.sort - b.sort})
           _this.menus = menus
         }).catch(function (error) {

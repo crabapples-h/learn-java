@@ -5,6 +5,8 @@ import cn.crabapples.spring.dao.UserRepository;
 import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,6 +24,8 @@ import java.util.Optional;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     private UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
@@ -85,6 +89,12 @@ public class UserServiceImpl implements UserService {
             throw new ApplicationException("用户不存在");
         }
         userRepository.activeUser(id);
+    }
+
+    @Override
+    public List<SysUser> findAll() {
+        logger.info("开始获取所有用户");
+        return userRepository.findAll();
     }
 
     /**

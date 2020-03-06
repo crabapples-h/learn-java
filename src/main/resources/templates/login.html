@@ -45,7 +45,7 @@
         axios.post('/login', data).then(response => {
           const result = response.data
           console.log(result)
-          if(result.status !== 200){
+          if (result.status !== 200) {
             layer.msg(result.message)
             return
           }

@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
-import java.util.List;
+import java.util.Set;
 
 /**
  * TODO 系统菜单
@@ -41,8 +41,11 @@ public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "varchar(64) default null comment '上级菜单id'")
     private String parentId;
 
+    @Column(columnDefinition = "varchar(64) default null comment '授权标识'")
+    private String permission;
+
     @Transient
-    private List<SysMenu> children;
+    private Set<SysMenu> children;
 
     @Override
     public String toString() {
