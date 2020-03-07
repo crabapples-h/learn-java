@@ -21,20 +21,21 @@ public class FastJsonConfigure {
     public FastJsonConfig fastJsonConfig() {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss E");
-//        fastJsonConfig.setSerializerFeatures(
-//                SerializerFeature.WriteEnumUsingToString,
-//                SerializerFeature.WriteNullStringAsEmpty,
-//                SerializerFeature.WriteMapNullValue,
-//                SerializerFeature.WriteDateUseDateFormat);
-        fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
-            if (source == null) {
-                /*
-                 * 如果返回对象的变量为null,则自动变成""
-                 */
-                return "";
-            }
-            return source;
-        });
+        fastJsonConfig.setSerializerFeatures(
+                SerializerFeature.WriteEnumUsingToString,
+                SerializerFeature.WriteNullStringAsEmpty,
+                SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteNullListAsEmpty,
+                SerializerFeature.WriteDateUseDateFormat);
+//        fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
+//            if (source == null) {
+//                /*
+//                 * 如果返回对象的变量为null,则自动变成""
+//                 */
+//                return "";
+//            }
+//            return source;
+//        });
 
 
         return fastJsonConfig;

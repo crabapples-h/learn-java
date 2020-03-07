@@ -573,7 +573,7 @@
             layer.msg(result.message)
             return
           }
-          console.log(result.data)
+          // console.log(result.data)
 
           let menus = this.createMenus(result.data).sort((a,b)=>{return a.sort - b.sort})
           _this.menus = menus
@@ -583,6 +583,7 @@
         });
       },
       createMenus(arrays) {
+        console.error(arrays)
         let menus = []
         arrays.forEach(e => {
               menus.push({
@@ -601,6 +602,10 @@
         )
         return menus
       },
+      menuOnClick(name,url){
+        console.log(name,url)
+        xadmin.add_tab(name, url)
+      }
     }
   })
 </script>

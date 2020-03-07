@@ -14,7 +14,7 @@ import java.util.Set;
  * qq 294046317
  * pc-name root
  */
-public interface SysRepository extends JpaRepository<SysMenu,String> {
+public interface SysMenuRepository extends JpaRepository<SysMenu,String> {
     Set<SysMenu> findByParentIdIsNull();
 
     Set<SysMenu> findByParentId(String parentId);

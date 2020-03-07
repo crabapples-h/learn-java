@@ -8,6 +8,8 @@ import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import cn.crabapples.spring.service.UserService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -19,8 +21,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TODO 系统相关服务实现类
@@ -31,11 +38,11 @@ import java.util.*;
  * qq 294046317
  * pc-name 29404
  */
-@Service
+//@Service
 //@CacheConfig(cacheNames = "user:")
-public class SysServiceImpl implements SysService {
+public class SysServiceImplBak implements SysService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(SysServiceImplBak.class);
     private String aesKey;
     private String redisPrefix;
     private Long tokenCacheTime;
@@ -47,10 +54,10 @@ public class SysServiceImpl implements SysService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
-    public SysServiceImpl(ApplicationConfigure applicationConfigure,
-                          UserService userService,
-                          SysMenuRepository sysMenuRepository,
-                          RedisTemplate<String, Object> redisTemplate) {
+    public SysServiceImplBak(ApplicationConfigure applicationConfigure,
+                             UserService userService,
+                             SysMenuRepository sysMenuRepository,
+                             RedisTemplate<String, Object> redisTemplate) {
         this.userService = userService;
         this.sysMenuRepository = sysMenuRepository;
         this.redisTemplate = redisTemplate;
@@ -124,55 +131,84 @@ public class SysServiceImpl implements SysService {
     public Set<? extends Object> getSysMenus() {
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         logger.info("开始获取用户:[{}]已授权的菜单", user.getId());
-        Set<SysMenu> userMenus = new HashSet<>();
-        user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
-        logger.info("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
-
-
-        List<SysMenu> allMenus = sysMenuRepository.findAll();
-        saveObj(userMenus,"8");
-        saveObj(allMenus,"9");
-//        insertChildrenMenus(sysMenus);
-        return userMenus;
-    }
-    void saveObj(Object obj, String f) {
-        File file = new File("d:/" + f);
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-            oos.writeObject(obj);
-            oos.flush();
-            oos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static Object readObj(String f) {
-        File file = new File("d:/" + f);
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            return ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Set<SysMenu> sysMenus = new HashSet<>();
+        user.getSysRoles().forEach(e -> sysMenus.addAll(e.getSysMenus()));
+        logger.info("-------------------------------------------------------------------");
+        logger.info("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(),sysMenus);
+        logger.info("-------------------------------------------------------------------");
+        insertChildrenMenus(sysMenus);
+        return sysMenus;
+//        return formatChildrenMenus(Lists.newArrayList(sysMenus));
     }
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
-        Set<SysMenu> userMenus = (Set<SysMenu>) readObj("8");
-        List<SysMenu> allMenus = (List<SysMenu>) readObj("9");
-        userMenus.forEach(e->{
-            allMenus.forEach(r->{
-                if(e.getId().equals(r.getId())){
-                    System.err.println(e);
-
-                }
+        File file = new File("d:/2");
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            Set<SysMenu> menus = (Set<SysMenu>) objectInputStream.readObject();
+            List<SysMenu> list = Lists.newArrayList(menus);
+            Set<SysMenu> sysMenus = formatChildrenMenus(list);
+            sysMenus.forEach(e -> {
+                Set<SysMenu> children = e.getChildren();
+                children.forEach(t -> {
+                    System.err.println(t);
+                });
             });
-        });
-//        System.err.println(userMenus);
-//        System.err.println(allMenus);
+        } catch (IOException | ClassNotFoundException e) {
+        }
     }
 
+    /**
+     * 格式化菜单为树状
+     *
+     * @param menus 菜单列表
+     * @return 格式化后的菜单Set
+     */
+    private static Set<SysMenu> formatChildrenMenus(List<SysMenu> menus) {
+//        logger.info("开始格式化菜单");
+        MenusFormat menusFormat = (menu, menuList) -> {
+//            logger.info("当前正在格式化的菜单为:[{}]", menu);
+            Set<SysMenu> children = new HashSet<>();
+            for (int i = menuList.size() - 1; i >= 0; i--) {
+                if (menuList.get(i).getParentId() != null && menuList.get(i).getParentId().equals(menu.getId())) {
+                    children.add(menuList.get(i));
+                    menuList.remove(menuList.get(i));
+                }
+            }
+            menu.setChildren(children);
+            return menu;
+        };
+        List<SysMenu> tempMenus = Lists.newArrayList(menus);
+        Set<SysMenu> sysMenus = new HashSet<>();
+        for (int i = tempMenus.size() - 1; i >= 0; i--) {
+            if (menus.get(i).getParentId() == null) {
+                sysMenus.add(menusFormat.format(menus.get(i), tempMenus));
+            }
+        }
+        return Sets.newHashSet(sysMenus);
+    }
 
+    /**
+     * TODO 格式化菜单接口
+     *
+     * @author Mr.He
+     * 2020/3/7 5:01
+     * e-mail crabapples.cn@gmail.com
+     * qq 294046317
+     * pc-name 29404
+     */
+    @FunctionalInterface
+    interface MenusFormat {
+        SysMenu format(SysMenu sysMenu, List<SysMenu> tempMenus);
+    }
+
+    public Set<SysMenu> insertChildrenMenus(Set<SysMenu> menus) {
+        menus.forEach(e->{
+            Set<SysMenu> children = sysMenuRepository.findByParentId(e.getId());
+            insertChildrenMenus(children);
+            e.setChildren(children);
+        });
+        return menus;
+    }
 }
