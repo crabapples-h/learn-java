@@ -1,6 +1,7 @@
 package cn.crabapples.spring.common;
 
 import cn.crabapples.spring.dto.ResponseDTO;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,20 @@ public abstract class BaseController {
     }
 
     @ExceptionHandler
+    protected String exceptionHandler(Exception e){
+        String info = "";
+        if(e instanceof UnauthorizedException){
+            info = "未获授权";
+        }
+        logger.error("出现异常:[{}][{}]",info,e.getMessage());
+
+        return "redirect:http://www.baidu.com";
+    }
+
+    @ExceptionHandler
     @ResponseBody
-    protected ResponseDTO exceptionHandler(Exception e){
-        logger.error("出现异常:[{}]",e.getMessage());
+    protected ResponseDTO applicationExceptionHandler(ApplicationException e){
+        logger.error("ajax出现异常:[{}]",e.getMessage(),e);
         return ResponseDTO.returnError("操作失败",e.getMessage());
     }
 }

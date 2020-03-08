@@ -125,19 +125,33 @@ public class SysServiceImpl implements SysService {
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
     public List<SysMenu> getSysMenus(SysUser user) {
-        logger.info("开始获取用户:[{}]已授权的菜单", user.getId());
-        List<SysMenu> userMenus = new ArrayList<>();
-        user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
-        logger.debug("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
-        List<SysMenu> allMenuTreesTemp = insertChildrenMenus(sysMenuRepository.findByParentIdIsNull());
-        userMenus.forEach(e -> filterChildrenMenus(e, allMenuTreesTemp));
-        userMenus.forEach(e -> filterParentMenus(allMenuTreesTemp));
-        logger.debug("用户:[{}]菜单格式化完毕:[{}]", user.getId(), allMenuTreesTemp);
-        logger.debug("开始过滤用户:[{}]没有权限的菜单:[{}]", user.getId(), allMenuTreesTemp);
-        List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
-        logger.debug("用户:[{}]没有权限的菜单过滤完毕:[{}]", user.getId(), allMenuTreesTemp);
-        return sysMenus;
+//        Subject subject = SecurityUtils.getSubject();
+//        Object object = subject.getSession().getAttribute("user");
+//        System.err.println(object);
+        List<SysMenu> menus = sysMenuRepository.findByParentIdIsNull();
+        insertChildrenMenus(menus);
+        menus.forEach(System.err::println);
+        return menus;
     }
+
+//
+
+
+//    @Override
+//    public List<SysMenu> getSysMenus(SysUser user) {
+//        logger.info("开始获取用户:[{}]已授权的菜单", user.getId());
+//        List<SysMenu> userMenus = new ArrayList<>();
+//        user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
+//        logger.debug("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
+//        List<SysMenu> allMenuTreesTemp = insertChildrenMenus(sysMenuRepository.findByParentIdIsNull());
+//        userMenus.forEach(e -> filterChildrenMenus(e, allMenuTreesTemp));
+//        userMenus.forEach(e -> filterParentMenus(allMenuTreesTemp));
+//        logger.debug("用户:[{}]菜单格式化完毕:[{}]", user.getId(), allMenuTreesTemp);
+//        logger.debug("开始过滤用户:[{}]没有权限的菜单:[{}]", user.getId(), allMenuTreesTemp);
+//        List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
+//        logger.debug("用户:[{}]没有权限的菜单过滤完毕:[{}]", user.getId(), allMenuTreesTemp);
+//        return sysMenus;
+//    }
 
     /**
      * 移除菜单树中显示标识为false的菜单

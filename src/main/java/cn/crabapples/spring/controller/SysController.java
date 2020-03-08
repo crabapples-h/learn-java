@@ -10,6 +10,7 @@ import cn.crabapples.spring.service.SysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,7 @@ public class SysController extends BaseController {
      * @return 登录后的主页面
      */
     @GetMapping("/index")
+    @RequiresPermissions("abc:wewe")
     public String index(){
         logger.info("收到请求->进入主页");
         return "index";
