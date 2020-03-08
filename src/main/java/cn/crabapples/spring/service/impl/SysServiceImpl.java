@@ -118,6 +118,7 @@ public class SysServiceImpl implements SysService {
 
     /**
      * 获取当前用户拥有的菜单
+     *
      * @return 当前用户拥有的菜单
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
@@ -129,16 +130,21 @@ public class SysServiceImpl implements SysService {
         user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
 //        logger.info("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
 //        List<SysMenu> allMenus = sysMenuRepository.findAll();
-//        saveObj(userMenus, "8");
-//        saveObj(allMenus, "9");
+
+        userMenus.forEach(e -> {
+            System.err.println(e.getName() + ":" + e.isShowFlag());
+        });
         List<SysMenu> allMenuTreesTemp = insertChildrenMenus(sysMenuRepository.findByParentIdIsNull());
-        userMenus.forEach(e -> filterMenus(e, allMenuTreesTemp));
+        saveObj(userMenus, "8");
+        saveObj(allMenuTreesTemp, "9");
+        userMenus.forEach(e -> filterChildrenMenus(e, allMenuTreesTemp));
+        userMenus.forEach(e -> filterParentMenus(allMenuTreesTemp));
         changeParentFlag(allMenuTreesTemp);
         System.err.println(allMenuTreesTemp);
 //        List<SysMenu> sysMenus = Lists.newArrayList(allMenuTreesTemp);
         List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
 
-//        System.err.println(allMenuTreesTemp);
+        System.err.println(allMenuTreesTemp);
         return sysMenus;
     }
 
@@ -163,10 +169,24 @@ public class SysServiceImpl implements SysService {
         });
     }
 
-    public void filterMenus(SysMenu userMenu, List<SysMenu> allMenu) {
+    public static void filterChildrenMenus(SysMenu userMenu, List<SysMenu> allMenu) {
         allMenu.forEach(e -> {
-            filterMenus(userMenu, e.getChildren());
-            e.setShowFlag(userMenu.getId().equals(e.getId()));
+            filterChildrenMenus(userMenu, e.getChildren());
+            if (userMenu.getId().equals(e.getId())) {
+                e.setShowFlag(userMenu.getId().equals(e.getId()));
+            }
+        });
+    }
+
+    public static void filterParentMenus(List<SysMenu> allMenu) {
+        allMenu.forEach(e -> {
+            filterParentMenus(e.getChildren());
+            e.getChildren().forEach(r -> {
+                if (r.isShowFlag()) {
+                    System.err.println(e.getName() + "" + e.isShowFlag());
+                    e.setShowFlag(true);
+                }
+            });
         });
     }
 
@@ -205,9 +225,18 @@ public class SysServiceImpl implements SysService {
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
-        List<SysMenu> userMenus = (List<SysMenu>) readObj("8");
-        List<SysMenu> allMenus = (List<SysMenu>) readObj("9");
-        Set<SysMenu> menus = new HashSet<>();
+        Set<SysMenu> userMenus = (Set<SysMenu>) readObj("8");
+        List<SysMenu> allMenuTreesTemp = (List<SysMenu>) readObj("9");
+        userMenus.forEach(e -> filterChildrenMenus(e, allMenuTreesTemp));
+        userMenus.forEach(e -> filterParentMenus(allMenuTreesTemp));
+        System.err.println(userMenus);
+        System.err.println(allMenuTreesTemp);
+//        changeParentFlag(allMenuTreesTemp);
+//        System.err.println(allMenuTreesTemp);
+////        List<SysMenu> sysMenus = Lists.newArrayList(allMenuTreesTemp);
+//        List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
+
+//        System.err.println(allMenuTreesTemp);
     }
 
 //    private static SysMenu getParent(SysMenu sysMenu, List<SysMenu> allMenus) {

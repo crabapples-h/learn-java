@@ -149,42 +149,42 @@
             icon: '&#xe6b8;',
             name: '会员管理',
             children: [
-              {
-                icon: '&#xe6a7;',
-                name: '统计页面',
-                url: '/demo11',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '统计页面',
-                url: '/welcome1',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '会员列表(静态表格)',
-                url: '/memberList',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '会员列表(动态表格)',
-                url: '/memberList1',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
+              // {
+              //   icon: '&#xe6a7;',
+              //   name: '统计页面',
+              //   url: '/demo11',
+              //   menuType: '2',
+              //   onclick: (name, url) => {
+              //     xadmin.add_tab(name, url)
+              //   },
+              // },
+              // {
+              //   icon: '&#xe6a7;',
+              //   name: '统计页面',
+              //   url: '/welcome1',
+              //   menuType: '2',
+              //   onclick: (name, url) => {
+              //     xadmin.add_tab(name, url)
+              //   },
+              // },
+              // {
+              //   icon: '&#xe6a7;',
+              //   name: '会员列表(静态表格)',
+              //   url: '/memberList',
+              //   menuType: 2,
+              //   onclick: (name, url) => {
+              //     xadmin.add_tab(name, url)
+              //   },
+              // },
+              // {
+              //   icon: '&#xe6a7;',
+              //   name: '会员列表(动态表格)',
+              //   url: '/memberList1',
+              //   menuType: 2,
+              //   onclick: (name, url) => {
+              //     xadmin.add_tab(name, url)
+              //   },
+              // },
               {
                 icon: '&#xe6a7;',
                 name: '会员删除',
@@ -198,7 +198,7 @@
                 icon: '&#xe6a7;',
                 name: '会员管理',
                 url: '/memberEdit',
-                menuType: 1,
+                menuType: '1',
                 onclick: (name, url) => {
                   xadmin.add_tab(name, url)
                 },
@@ -207,7 +207,7 @@
                     icon: '&#xe6a7;',
                     name: '会员删除',
                     url: 'member-del.html',
-                    menuType: 2,
+                    menuType: '2',
                     onclick: (name, url) => {
                       xadmin.add_tab(name, url)
                     },
@@ -216,7 +216,7 @@
                     icon: '&#xe6a7;',
                     name: '等级管理',
                     url: 'member-list1.html',
-                    menuType: 2,
+                    menuType: '2',
                     onclick: (name, url) => {
                       xadmin.add_tab(name, url)
                     },
@@ -225,343 +225,346 @@
               },
             ]
           },
-          {
-            id: '',
-            icon: '&#xe723;',
-            name: '订单管理',
-            children: [
-              {
-                id: '',
-                icon: '&#xe6a7;',
-                name: '订单列表',
-                url: 'order-list.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '订单列表1',
-                url: 'order-list1.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe723;',
-            name: '分类管理',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '多级分类',
-                url: 'cate.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe723;',
-            name: '城市联动',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '三级地区联动',
-                url: 'city.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe723;',
-            name: '管理员管理',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '管理员列表',
-                url: 'admin-list.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '角色管理',
-                url: 'admin-role.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '权限分类',
-                url: 'admin-cate.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '权限管理',
-                url: 'admin-rule.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe723;',
-            name: '系统统计',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '折线图',
-                url: 'echarts1.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '折线图',
-                url: 'echarts2.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '地图',
-                url: 'echarts3.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '饼图',
-                url: 'echarts4.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '雷达图',
-                url: 'echarts5.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: 'K线图',
-                url: 'echarts6.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '热力图',
-                url: 'echarts7.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '仪表图',
-                url: 'echarts8.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-
-            ]
-          },
-          {
-            icon: '&#xe6b4;',
-            name: '图标字体',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '图标对应字体',
-                url: 'unicode.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe6b4;',
-            name: '其他页面',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '登录页面',
-                url: 'login.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '错误页面',
-                url: 'error.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '示例页面',
-                url: 'demo.html',
-                menuType: 2,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '更新日志',
-                url: 'log.html',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
-          {
-            icon: '&#xe6b4;',
-            name: '第三方组件',
-            children: [
-              {
-                icon: '&#xe6a7;',
-                name: '滑块验证',
-                url: 'https://fly.layui.com/extend/sliderVerify/',
-                isTree: false,
-                isMenu: false,
-                isLink: true,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '富文本编辑器',
-                url: 'https://fly.layui.com/extend/layedit/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: 'eleTree组件',
-                url: 'https://fly.layui.com/extend/eleTree/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '图片截取',
-                url: 'https://fly.layui.com/extend/croppers/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: '图片截取',
-                url: 'https://fly.layui.com/extend/eleTree/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: ' formSelects 4.x 多选框',
-                url: 'https://fly.layui.com/extend/formSelects/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: 'Magnifier 放大镜',
-                url: 'https://fly.layui.com/extend/Magnifier/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-              {
-                icon: '&#xe6a7;',
-                name: 'notice 通知控件',
-                url: 'https://fly.layui.com/extend/notice/',
-                isTree: false,
-                isMenu: true,
-                isLink: false,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
-              },
-            ]
-          },
+          // {
+          //   id: '',
+          //   icon: '&#xe723;',
+          //   name: '订单管理',
+          //   children: [
+          //     {
+          //       id: '',
+          //       icon: '&#xe6a7;',
+          //       name: '订单列表',
+          //       url: 'order-list.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '订单列表1',
+          //       url: 'order-list1.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe723;',
+          //   name: '分类管理',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '多级分类',
+          //       url: 'cate.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe723;',
+          //   name: '城市联动',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '三级地区联动',
+          //       url: 'city.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe723;',
+          //   name: '管理员管理',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '管理员列表',
+          //       url: 'admin-list.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '角色管理',
+          //       url: 'admin-role.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '权限分类',
+          //       url: 'admin-cate.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '权限管理',
+          //       url: 'admin-rule.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe723;',
+          //   name: '系统统计',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '折线图',
+          //       url: 'echarts1.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '折线图',
+          //       url: 'echarts2.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '地图',
+          //       url: 'echarts3.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '饼图',
+          //       url: 'echarts4.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '雷达图',
+          //       url: 'echarts5.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: 'K线图',
+          //       url: 'echarts6.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '热力图',
+          //       url: 'echarts7.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '仪表图',
+          //       url: 'echarts8.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe6b4;',
+          //   name: '图标字体',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '图标对应字体',
+          //       url: 'unicode.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe6b4;',
+          //   name: '其他页面',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '登录页面',
+          //       url: 'login.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '错误页面',
+          //       url: 'error.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '示例页面',
+          //       url: 'demo.html',
+          //       menuType: 2,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '更新日志',
+          //       url: 'log.html',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
+          // {
+          //   icon: '&#xe6b4;',
+          //   name: '第三方组件',
+          //   children: [
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '滑块验证',
+          //       url: 'https://fly.layui.com/extend/sliderVerify/',
+          //       isTree: false,
+          //       isMenu: false,
+          //       isLink: true,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '富文本编辑器',
+          //       url: 'https://fly.layui.com/extend/layedit/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: 'eleTree组件',
+          //       url: 'https://fly.layui.com/extend/eleTree/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '图片截取',
+          //       url: 'https://fly.layui.com/extend/croppers/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: '图片截取',
+          //       url: 'https://fly.layui.com/extend/eleTree/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: ' formSelects 4.x 多选框',
+          //       url: 'https://fly.layui.com/extend/formSelects/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: 'Magnifier 放大镜',
+          //       url: 'https://fly.layui.com/extend/Magnifier/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //     {
+          //       icon: '&#xe6a7;',
+          //       name: 'notice 通知控件',
+          //       url: 'https://fly.layui.com/extend/notice/',
+          //       isTree: false,
+          //       isMenu: true,
+          //       isLink: false,
+          //       onclick: (name, url) => {
+          //         xadmin.add_tab(name, url)
+          //       },
+          //     },
+          //   ]
+          // },
         ]
       }
     },
     mounted() {
-      this.getMenus()
       if (this.isDebug) {
         this.menus = this.menusDemo
+        console.log(JSON.stringify(this.menus))
+
+      } else {
+        this.getMenus()
       }
     },
     methods: {
@@ -574,17 +577,19 @@
             return
           }
           // console.log(result.data)
+          let menus = this.createMenus(result.data).sort((a, b) => {
+            return a.sort - b.sort
+          })
 
-          let menus = this.createMenus(result.data).sort((a,b)=>{return a.sort - b.sort})
-          console.log(menus)
           _this.menus = menus
+          console.log(JSON.stringify(_this.menus))
         }).catch(function (error) {
           // 请求失败处理
           console.log(error);
         });
       },
       createMenus(arrays) {
-        // console.error(arrays)
+        // console.log(arrays)
         let menus = []
         arrays.forEach(e => {
               menus.push({
@@ -597,14 +602,16 @@
                 onclick: (name, url) => {
                   xadmin.add_tab(name, url)
                 },
-                children: this.createMenus(e.children).sort((a,b)=>{return a.sort - b.sort}),
+                children: this.createMenus(e.children).sort((a, b) => {
+                  return a.sort - b.sort
+                }),
               })
             }
         )
         return menus
       },
-      menuOnClick(name,url){
-        console.log(name,url)
+      menuOnClick(name, url) {
+        console.log(name, url)
         xadmin.add_tab(name, url)
       }
     }
