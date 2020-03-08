@@ -4,6 +4,7 @@ import cn.crabapples.spring.common.BaseController;
 import cn.crabapples.spring.common.groups.IsLogin;
 import cn.crabapples.spring.dto.ResponseDTO;
 import cn.crabapples.spring.entity.SysMenu;
+import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import io.swagger.annotations.Api;
@@ -83,8 +84,9 @@ public class SysController extends BaseController {
     @GetMapping("/getSysMenus")
     @ResponseBody
     public ResponseDTO getSysMenus(){
-        logger.info("收到请求->获取菜单列表");
-        List<SysMenu> menus = sysService.getSysMenus();
+        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+        logger.info("收到请求->获取用户[{}]的菜单列表",user.getId());
+        List<SysMenu> menus = sysService.getSysMenus(user);
         logger.info("获取菜单列表成功:[{}]",menus);
         return ResponseDTO.returnSuccess("操作成功",menus);
     }

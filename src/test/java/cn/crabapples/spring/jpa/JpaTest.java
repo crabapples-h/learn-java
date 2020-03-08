@@ -49,17 +49,13 @@ public class JpaTest {
     @Test
     public void getAllUserTest() {
         userService.findAll().forEach(e -> {
-            Set<SysRole> sysRoles = e.getSysRoles();
+            List<SysRole> sysRoles = e.getSysRoles();
             sysRoles.forEach(t -> {
-                Set<SysMenu> sysMenus = t.getSysMenus();
+                List<SysMenu> sysMenus = t.getSysMenus();
                 sysMenus.forEach(System.err::println);
             });
         });
     }
 
-    @Test
-    public void getMenuTest() {
-        System.err.println(sysMenuRepository.findByParentIdIsNull());
-    }
 }
 

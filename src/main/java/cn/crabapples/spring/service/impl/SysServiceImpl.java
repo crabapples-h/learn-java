@@ -124,10 +124,9 @@ public class SysServiceImpl implements SysService {
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public List<SysMenu> getSysMenus() {
-        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
+    public List<SysMenu> getSysMenus(SysUser user) {
         logger.info("开始获取用户:[{}]已授权的菜单", user.getId());
-        Set<SysMenu> userMenus = new HashSet<>();
+        List<SysMenu> userMenus = new ArrayList<>();
         user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
         logger.debug("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
         List<SysMenu> allMenuTreesTemp = insertChildrenMenus(sysMenuRepository.findByParentIdIsNull());
@@ -198,46 +197,4 @@ public class SysServiceImpl implements SysService {
         });
         return menus;
     }
-
-
-//
-//    @SuppressWarnings("all")
-//    public static void main(String[] args) {
-//        Set<SysMenu> userMenus = (Set<SysMenu>) readObj("8");
-//        List<SysMenu> allMenuTreesTemp = (List<SysMenu>) readObj("9");
-//        userMenus.forEach(e -> filterChildrenMenus(e, allMenuTreesTemp));
-//        userMenus.forEach(e -> filterParentMenus(allMenuTreesTemp));
-//        System.err.println(userMenus);
-//        System.err.println(allMenuTreesTemp);
-////        changeParentFlag(allMenuTreesTemp);
-////        System.err.println(allMenuTreesTemp);
-//////        List<SysMenu> sysMenus = Lists.newArrayList(allMenuTreesTemp);
-////        List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
-//
-////        System.err.println(allMenuTreesTemp);
-//    }
-
-//    private static SysMenu getParent(SysMenu sysMenu, List<SysMenu> allMenus) {
-//        SysMenu parent = new SysMenu();
-//        allMenus.forEach(e -> {
-//            if (sysMenu.getParentId() != null && sysMenu.getParentId().equals(e.getId())) {
-//                getParent(e, allMenus);
-//                parent.add(e);
-//            }
-//        });
-//        return parent;
-//    }
-//
-//
-//
-//    private static Set<SysMenu> getChildren(SysMenu sysMenu, List<SysMenu> allMenus) {
-//        Set<SysMenu> children = new HashSet<>();
-//        allMenus.forEach(e -> {
-//            if (sysMenu.getId().equals(e.getParentId())) {
-//                getChildren(e, allMenus);
-//                children.add(e);
-//            }
-//        });
-//        return children;
-//    }
 }

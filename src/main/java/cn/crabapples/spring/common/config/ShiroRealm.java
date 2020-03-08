@@ -1,6 +1,9 @@
 package cn.crabapples.spring.common.config;
 
+import cn.crabapples.spring.entity.SysMenu;
+import cn.crabapples.spring.entity.SysRole;
 import cn.crabapples.spring.entity.SysUser;
+import cn.crabapples.spring.service.SysService;
 import cn.crabapples.spring.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -8,7 +11,13 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -24,9 +33,11 @@ import org.springframework.context.annotation.Configuration;
 public class ShiroRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(ShiroRealm.class);
     private UserService userService;
+    private final SysService sysService;
 
-    public ShiroRealm(UserService userService) {
+    public ShiroRealm(UserService userService, SysService sysService) {
         this.userService = userService;
+        this.sysService = sysService;
     }
 
     /**
@@ -37,12 +48,34 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        SysUser user = (SysUser) principalCollection.getPrimaryPrincipal();
+        List<SysMenu> menus = sysService.getSysMenus(user);
+        Set<String> permissions = getPermissions(menus);
+//        user.getSysRoles().forEach(e -> {
+//            menus.addAll(e.getSysMenus());
+//        });
+//        System.err.println(user);
+//        Set<String> permissions = new HashSet<>();
+//        menus.forEach(e -> System.err.println(e.getName()));
+//        menus.forEach(e -> permissions.add(e.getPermission()));
+////        System.err.println(menus);
+        System.err.println(permissions);
+////        principalCollection
         System.err.println("授权");
         return null;
     }
 
+    private Set<String> getPermissions(List<SysMenu> menus){
+        Set<String> permissions = new HashSet<>();
+        menus.forEach(e->{
+            permissions.addAll(getPermissions(e.getChildren()));
+            permissions.add(e.getPermission());
+        });
+        return permissions;
+    }
     /**
      * shiro认证调用的方法
+     *
      * @param authenticationToken shiro认证的token
      * @return 用户认证信息
      * @throws AuthenticationException IncorrectCredentialsException密码错误 UnknownAccountException用户名错误

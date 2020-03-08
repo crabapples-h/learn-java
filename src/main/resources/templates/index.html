@@ -75,14 +75,15 @@
           <i class="iconfont nav_right">&#xe697;</i>
         </a>
         <ul class="sub-menu">
-          <li v-for="item in item.children">
-            <!-- 生成目录 -->
+          <!--生成一级目录-->
+          <li v-for="item in item.children" shiro:hasPermission="item.permission">
             <a href="javascript:;" v-if="item.menuType === '1'">
               <i class="iconfont">&#xe70b;</i>
               <cite>{{item.name}}</cite>
               <i class="iconfont nav_right">&#xe697;</i>
             </a>
             <ul class="sub-menu" v-if="item.menuType === '1'">
+              <!-- 生成二级目录 -->
               <li v-for="item in item.children">
                 <a @click="menuOnClick(item.name, item.url)">
                   <i class="iconfont">&#xe6a7;</i>
@@ -575,6 +576,8 @@
             return
           }
           _this.menus = this.createMenus(result.data).sort((a, b) => {return a.sort - b.sort})
+          console.log(JSON.stringify(_this.menus))
+
         }).catch(function (error) {
           // 请求失败处理
           console.log(error);
@@ -591,12 +594,14 @@
                 name: `${e.name}`,
                 url: `${e.url}`,
                 menuType: `${e.menuType}`,
-                onclick: (name, url) => {
-                  xadmin.add_tab(name, url)
-                },
+                permission:`${e.permission}`,
+                level:`${e.level}`,
                 children: this.createMenus(e.children).sort((a, b) => {
                   return a.sort - b.sort
                 }),
+                onclick: (name, url) => {
+                  xadmin.add_tab(name, url)
+                },
               })
             }
         )

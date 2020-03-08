@@ -12,7 +12,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TODO 用户实体类
@@ -60,7 +59,7 @@ public class SysUser extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JSONField(serialize = false)
-    private Set<SysRole> sysRoles;
+    private List<SysRole> sysRoles;
 
     @Column(columnDefinition = "bit(1) default 0 not null comment '用户状态标记 0:正常 1:禁用'")
     @NotBlank(message = "状态不能为空", groups = IsNotNull.class)

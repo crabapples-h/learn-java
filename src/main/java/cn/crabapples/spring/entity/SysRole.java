@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * TODO 角色实体类
@@ -25,7 +25,7 @@ public class SysRole extends BaseEntity {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<SysMenu> sysMenus;
+    private List<SysMenu> sysMenus;
 
     @Override
     public String toString() {

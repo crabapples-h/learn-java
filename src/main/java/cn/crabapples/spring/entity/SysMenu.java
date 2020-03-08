@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TODO 系统菜单
@@ -36,11 +35,14 @@ public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "varchar(64) comment '菜单链接'")
     private String url;
 
-    @Column(columnDefinition = "int(2) default 0 comment '菜单类型 0: 根菜单 1:菜单树 2:菜单 3:外部链接'")
+    @Column(columnDefinition = "int(2) default 0 comment '菜单类型 1:目录 2:菜单 3:外链 4:按钮'")
     private Integer menuType;
 
     @Column(columnDefinition = "varchar(64) default null comment '上级菜单id'")
     private String parentId;
+
+    @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
+    private Integer level;
 
     @Column(columnDefinition = "varchar(64) default null comment '授权标识'")
     private String permission;

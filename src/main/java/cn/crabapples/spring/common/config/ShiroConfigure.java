@@ -52,6 +52,7 @@ public class ShiroConfigure {
 
         shiroFilterFactory.setFilterChainDefinitionMap(filterMap);
         shiroFilterFactory.setLoginUrl("/");
+        shiroFilterFactory.setUnauthorizedUrl("/");
         return shiroFilterFactory;
     }
 

@@ -4,7 +4,6 @@ import cn.crabapples.spring.entity.SysMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * TODO 系统菜单持久层
@@ -15,8 +14,9 @@ import java.util.Set;
  * qq 294046317
  * pc-name root
  */
-public interface SysMenuRepository extends JpaRepository<SysMenu,String> {
-    List<SysMenu> findByParentIdIsNull();
+public interface SysMenuRepository extends JpaRepository<SysMenu, String> {
 
     List<SysMenu> findByParentId(String parentId);
+
+    List<SysMenu> findByParentIdIsNull();
 }
