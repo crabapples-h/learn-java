@@ -576,6 +576,7 @@
           // console.log(result.data)
 
           let menus = this.createMenus(result.data).sort((a,b)=>{return a.sort - b.sort})
+          console.log(menus)
           _this.menus = menus
         }).catch(function (error) {
           // 请求失败处理
@@ -583,7 +584,7 @@
         });
       },
       createMenus(arrays) {
-        console.error(arrays)
+        // console.error(arrays)
         let menus = []
         arrays.forEach(e => {
               menus.push({

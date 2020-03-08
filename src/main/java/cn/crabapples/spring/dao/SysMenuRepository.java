@@ -3,6 +3,7 @@ package cn.crabapples.spring.dao;
 import cn.crabapples.spring.entity.SysMenu;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Set;
  * pc-name root
  */
 public interface SysMenuRepository extends JpaRepository<SysMenu,String> {
-    Set<SysMenu> findByParentIdIsNull();
+    List<SysMenu> findByParentIdIsNull();
 
-    Set<SysMenu> findByParentId(String parentId);
+    List<SysMenu> findByParentId(String parentId);
 }

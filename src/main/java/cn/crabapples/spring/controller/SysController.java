@@ -84,7 +84,7 @@ public class SysController extends BaseController {
     @ResponseBody
     public ResponseDTO getSysMenus(){
         logger.info("收到请求->获取菜单列表");
-        Set<?> menus = sysService.getSysMenus();
+        List<SysMenu> menus = sysService.getSysMenus();
         logger.info("获取菜单列表成功:[{}]",menus);
         return ResponseDTO.returnSuccess("操作成功",menus);
     }

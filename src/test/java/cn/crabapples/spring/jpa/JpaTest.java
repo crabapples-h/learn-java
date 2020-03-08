@@ -1,5 +1,6 @@
 package cn.crabapples.spring.jpa;
 
+import cn.crabapples.spring.dao.SysMenuRepository;
 import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.entity.SysRole;
 import cn.crabapples.spring.entity.SysUser;
@@ -33,6 +34,9 @@ public class JpaTest {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SysMenuRepository sysMenuRepository;
+
     @Test
     public void jpaTest() {
         List<SysUser> sql = userServiceTest.findBySQL("kitty");
@@ -51,6 +55,11 @@ public class JpaTest {
                 sysMenus.forEach(System.err::println);
             });
         });
+    }
+
+    @Test
+    public void getMenuTest() {
+        System.err.println(sysMenuRepository.findByParentIdIsNull());
     }
 }
 

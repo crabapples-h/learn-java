@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,7 +46,10 @@ public class SysMenu extends BaseEntity {
     private String permission;
 
     @Transient
-    private Set<SysMenu> children;
+    private List<SysMenu> children;
+
+    @Transient
+    private boolean showFlag;
 
     @Override
     public String toString() {

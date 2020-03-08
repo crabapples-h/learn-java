@@ -48,6 +48,7 @@ public class ShiroConfigure {
         filterMap.put("/X-admin/fonts/**","anon");
         filterMap.put("/X-admin/lib/**","anon");
 
+//        filterMap.put("/index","perms[]");
 
         shiroFilterFactory.setFilterChainDefinitionMap(filterMap);
         shiroFilterFactory.setLoginUrl("/");

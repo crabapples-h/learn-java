@@ -1,8 +1,10 @@
 package cn.crabapples.spring.service;
 
 import cn.crabapples.spring.dto.ResponseDTO;
+import cn.crabapples.spring.entity.SysMenu;
 import cn.crabapples.spring.form.UserForm;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,5 +27,5 @@ public interface SysService {
      * 获取系统菜单
      * @return
      */
-    Set<? extends Object> getSysMenus();
+    List<SysMenu> getSysMenus();
 }

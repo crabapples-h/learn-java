@@ -8,6 +8,8 @@ import cn.crabapples.spring.entity.SysUser;
 import cn.crabapples.spring.form.UserForm;
 import cn.crabapples.spring.service.SysService;
 import cn.crabapples.spring.service.UserService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -116,25 +118,68 @@ public class SysServiceImpl implements SysService {
 
     /**
      * 获取当前用户拥有的菜单
-     *
      * @return 当前用户拥有的菜单
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public Set<? extends Object> getSysMenus() {
+    public List<SysMenu> getSysMenus() {
         SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
         logger.info("开始获取用户:[{}]已授权的菜单", user.getId());
         Set<SysMenu> userMenus = new HashSet<>();
         user.getSysRoles().forEach(e -> userMenus.addAll(e.getSysMenus()));
-        logger.info("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
+//        logger.info("用户:[{}]已授权的菜单为:[{}]即将开始格式化菜单", user.getId(), userMenus);
+//        List<SysMenu> allMenus = sysMenuRepository.findAll();
+//        saveObj(userMenus, "8");
+//        saveObj(allMenus, "9");
+        List<SysMenu> allMenuTreesTemp = insertChildrenMenus(sysMenuRepository.findByParentIdIsNull());
+        userMenus.forEach(e -> filterMenus(e, allMenuTreesTemp));
+        changeParentFlag(allMenuTreesTemp);
+        System.err.println(allMenuTreesTemp);
+//        List<SysMenu> sysMenus = Lists.newArrayList(allMenuTreesTemp);
+        List<SysMenu> sysMenus = removeMenus(allMenuTreesTemp);
 
-
-        List<SysMenu> allMenus = sysMenuRepository.findAll();
-        saveObj(userMenus,"8");
-        saveObj(allMenus,"9");
-//        insertChildrenMenus(sysMenus);
-        return userMenus;
+//        System.err.println(allMenuTreesTemp);
+        return sysMenus;
     }
+
+    public List<SysMenu> removeMenus(List<SysMenu> sysMenus) {
+        for (int i = sysMenus.size() - 1; i >= 0; i--) {
+//            List<SysMenu> children = sysMenus.get(i).getChildren();
+            sysMenus.get(i).setChildren(removeMenus(sysMenus.get(i).getChildren()));
+            if (sysMenus.get(i).getChildren().size() == 0) {
+                if (!sysMenus.get(i).isShowFlag()) {
+                    sysMenus.remove(sysMenus.get(i));
+                }
+            }
+//            sysMenus.get(i).setChildren(sysMenus.get(i).getChildren());
+        }
+        return sysMenus;
+    }
+
+    public void changeParentFlag(List<SysMenu> allMenus) {
+        allMenus.forEach(e -> {
+//            System.err.println(e);
+
+        });
+    }
+
+    public void filterMenus(SysMenu userMenu, List<SysMenu> allMenu) {
+        allMenu.forEach(e -> {
+            filterMenus(userMenu, e.getChildren());
+            e.setShowFlag(userMenu.getId().equals(e.getId()));
+        });
+    }
+
+
+    public List<SysMenu> insertChildrenMenus(List<SysMenu> menus) {
+        menus.forEach(e -> {
+            List<SysMenu> children = sysMenuRepository.findByParentId(e.getId());
+            insertChildrenMenus(children);
+            e.setChildren(children);
+        });
+        return menus;
+    }
+
     void saveObj(Object obj, String f) {
         File file = new File("d:/" + f);
         try {
@@ -160,19 +205,32 @@ public class SysServiceImpl implements SysService {
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
-        Set<SysMenu> userMenus = (Set<SysMenu>) readObj("8");
+        List<SysMenu> userMenus = (List<SysMenu>) readObj("8");
         List<SysMenu> allMenus = (List<SysMenu>) readObj("9");
-        userMenus.forEach(e->{
-            allMenus.forEach(r->{
-                if(e.getId().equals(r.getId())){
-                    System.err.println(e);
-
-                }
-            });
-        });
-//        System.err.println(userMenus);
-//        System.err.println(allMenus);
+        Set<SysMenu> menus = new HashSet<>();
     }
 
-
+//    private static SysMenu getParent(SysMenu sysMenu, List<SysMenu> allMenus) {
+//        SysMenu parent = new SysMenu();
+//        allMenus.forEach(e -> {
+//            if (sysMenu.getParentId() != null && sysMenu.getParentId().equals(e.getId())) {
+//                getParent(e, allMenus);
+//                parent.add(e);
+//            }
+//        });
+//        return parent;
+//    }
+//
+//
+//
+//    private static Set<SysMenu> getChildren(SysMenu sysMenu, List<SysMenu> allMenus) {
+//        Set<SysMenu> children = new HashSet<>();
+//        allMenus.forEach(e -> {
+//            if (sysMenu.getId().equals(e.getParentId())) {
+//                getChildren(e, allMenus);
+//                children.add(e);
+//            }
+//        });
+//        return children;
+//    }
 }
