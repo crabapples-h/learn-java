@@ -561,8 +561,6 @@
     mounted() {
       if (this.isDebug) {
         this.menus = this.menusDemo
-        console.log(JSON.stringify(this.menus))
-
       } else {
         this.getMenus()
       }
@@ -576,13 +574,7 @@
             layer.msg(result.message)
             return
           }
-          // console.log(result.data)
-          let menus = this.createMenus(result.data).sort((a, b) => {
-            return a.sort - b.sort
-          })
-
-          _this.menus = menus
-          console.log(JSON.stringify(_this.menus))
+          _this.menus = this.createMenus(result.data).sort((a, b) => {return a.sort - b.sort})
         }).catch(function (error) {
           // 请求失败处理
           console.log(error);
@@ -610,8 +602,9 @@
         )
         return menus
       },
+
       menuOnClick(name, url) {
-        console.log(name, url)
+        console.log('用户点击了菜单--->',name, url)
         xadmin.add_tab(name, url)
       }
     }
