@@ -41,7 +41,6 @@ public class MenusController extends BaseController {
 
 
     @RequestMapping("/getMenuList")
-    @ApiOperation(value = "获取菜单列表", notes = "获取菜单列表")
     public ResponseDTO getMenuList(){
         logger.info("收到请求->获取菜单列表:[{}]");
 //        super.validator(form, IsAdd.class);
@@ -51,7 +50,6 @@ public class MenusController extends BaseController {
     }
 
     @RequestMapping("/getMenuInfo/{id}")
-    @ApiOperation(value = "获取菜单详情", notes = "获取菜单详情")
     public ResponseDTO getMenuInfo(@PathVariable String id){
         logger.info("收到请求->获取菜单详情:[{}]", id);
         List<MenuInfo> menuInfos = menuInfoService.findByListId(id);
@@ -59,15 +57,14 @@ public class MenusController extends BaseController {
         return ResponseDTO.returnSuccess("操作成功",menuInfos);
     }
 
-//    @PostMapping("/submit")
-//    @ApiOperation(value = "修改用户", notes = "修改用户接口")
-//    public ResponseDTO submit(@RequestBody UserForm form){
-//        logger.info("收到请求->修改用户:[{}]",form);
+    @PostMapping("/submit")
+    public ResponseDTO submit(@RequestBody List<MenuInfo> menuInfos){
+        logger.info("收到请求->确认订单:[{}]",menuInfos);
 //        super.validator(form, IsEdit.class);
 //        SysUser user = userService.editUser(form);
 //        logger.info("用户修改完成->用户信息:[{}]",user);
-//        return ResponseDTO.returnSuccess("操作成功",user);
-//    }
+        return ResponseDTO.returnSuccess("操作成功");
+    }
 //
 //    @PostMapping("/delUser")
 //    @ApiOperation(value = "删除用户", notes = "删除用户接口")
