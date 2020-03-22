@@ -1,6 +1,6 @@
 package cn.crabapples.spring.dao;
 
-import cn.crabapples.spring.entity.MenuInfo;
+import cn.crabapples.spring.entity.ShopInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,6 +14,6 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-public interface MenuInfoRepository extends JpaRepository<MenuInfo,String> {
-    List<MenuInfo> findByListId(String id);
+public interface ShopInfoRepository extends JpaRepository<ShopInfo,String> {
+    List<ShopInfo> findByListId(String id);
 }

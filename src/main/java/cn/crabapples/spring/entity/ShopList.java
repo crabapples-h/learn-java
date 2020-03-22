@@ -19,7 +19,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class MenuList extends BaseEntity {
+public class ShopList extends BaseEntity {
     private String name;
 
     @Override

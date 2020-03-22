@@ -1,10 +1,11 @@
 package cn.crabapples.spring.common.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 //@ConditionalOnWebApplication
-//@Configuration
+@Configuration
 public class WebSocketConfigure {
 
     @Bean
@@ -12,8 +13,8 @@ public class WebSocketConfigure {
         return new ServerEndpointExporter();
     }
 
-    @Bean
-    public CustomSpringConfigure customSpringConfigurator() {
-        return new CustomSpringConfigure();
-    }
+//    @Bean
+//    public CustomSpringConfigure customSpringConfigurator() {
+//        return new CustomSpringConfigure();
+//    }
 }

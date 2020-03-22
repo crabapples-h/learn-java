@@ -2,18 +2,22 @@ package cn.crabapples.spring.controller;
 
 import cn.crabapples.spring.common.BaseController;
 import cn.crabapples.spring.dto.ResponseDTO;
-import cn.crabapples.spring.entity.MenuInfo;
-import cn.crabapples.spring.entity.MenuList;
-import cn.crabapples.spring.service.MenuInfoService;
-import cn.crabapples.spring.service.MenuListService;
+import cn.crabapples.spring.entity.OrderInfo;
+import cn.crabapples.spring.entity.ShopInfo;
+import cn.crabapples.spring.entity.ShopInfoOrder;
+import cn.crabapples.spring.entity.ShopList;
+import cn.crabapples.spring.service.ShopService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
 
 
 /**
@@ -27,43 +31,38 @@ import java.util.List;
  */
 @Controller
 @ResponseBody
-@RequestMapping(value = "/api/menu")
+@RequestMapping(value = "/api/shop")
 @Api("用户管理")
-public class MenusController extends BaseController {
-    private Logger logger = LoggerFactory.getLogger(MenusController.class);
-    private final MenuListService menuListService;
-    private final MenuInfoService menuInfoService;
+public class ShopController extends BaseController {
+    private Logger logger = LoggerFactory.getLogger(ShopController.class);
+    private final ShopService shopService;
 
-    public MenusController(MenuListService menuListService, MenuInfoService menuInfoService) {
-        this.menuListService = menuListService;
-        this.menuInfoService = menuInfoService;
+    public ShopController(ShopService shopService) {
+        this.shopService = shopService;
     }
-
 
     @RequestMapping("/getMenuList")
-    public ResponseDTO getMenuList(){
-        logger.info("收到请求->获取菜单列表:[{}]");
-//        super.validator(form, IsAdd.class);
-        List<MenuList> menuLists = menuListService.findAll();
-        logger.info("获取菜单列表->菜单列表信息:[{}]",menuLists);
-        return ResponseDTO.returnSuccess("操作成功",menuLists);
+    public ResponseDTO getMenuList() {
+        logger.info("收到请求->获取菜单列表");
+        List<ShopList> shopLists = shopService.findAllShopList();
+        logger.info("获取菜单列表->菜单列表信息:[{}]", shopLists);
+        return ResponseDTO.returnSuccess("操作成功", shopLists);
     }
 
-    @RequestMapping("/getMenuInfo/{id}")
-    public ResponseDTO getMenuInfo(@PathVariable String id){
+    @RequestMapping("/getGoodsInfo/{id}")
+    public ResponseDTO getGoodsInfo(@PathVariable String id) {
         logger.info("收到请求->获取菜单详情:[{}]", id);
-        List<MenuInfo> menuInfos = menuInfoService.findByListId(id);
-        logger.info("获取菜单详情->菜单详情信息:[{}]",menuInfos);
-        return ResponseDTO.returnSuccess("操作成功",menuInfos);
+        List<ShopInfo> shopInfos = shopService.findShopInfoByListId(id);
+        logger.info("获取菜单详情->菜单详情信息:[{}]", shopInfos);
+        return ResponseDTO.returnSuccess("操作成功", shopInfos);
     }
 
     @PostMapping("/submit")
-    public ResponseDTO submit(@RequestBody List<MenuInfo> menuInfos){
-        logger.info("收到请求->确认订单:[{}]",menuInfos);
-//        super.validator(form, IsEdit.class);
-//        SysUser user = userService.editUser(form);
-//        logger.info("用户修改完成->用户信息:[{}]",user);
-        return ResponseDTO.returnSuccess("操作成功");
+    public ResponseDTO submit(@RequestBody List<ShopInfo> shopInfos) {
+        logger.info("收到请求->确认订单:[{}]", shopInfos);
+        OrderInfo orderInfo = shopService.saveShopInfoOrders(shopInfos);
+        logger.info("下单成功->订单信息:[{}]",orderInfo);
+        return ResponseDTO.returnSuccess("操作成功",orderInfo);
     }
 //
 //    @PostMapping("/delUser")
