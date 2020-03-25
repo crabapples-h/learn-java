@@ -65,7 +65,7 @@
 <!-- 顶部结束 -->
 <!-- 中部开始 -->
 <!-- 左侧菜单开始 -->
-<div class="left-nav">
+<div class="left-nav" id="sys-menus">
   <div id="side-nav">
     <ul id="nav">
       <li v-for="item in menus">
@@ -139,7 +139,7 @@
 </body>
 <script>
   let vue = new Vue({
-    el: '#side-nav',
+    el: '#sys-menus',
     data() {
       return {
         isDebug: false,
@@ -592,7 +592,7 @@
                 sort: `${e.sort}`,
                 icon: `${e.icon}`,
                 name: `${e.name}`,
-                url: `${e.url}`,
+                url: `/view${e.url}`,
                 menuType: `${e.menuType}`,
                 permission:`${e.permission}`,
                 level:`${e.level}`,

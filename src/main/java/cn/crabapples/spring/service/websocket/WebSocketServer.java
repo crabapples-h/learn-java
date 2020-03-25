@@ -47,7 +47,7 @@ public class WebSocketServer {
         }
     }
 
-    private void sendMessage(Session session, String message) {
+    void sendMessage(Session session, String message) {
         try {
             session.getBasicRemote().sendText(message);
         } catch (IOException e) {

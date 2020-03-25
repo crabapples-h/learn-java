@@ -56,16 +56,17 @@ public class ShiroConfigure {
          *  perms需要授权的url
          */
 //        filterMap.put("/**","authc");
-        filterMap.put("/**","anon");
-//        filterMap.put("/login","anon");
-//
-//        filterMap.put("/js/**","anon");
-//        filterMap.put("/css/**","anon");
-//        filterMap.put("/X-admin/css/**","anon");
-//        filterMap.put("/X-admin/js/**","anon");
-//        filterMap.put("/X-admin/images/**","anon");
-//        filterMap.put("/X-admin/fonts/**","anon");
-//        filterMap.put("/X-admin/lib/**","anon");
+        filterMap.put("/api/shop/**","anon");
+        filterMap.put("/login","anon");
+
+        filterMap.put("/js/**","anon");
+        filterMap.put("/css/**","anon");
+        filterMap.put("/X-admin/css/**","anon");
+        filterMap.put("/X-admin/js/**","anon");
+        filterMap.put("/X-admin/images/**","anon");
+        filterMap.put("/X-admin/fonts/**","anon");
+        filterMap.put("/X-admin/lib/**","anon");
+        filterMap.put("/view/**","anon");
 
 //        filterMap.put("/index","perms[]");
 

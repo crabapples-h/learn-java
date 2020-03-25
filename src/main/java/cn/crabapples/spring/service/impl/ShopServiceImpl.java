@@ -59,6 +59,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public List<ShopInfo> findAllShopInfo() {
+        return menuInfoRepository.findAll();
+    }
+
+    @Override
     public synchronized OrderInfo saveShopInfoOrders(List<ShopInfo> shopInfos) {
         StringBuilder sort = new StringBuilder(SORT.toString());
         BigDecimal sum = new BigDecimal("0");

@@ -43,7 +43,7 @@ public abstract class BaseController {
         if(e instanceof UnauthorizedException){
             info = "未获授权";
         }
-        logger.error("出现异常:[{}][{}]",info,e.getMessage());
+        logger.error("出现异常:[{}][{}]\n",info,e.getMessage(),e);
 
         return "redirect:http://www.baidu.com";
     }
@@ -51,7 +51,7 @@ public abstract class BaseController {
     @ExceptionHandler
     @ResponseBody
     protected ResponseDTO applicationExceptionHandler(ApplicationException e){
-        logger.error("ajax出现异常:[{}]",e.getMessage(),e);
+        logger.error("ajax出现异常:[{}]\n",e.getMessage(),e);
         return ResponseDTO.returnError("操作失败",e.getMessage());
     }
 }

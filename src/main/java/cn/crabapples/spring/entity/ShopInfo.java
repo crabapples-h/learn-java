@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 
 /**
@@ -29,6 +30,9 @@ public class ShopInfo extends BaseEntity {
     private Integer count;
     private BigDecimal amt;
     private BigDecimal sum;
+
+    @ManyToOne
+    private ShopList shopList;
 
     @Override
     public String toString() {

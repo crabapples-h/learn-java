@@ -23,4 +23,6 @@ public interface ShopService {
     List<ShopInfo> findShopInfoByListId(String id);
 
     OrderInfo saveShopInfoOrders(List<ShopInfo> submits);
+
+    List<ShopInfo> findAllShopInfo();
 }

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /**
  * TODO
@@ -21,6 +23,8 @@ import javax.persistence.Entity;
 @Setter
 public class ShopList extends BaseEntity {
     private String name;
+    @OneToMany
+    private List<ShopInfo> shopInfos;
 
     @Override
     public String toString() {

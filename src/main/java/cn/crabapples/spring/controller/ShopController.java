@@ -49,10 +49,18 @@ public class ShopController extends BaseController {
         return ResponseDTO.returnSuccess("操作成功", shopLists);
     }
 
-    @RequestMapping("/getGoodsInfo/{id}")
-    public ResponseDTO getGoodsInfo(@PathVariable String id) {
+    @RequestMapping("/getGoodsInfoById/{id}")
+    public ResponseDTO getGoodsInfoById(@PathVariable String id) {
         logger.info("收到请求->获取菜单详情:[{}]", id);
         List<ShopInfo> shopInfos = shopService.findShopInfoByListId(id);
+        logger.info("获取菜单详情->菜单详情信息:[{}]", shopInfos);
+        return ResponseDTO.returnSuccess("操作成功", shopInfos);
+    }
+
+    @RequestMapping("/getAllGoodsInfo")
+    public ResponseDTO getAllGoodsInfo() {
+        logger.info("收到请求->获取菜单详情");
+        List<ShopInfo> shopInfos = shopService.findAllShopInfo();
         logger.info("获取菜单详情->菜单详情信息:[{}]", shopInfos);
         return ResponseDTO.returnSuccess("操作成功", shopInfos);
     }

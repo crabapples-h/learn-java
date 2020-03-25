@@ -73,7 +73,6 @@ public class SysController extends BaseController {
      * @return 登录后的主页面
      */
     @GetMapping("/index")
-    @RequiresPermissions("abc:wewe")
     public String index(){
         logger.info("收到请求->进入主页");
         return "index";

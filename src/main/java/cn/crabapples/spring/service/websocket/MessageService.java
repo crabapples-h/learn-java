@@ -17,13 +17,10 @@ import javax.websocket.Session;
 @Slf4j
 @Service
 public class MessageService {
-
     private WebSocketServer webSocketServer;
-
     public MessageService(WebSocketServer webSocketServer) {
         this.webSocketServer = webSocketServer;
     }
-
     public void sendMessage(String message, String sid) {
         Session session = webSocketServer.webSocketMap.get(sid);
         if (session == null) {
