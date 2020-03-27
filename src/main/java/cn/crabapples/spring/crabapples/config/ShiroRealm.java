@@ -1,4 +1,4 @@
-package cn.crabapples.spring.system.common.config;
+package cn.crabapples.spring.crabapples.config;
 
 import cn.crabapples.spring.system.entity.SysMenu;
 import cn.crabapples.spring.system.entity.SysUser;
@@ -13,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 

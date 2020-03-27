@@ -1,11 +1,11 @@
-package cn.crabapples.spring.system.controller;
+package cn.crabapples.spring.crabapples.controller;
 
+import cn.crabapples.spring.crabapples.entity.OrderInfo;
+import cn.crabapples.spring.crabapples.entity.ShopInfo;
+import cn.crabapples.spring.crabapples.entity.ShopList;
+import cn.crabapples.spring.crabapples.service.ShopService;
 import cn.crabapples.spring.system.common.BaseController;
 import cn.crabapples.spring.system.dto.ResponseDTO;
-import cn.crabapples.spring.system.entity.OrderInfo;
-import cn.crabapples.spring.system.entity.ShopInfo;
-import cn.crabapples.spring.system.entity.ShopList;
-import cn.crabapples.spring.system.service.ShopService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

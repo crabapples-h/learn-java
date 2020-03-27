@@ -1,6 +1,6 @@
-package cn.crabapples.spring.system.dao;
+package cn.crabapples.spring.crabapples.dao;
 
-import cn.crabapples.spring.system.entity.ShopList;
+import cn.crabapples.spring.crabapples.entity.ShopList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

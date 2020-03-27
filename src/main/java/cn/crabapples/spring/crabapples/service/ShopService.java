@@ -1,8 +1,8 @@
-package cn.crabapples.spring.system.service;
+package cn.crabapples.spring.crabapples.service;
 
-import cn.crabapples.spring.system.entity.OrderInfo;
-import cn.crabapples.spring.system.entity.ShopInfo;
-import cn.crabapples.spring.system.entity.ShopList;
+import cn.crabapples.spring.crabapples.entity.OrderInfo;
+import cn.crabapples.spring.crabapples.entity.ShopInfo;
+import cn.crabapples.spring.crabapples.entity.ShopList;
 
 import java.util.List;
 

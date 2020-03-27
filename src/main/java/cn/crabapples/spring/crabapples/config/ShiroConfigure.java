@@ -1,4 +1,4 @@
-package cn.crabapples.spring.system.common.config;
+package cn.crabapples.spring.crabapples.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.mgt.SecurityManager;

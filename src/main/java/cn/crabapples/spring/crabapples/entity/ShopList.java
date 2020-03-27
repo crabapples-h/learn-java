@@ -1,4 +1,4 @@
-package cn.crabapples.spring.system.entity;
+package cn.crabapples.spring.crabapples.entity;
 
 import cn.crabapples.spring.system.common.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
