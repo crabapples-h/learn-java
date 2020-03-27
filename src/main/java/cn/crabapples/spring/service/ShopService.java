@@ -25,4 +25,8 @@ public interface ShopService {
     OrderInfo saveShopInfoOrders(List<ShopInfo> submits);
 
     List<ShopInfo> findAllShopInfo();
+
+    ShopInfo changeStatus(String id);
+
+    void deleteGoods(List<String> ids);
 }

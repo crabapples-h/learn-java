@@ -72,26 +72,22 @@ public class ShopController extends BaseController {
         logger.info("下单成功->订单信息:[{}]",orderInfo);
         return ResponseDTO.returnSuccess("操作成功",orderInfo);
     }
-//
-//    @PostMapping("/delUser")
-//    @ApiOperation(value = "删除用户", notes = "删除用户接口")
-//    public ResponseDTO delUser(@RequestBody UserForm form){
-//        super.validator(form, IsStatusChange.class);
-//        logger.info("收到请求->删除用户:[{}]",form.getId());
-//        userService.delUser(form.getId());
-//        logger.info("用户删除完成");
-//        return ResponseDTO.returnSuccess("操作成功");
-//    }
-//
-//    @PostMapping("/unActiveUser")
-//    @ApiOperation(value = "禁用用户", notes = "禁用用户接口")
-//    public ResponseDTO unActiveUser(@RequestBody UserForm form){
-//        super.validator(form, IsStatusChange.class);
-//        logger.info("收到请求->禁用用户:[{}]",form.getId());
-//        userService.unActiveUser(form.getId());
-//        logger.info("用户禁用完成");
-//        return ResponseDTO.returnSuccess("操作成功");
-//    }
+
+    @PutMapping("/changeStatus/{id}")
+    public ResponseDTO changeStatus(@PathVariable String id){
+        logger.info("收到请求->修改商品状态:[{}]",id);
+        shopService.changeStatus(id);
+        logger.info("修改商品状态完成");
+        return ResponseDTO.returnSuccess("操作成功");
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseDTO delete(@RequestBody List<String> ids){
+        logger.info("收到请求->删除商品:[{}]",ids);
+        shopService.deleteGoods(ids);
+        logger.info("删除商品完成");
+        return ResponseDTO.returnSuccess("操作成功");
+    }
 //
 //    @PostMapping("/activeUser")
 //    @ApiOperation(value = "激活用户", notes = "激活用户接口")

@@ -1,5 +1,6 @@
 package cn.crabapples.spring.service.impl;
 
+import cn.crabapples.spring.common.ApplicationException;
 import cn.crabapples.spring.dao.OrderInfoRepository;
 import cn.crabapples.spring.dao.ShopInfoOrderRepository;
 import cn.crabapples.spring.dao.ShopInfoRepository;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -56,6 +58,21 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<ShopInfo> findShopInfoByListId(String id) {
         return menuInfoRepository.findByListId(id);
+    }
+
+    @Override
+    public void deleteGoods(List<String> ids) {
+//        ids.forEach(menuInfoRepository::deleteById);
+    }
+
+    @Override
+    public ShopInfo changeStatus(String id) {
+        ShopInfo shopInfo = menuInfoRepository.findById(id).orElse(null);
+        if (null != shopInfo) {
+            shopInfo.setStatus(!shopInfo.isStatus());
+            return menuInfoRepository.save(shopInfo);
+        }
+        throw new ApplicationException("商品信息异常");
     }
 
     @Override

@@ -30,6 +30,7 @@ public class ShopInfo extends BaseEntity {
     private Integer count;
     private BigDecimal amt;
     private BigDecimal sum;
+    private boolean status;
 
     @ManyToOne
     private ShopList shopList;
