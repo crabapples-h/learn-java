@@ -10,8 +10,7 @@
           <span class="layui-breadcrumb">
             <a href="">首页</a>
             <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
+            <a><cite>导航元素</cite></a>
           </span>
   <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()"
      title="刷新">
@@ -27,12 +26,14 @@
               <input type="text" name="username" placeholder="请输入商品名" autocomplete="off" class="layui-input">
             </div>
             <div class="layui-inline layui-show-xs-block">
-              <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+              <button class="layui-btn" lay-submit="" lay-filter="sreach">
+                <i class="layui-icon">&#xe615;</i>
+              </button>
             </div>
 <!--            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>-->
-            <button class="layui-btn" @click="edit()">
+            <a class="layui-btn" @click="edit()">
               <i class="layui-icon"></i>添加
-            </button>
+            </a>
           </form>
         </div>
         <div class="layui-card-body layui-table-body layui-table-main">
@@ -53,7 +54,7 @@
             <tbody>
             <tr v-for="item in goods">
               <!--              <td><input type="checkbox" name="id" :value="item.id" lay-skin="primary"></td>-->
-              <td><img :src="item.img" alt=""></td>
+<!--              <td><img :src="item.img" alt=""></td>-->
               <td>{{item.title}}</td>
               <td>{{item.name}}</td>
               <td>{{item.content}}</td>

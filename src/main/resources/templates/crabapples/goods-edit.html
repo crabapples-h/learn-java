@@ -4,208 +4,132 @@
   <header data-th-include="common :: meta"></header>
   <header data-th-replace="common :: javascript"></header>
   <header data-th-replace="common :: style"></header>
-
 </head>
+
 <body>
-<div class="x-nav">
-          <span class="layui-breadcrumb">
-            <a href="">首页</a>
-            <a href="">演示</a>
-            <a>
-              <cite>导航元素</cite></a>
-          </span>
-  <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()"
-     title="刷新">
-    <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
-</div>
 <div class="layui-fluid">
-  <div class="layui-row layui-col-space15">
-    <div class="layui-col-md12">
-      <div class="layui-card" id="goods">
-        <div class="layui-card-body ">
-          <form class="layui-form layui-col-space5">
-            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-            <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i
-                class="layui-icon"></i>添加
-            </button>
-            <div class="layui-inline layui-show-xs-block">
-              <input type="text" name="username" placeholder="请输入商品名" autocomplete="off" class="layui-input">
+  <div class="layui-row">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                <legend>常规使用：普通图片上传</legend>
+            </fieldset>
+
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传图片</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div>
             </div>
-            <div class="layui-inline layui-show-xs-block">
-              <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-            </div>
-          </form>
         </div>
-        <div class="layui-card-body layui-table-body layui-table-main">
-          <table class="layui-table layui-form">
-            <thead>
-            <tr>
-              <th>
-                <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
-              </th>
-              <th>图片</th>
-              <th>商品标题</th>
-              <th>商品名</th>
-              <th>简介</th>
-              <th>单价</th>
-              <th>上级菜单</th>
-              <th>状态</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="item in goods">
-              <td>
-                <input type="checkbox" name="id" :value="item.id" lay-skin="primary">
-              </td>
-              <td><img :src="item.img" alt=""></td>
-              <td>{{item.title}}</td>
-              <td>{{item.name}}</td>
-              <td>{{item.content}}</td>
-              <td>{{item.amt}}</td>
-              <td>{{item.listId}}</td>
-              <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
-              </td>
-              <td class="td-manage">
-                <a onclick="stop(this,'10001')" href="javascript:;" title="下架">
-                  <i class="layui-icon">&#xe601;</i>
-                </a>
-                <a title="编辑" onclick="xadmin.open('编辑','member-edit.html',600,400)" href="javascript:;">
-                  <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
-                  <i class="layui-icon">&#xe640;</i>
-                </a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="layui-card-body ">
-          <div class="page">
-            <div>
-              <a class="prev" href="">&lt;&lt;</a>
-              <a class="num" href="">1</a>
-              <span class="current">2</span>
-              <a class="num" href="">3</a>
-              <a class="num" href="">489</a>
-              <a class="next" href="">&gt;&gt;</a>
-            </div>
-          </div>
+
+      <div class="layui-form-item">
+        <label for="title" class="layui-form-label">
+          <span class="x-red">*</span>商品标题
+        </label>
+        <div class="layui-input-inline">
+          <input type="text" id="title" name="title" required="" lay-verify="title" autocomplete="off"
+                 class="layui-input">
         </div>
       </div>
-    </div>
+
+
+      <div class="layui-form-item">
+        <label for="name" class="layui-form-label">
+          <span class="x-red">*</span>商品名
+        </label>
+        <div class="layui-input-inline">
+          <input type="password" id="name" name="name" required="" lay-verify="name" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label for="comment" class="layui-form-label">
+          <span class="x-red">*</span>简介
+        </label>
+        <div class="layui-input-inline">
+          <input type="password" id="comment" name="comment" required="" lay-verify="comment" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label for="amt" class="layui-form-label">
+          <span class="x-red">*</span>单价
+        </label>
+        <div class="layui-input-inline">
+          <input type="password" id="amt" name="amt" required="" lay-verify="amt" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label for="parent" class="layui-form-label">
+          <span class="x-red">*</span>上级菜单
+        </label>
+        <div class="layui-input-inline">
+          <input type="password" id="parent" name="parent" required="" lay-verify="parent" autocomplete="off"
+                 class="layui-input">
+        </div>
+      </div>
+
+
+      <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <button class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+      </div>
+
+    </form>
   </div>
 </div>
-</body>
-<script>
-  layui.use(['laydate', 'form'], function () {
-    let laydate = layui.laydate;
-    let form = layui.form;
-    // 监听全选
-    form.on('checkbox(checkall)', function (data) {
-      if (data.elem.checked) {
-        $('tbody input').prop('checked', true);
-      } else {
-        $('tbody input').prop('checked', false);
-      }
-      form.render('checkbox');
-    });
+<script>layui.use(['form', 'layer'],
+    function () {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer;
 
-    //执行一个laydate实例
-    laydate.render({
-      elem: '#start' //指定元素
-    });
-
-    //执行一个laydate实例
-    laydate.render({
-      elem: '#end' //指定元素
-    });
-
-
-  });
-
-  /*用户-停用*/
-  function stop(obj, id) {
-    layer.confirm('确认要下架吗？', function (index) {
-      if ($(obj).attr('title') == '启用') {
-
-        //发异步把用户状态进行更改
-        $(obj).attr('title', '停用')
-        $(obj).find('i').html('&#xe62f;');
-
-        $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-        layer.msg('已停用!', {icon: 5, time: 1000});
-
-      } else {
-        $(obj).attr('title', '启用')
-        $(obj).find('i').html('&#xe601;');
-
-        $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-        layer.msg('已启用!', {icon: 1, time: 1000});
-      }
-
-    });
-  }
-
-  /*用户-删除*/
-  function member_del(obj, id) {
-    layer.confirm('确认要删除吗？', function (index) {
-      //发异步删除数据
-      $(obj).parents("tr").remove();
-      layer.msg('已删除!', {icon: 1, time: 1000});
-    });
-  }
-
-
-  function delAll(argument) {
-    var ids = [];
-
-    // 获取选中的id
-    $('tbody input').each(function (index, el) {
-      if ($(this).prop('checked')) {
-        ids.push($(this).val())
-      }
-    });
-
-    layer.confirm('确认要删除吗？' + ids.toString(), function (index) {
-      //捉到所有被选中的，发异步进行删除
-      layer.msg('删除成功', {icon: 1});
-      $(".layui-form-checked").not('.header').parents('tr').remove();
-    });
-  }
-</script>
-
-<script>
-  let vue = new Vue({
-    el: '#goods',
-    data() {
-      return {
-        isDebug: false,
-        goods: [],
-      }
-    },
-    mounted() {
-      this.getAllGoodsInfo()
-    },
-    methods: {
-      getAllGoodsInfo() {
-        const _this = this
-        axios.get('/api/shop/getAllGoodsInfo').then(response => {
-          const result = response.data
-          if (result.status !== 200) {
-            layer.msg(result.message)
-            return
-          }
-          _this.goods = result.data
-          console.log(result.data)
-        }).catch(function (error) {
-          // 请求失败处理
-          console.log(error);
+        //自定义验证规则
+        form.verify({
+            nikename: function (value) {
+                if (value.length < 5) {
+                    return '昵称至少得5个字符啊';
+                }
+            },
+            pass: [/(.+){6,12}$/, '密码必须6到12位'],
+            repass: function (value) {
+                if ($('#L_pass').val() != $('#L_repass').val()) {
+                    return '两次密码不一致';
+                }
+            }
         });
-      }
-    }
-  })
-</script>
+
+        //监听提交
+        form.on('submit(add)',
+            function (data) {
+                console.log(data);
+                //发异步，把数据提交给php
+                layer.alert("增加成功", {
+                        icon: 6
+                    },
+                    function () {
+                        // 获得frame索引
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+                return false;
+            });
+
+    });</script>
+<script>var _hmt = _hmt || [];
+(function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();</script>
+</body>
+
 </html>
