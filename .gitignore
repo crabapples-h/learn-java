@@ -1,5 +1,5 @@
 HELP.md
-/target/
+*/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -32,4 +32,3 @@ HELP.md
 /SingletonDemoFile.temp
 #*-pro*.yml
 #*-pro*.properties
-A.java

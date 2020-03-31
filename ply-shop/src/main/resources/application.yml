@@ -5,9 +5,7 @@ crabapples:
   SALT: crabapples
 
 server:
-  port: 9099 #启动端口
-#  servlet:
-#    context-path: /learn #应用名
+  port: 9095 #启动端口
 nacos:
   config:
     server-addr: '192.168.3.20:8848'
