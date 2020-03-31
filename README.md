@@ -63,3 +63,10 @@
     * 集成shiro授权,登陆成功后返回所有菜单，根据thymeleaf-shiro动态显示菜单(springBoot-jpa-shiro)
 * 20200318
     * 临时关闭nacos配置中心
+* 20200320
+    * 加入rabbitMq简单队列演示
+* 20200321
+    * 加入邮件发送工具类
+    * 加入rabbitMq轮询分发演示
+* 20200323
+    * 加入webSocket演示

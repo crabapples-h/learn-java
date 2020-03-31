@@ -26,17 +26,6 @@ public class FastJsonConfigure {
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteNullListAsEmpty,
                 SerializerFeature.WriteDateUseDateFormat);
-//        fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
-//            if (source == null) {
-//                /*
-//                 * 如果返回对象的变量为null,则自动变成""
-//                 */
-//                return "";
-//            }
-//            return source;
-//        });
-
-
         return fastJsonConfig;
     }
 }

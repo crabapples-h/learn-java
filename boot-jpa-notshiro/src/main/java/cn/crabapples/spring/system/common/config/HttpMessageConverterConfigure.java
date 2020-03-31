@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * TODO springboot 消息转换配置(主要用于配置fastJson解析)
+ * TODO springboot 消息转换配置(主要用于配置消息使用fastJson解析)
  *
  * @author Mr.He
  * 2020/1/31 2:02

@@ -44,8 +44,7 @@ public abstract class BaseController {
             info = "未获授权";
         }
         logger.error("出现异常:[{}][{}]",info,e.getMessage());
-
-        return "redirect:http://www.baidu.com";
+        return null;
     }
 
     @ExceptionHandler
