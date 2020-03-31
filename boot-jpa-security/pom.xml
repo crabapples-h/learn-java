@@ -15,9 +15,16 @@
         <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
         <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
         <bootSecurity.version>2.1.6.RELEASE</bootSecurity.version>
+        <thymeleafExtras.version>3.0.4.RELEASE</thymeleafExtras.version>
     </properties>
 
     <dependencies>
+        <!-- SpringBoot Nacos依赖 配置文件:application -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>${bootNacosConfig.version}</version>
+        </dependency>
 
         <!-- SpringSecurity模块 -->
         <dependency>
@@ -30,14 +37,7 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-            <version>3.0.4.RELEASE</version>
-        </dependency>
-
-        <!-- SpringBoot Nacos依赖 配置文件:application -->
-        <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-config-spring-boot-starter</artifactId>
-            <version>${bootNacosConfig.version}</version>
+            <version>${thymeleafExtras.version}</version>
         </dependency>
 
         <!-- thymeleaf模板引擎 -->
@@ -45,8 +45,5 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-
     </dependencies>
-
 </project>

@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  */
 @SpringBootTest
 @ActiveProfiles("dev")
-//@ContextConfiguration("classpath:application-dev.yml")
+//@ContextConfiguration("classpath:bootstrap-dev.yml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RedisTest {
     @Autowired

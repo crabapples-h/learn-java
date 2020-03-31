@@ -1,13 +1,13 @@
 package cn.crabapples.spring.system.form;
 
-import cn.crabapples.spring.system.common.groups.*;
-import cn.crabapples.spring.system.entity.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * TODO 用户信息提交Form
@@ -19,6 +19,7 @@ import javax.validation.constraints.*;
  * pc-name 29404
  */
 @Data
+
 @ApiModel("登录")
 public class UserForm {
     @NotBlank(message = "id不能为空", groups = IsEdit.class)

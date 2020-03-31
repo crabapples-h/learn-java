@@ -12,7 +12,6 @@
     <artifactId>boot-jpa-notshiro</artifactId>
 
     <properties>
-
         <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
         <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
         <shiro.version>1.4.0</shiro.version>
@@ -20,14 +19,12 @@
     </properties>
 
     <dependencies>
-
         <!-- SpringBoot Nacos依赖 配置文件:application -->
         <dependency>
             <groupId>com.alibaba.boot</groupId>
             <artifactId>nacos-config-spring-boot-starter</artifactId>
             <version>${bootNacosConfig.version}</version>
         </dependency>
-
 
         <!-- thymeleafShiro -->
         <dependency>
@@ -36,7 +33,6 @@
             <version>${thymeleafShiro.version}</version>
         </dependency>
 
-
         <!-- shiroSpring -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -44,16 +40,10 @@
             <version>${shiro.version}</version>
         </dependency>
 
-        <!-- SpringBoot Nacos依赖 配置文件:application -->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.boot</groupId>-->
-        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
-        <!--            <version>${bootNacosConfig.version}</version>-->
-        <!--        </dependency>-->
-
-        <!-- SpringAop依赖 -->
-
-
-
+        <!-- thymeleaf模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
     </dependencies>
 </project>

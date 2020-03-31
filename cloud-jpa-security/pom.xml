@@ -13,17 +13,23 @@
 
     <properties>
         <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>
-        <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
-        <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
+        <webSocket.version>5.1.6.RELEASE</webSocket.version>
         <shiro.version>1.4.0</shiro.version>
         <thymeleafShiro.version>2.0.0</thymeleafShiro.version>
-        <springCloudNacosConfig.version>2.1.0.RELEASE</springCloudNacosConfig.version>
-        <springCloudNacosDiscovery.version>2.1.0.RELEASE</springCloudNacosDiscovery.version>
+        <springCloudNacosConfig.version>2.2.0.RELEASE</springCloudNacosConfig.version>
+        <springCloudNacosDiscovery.version>2.2.0.RELEASE</springCloudNacosDiscovery.version>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.nacos</groupId>-->
+<!--            <artifactId>nacos-client</artifactId>-->
+<!--            <version>1.0.1</version>-->
+<!--        </dependency>-->
 
-        <!--         SpringCloud Nacos依赖 配置文件:bootstrap -->
+
+        <!-- SpringCloud Nacos依赖 配置文件:bootstrap -->
         <!-- 配置管理 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -43,34 +49,24 @@
             <version>${thymeleafShiro.version}</version>
         </dependency>
 
-        <!--         shiroSpring-->
+        <!-- shiroSpring-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
 
-
         <!-- thymeleaf模板引擎 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-        <!--        </dependency>-->
-
-        <!--springboot热部署工具(使用@Cacheable时会报cannot case exception)-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-devtools</artifactId>-->
-        <!--            <optional>true</optional>-->
-        <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
         <!-- webSocket依赖 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-websocket</artifactId>-->
-        <!--            <version>${springBootWebSocket.version}</version>-->
-        <!--        </dependency>-->
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${webSocket.version}</version>
+        </dependency>
     </dependencies>
 </project>

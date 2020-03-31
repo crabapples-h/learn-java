@@ -12,16 +12,6 @@
     <artifactId>boot-jpa-shiro</artifactId>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <fastJson.version>1.2.47</fastJson.version>
-        <lombok.version>1.16.16</lombok.version>
-        <swagger2.version>2.6.1</swagger2.version>
-        <swaggerUI.version>2.6.1</swaggerUI.version>
-        <googleAuth.version>1.2.0</googleAuth.version>
-        <mysqlConnector.version>5.1.47</mysqlConnector.version>
-        <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>
-
         <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
         <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
         <shiro.version>1.4.0</shiro.version>
@@ -29,6 +19,13 @@
     </properties>
 
     <dependencies>
+        <!-- SpringBoot Nacos依赖 配置文件:application -->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.boot</groupId>-->
+        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
+        <!--            <version>${bootNacosConfig.version}</version>-->
+        <!--        </dependency>-->
+
         <!-- thymeleafShiro -->
         <dependency>
             <groupId>com.github.theborakompanioni</groupId>
@@ -43,13 +40,6 @@
             <version>${shiro.version}</version>
         </dependency>
 
-        <!-- SpringBoot Nacos依赖 配置文件:application -->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.boot</groupId>-->
-        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
-        <!--            <version>${bootNacosConfig.version}</version>-->
-        <!--        </dependency>-->
-
         <!-- thymeleaf模板引擎 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,8 +52,5 @@
             <artifactId>spring-websocket</artifactId>
             <version>${springBootWebSocket.version}</version>
         </dependency>
-
-
     </dependencies>
-
 </project>
