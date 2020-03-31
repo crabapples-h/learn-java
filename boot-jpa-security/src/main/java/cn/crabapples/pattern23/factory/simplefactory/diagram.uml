@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="229.28055555555557" y="246.0">Mr.He.pattern23.factory.simplefactory.Client</node>
+    <node x="159.15555555555557" y="164.0">Mr.He.pattern23.factory.simplefactory.FoodFactory</node>
+    <node x="128.00000000000003" y="82.0">Mr.He.pattern23.factory.simplefactory.Apple</node>
+    <node x="0.0" y="82.0">Mr.He.pattern23.factory.simplefactory.Orange</node>
+    <node x="246.00000000000003" y="82.0">Mr.He.pattern23.factory.simplefactory.Peach</node>
+    <node x="244.3166666666667" y="0.0">Mr.He.pattern23.factory.simplefactory.Food</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Mr.He.pattern23.factory.simplefactory.Apple" target="Mr.He.pattern23.factory.simplefactory.Food">
+      <point x="0.0" y="-16.0" />
+      <point x="177.00000000000003" y="62.0" />
+      <point x="270.7166666666667" y="62.0" />
+      <point x="-17.600000000000023" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.FoodFactory" target="Mr.He.pattern23.factory.simplefactory.Peach">
+      <point x="19.75" y="-16.0" />
+      <point x="257.90555555555557" y="134.0" />
+      <point x="295.0" y="134.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.Client" target="Mr.He.pattern23.factory.simplefactory.FoodFactory">
+      <point x="-27.0" y="-16.0" />
+      <point x="256.28055555555557" y="221.0" />
+      <point x="238.15555555555557" y="221.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.FoodFactory" target="Mr.He.pattern23.factory.simplefactory.Apple">
+      <point x="-19.75" y="-16.0" />
+      <point x="218.40555555555557" y="134.0" />
+      <point x="177.00000000000003" y="134.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.Orange" target="Mr.He.pattern23.factory.simplefactory.Food">
+      <point x="0.0" y="-16.0" />
+      <point x="54.0" y="52.0" />
+      <point x="253.1166666666667" y="52.0" />
+      <point x="-35.19999999999999" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.FoodFactory" target="Mr.He.pattern23.factory.simplefactory.Food">
+      <point x="59.25" y="-16.0" />
+      <point x="297.40555555555557" y="144.0" />
+      <point x="354.5" y="144.0" />
+      <point x="354.5" y="62.0" />
+      <point x="305.91666666666674" y="62.0" />
+      <point x="17.600000000000023" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.Peach" target="Mr.He.pattern23.factory.simplefactory.Food">
+      <point x="0.0" y="-16.0" />
+      <point x="295.0" y="62.0" />
+      <point x="288.3166666666667" y="62.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.Client" target="Mr.He.pattern23.factory.simplefactory.Food">
+      <point x="27.0" y="-16.0" />
+      <point x="310.28055555555557" y="221.0" />
+      <point x="372.76666666666665" y="221.0" />
+      <point x="372.76666666666665" y="52.0" />
+      <point x="323.51666666666665" y="52.0" />
+      <point x="35.19999999999999" y="16.0" />
+    </edge>
+    <edge source="Mr.He.pattern23.factory.simplefactory.FoodFactory" target="Mr.He.pattern23.factory.simplefactory.Orange">
+      <point x="-59.25" y="-16.0" />
+      <point x="178.90555555555557" y="144.0" />
+      <point x="54.0" y="144.0" />
+      <point x="0.0" y="16.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="186.5" y="139.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
