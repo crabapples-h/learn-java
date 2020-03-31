@@ -35,7 +35,6 @@
         <mysqlConnector.version>5.1.47</mysqlConnector.version>
         <mail.version>1.4.7</mail.version>
 
-
         <!--        <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>-->
         <!--        <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>-->
         <!--        <bootNacosConfig.version>0.2.3</bootNacosConfig.version>-->
@@ -48,12 +47,6 @@
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>${mail.version}</version>
-        </dependency>
-
-        <!--rabbitmq-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
         <!--rabbitmq-->
@@ -268,12 +261,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
                     <skip>true</skip>
                 </configuration>
             </plugin>
@@ -285,12 +272,8 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
         </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/webapp</directory>
