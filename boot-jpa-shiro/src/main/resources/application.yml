@@ -5,7 +5,7 @@ crabapples:
   SALT: crabapples
 
 server:
-  port: 9099 #启动端口
+  port: 9093 #启动端口
 #  servlet:
 #    context-path: /learn #应用名
 nacos:
@@ -16,7 +16,6 @@ spring:
     name: learn
   profiles:
     active: dev #激活的配置文件
-
   thymeleaf:
     prefix: classpath:templates/ #thymeleaf模板引擎路径
 #    suffix: .html #thymeleaf模板后缀

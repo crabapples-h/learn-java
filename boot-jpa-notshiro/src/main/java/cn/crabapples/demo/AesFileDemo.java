@@ -9,8 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;
 import java.security.SecureRandom;
-import java.util.Date;
-import java.util.Objects;
 
 /**
  * TODO AES加密文件演示

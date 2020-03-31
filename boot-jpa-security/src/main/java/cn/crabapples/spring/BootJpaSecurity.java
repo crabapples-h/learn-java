@@ -31,12 +31,12 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 //@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 //@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
-public class DemoApplication {
-    private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+public class BootJpaSecurity {
+    private static final Logger logger = LoggerFactory.getLogger(BootJpaSecurity.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] [notShiro] >>>>>>>>>");
+        SpringApplication.run(BootJpaSecurity.class, args);
+        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] [springSecurity] >>>>>>>>>");
     }
     @Bean
     public RestTemplate restTemplate() {

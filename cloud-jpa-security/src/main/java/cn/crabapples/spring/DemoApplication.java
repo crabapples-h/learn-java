@@ -32,11 +32,11 @@ import org.springframework.web.client.RestTemplate;
 @EnableJpaAuditing
 @SpringBootApplication
 @EnableDiscoveryClient
-public class DemoApplication {
-    private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+public class CloudJpaSecurity {
+    private static final Logger logger = LoggerFactory.getLogger(CloudJpaSecurity.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(CloudJpaSecurity.class, args);
         logger.info(">>>>>>>>SpringCloud服务启动成功 [nacos] [jpa]>>>>>>>>>");
     }
     @LoadBalanced
