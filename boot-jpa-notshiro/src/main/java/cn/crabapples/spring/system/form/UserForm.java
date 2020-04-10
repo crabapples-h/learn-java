@@ -1,5 +1,7 @@
 package cn.crabapples.spring.system.form;
 
+import cn.crabapples.spring.system.common.groups.*;
+import cn.crabapples.spring.system.entity.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

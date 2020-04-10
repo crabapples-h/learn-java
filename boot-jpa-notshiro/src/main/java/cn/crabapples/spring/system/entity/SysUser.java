@@ -65,8 +65,7 @@ public class SysUser extends BaseEntity {
     @NotBlank(message = "状态不能为空", groups = IsNotNull.class)
     private Integer status;
 
-    @Column(columnDefinition = "bit(1) default 1 not null comment '是否为超级管理员状态标记 0:是 1:否'")
-    private Integer isAdmin;
+    private boolean isAdmin;
 
     @Override
     public String toString() {
