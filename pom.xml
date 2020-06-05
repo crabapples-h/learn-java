@@ -11,6 +11,7 @@
         <module>cloud-jpa-security</module>
         <module>ply-shop</module>
         <module>web-page</module>
+        <module>learn</module>
     </modules>
 
     <parent>
@@ -32,9 +33,8 @@
         <lombok.version>1.16.16</lombok.version>
         <swagger2.version>2.6.1</swagger2.version>
         <swaggerUI.version>2.6.1</swaggerUI.version>
-        <googleAuth.version>1.2.0</googleAuth.version>
         <mysqlConnector.version>5.1.47</mysqlConnector.version>
-        <mail.version>1.4.7</mail.version>
+
 
         <!--        <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>-->
         <!--        <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>-->
@@ -44,23 +44,12 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${mail.version}</version>
-        </dependency>
-
-        <!--rabbitmq-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
+        <!-- webSocket依赖 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework</groupId>-->
+        <!--            <artifactId>spring-websocket</artifactId>-->
+        <!--            <version>${springBootWebSocket.version}</version>-->
+        <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>com.github.theborakompanioni</groupId>-->
         <!--            <artifactId>thymeleaf-extras-shiro</artifactId>-->
@@ -80,6 +69,48 @@
         <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
         <!--            <version>${bootNacosConfig.version}</version>-->
         <!--        </dependency>-->
+        <!-- elasticSearch依赖 -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.elasticsearch.client</groupId>-->
+        <!--            <artifactId>transport</artifactId>-->
+        <!--            <version>7.5.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.elasticsearch.client</groupId>-->
+        <!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
+        <!--            <version>7.5.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.elasticsearch</groupId>-->
+        <!--            <artifactId>elasticsearch</artifactId>-->
+        <!--            <version>7.5.0</version>-->
+        <!--        </dependency>-->
+
+        <!-- redis依赖 -->
+        <!--
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        -->
+        <!--springboot热部署工具(使用@Cacheable时会报cannot case exception)-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-devtools</artifactId>-->
+        <!--            <optional>true</optional>-->
+        <!--        </dependency>-->
+
+        <!--rabbitmq-->
+        <!--
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
         <!-- SpringAop依赖 -->
         <dependency>
@@ -99,10 +130,10 @@
         </dependency>
 
         <!-- thymeleaf模板引擎 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
 
         <!-- swagger依赖 -->
         <dependency>
@@ -114,42 +145,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swaggerUI.version}</version>
-        </dependency>
-
-        <!-- elasticSearch依赖 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch.client</groupId>-->
-        <!--            <artifactId>transport</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch.client</groupId>-->
-        <!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch</groupId>-->
-        <!--            <artifactId>elasticsearch</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
-
-        <!-- redis依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!--springboot热部署工具(使用@Cacheable时会报cannot case exception)-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-devtools</artifactId>-->
-        <!--            <optional>true</optional>-->
-        <!--        </dependency>-->
-
-        <!-- google令牌依赖 -->
-        <dependency>
-            <groupId>com.warrenstrange</groupId>
-            <artifactId>googleauth</artifactId>
-            <version>${googleAuth.version}</version>
         </dependency>
 
         <dependency>
@@ -206,19 +201,6 @@
             <version>${lombok.version}</version>
         </dependency>
 
-        <!-- webSocket依赖 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework</groupId>-->
-        <!--            <artifactId>spring-websocket</artifactId>-->
-        <!--            <version>${springBootWebSocket.version}</version>-->
-        <!--        </dependency>-->
-
-
-        <dependency>
-            <groupId>ch.ethz.ganymed</groupId>
-            <artifactId>ganymed-ssh2</artifactId>
-            <version>RELEASE</version>
-        </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>

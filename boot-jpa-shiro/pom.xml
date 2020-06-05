@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!-- SpringBoot Nacos依赖 配置文件:application -->
+        <!-- Nacos依赖 SpringBoot 配置文件:application.properties -->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.boot</groupId>-->
         <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
@@ -38,12 +38,6 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
-        </dependency>
-
-        <!-- thymeleaf模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
         <!-- webSocket依赖 -->
