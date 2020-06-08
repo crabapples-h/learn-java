@@ -1,0 +1,45 @@
+package cn.crabapples.common;
+
+import cn.crabapples.common.utils.AssertUtils;
+import cn.crabapples.system.dto.ResponseDTO;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Component
+@ControllerAdvice
+public class CustomExceptionHandler {
+    private final Logger logger = LoggerFactory.getLogger(CustomExceptionHandler.class);
+
+
+//    @ExceptionHandler
+//    protected String exceptionHandler(Exception e) {
+//        String info = "";
+//        if (e instanceof UnauthorizedException) {
+//            info = "未获授权";
+//        }
+//        logger.warn("出现异常:[{}][{}]", info, e.getMessage());
+//        return null;
+//    }
+
+    @ExceptionHandler
+    @ResponseBody
+    protected ResponseDTO applicationExceptionHandler(Exception e) {
+        logger.warn("XHR出现异常:[{}]", e.getMessage(), e);
+        if (e instanceof IncorrectCredentialsException) {
+            return ResponseDTO.returnError("密码错误");
+        }
+        if (e instanceof AuthenticationException) {
+            return ResponseDTO.returnError("用户名不存在");
+        }
+        return ResponseDTO.returnError("操作失败", e.getMessage());
+    }
+}

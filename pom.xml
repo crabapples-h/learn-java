@@ -22,7 +22,7 @@
     </parent>
 
     <groupId>cn.crabapples</groupId>
-    <artifactId>learning</artifactId>
+    <artifactId>learning-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
@@ -85,14 +85,23 @@
         <!--            <artifactId>elasticsearch</artifactId>-->
         <!--            <version>7.5.0</version>-->
         <!--        </dependency>-->
-
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
         <!-- redis依赖 -->
-        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        -->
+
         <!--springboot热部署工具(使用@Cacheable时会报cannot case exception)-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->
@@ -101,12 +110,11 @@
         <!--        </dependency>-->
 
         <!--rabbitmq-->
-        <!--
-         <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
--->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>

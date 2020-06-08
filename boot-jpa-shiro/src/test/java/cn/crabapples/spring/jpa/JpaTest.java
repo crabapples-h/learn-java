@@ -1,11 +1,11 @@
 package cn.crabapples.spring.jpa;
 
-import cn.crabapples.spring.system.dao.SysMenuRepository;
-import cn.crabapples.spring.system.entity.SysMenu;
-import cn.crabapples.spring.system.entity.SysRole;
-import cn.crabapples.spring.system.entity.SysUser;
-import cn.crabapples.spring.system.service.UserService;
-import cn.crabapples.spring.test.service.UserServiceTest;
+import cn.crabapples.system.dao.jpa.SysMenuRepository;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysRole;
+import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.service.UserService;
+import cn.crabapples.test.service.UserServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

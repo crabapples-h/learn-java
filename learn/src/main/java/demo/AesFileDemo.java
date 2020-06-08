@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;
 import java.security.SecureRandom;
+import java.util.Objects;
 
 /**
  * TODO AES加密文件演示
@@ -44,7 +45,7 @@ public class AesFileDemo {
         secureRandom.setSeed(seed.getBytes());
         keyGenerator.init(128, secureRandom);
         SecretKey secretKey = keyGenerator.generateKey();
-        logger.debug("生成的key为:[{}],种子为:[{}]",secretKey,seed);
+        logger.debug("生成的key为:[{}],种子为:[{}]", secretKey, seed);
         return secretKey;
     }
 
@@ -119,7 +120,7 @@ public class AesFileDemo {
         fileInputStream.close();
         fileOutputStream.close();
         String outputFile = targetFile.getAbsolutePath();
-        logger.info("操作完成后的文件为:[{}]",outputFile);
+        logger.info("操作完成后的文件为:[{}]", outputFile);
         return outputFile;
     }
 }

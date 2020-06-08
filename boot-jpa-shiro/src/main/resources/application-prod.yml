@@ -12,6 +12,9 @@ mail:
   port: '465'
   isAuth: true
   isDebug: true
+logging:
+  pattern:
+    level: info
 spring :
   rabbitmq:
     host: 192.168.3.20

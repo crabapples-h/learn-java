@@ -16,19 +16,14 @@ spring:
     name: learn
   profiles:
     active: dev #激活的配置文件
-  thymeleaf:
-    prefix: classpath:templates/ #thymeleaf模板引擎路径
+#  thymeleaf:
+#    prefix: classpath:templates/ #thymeleaf模板引擎路径
 #    suffix: .html #thymeleaf模板后缀
-    cache: false
-    mode: HTML5
+#    cache: false
+#    mode: HTML5
   cache:
     jedis:
       pool:
         max-active: 10
     redis:
       time-to-live: 60000
-
-logging:
-  pattern:
-    level: debug
-

@@ -1,0 +1,126 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>X-admin</title>
+	<header data-th-include="/manage/common :: meta"></header>
+	<header data-th-replace="/manage/common :: javascript"></header>
+	<header data-th-replace="/manage/common :: style"></header>
+</head>
+<body>
+<div class="layui-fluid">
+	<div class="layui-row layui-col-space15" id="manage-picture">
+		<!--    <div class="layui-col-sm6 layui-col-md4" v-for="item in pictures">-->
+		<div class="layui-col-sm6 layui-col-md4">
+			<textarea id="demo" style="display: none;"></textarea>
+			<button type="button" class="layui-btn layui-btn-normal" @click="submit">一个标准的按钮</button>
+			<!--      <div class="layui-card">-->
+			<!--        <div class="layui-card-body" style="min-height: 300px;">-->
+			<!--          <img :src="`/file/${item.url}`" class="layui-col-sm12 upload"-->
+			<!--               :lay-data="`{url: '/manage/uploadFile/${item.id}'}`"-->
+			<!--               style="height: 300px;"/>-->
+			<!--        </div>-->
+			<!--      </div>-->
+		</div>
+	</div>
+
+</div>
+<script>
+    layui.use('upload', function () {
+        let $ = layui.jquery
+        let upload = layui.upload;
+        let uploadInst = upload.render({
+            elem: '.upload',
+            auto: true,
+            accept: 'images',
+            choose: function (obj) {
+                // obj.pushFile();
+                // obj.preview(function (index, file, result) {
+                //   console.log(index); //得到文件索引
+                //   console.log(file); //得到文件对象
+                //   console.log('通过api获取到的数据:', result); //得到文件base64编码，比如图片
+                //   $('#demo1').attr('src', result); //图片链接（base64）
+                //obj.resetFile(index, file, '123.jpg'); //重命名文件名，layui 2.3.0 开始新增
+
+                //这里还可以做一些 append 文件列表 DOM 的操作
+
+                //obj.upload(index, file); //对上传失败的单个文件重新上传，一般在某个事件中使用
+                //delete files[index]; //删除列表中对应的文件，一般在某个事件中使用
+                // })
+            },
+            done: function (result) {
+                if (result.status !== 200) {
+                    layer.msg(result.message)
+                    return
+                }
+                return layer.msg('上传成功');
+                vue.getPictures()
+            }
+        });
+    });
+</script>
+<script>
+    // layui.use('layedit', function(){
+    //   var layedit = layui.layedit;
+    //   var layeditIndex = layedit.build('demo'); //建立编辑器
+    // });
+</script>
+<script>
+    layui.use('layedit', function () {
+        var layedit = layui.layedit;
+        var layeditIndex = layedit.build('demo'); //建立编辑器
+    });
+    let vue = new Vue({
+        el: '#manage-picture',
+        data() {
+            return {
+                pictures: [],
+                layEdit: null,
+                layEditIndex: null,
+            }
+        },
+        mounted() {
+            const _this = this
+            layui.use('layedit', function () {
+                let layEdit = layui.layedit;
+                layEdit.set({
+                    uploadImage: {
+                        url: '/manage/uploadFile/',//接口url
+                        type: '' //默认post
+                    }
+                });
+                let layEditIndex = layEdit.build('demo'); //建立编辑器
+                _this.layEdit = layEdit
+                _this.layEditIndex = layEditIndex
+            });
+            // this.getPictures()
+        },
+        methods: {
+            submit() {
+                const _this = this
+                let content = _this.layEdit.getContent(_this.layEditIndex)
+                console.log(content)
+            },
+            getPictures() {
+                const _this = this
+                axios.get('/api/getPictures').then(response => {
+                    const result = response.data
+                    console.log('通过api获取到的数据:', result)
+                    if (result.status !== 200) {
+                        layer.msg(result.message)
+                        return
+                    }
+                    _this.pictures = result.data
+                    while (_this.pictures.length < 9) {
+                        _this.pictures.push({})
+                    }
+                }).catch(function (error) {
+                    // 请求失败处理
+                    console.log('请求出现错误:', error);
+                });
+            },
+        }
+    })
+</script>
+</body>
+</html>
