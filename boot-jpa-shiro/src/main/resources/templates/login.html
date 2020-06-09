@@ -40,15 +40,15 @@
                 axios.post('/loginCheck', data).then(response => {
                     const result = response.data;
                     console.log('通过api获取到的数据:', result)
-                    // if (result.status !== 200) {
-                    //     layer.msg(result.message);
-                    //     return
-                    // }
+                    if (result.status !== 200) {
+                        // layer.msg(result.message);
+                        return
+                    }
                     // layer.msg(result.message);
                     // if (result.data.admin) {
                     //     window.location.href = '/manage/index'
                     // } else {
-                    //     window.location.href = '/index'
+                    window.location.href = '/index'
                     // }
                     // window.location.href = '/index'
                 }).catch(exception => {
