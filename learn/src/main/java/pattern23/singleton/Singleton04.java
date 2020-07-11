@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *  线程安全,效率高,可以延时加载
  */
 public class Singleton04 {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static class SingletonInstance {
         private static final Singleton04 instance = new Singleton04();
     }

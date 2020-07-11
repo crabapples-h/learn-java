@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Singleton01{
     Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static Singleton01 instance = new Singleton01();
+    private static final Singleton01 instance = new Singleton01();
     private Singleton01() {}
 
     public static Singleton01 getInstance() {

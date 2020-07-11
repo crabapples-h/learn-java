@@ -48,8 +48,8 @@ public class Client02 {
      * @throws Exception 反射异常
      */
     public static void reflectDemo() throws Exception {
-        Class<Singleton06> clazz = (Class<Singleton06>) Class.forName("cn.crabapples.pattern23.singleton.Singleton06");
-        Constructor<Singleton06> constructors = clazz.getDeclaredConstructor((Class<?>) null);
+        Class<Singleton06> clazz = (Class<Singleton06>) Class.forName("pattern23.singleton.Singleton06");
+        Constructor<Singleton06> constructors = clazz.getDeclaredConstructor();
         constructors.setAccessible(true);
         Singleton06 singleton06_3 = constructors.newInstance();
         logger.info("Hello:{}", singleton06_3);

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * pc-name root
  */
 public class Singleton03 {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static Singleton03 instance;
 
     private Singleton03() {}

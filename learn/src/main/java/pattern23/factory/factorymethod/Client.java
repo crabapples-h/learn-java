@@ -11,9 +11,9 @@ package pattern23.factory.factorymethod;
  */
 public class Client {
     public static void main(String[] args) {
-        Flower flower = new CrabappleFactory().createFlower();
+        Flower crabapple = new CrabappleFactory().createFlower();
         Flower rose = new RoseFactory().createFlower();
-        flower.show();
+        crabapple.show();
         rose.show();
     }
 }

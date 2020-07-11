@@ -12,16 +12,18 @@ import org.slf4j.LoggerFactory;
  * qq 294046317
  * pc-name root
  */
-public class RoseFactory implements FlowerFactory{
+public class RoseFactory implements FlowerFactory {
     @Override
     public Flower createFlower() {
         return new Rose();
     }
-    static class Rose implements Flower{
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    static class Rose implements Flower {
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
-        public void show(){
-            logger.info("这是玫瑰:[{}]",this);
+        public void show() {
+            logger.info("这是玫瑰:[{}]", this);
         }
     }
 }

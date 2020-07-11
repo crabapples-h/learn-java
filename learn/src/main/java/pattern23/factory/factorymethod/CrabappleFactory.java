@@ -18,11 +18,13 @@ public class CrabappleFactory implements FlowerFactory {
     public Flower createFlower() {
         return new Crabapple();
     }
+
     public static class Crabapple implements Flower {
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
-        public void show(){
-            logger.info("这是海棠:[{}]",this);
+        public void show() {
+            logger.info("这是海棠:[{}]", this);
         }
     }
 }

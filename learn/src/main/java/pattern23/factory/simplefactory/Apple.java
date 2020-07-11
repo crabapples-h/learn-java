@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * pc-name root
  */
 public class Apple implements Food{
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public void eat(){
         logger.info("吃苹果:[{}]",this);

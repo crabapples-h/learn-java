@@ -18,8 +18,8 @@ import java.io.Serializable;
  * 线程安全,效率高,不能延时加载
  */
 public class Singleton06 implements Serializable {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static Singleton06 instance = new Singleton06();
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Singleton06 instance = new Singleton06();
     private Singleton06() {
         if(instance != null){
             throw new RuntimeException("禁止通过反射创建多个实例");
