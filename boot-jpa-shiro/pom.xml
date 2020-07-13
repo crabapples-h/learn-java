@@ -19,6 +19,8 @@
     </properties>
 
     <dependencies>
+
+
         <!-- Nacos依赖 SpringBoot 配置文件:application.properties -->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.boot</groupId>-->

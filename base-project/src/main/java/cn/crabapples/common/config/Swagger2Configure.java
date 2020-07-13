@@ -1,6 +1,5 @@
 package cn.crabapples.common.config;
 
-import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;

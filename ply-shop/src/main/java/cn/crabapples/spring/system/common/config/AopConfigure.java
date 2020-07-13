@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
 @Order(50)
 public class AopConfigure {
     private static final Logger logger = LoggerFactory.getLogger(AopConfigure.class);
-    private static final String CONTROLLER_AOP = "execution(* cn.crabapples.spring.system.controller.*.*(..))";
+    private static final String CONTROLLER_AOP = "execution(* cn.crabapples.system.controller.*.*(..))";
 
     @Pointcut(CONTROLLER_AOP)
     public void controllerAop() {
