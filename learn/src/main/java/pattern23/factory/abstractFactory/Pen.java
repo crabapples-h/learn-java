@@ -15,19 +15,21 @@ import org.slf4j.LoggerFactory;
 public interface Pen {
     void write();
 
-    class ChinesePen implements Pen{
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+    class ChinesePen implements Pen {
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
         public void write() {
-            logger.info("write ChinesePen:[{}]",this);
+            logger.info("write :[ChinesePen]");
         }
     }
 
-    class MathPen implements Pen{
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+    class MathPen implements Pen {
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
         public void write() {
-            logger.info("write MathPen:[{}]",this);
+            logger.info("write :[MathPen]");
         }
     }
 

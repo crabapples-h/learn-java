@@ -10,10 +10,11 @@ package pattern23.factory.abstractFactory;
  * pc-name root
  */
 public class MathFactory {
-    static Book buyBook(){
+    static Book buyBook() {
         return BookFactory.buyMathBook();
     }
-    static Pen buyPen(){
+
+    static Pen buyPen() {
         return PenFactory.buyMathPen();
     }
 }

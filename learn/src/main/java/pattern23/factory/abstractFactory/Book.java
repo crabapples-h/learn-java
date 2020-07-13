@@ -15,18 +15,21 @@ import org.slf4j.LoggerFactory;
 public interface Book {
     void read();
 
-    class ChineseBook implements Book{
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+    class ChineseBook implements Book {
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
         public void read() {
-            logger.info("read ChineseBook:[{}]",this);
+            logger.info("read :[ChineseBook]");
         }
     }
-    class MathBook implements Book{
-        private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    class MathBook implements Book {
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
         public void read() {
-            logger.info("read MathBook:[{}]",this);
+            logger.info("read :[MathBook]");
         }
     }
 }

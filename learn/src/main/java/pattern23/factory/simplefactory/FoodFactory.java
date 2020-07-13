@@ -13,13 +13,13 @@ import org.slf4j.LoggerFactory;
  * pc-name root
  */
 public class FoodFactory {
-    public static Food getApple(){
+    public static Apple getApple(){
         return new Apple();
     }
-    public static Food getOrange(){
+    public static Orange getOrange(){
         return new Orange();
     }
-    public static Food getPeach(){
+    public static Peach getPeach(){
         return new Peach();
     }
 

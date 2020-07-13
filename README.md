@@ -15,12 +15,12 @@
 * 20191213
     * 加入Google令牌工具 `GoogleAuthenticatorSimpleUtils.java`
 * 20191220
-    * 加入单例模式相关测试 `cn.crabapples.pattern23.singleton.*`
+    * 加入单例模式相关测试 `pattern23.singleton.*`
 * 20191224
-    * 加入简单工厂模式测试 `cn.crabapples.pattern23.factory.simplefactory.*`
-    * 加入工厂方法模式测试 `cn.crabapples.pattern23.factoey.factorymethod.*`
+    * 加入简单工厂模式测试 `pattern23.factory.simplefactory.*`
+    * 加入工厂方法模式测试 `pattern23.factoey.factorymethod.*`
 * 20191227
-    * 加入抽象工厂模式测试 `cn.crabapples.pattern23.factoey.abstractFactory.*`
+    * 加入抽象工厂模式测试 `pattern23.factoey.abstractFactory.*`
 * 20200117
     * 加入swagger测试 `cn.crabapples.spring.common.config.Swagger2Configure.java`
 * 20200127
@@ -70,3 +70,9 @@
     * 加入rabbitMq轮询分发演示
 * 20200323
     * 加入webSocket演示
+* 20200401
+    * 加入前后端分离前端模块
+* 20200606
+    * 整理代码，提出重复代码
+* 20200713
+    * 加入建造者模式 `pattern23.builder.*`

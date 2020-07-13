@@ -10,9 +10,10 @@ package pattern23.factory.abstractFactory;
  * pc-name root
  */
 public class PenFactory {
-    static Pen buyChinesePen(){
+    static Pen buyChinesePen() {
         return new Pen.ChinesePen();
     }
+
     static Pen buyMathPen() {
         return new Pen.MathPen();
     }
