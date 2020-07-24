@@ -16,6 +16,9 @@ import java.util.concurrent.CountDownLatch;
  */
 public class Client03 {
     static Logger logger = LoggerFactory.getLogger(Client03.class);
+    private static final int objSum = 1000000;
+    private static final int threadNum = 10;
+
 
     public static void main(String[] args) throws Exception {
         singleton01Demo();
@@ -27,11 +30,10 @@ public class Client03 {
 
     public static void singleton01Demo() throws Exception {
         long startTime = System.currentTimeMillis();
-        int threadNum = 10;
-        CountDownLatch countDownLatch = new CountDownLatch(threadNum);
+        final CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         for (int sum = 0; sum < threadNum; sum++) {
             new Thread(() -> {
-                for (int time = 0; time < 1000; time++) {
+                for (int time = 0; time < objSum; time++) {
                     Singleton01 singleton01 = Singleton01.getInstance();
                 }
                 countDownLatch.countDown();
@@ -45,11 +47,10 @@ public class Client03 {
 
     public static void singleton02Demo() throws Exception {
         long startTime = System.currentTimeMillis();
-        int threadNum = 10;
         CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         for (int sum = 0; sum < threadNum; sum++) {
             new Thread(() -> {
-                for (int time = 0; time < 1000; time++) {
+                for (int time = 0; time < objSum; time++) {
                     Singleton02 singleton02 = Singleton02.getInstance();
                 }
                 countDownLatch.countDown();
@@ -63,11 +64,10 @@ public class Client03 {
 
     public static void singleton03Demo() throws Exception {
         long startTime = System.currentTimeMillis();
-        int threadNum = 10;
         CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         for (int sum = 0; sum < threadNum; sum++) {
             new Thread(() -> {
-                for (int time = 0; time < 1000; time++) {
+                for (int time = 0; time < objSum; time++) {
                     Singleton03 singleton03 = Singleton03.getInstance();
                 }
                 countDownLatch.countDown();
@@ -81,11 +81,10 @@ public class Client03 {
 
     public static void singleton04Demo() throws Exception {
         long startTime = System.currentTimeMillis();
-        int threadNum = 10;
         CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         for (int sum = 0; sum < threadNum; sum++) {
             new Thread(() -> {
-                for (int time = 0; time < 1000; time++) {
+                for (int time = 0; time < objSum; time++) {
                     Singleton04 singleton04 = Singleton04.getInstance();
                 }
                 countDownLatch.countDown();
@@ -99,11 +98,10 @@ public class Client03 {
 
     public static void singleton05Demo() throws Exception {
         long startTime = System.currentTimeMillis();
-        int threadNum = 10;
         CountDownLatch countDownLatch = new CountDownLatch(threadNum);
         for (int sum = 0; sum < threadNum; sum++) {
             new Thread(() -> {
-                for (int time = 0; time < 1000; time++) {
+                for (int time = 0; time < objSum; time++) {
                     Singleton05 singleton05 = Singleton05.INSTANCE;
                 }
                 countDownLatch.countDown();
@@ -114,6 +112,5 @@ public class Client03 {
         long endTime = System.currentTimeMillis();
         logger.info("singleton05总耗时:{}ms", endTime - startTime);
     }
-
 
 }
