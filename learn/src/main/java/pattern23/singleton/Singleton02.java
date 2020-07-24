@@ -11,21 +11,24 @@ import org.slf4j.LoggerFactory;
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root
- *
+ * <p>
  * 线程安全,效率不高,可以延迟加载
  */
 public class Singleton02 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static Singleton02 instance;
-    private Singleton02() {}
+
+    private Singleton02() {
+    }
 
     public synchronized static Singleton02 getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new Singleton02();
         }
         return instance;
     }
-    public void doSomething(){
+
+    public void doSomething() {
         logger.info("hello,[{}]", instance);
     }
 }

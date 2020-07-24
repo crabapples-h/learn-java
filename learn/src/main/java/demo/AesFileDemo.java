@@ -1,5 +1,6 @@
 package demo;
 
+import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;
 import java.security.SecureRandom;
-import java.util.Objects;
 
 /**
  * TODO AES加密文件演示
@@ -57,7 +57,7 @@ public class AesFileDemo {
      * @return 输出的文件
      * @throws Exception 运行过程中可能出现的异常
      */
-    public static String doFinal(String keyString, File sourceFile, String targetPath, int type) throws Exception {
+    public static String doFinal(@NotNull String keyString, File sourceFile, String targetPath, int type) throws Exception {
         /*
          * 初始化加密方式
          */
@@ -122,5 +122,12 @@ public class AesFileDemo {
         String outputFile = targetFile.getAbsolutePath();
         logger.info("操作完成后的文件为:[{}]", outputFile);
         return outputFile;
+    }
+
+    public static void main(String[] args) throws Exception {
+        File path = new File("d:/1");
+        for (File file : path.listFiles()) {
+           doFinal(null,file,"d:/2",Cipher.ENCRYPT_MODE);
+        }
     }
 }

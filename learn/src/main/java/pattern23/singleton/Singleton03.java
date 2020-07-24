@@ -16,16 +16,17 @@ public class Singleton03 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static Singleton03 instance;
 
-    private Singleton03() {}
+    private Singleton03() {
+    }
 
     public static Singleton03 getInstance() {
-        if(instance == null){
+        if (instance == null) {
             Singleton03 singleton03;
-            synchronized (Singleton03.class){
+            synchronized (Singleton03.class) {
                 singleton03 = instance;
-                if(singleton03 == null){
-                    synchronized (Singleton03.class){
-                        if(singleton03 == null){
+                if (singleton03 == null) {
+                    synchronized (Singleton03.class) {
+                        if (singleton03 == null) {
                             singleton03 = new Singleton03();
                         }
                     }
@@ -35,7 +36,8 @@ public class Singleton03 {
         }
         return instance;
     }
-    public void doSomething(){
+
+    public void doSomething() {
         logger.info("hello,[{}]", instance);
     }
 }

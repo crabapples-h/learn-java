@@ -11,13 +11,15 @@ import org.slf4j.LoggerFactory;
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root
- *
+ * <p>
  * 线程安全,效率高,不能延时加载
  */
 public enum Singleton05 {
     INSTANCE;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    public void doSomething(){
+
+    public void doSomething() {
         logger.info("hello,[{}]", INSTANCE);
     }
+
 }
