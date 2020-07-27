@@ -12,14 +12,14 @@ package pattern23.factory.abstractFactory;
 public class Client {
     public static void main(String[] args) {
         Book chineseBook = ChineseFactory.buyBook();
-        Book mathBook = MathFactory.buyBook();
-
         Pen chinesePen = ChineseFactory.buyPen();
+
+        Book mathBook = MathFactory.buyBook();
         Pen mathPen = MathFactory.buyPen();
 
         chineseBook.read();
-        mathBook.read();
         chinesePen.write();
+        mathBook.read();
         mathPen.write();
     }
 

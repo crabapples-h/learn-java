@@ -14,20 +14,11 @@
     <properties>
         <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>
         <webSocket.version>5.1.6.RELEASE</webSocket.version>
-        <shiro.version>1.4.0</shiro.version>
-        <thymeleafShiro.version>2.0.0</thymeleafShiro.version>
         <springCloudNacosConfig.version>2.2.0.RELEASE</springCloudNacosConfig.version>
         <springCloudNacosDiscovery.version>2.2.0.RELEASE</springCloudNacosDiscovery.version>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.nacos</groupId>-->
-<!--            <artifactId>nacos-client</artifactId>-->
-<!--            <version>1.0.1</version>-->
-<!--        </dependency>-->
-
 
         <!-- SpringCloud Nacos依赖 配置文件:bootstrap -->
         <!-- 配置管理 -->
@@ -44,16 +35,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.theborakompanioni</groupId>
-            <artifactId>thymeleaf-extras-shiro</artifactId>
-            <version>${thymeleafShiro.version}</version>
-        </dependency>
-
-        <!-- shiroSpring-->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>1.0.1</version>
         </dependency>
 
         <!-- thymeleaf模板引擎 -->

@@ -1,9 +1,9 @@
 package cn.crabapples.spring.crabapples.config;
 
-import cn.crabapples.spring.system.entity.SysMenu;
-import cn.crabapples.spring.system.entity.SysUser;
-import cn.crabapples.spring.system.service.SysService;
-import cn.crabapples.spring.system.service.UserService;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.service.SysService;
+import cn.crabapples.system.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

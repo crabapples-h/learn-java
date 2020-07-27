@@ -4,8 +4,9 @@ package cn.crabapples.common.config;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * TODO 邮件配置类
@@ -19,24 +20,17 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
+@PropertySource(value = {"classpath:application-custom.yml"})
+@ConfigurationProperties(prefix = "mail")
 public class MailConfigure {
-    @Value("${mail.host}")
     private String host;
-    @Value("${mail.source}")
     private String source;
-    @Value("${mail.port}")
     private String port;
-    @Value("${mail.username}")
     private String username;
-    @Value("${mail.password}")
     private String password;
-    @Value("${mail.isAuth:true}")
     private boolean isAuth;
-    @Value("${mail.isDebug:true}")
     private boolean isDebug;
-    @Value("${mail.protocol:smtp}")
     private String protocol;
-    @Value("${mail.socketFactory:javax.net.ssl.SSLSocketFactory}")
     private String socketFactory;
     private String[] targets = {};
 

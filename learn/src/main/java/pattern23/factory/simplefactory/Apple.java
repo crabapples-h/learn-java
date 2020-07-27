@@ -12,10 +12,11 @@ import org.slf4j.LoggerFactory;
  * qq 294046317
  * pc-name root
  */
-public class Apple implements Food{
+public class Apple implements Food {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
-    public void eat(){
-        logger.info("吃苹果:[{}]",this);
+    public void eat() {
+        logger.info("吃苹果:[{}]", this);
     }
 }

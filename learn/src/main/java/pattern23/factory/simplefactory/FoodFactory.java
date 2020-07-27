@@ -13,28 +13,33 @@ import org.slf4j.LoggerFactory;
  * pc-name root
  */
 public class FoodFactory {
-    public static Apple getApple(){
+    public static Apple getApple() {
         return new Apple();
     }
-    public static Orange getOrange(){
+
+    public static Orange getOrange() {
         return new Orange();
     }
-    public static Peach getPeach(){
+
+    public static Peach getPeach() {
         return new Peach();
     }
 
-    public static class Orange implements Food{
+    public static class Orange implements Food {
         private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
-        public void eat(){
-            logger.info("吃橙子:[{}]",this);
+        public void eat() {
+            logger.info("吃橙子:[{}]", this);
         }
     }
-    public static class Peach implements Food{
+
+    public static class Peach implements Food {
         private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
         @Override
-        public void eat(){
-            logger.info("吃梨:[{}]",this);
+        public void eat() {
+            logger.info("吃桃:[{}]", this);
         }
     }
 }

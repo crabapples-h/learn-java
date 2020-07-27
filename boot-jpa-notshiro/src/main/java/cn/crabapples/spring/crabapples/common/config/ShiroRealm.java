@@ -1,7 +1,7 @@
 package cn.crabapples.spring.crabapples.common.config;
 
-import cn.crabapples.spring.system.entity.SysUser;
-import cn.crabapples.spring.system.service.UserService;
+import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;

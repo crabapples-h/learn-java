@@ -9,7 +9,7 @@ import cn.crabapples.spring.crabapples.entity.ShopInfo;
 import cn.crabapples.spring.crabapples.entity.ShopInfoOrder;
 import cn.crabapples.spring.crabapples.entity.ShopList;
 import cn.crabapples.spring.crabapples.service.ShopService;
-import cn.crabapples.spring.system.common.ApplicationException;
+import cn.crabapples.system.common.ApplicationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
