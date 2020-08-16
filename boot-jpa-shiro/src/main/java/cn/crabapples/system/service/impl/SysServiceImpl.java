@@ -1,8 +1,6 @@
 package cn.crabapples.system.service.impl;
 
-import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.config.ApplicationConfigure;
-import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.jpa.SysMenuRepository;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
@@ -16,12 +14,11 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.Objects;
 
 
 /**
@@ -42,6 +39,8 @@ public class SysServiceImpl implements SysService {
     private String redisPrefix;
     private Long tokenCacheTime;
     private String salt;
+    @Value("${isDebug}")
+    private boolean isDebug;
 
     private final UserService userService;
 
@@ -81,7 +80,8 @@ public class SysServiceImpl implements SysService {
         String username = form.getUsername();
         String password = String.valueOf(new Md5Hash(form.getPassword(), salt));
         logger.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-        shiroCheckLogin(username, password);
+        SysUser sysUser = shiroCheckLogin(username, password);
+//        sysUser.
     }
 
     /**

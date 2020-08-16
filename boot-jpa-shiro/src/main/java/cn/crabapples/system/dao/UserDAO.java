@@ -4,13 +4,12 @@ import cn.crabapples.system.dao.jpa.UserRepository;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
-
-@Repository
+@Component
 public class UserDAO {
     private final UserRepository userRepository;
 

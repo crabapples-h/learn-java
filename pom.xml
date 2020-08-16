@@ -9,10 +9,10 @@
         <module>boot-jpa-security</module>
         <module>boot-jpa-shiro</module>
         <module>cloud-jpa-security</module>
-        <module>ply-shop</module>
         <module>web-page</module>
         <module>learn</module>
         <module>base-project</module>
+        <module>frontemd</module>
     </modules>
 
     <parent>
@@ -45,12 +45,12 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.crabapples</groupId>
-            <artifactId>base-project</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.crabapples</groupId>-->
+<!--            <artifactId>base-project</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -42,17 +42,6 @@ public class SysController extends BaseController {
     }
 
     /**
-     * 进入登录页面
-     *
-     * @return 返回登录页面html
-     */
-    @GetMapping("/")
-    public String toIndex() {
-        logger.info("收到请求->进入主页");
-        return "/login";
-    }
-
-    /**
      * 发起登录请求
      *
      * @param form 用户名和密码

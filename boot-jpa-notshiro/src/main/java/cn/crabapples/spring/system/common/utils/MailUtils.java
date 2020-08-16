@@ -1,17 +1,14 @@
 package cn.crabapples.spring.system.common.utils;
 
-import ch.ethz.ssh2.crypto.Base64;
 import cn.crabapples.spring.system.common.config.MailConfigure;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeBodyPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
+import javax.mail.MessagingException;
 import java.util.Properties;
 
 /**

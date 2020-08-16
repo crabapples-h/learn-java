@@ -12,11 +12,16 @@
     <version>1.0</version>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
         <!--邮件解析依赖-->
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
             <artifactId>ganymed-ssh2</artifactId>
-            <version>RELEASE</version>
+            <version>262</version>
             <scope>compile</scope>
         </dependency>
 
