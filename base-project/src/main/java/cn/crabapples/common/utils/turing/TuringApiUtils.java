@@ -1,6 +1,5 @@
 package cn.crabapples.common.utils.turing;
 
-import cn.crabapples.common.config.TuringConfigure;
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

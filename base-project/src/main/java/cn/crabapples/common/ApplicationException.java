@@ -1,5 +1,7 @@
 package cn.crabapples.common;
 
+import lombok.Getter;
+
 /**
  * TODO 应用异常类
  *
@@ -10,11 +12,17 @@ package cn.crabapples.common;
  * pc-name 29404
  */
 public class ApplicationException extends RuntimeException{
+    @Getter
+    private int code;
     public ApplicationException() {
     }
 
     public ApplicationException(String message) {
         super(message);
+    }
+    public ApplicationException(String message,int code) {
+        super(message);
+        this.code = code;
     }
 
     public ApplicationException(String message, Throwable cause) {

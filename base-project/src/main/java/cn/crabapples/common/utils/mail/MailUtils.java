@@ -1,7 +1,6 @@
-package cn.crabapples.common.utils;
+package cn.crabapples.common.utils.mail;
 
 import ch.ethz.ssh2.crypto.Base64;
-import cn.crabapples.common.config.MailConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

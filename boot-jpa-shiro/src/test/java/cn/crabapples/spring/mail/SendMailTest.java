@@ -1,6 +1,6 @@
 package cn.crabapples.spring.mail;
 
-import cn.crabapples.common.utils.MailUtils;
+import cn.crabapples.common.utils.mail.MailUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

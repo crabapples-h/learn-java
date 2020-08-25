@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;
+package cn.crabapples.common.utils.mail;
 
 
 import com.alibaba.fastjson.JSONObject;

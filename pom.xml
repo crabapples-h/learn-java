@@ -9,10 +9,9 @@
         <module>boot-jpa-security</module>
         <module>boot-jpa-shiro</module>
         <module>cloud-jpa-security</module>
-        <module>web-page</module>
         <module>learn</module>
         <module>base-project</module>
-        <module>frontemd</module>
+        <module>frontend</module>
     </modules>
 
     <parent>
