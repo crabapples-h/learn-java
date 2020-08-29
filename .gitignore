@@ -36,3 +36,6 @@ HELP.md
 ### Frontend ###
 package-lock.json
 yarn.lock
+
+### log ###
+*.log
