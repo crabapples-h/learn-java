@@ -3,6 +3,8 @@ dadaBaseUrl: 'localhost'
 dataBaseDriveV8: 'com.mysql.cj.jdbc.Driver'
 dataBaseDriveV5: 'com.mysql.jdbc.Driver'
 dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
+virtualPath: '/file/'
+filePath: '/home/mrhe/uploadPath/'
 mail:
   host: 'smtp.qq.com'
   username: 'xxxxx@qq.com'
@@ -15,6 +17,10 @@ logging:
   pattern:
     level: info
 spring:
+  data:
+    mongodb:
+      database: learn
+      host: 127.0.0.1
   jpa:
     show-sql: false #是否在控制台显示数据库语句
     hibernate:
@@ -57,5 +63,6 @@ spring:
 
   #    type: com.alibaba.druid.pool.DruidDataSource
   #    driverClassName: com.mysql.jdbc.Driver
+
 
 
