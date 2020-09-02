@@ -1,6 +1,8 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.config.ApplicationConfigure;
+import cn.crabapples.common.config.jwt.JwtConfigure;
+import cn.crabapples.common.config.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.jpa.SysMenuRepository;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
@@ -41,17 +43,15 @@ public class SysServiceImpl implements SysService {
     private String salt;
     @Value("${isDebug}")
     private boolean isDebug;
-
     private final UserService userService;
-
+    private final JwtConfigure jwtConfigure;
     private final SysMenuRepository sysMenuRepository;
-
     private final RedisTemplate<String, Object> redisTemplate;
 
     public SysServiceImpl(ApplicationConfigure applicationConfigure,
                           UserService userService,
                           SysMenuRepository sysMenuRepository,
-                          RedisTemplate<String, Object> redisTemplate) {
+                          RedisTemplate<String, Object> redisTemplate, JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.sysMenuRepository = sysMenuRepository;
         this.redisTemplate = redisTemplate;
@@ -59,6 +59,7 @@ public class SysServiceImpl implements SysService {
         this.redisPrefix = applicationConfigure.REDIS_PREFIX;
         this.tokenCacheTime = applicationConfigure.TOKEN_CACHE_TIME;
         this.salt = applicationConfigure.SALT;
+        this.jwtConfigure = jwtConfigure;
     }
 
     /**
@@ -76,12 +77,12 @@ public class SysServiceImpl implements SysService {
      */
 //    @Cacheable(value = "login:token", key = "#p0.username")
     @Override
-    public void loginCheck(UserForm form) {
+    public String loginCheck(UserForm form) {
         String username = form.getUsername();
         String password = String.valueOf(new Md5Hash(form.getPassword(), salt));
         logger.info("开始登录->用户名:[{}],密码:[{}]", username, password);
         SysUser sysUser = shiroCheckLogin(username, password);
-//        sysUser.
+        return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getName(), jwtConfigure);
     }
 
     /**

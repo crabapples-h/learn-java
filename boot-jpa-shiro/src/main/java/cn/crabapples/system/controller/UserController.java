@@ -42,7 +42,7 @@ public class UserController extends BaseController {
     public ResponseDTO addUser(@RequestBody cn.crabapples.system.form.UserForm form) {
         logger.info("收到请求->添加用户:[{}]", form);
         super.validator(form, IsAdd.class);
-        cn.crabapples.system.entity.SysUser user = userService.addUser(form);
+        SysUser user = userService.addUser(form);
         logger.info("返回结果->用户添加完成:[{}]", user);
         return ResponseDTO.returnSuccess("操作成功", user);
     }

@@ -1,6 +1,7 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.BaseController;
+import cn.crabapples.common.config.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsLogin;
 import cn.crabapples.system.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysMenu;
@@ -50,12 +51,13 @@ public class SysController extends BaseController {
     @PostMapping("/loginCheck")
     @ResponseBody
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
+    @JwtIgnore
     public ResponseDTO loginCheck(@RequestBody UserForm form) {
         logger.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, IsLogin.class);
-        sysService.loginCheck(form);
-        logger.info("登录验证结束");
-        return ResponseDTO.returnSuccess("登录成功");
+        String token = sysService.loginCheck(form);
+        logger.info("登录验证结束,token:[{}]", token);
+        return ResponseDTO.returnSuccess("登录成功", token);
     }
 
     /**

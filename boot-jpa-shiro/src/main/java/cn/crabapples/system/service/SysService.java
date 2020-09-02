@@ -19,9 +19,9 @@ import java.util.List;
 public interface SysService {
     /**
      * 用户登录
-     * @return 登录成功后返回的登录信息
+     * @return 登录成功后返回token
      */
-    void loginCheck(UserForm form);
+    String loginCheck(UserForm form);
 
     /**
      * 获取当前用户系统菜单
