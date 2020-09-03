@@ -1,5 +1,7 @@
 package cn.crabapples.system.dto;
 
+import ch.qos.logback.core.status.Status;
+import cn.crabapples.common.ResponseCode;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,27 +18,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseDTO {
-    @Getter
-    enum Status {
-        SUCCESS(200),
-        ERROR(500),
-        AUTH_FAIL(401);
-        int code;
-
-        Status(int code) {
-            this.code = code;
-        }
-    }
-
-    private static final int SUCCESS = 200;
-    private static final int ERROR = 500;
     private int status;
     private String message;
     private Object data;
     private long time;
 
-    private ResponseDTO(Status status, String message, Object data) {
-        this.status = status.code;
+    private ResponseDTO(ResponseCode status, String message, Object data) {
+        this.status = status.getCode();
         this.message = message;
         this.data = data;
         this.time = System.currentTimeMillis();
@@ -50,7 +38,7 @@ public class ResponseDTO {
     }
 
     public static ResponseDTO returnSuccess(String message, Object data) {
-        return new ResponseDTO(Status.SUCCESS, message, data);
+        return new ResponseDTO(ResponseCode.SUCCESS, message, data);
     }
 
     public static ResponseDTO returnSuccess(String message) {
@@ -67,7 +55,7 @@ public class ResponseDTO {
     }
 
     public static ResponseDTO returnAuthFail(String message, Object data) {
-        return new ResponseDTO(Status.AUTH_FAIL, message, data);
+        return new ResponseDTO(ResponseCode.AUTH_FAIL, message, data);
     }
 
     public static ResponseDTO returnAuthFail(String message) {
