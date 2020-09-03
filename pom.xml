@@ -57,22 +57,6 @@
             <version>1.1.20</version>
         </dependency>
 
-        <!-- elasticSearch依赖 -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch.client</groupId>-->
-        <!--            <artifactId>transport</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch.client</groupId>-->
-        <!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.elasticsearch</groupId>-->
-        <!--            <artifactId>elasticsearch</artifactId>-->
-        <!--            <version>7.5.0</version>-->
-        <!--        </dependency>-->
         <!-- redis依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -85,12 +69,6 @@
         <!--            <artifactId>spring-boot-devtools</artifactId>-->
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
-
-        <!--rabbitmq-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -142,12 +120,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!--mongodb-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
         <!-- mysql -->

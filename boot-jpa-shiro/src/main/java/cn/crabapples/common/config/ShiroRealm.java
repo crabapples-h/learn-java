@@ -73,7 +73,7 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     /**
-     * shiro认证调用的方法,认证失败时会抛出异常
+     * shiro认证(登录)调用的方法,认证失败时会抛出异常
      * IncorrectCredentialsException密码错误
      * UnknownAccountException用户名错误
      */

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App'
-import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import router from './router'
+import instance from '@/utils/AxiosUtils'
 
 Vue.config.productionTip = false
 Vue.use(
@@ -12,7 +12,7 @@ Vue.use(
     VueAxios,
 )
 
-Vue.prototype.$http = axios
+Vue.prototype.$http = instance
 new Vue({
     router,
     render: h => h(App)

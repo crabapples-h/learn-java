@@ -5,6 +5,14 @@ dataBaseDriveV5: 'com.mysql.jdbc.Driver'
 dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
 virtualPath: '/file/'
 filePath: '/home/mrhe/uploadPath/'
+### jwt config ###
+jwt:
+  authKey: crabapples-token
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
+  name: crabapples
+  expiresSecond: 3600000
+### mail config ###
 mail:
   host: 'smtp.qq.com'
   username: 'xxxxx@qq.com'
@@ -13,9 +21,12 @@ mail:
   port: '465'
   isAuth: true
   isDebug: true
+### log config ###
 logging:
-  pattern:
-    level: info
+  level:
+    root: info
+    druid:
+      sql: debug
 spring:
   data:
     mongodb:
@@ -44,25 +55,41 @@ spring:
     url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
     username: root #数据库用户名
     password: root #数据库密码
-  #    dbcp2:
-  #      driver-class-name: ${dataBaseDriveV8}
-  #      url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-  #      username: learn #数据库用户名
-  #      password: learn #数据库密码
-  ##      max-conn-lifetime-millis: 10
-  ##      validation-query-timeout: 1
-  #      initial-size: 20
-  #      max-idle: 50
-  #      min-idle: 20
-  #      max-wait-millis: 10
-  #      max-total: 90
-  #      remove-abandoned-timeout: 2
-  #      test-on-borrow: true
-  #      validation-query: SELECT 1
-
-
-  #    type: com.alibaba.druid.pool.DruidDataSource
-  #    driverClassName: com.mysql.jdbc.Driver
-
-
-
+    druid:
+      first:
+        driverClassName: ${dataBaseDriveV8}
+        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
+        username: root
+        password: root
+        type: com.alibaba.druid.pool.DruidDataSource
+      second:
+        driverClassName: ${dataBaseDriveV8}
+        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
+        username: root1
+        password: root1
+        type: com.alibaba.druid.pool.DruidDataSource
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      filters: stat,wall,slf4j
+      initial-size: 5
+      max-active: 20
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 30000
+      min-idle: 5
+      reset-stat-enable: false
+      stat-view-servlet:
+        login-password: admin
+        login-username: admin
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      use-global-data-source-stat: true
+      validation-query: select 'x'
+      filter:
+        slf4j:
+          connection-log-enabled: false
+          enabled: false
+          result-set-log-enabled: true
+          statement-executable-sql-log-enable: true
+          statement-log-enabled: false
