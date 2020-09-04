@@ -1,5 +1,4 @@
 package cn.crabapples.common.config.datasource;
-
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -18,13 +17,12 @@ public class DynamicDataSourceAspect {
     public void changeDataSource(JoinPoint joinPoint, DataSourceChange dataSourceChange) {
         System.err.println("数据源切换开始");
         String dbid = dataSourceChange.name();
-        if (!DynamicDataSourceContextHolder.isContainsDataSource(dbid)) {
+        if (!DynamicDataSourceContextHolder.containsDataSource(dbid)) {
             //joinPoint.getSignature() ：获取连接点的方法签名对象
             log.info("数据源:[{}]不存在使用默认的数据源[{}]", dbid, joinPoint.getSignature());
         } else {
             log.info("使用数据源：" + dbid);
-            DynamicDataSourceContextHolder.setDataSourceType(dbid);
-            DynamicDataSource.setDataSource(dbid);
+            DynamicDataSourceContextHolder.setDataSource(dbid);
         }
         System.err.println("数据源切换结束");
     }
@@ -32,8 +30,6 @@ public class DynamicDataSourceAspect {
     @After("@annotation(dataSourceChange)")
     public void clearDataSource(JoinPoint joinPoint, DataSourceChange dataSourceChange) {
         log.debug("清除数据源:[{}]", dataSourceChange.name());
-        DynamicDataSourceContextHolder.clearDataSourceType();
-        DynamicDataSource.clearDataSource();
-
+        DynamicDataSourceContextHolder.clearDataSource();
     }
 }

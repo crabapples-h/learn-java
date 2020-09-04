@@ -1,6 +1,7 @@
 package cn.crabapples.test.controller;
 
 import cn.crabapples.common.BaseController;
+import cn.crabapples.common.config.datasource.DataSourceChange;
 import cn.crabapples.common.groups.IsNotNull;
 import cn.crabapples.common.groups.IsNull;
 import cn.crabapples.system.dto.ResponseDTO;
@@ -45,58 +46,71 @@ public class ControllerTest extends BaseController {
         this.rabbitTemplate = rabbitTemplate;
     }
 
+    @GetMapping("/datasource/test1")
+    @DataSourceChange(name = "primary")
+    public ResponseDTO dataSourceTest1() {
+        return ResponseDTO.returnSuccess("切换数据源1");
+    }
+
+    @GetMapping("/datasource/test2")
+    @DataSourceChange(name = "second")
+    public ResponseDTO dataSourceTest2() {
+        return ResponseDTO.returnSuccess("切换数据源2");
+    }
+
     @GetMapping("/mq/send")
-    public ResponseDTO mqSend(@RequestParam String name){
-        Map<String,Object> map = new HashMap<>();
-        map.put("name","小明");
-        map.put("age",1);
-        map.put("amt",9.9);
+    public ResponseDTO mqSend(@RequestParam String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "小明");
+        map.put("age", 1);
+        map.put("amt", 9.9);
         map.put("time", LocalDateTime.now());
-        rabbitTemplate.convertAndSend(name,map);
+        rabbitTemplate.convertAndSend(name, map);
         System.out.println(rabbitTemplate);
         return ResponseDTO.returnSuccess("消息发送成功");
     }
 
     @GetMapping("/mq/get")
-    public ResponseDTO mqGet(@RequestParam String name){
+    public ResponseDTO mqGet(@RequestParam String name) {
         Message message = rabbitTemplate.receive(name);
         System.err.println(message);
-        return ResponseDTO.returnSuccess("消息消费成功",message);
+        return ResponseDTO.returnSuccess("消息消费成功", message);
     }
 
 
     @GetMapping("/hello")
     @ApiOperation(value = "hello,world测试", notes = "这个是一个测试接口")
     @ApiImplicitParam(name = "name", value = "这个是参数", required = true, dataType = "String", paramType = "query")
-    public String helloDemo(@RequestParam String name){
+    public String helloDemo(@RequestParam String name) {
         return name + " say: hello world";
     }
 
     /**
      * TODO 测试从RequestBody中获取数据并验证
+     *
      * @RequestBody 表示从请求体中获取数据
      * @Valid 表示需要验证对应属性
-     *
+     * <p>
      * 参数中传入BindingResult对象时，无论参数校验是否通过都会执行方法
      * 可通过bindingResult.hasErrors()判断参数校验是否通过
      */
     @PostMapping("/postDemo1")
     @ApiOperation(value = "属性校验测试", notes = "属性校验测试接口")
-    public ResponseDTO postDemo1(@Valid @RequestBody DemoPostForm1 demoPostForm, BindingResult bindingResult){
-        logger.info("提交的参数:{}",demoPostForm);
-        if(bindingResult.hasErrors()){
+    public ResponseDTO postDemo1(@Valid @RequestBody DemoPostForm1 demoPostForm, BindingResult bindingResult) {
+        logger.info("提交的参数:{}", demoPostForm);
+        if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getFieldErrors().get(0).getDefaultMessage();
             logger.error("验证信息:{}", errorMessage);
             return ResponseDTO.returnError(errorMessage);
         }
-        return ResponseDTO.returnSuccess("成功",demoPostForm);
+        return ResponseDTO.returnSuccess("成功", demoPostForm);
     }
 
     /**
      * TODO 测试使用不同的校验组校验参数，根据参数中的type判断使用哪个校验组
      */
     @PostMapping("/postDemo2")
-    public ResponseDTO postDemo2(@RequestBody DemoPostForm2 demoPostForm){
+    public ResponseDTO postDemo2(@RequestBody DemoPostForm2 demoPostForm) {
         try {
             if (demoPostForm.getType() == 0) {
                 super.validator(demoPostForm, IsNull.class);
@@ -104,8 +118,8 @@ public class ControllerTest extends BaseController {
                 super.validator(demoPostForm, IsNotNull.class);
             }
             return ResponseDTO.returnSuccess("收到");
-        }catch (Exception e){
-            assert false : "" ;
+        } catch (Exception e) {
+            assert false : "";
             return ResponseDTO.returnError(e.getMessage());
         }
     }

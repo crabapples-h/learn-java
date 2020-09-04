@@ -56,18 +56,6 @@ spring:
     username: root #数据库用户名
     password: root #数据库密码
     druid:
-      first:
-        driverClassName: ${dataBaseDriveV8}
-        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-        username: root
-        password: root
-        type: com.alibaba.druid.pool.DruidDataSource
-      second:
-        driverClassName: ${dataBaseDriveV8}
-        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-        username: root1
-        password: root1
-        type: com.alibaba.druid.pool.DruidDataSource
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       filters: stat,wall,slf4j
       initial-size: 5
