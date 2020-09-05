@@ -20,8 +20,8 @@ import org.springframework.context.annotation.PropertySource;
 @Getter
 @Setter
 @Configuration
-@PropertySource(value = {"classpath:application-custom.yml"})
-@ConfigurationProperties(prefix = "mail")
+@PropertySource(value = {"classpath:application-custom.properties"})
+@ConfigurationProperties(prefix = "crabapples.mail")
 public class MailConfigure {
     private String host;
     private String source;

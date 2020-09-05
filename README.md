@@ -84,7 +84,14 @@
     * 加入原型(克隆)模式 `pattern23.prototype.*`
 * 20200817
     * 加入前端模块
+      * 前端的axiosUtils中默认定义登录地址为 `/api/loginCheck`
+      * 前端的axiosUtils中默认定义退出地址为 `/api/logout`
 * 20200825
     * 加入jwt
+      * 拦截所有url(可以使用`@JwtIgnore`来标记不需要拦截的url)
 * 20200829
     * 加入mongodb
+* 20200905
+    * 加入多数据源配置(根据包名)
+    * 加入多数据源配置(使用AOP动态切换)
+      * 使用spring的配置文件扫描功能,从classpath:datasource.properties中读取数据源信息

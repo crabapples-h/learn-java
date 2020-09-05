@@ -53,9 +53,9 @@ public class SysServiceImpl implements SysService {
         this.userService = userService;
         this.sysRepository = sysRepository;
         this.redisTemplate = redisTemplate;
-        this.aesKey = applicationConfigure.AES_KEY;
-        this.redisPrefix = applicationConfigure.REDIS_PREFIX;
-        this.tokenCacheTime = applicationConfigure.TOKEN_CACHE_TIME;
+        this.aesKey = applicationConfigure.aesKey;
+        this.redisPrefix = applicationConfigure.redisPrefix;
+        this.tokenCacheTime = applicationConfigure.tokenCacheTime;
     }
 
     /**

@@ -1,4 +1,4 @@
-package cn.crabapples.common.config.jwt;
+package cn.crabapples.common.utils.jwt;
 
 import cn.crabapples.common.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,15 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * TODO 配置jwt拦截器(不拦截@JwtIgnore标记的url)
+ *
+ * @author Mr.He
+ * 9/5/20 2:54 PM
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name root
+ */
 @Slf4j
 @Component
 public class JwtInterceptor extends HandlerInterceptorAdapter {

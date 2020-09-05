@@ -8,8 +8,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @author hequan@gogpay.cn
- * @date $ $
+ * TODO 图灵机器人工具类
+ *
+ * @author Mr.He
+ * 9/5/20 3:02 PM
+ * e-mail hequan@gogpay.cn
+ * qq 294046317
+ * pc-name root
  */
 @Component
 public class TuringApiUtils {

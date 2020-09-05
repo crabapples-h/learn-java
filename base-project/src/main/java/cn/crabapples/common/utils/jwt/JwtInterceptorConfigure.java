@@ -1,32 +1,24 @@
-package cn.crabapples.common.config.jwt;
+package cn.crabapples.common.utils.jwt;
 
-import cn.crabapples.common.config.jwt.JwtInterceptor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * TODO 注册jwt全局拦截器
+ *
+ * @author Mr.He
+ * 9/5/20 2:53 PM
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name root
+ */
 @Configuration
 public class JwtInterceptorConfigure implements WebMvcConfigurer {
-    @Value("${filePath}")
-    private String filePath;
-    @Value("${virtualPath}")
-    private String virtualPath;
-
     private final JwtInterceptor jwtInterceptor;
 
     public JwtInterceptorConfigure(JwtInterceptor jwtInterceptor) {
         this.jwtInterceptor = jwtInterceptor;
-    }
-
-    /**
-     * 虚拟路径配置
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(virtualPath + "/**").addResourceLocations("file:" + filePath + "/");
-        WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 
     /**

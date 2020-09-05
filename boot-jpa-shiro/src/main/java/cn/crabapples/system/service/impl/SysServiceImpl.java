@@ -1,8 +1,8 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.config.ApplicationConfigure;
-import cn.crabapples.common.config.jwt.JwtConfigure;
-import cn.crabapples.common.config.jwt.JwtTokenUtils;
+import cn.crabapples.common.utils.jwt.JwtConfigure;
+import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.jpa.SysMenuRepository;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
@@ -59,10 +59,10 @@ public class SysServiceImpl implements SysService {
         this.userService = userService;
         this.sysMenuRepository = sysMenuRepository;
         this.redisTemplate = redisTemplate;
-        this.aesKey = applicationConfigure.AES_KEY;
-        this.redisPrefix = applicationConfigure.REDIS_PREFIX;
-        this.tokenCacheTime = applicationConfigure.TOKEN_CACHE_TIME;
-        this.salt = applicationConfigure.SALT;
+        this.aesKey = applicationConfigure.aesKey;
+        this.redisPrefix = applicationConfigure.redisPrefix;
+        this.tokenCacheTime = applicationConfigure.tokenCacheTime;
+        this.salt = applicationConfigure.salt;
         this.jwtConfigure = jwtConfigure;
     }
 

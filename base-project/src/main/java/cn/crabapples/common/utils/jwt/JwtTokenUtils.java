@@ -1,4 +1,4 @@
-package cn.crabapples.common.config.jwt;
+package cn.crabapples.common.utils.jwt;
 
 import cn.crabapples.common.ApplicationException;
 import io.jsonwebtoken.*;
@@ -10,10 +10,17 @@ import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
 
+/**
+ * TODO jwt工具(用于解析和生成token)
+ *
+ * @author Mr.He
+ * 9/5/20 2:52 PM
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name root
+ */
 @Slf4j
 public class JwtTokenUtils {
-
-
     /**
      * 解析jwt
      *
@@ -48,17 +55,13 @@ public class JwtTokenUtils {
         try {
             // 使用HS256加密算法
             SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
             long nowMillis = System.currentTimeMillis();
             Date now = new Date(nowMillis);
-
             //生成签名密钥
             byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtConfigure.getBase64Secret());
             Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-
             //userId是重要信息，进行加密下
             String encryId = Base64Util.encode(userId);
-
             //添加构成JWT的参数
             JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
                     // 可以将基本不重要的对象信息放到claims

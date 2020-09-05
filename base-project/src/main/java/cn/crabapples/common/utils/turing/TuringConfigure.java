@@ -8,14 +8,19 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * @author hequan@gogpay.cn
- * @date $ $
+ * TODO 图灵机器人API配置
+ *
+ * @author Mr.He
+ * 9/5/20 3:01 PM
+ * e-mail hequan@gogpay.cn
+ * qq 294046317
+ * pc-name root
  */
 @Getter
 @Setter
 @Component
-@PropertySource(value = {"classpath:application-custom.yml"})
-@ConfigurationProperties(prefix = "turing")
+@PropertySource(value = {"classpath:application-custom.properties"})
+@ConfigurationProperties(prefix = "crabapples.turing")
 public class TuringConfigure {
     private String url;
     private String appKey;

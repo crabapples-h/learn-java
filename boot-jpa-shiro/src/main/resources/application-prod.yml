@@ -35,22 +35,3 @@ spring :
     url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
     username: learn #数据库用户名
     password: learn #数据库密码
-  #    dbcp2:
-  #      driver-class-name: ${dataBaseDriveV8}
-  #      url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-  #      username: learn #数据库用户名
-  #      password: learn #数据库密码
-  ##      max-conn-lifetime-millis: 10
-  ##      validation-query-timeout: 1
-  #      initial-size: 20
-  #      max-idle: 50
-  #      min-idle: 20
-  #      max-wait-millis: 10
-  #      max-total: 90
-  #      remove-abandoned-timeout: 2
-  #      test-on-borrow: true
-  #      validation-query: SELECT 1
-
-
-  #    type: com.alibaba.druid.pool.DruidDataSource
-  #    driverClassName: com.mysql.jdbc.Driver

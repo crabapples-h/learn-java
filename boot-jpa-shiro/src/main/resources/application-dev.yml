@@ -5,22 +5,7 @@ dataBaseDriveV5: 'com.mysql.jdbc.Driver'
 dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
 virtualPath: '/file/'
 filePath: '/home/mrhe/uploadPath/'
-### jwt config ###
-jwt:
-  authKey: crabapples-token
-  clientId: 098f6bcd4621d373cade4e832627b4f6
-  base64Secret: MDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTgzMjYyN2I0ZjY=
-  name: crabapples
-  expiresSecond: 3600000
-### mail config ###
-mail:
-  host: 'smtp.qq.com'
-  username: 'xxxxx@qq.com'
-  password: 'xxxxx'
-  source: 'xxxxx@qq.com'
-  port: '465'
-  isAuth: true
-  isDebug: true
+
 ### log config ###
 logging:
   level:
@@ -51,11 +36,17 @@ spring:
       pool:
         max-active: 10
   datasource:
-    driverClassName: ${dataBaseDriveV8} #数据库驱动
-    url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
-    username: root #数据库用户名
-    password: root #数据库密码
     druid:
+      first:
+        driverClassName: ${dataBaseDriveV8} #数据库驱动
+        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
+        username: crabapples #数据库用户名
+        password: crabapples #数据库密码
+      second:
+        driverClassName: ${dataBaseDriveV8} #数据库驱动
+        url: jdbc:mysql://${dadaBaseUrl}:3306/learn?useSSL=false&${dataBaseParam} #数据库地址
+        username: root #数据库用户名
+        password: root #数据库密码
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
       filters: stat,wall,slf4j
       initial-size: 5

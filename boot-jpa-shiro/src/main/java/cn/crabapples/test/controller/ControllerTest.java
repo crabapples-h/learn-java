@@ -1,13 +1,15 @@
 package cn.crabapples.test.controller;
 
 import cn.crabapples.common.BaseController;
-import cn.crabapples.common.config.datasource.DataSourceChange;
+import cn.crabapples.common.config.ApplicationConfigure;
+import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsNotNull;
 import cn.crabapples.common.groups.IsNull;
 import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.form.DemoPostForm1;
 import cn.crabapples.test.form.DemoPostForm2;
-import cn.crabapples.test.service.ServiceTest;
+import cn.crabapples.test.service.UserServiceTest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,27 +38,35 @@ import java.util.Map;
 @Api("测试接口")
 @RestController
 @RequestMapping(value = "/api/test")
+
 public class ControllerTest extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerTest.class);
-    private ServiceTest serviceTest;
+    private UserServiceTest userServiceTest;
     private final RabbitTemplate rabbitTemplate;
+    private final ApplicationConfigure applicationConfigure;
 
-    public ControllerTest(ServiceTest serviceTest, RabbitTemplate rabbitTemplate) {
-        this.serviceTest = serviceTest;
+    public ControllerTest(UserServiceTest userServiceTest,
+                          RabbitTemplate rabbitTemplate,
+                          ApplicationConfigure applicationConfigure) {
+        this.userServiceTest = userServiceTest;
         this.rabbitTemplate = rabbitTemplate;
+        this.applicationConfigure = applicationConfigure;
     }
 
     @GetMapping("/datasource/test1")
-    @DataSourceChange(name = "primary")
+    @JwtIgnore
     public ResponseDTO dataSourceTest1() {
-        return ResponseDTO.returnSuccess("切换数据源1");
+        System.err.println(applicationConfigure);
+        List<SysUser> userList = userServiceTest.findByHQL("alice");
+        return ResponseDTO.returnSuccess("切换数据源1", userList);
     }
 
     @GetMapping("/datasource/test2")
-    @DataSourceChange(name = "second")
+    @JwtIgnore
     public ResponseDTO dataSourceTest2() {
-        return ResponseDTO.returnSuccess("切换数据源2");
+        List<SysUser> userList = userServiceTest.findByHQL("admin");
+        return ResponseDTO.returnSuccess("切换数据源2", userList);
     }
 
     @GetMapping("/mq/send")

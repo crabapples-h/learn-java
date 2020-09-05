@@ -1,8 +1,7 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.BaseController;
-import cn.crabapples.common.config.datasource.DataSourceChange;
-import cn.crabapples.common.config.jwt.JwtIgnore;
+import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsLogin;
 import cn.crabapples.system.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysMenu;
@@ -47,7 +46,6 @@ public class SysController extends BaseController {
     @JwtIgnore
     @PostMapping("/loginCheck")
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-    @DataSourceChange(name = "secondDataSource")
     public ResponseDTO loginCheck(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, IsLogin.class);

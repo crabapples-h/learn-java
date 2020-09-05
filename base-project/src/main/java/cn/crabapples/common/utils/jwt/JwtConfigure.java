@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;
+package cn.crabapples.common.utils.jwt;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -8,24 +8,25 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO 应用配置类
+ * TODO jwt配置类
  *
  * @author Mr.He
- * 3/2/20 1:21 AM
+ * 9/5/20 2:55 PM
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name root
  */
-@Component
-@PropertySource(value = {"classpath:application-custom.properties"})
-@ConfigurationProperties(prefix= "crabapples.application")
 @Getter
 @Setter
-public class ApplicationConfigure {
-    public String aesKey;
-    public String redisPrefix;
-    public Long tokenCacheTime;
-    public String salt;
+@Component
+@PropertySource(value = {"classpath:application-custom.properties"})
+@ConfigurationProperties(prefix = "crabapples.jwt")
+public class JwtConfigure {
+    private String authKey;
+    private String clientId;
+    private String base64Secret;
+    private String name;
+    private int expiresSecond;
 
     @Override
     public String toString() {

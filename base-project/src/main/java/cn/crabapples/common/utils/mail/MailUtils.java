@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
- * TODO SMTP发送邮件演示
+ * TODO SMTP邮件工具类
  *
  * @author Mr.He
  * 2020/3/20 21:15
