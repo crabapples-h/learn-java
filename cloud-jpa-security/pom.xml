@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+        <!--base-utils-->
         <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>base-project</artifactId>

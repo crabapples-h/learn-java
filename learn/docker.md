@@ -38,7 +38,7 @@ docker run \
 ---
 >docker启动redis &emsp; **ports:1003x**
 * *-v $(pwd)/data/redis:/data 映射本地路径(数据目录)*
-* *-v $(pwd)/conf/redis.conf:/etc/redis/redis.conf 映射本地路径(配置文件)*
+* *-v $(pwd)/conf/redis/redis.conf:/etc/redis/redis.conf 映射本地路径(配置文件)*
 * *redis-server /etc/redis/redis.conf 运行容器的redis-server命令，指定redis配置文件*
 * *--appendonly yes 容器内部参数(开启redis数据持久化)*
 ```
@@ -131,7 +131,7 @@ docker run \
 docker run \
     --network local-network --network-alias elasticsearch \
     --restart=always -d \
-    -p 49200:9200 -p 49300:9300 \
+    -p 39200:9200 -p 39300:9300 \
     -e "discovery.type=single-node" \
     docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 ```
@@ -144,6 +144,19 @@ docker run \
     -v $(pwd)/conf/gitlab/config:/etc/gitlab \
     -v $(pwd)/data/gitlab/logs:/var/log/gitlab \
     -v $(pwd)/data/gitlab/data:/var/opt/gitlab \
-    -p 40443:443 -p 40080:80 -p 40022:22 --name gitlab \
+    -p 31443:443 -p 31080:80 -p 30022:22 --name gitlab \
     gitlab/gitlab-ce
+```
+##
+####docker启动rabbitmq &emsp; **port:35672 &emsp; port:35692**
+```
+docker run \
+    --network local-network --network-alias rabbitmq \
+    --restart=always -d \
+    -v $(pwd)/data/rabbitmq:/var/lib/rabbitmq \
+    -p 35672:5672 -p 35692:15672 --name rabbitmq \
+    -e RABBITMQ_DEFAULT_USER=admin \
+    -e RABBITMQ_DEFAULT_PASS=admin \
+    -e RABBITMQ_DEFAULT_VHOST=crabapples \
+    rabbitmq:3.8-management
 ```

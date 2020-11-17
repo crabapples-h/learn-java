@@ -28,7 +28,7 @@ public class RabbitmqSimpleQueueDemo {
         /*
          * 启动一个新的线程持续监听队列消息
          */
-        new Thread(() -> {
+        Thread read = new Thread(() -> {
             try {
                 Connection connection = RabbitmqDemoConfigure.getConnection();
                 Channel channel = connection.createChannel();
@@ -45,20 +45,22 @@ public class RabbitmqSimpleQueueDemo {
                     @Override
                     public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                         super.handleDelivery(consumerTag, envelope, properties, body);
-                        logger.info("队列监听->获取到新的消息:[{}]", new String(body, StandardCharsets.UTF_8));
+                        logger.info("获取到新的消息:[{}]", new String(body, StandardCharsets.UTF_8));
                     }
                 };
 
                 channel.basicConsume(QUEUE_NAME, true, consumer);
+                logger.error("线程:[{}]结束", Thread.currentThread());
             } catch (IOException | TimeoutException e) {
                 e.printStackTrace();
             }
-        }).start();
-
+        });
+        read.setName("read");
+        read.start();
         /*
          * 启动一个新的线程持续向队列发送消息
          */
-        new Thread(() -> {
+        Thread send = new Thread(() -> {
             try {
                 Connection connection = RabbitmqDemoConfigure.getConnection();
                 Channel channel = connection.createChannel();
@@ -74,14 +76,17 @@ public class RabbitmqSimpleQueueDemo {
                 for (int i = 0; i < 50; i++) {
                     String message = String.format("第 %d 条消息:", i);
                     channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-                    logger.info("队列监听->消息发送成功:[{}]", message);
+                    logger.info("消息发送成功:[{}]", message);
                     Thread.sleep(200);
                 }
                 channel.close();
                 connection.close();
+                logger.error("线程:[{}]结束", Thread.currentThread());
             } catch (IOException | InterruptedException | TimeoutException e) {
                 e.printStackTrace();
             }
-        }).start();
+        });
+        send.setName("send");
+        send.start();
     }
 }

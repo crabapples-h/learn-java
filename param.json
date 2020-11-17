@@ -1,0 +1,38 @@
+{
+  "preprdid": "",
+  "trptpe": 1,
+  "flag": 8,
+  "searchitem": [
+    {
+      "dccode": "KWE",
+      "accode": "CTU",
+      "dtime": "2020-11-19"
+    }
+  ],
+  "subchannel": null,
+  "tid": "{947c777d-cbb4-4225-b9ea-3b55577acff2}",
+  "head": {
+    "cid": "09031091112268009574",
+    "ctok": "",
+    "cver": "1.0",
+    "lang": "01",
+    "sid": "8888",
+    "syscode": "09",
+    "auth": null,
+    "extension": [
+      {
+        "name": "aid",
+        "value": "4897"
+      },
+      {
+        "name": "sid",
+        "value": "155952"
+      },
+      {
+        "name": "protocal",
+        "value": "https"
+      }
+    ]
+  },
+  "contentType": "json"
+}
