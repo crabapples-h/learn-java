@@ -28,7 +28,7 @@ public class HttpUtilsV1 {
     private static final int CONN_TIMEOUT = 30000;    //链接超时时间
     private static final int READ_TIMEOUT = 30000;    //响应超时时间
 
-    /**
+    /*
      * 默认请求头
      */
     static {
