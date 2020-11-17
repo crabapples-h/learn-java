@@ -47,12 +47,6 @@ public class AesFileDemo {
         SecretKey secretKey = keyGenerator.generateKey();
         logger.debug("生成的key为:[{}],种子为:[{}]", secretKey, seed);
         return secretKey;
-
-//        docker run --network local-network --network-alias mysql --restart=on-failure:10 -v D:/developer/docker/data/mysql:/var/lib/mysql -p 10001:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql
-//
-//        docker run --network local-network --network-alias mongo --restart=on-failure:10 -v D:/developer/docker/data/mongo:/data/db -p 10002:27017 --name mongodb mongo
-//
-//        docker run --network local-network --network-alias redis --restart=on-failure:10 -v D:/developer/docker/data/redis:/data -p 10003:6379 --name redis redis redis-server --appendonly yes
     }
 
     /**
@@ -133,7 +127,7 @@ public class AesFileDemo {
     public static void main(String[] args) throws Exception {
         File path = new File("d:/1");
         for (File file : path.listFiles()) {
-            doFinal("", file, "d:/3", Cipher.ENCRYPT_MODE);
+           doFinal("",file,"d:/3",Cipher.ENCRYPT_MODE);
         }
     }
 }

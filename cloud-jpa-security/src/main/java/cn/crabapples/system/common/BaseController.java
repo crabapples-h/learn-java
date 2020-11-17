@@ -22,7 +22,7 @@ import java.util.Set;
  * pc-name 29404
  */
 public abstract class BaseController {
-    private final Logger logger = LoggerFactory.getLogger(BaseController.class);
+    private Logger logger = LoggerFactory.getLogger(BaseController.class);
     @Autowired
     private Validator validator;
 
