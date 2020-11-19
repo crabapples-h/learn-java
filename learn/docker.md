@@ -131,8 +131,11 @@ docker run \
 docker run \
     --network local-network --network-alias elasticsearch \
     --restart=always -d \
-    -p 9200:9200 -p 9300:9300 --name elasticsearch \
+    -v $(pwd)/data/elasticsearch:/usr/share/elasticsearch/data \
+    -v $(pwd)/logs/elasticsearch:/usr/share/elasticsearch/logs \
+    -v $(pwd)/conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
     -e "discovery.type=single-node" \
+    -p 9200:9200 -p 9300:9300 --name es-node1 \
     docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 ```
 ##
