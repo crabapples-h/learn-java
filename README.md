@@ -48,7 +48,7 @@
     * 前端模板加入form序列化工具`src/main/resources/static/js/common.js`
     * 前端模板加入thymeleaf公共代码`src/main/resources/templates/common.html`
     * 登陆返回数据修改为json格式`src/main/resources/templates/common.html`
-    * 加密文件的方法加入日志`cn.crabapples.demo.AesFileDemo.java`
+    * 加密文件的方法加入日志`cn.crabapples.demo.security.AesFileDemo.java`
 * 20200305
     * 新增分支 springBoot-jpa-security
     * 新增分支 springBoot-jpa-shiro

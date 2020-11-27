@@ -1,0 +1,5 @@
+FROM openjdk:8-jdk-alpine
+ENV LANG C.UTF-8
+VOLUME /params /var/logs
+COPY target/${JAR_FILE} /opt/app.jar
+ENTRYPOINT ["java","-jar","/opt/app.jar"]

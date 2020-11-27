@@ -1,6 +1,7 @@
 package demo;
 
 import com.rabbitmq.client.*;
+import demo.mq.RabbitmqDemoConfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

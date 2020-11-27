@@ -1,4 +1,4 @@
-package demo;
+package demo.security;
 
 import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;

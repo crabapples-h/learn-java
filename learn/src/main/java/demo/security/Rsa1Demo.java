@@ -1,4 +1,4 @@
-package demo;
+package demo.security;
 
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;

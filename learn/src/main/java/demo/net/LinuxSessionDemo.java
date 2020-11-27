@@ -1,4 +1,4 @@
-package demo;
+package demo.net;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;

@@ -1,4 +1,4 @@
-package demo;
+package demo.file;
 
 /**
  * TODO 压缩/解压文件

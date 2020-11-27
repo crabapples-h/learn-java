@@ -1,4 +1,4 @@
-package demo;
+package demo.security;
 
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import org.slf4j.Logger;
