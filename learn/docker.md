@@ -162,4 +162,13 @@ docker run \
     -e RABBITMQ_DEFAULT_PASS=admin \
     -e RABBITMQ_DEFAULT_VHOST=crabapples \
     rabbitmq:3.8-management
+
+ docker run \
+	--network local-network --network-alias air-ticket-data-xiecheng \
+	--restart=always -d \
+ 	-v $(pwd)/data/data/air-ticket-data/:/params \
+ 	-v $(pwd)/data/logs/air-ticket-data/:/var/logs \
+ 	--name air-ticket-data-xiecheng \
+ 	-e LANG="C.UTF-8" \
+ 	air-ticket-data-xiecheng
 ```
