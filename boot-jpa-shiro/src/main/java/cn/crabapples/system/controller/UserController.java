@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -25,8 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * qq 294046317
  * pc-name 29404
  */
-@Controller
-@ResponseBody
+@RestController
 @RequestMapping(value = "/api/user")
 @Api("用户管理")
 public class UserController extends BaseController {

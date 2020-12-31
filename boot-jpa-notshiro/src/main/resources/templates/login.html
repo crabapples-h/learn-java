@@ -3,13 +3,13 @@
 <head>
   <title>后台登录-X-admin2.2</title>
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <link rel="stylesheet" data-th-href="@{/X-admin/css/login.css}">
+  <link rel="stylesheet" data-th-href="@{/X-admin/css/loginApi.css}">
   <header data-th-include="common :: meta"></header>
   <header data-th-replace="common :: javascript"></header>
   <header data-th-replace="common :: style"></header>
 </head>
-<body class="login-bg">
-<div class="login layui-anim layui-anim-up">
+<body class="loginApi-bg">
+<div class="loginApi layui-anim layui-anim-up">
   <div class="message">x-admin2.0-管理登录</div>
   <div id="darkbannerwrap"></div>
   <form method="post" class="layui-form" id="loginForm">
@@ -19,7 +19,7 @@
     <input name="password" autocomplete="off" lay-verify="required" class="layui-input"
            placeholder="密码" type="password">
     <hr class="hr15">
-    <input lay-submit lay-filter="login" style="width:100%;" type="button" value="登录">
+    <input lay-submit lay-filter="loginApi" style="width:100%;" type="button" value="登录">
     <hr class="hr20">
   </form>
 </div>
@@ -31,18 +31,18 @@
       //弹窗关闭后的操作
     });
     //layUi监听提交
-    form.on('submit(login)', function (data) {
+    form.on('submit(loginApi)', function (data) {
       let loginForm = $('#loginForm').serializeObject()
-      vue.login(loginForm)
+      vue.loginApi(loginForm)
       return false;
     });
   });
   let vue = new Vue({
     el: '#loginForm',
     methods: {
-      login(data) {
+      loginApi(data) {
         console.log(data)
-        axios.post('/login', data).then(response => {
+        axios.post('/loginApi', data).then(response => {
           const result = response.data
           console.log(result)
           if (result.status !== 200) {

@@ -15,8 +15,10 @@ instance.interceptors.request.use(
             router.push('/login')
         }
         config.headers['crabapples-token'] = token;
-        // console.log('请求拦截')
-        // console.log(config)
+        if (/get/i.test(config.method)) {
+            config.params = config.params || {}
+            config.params.temp = Date.parse(new Date()) / 1000
+        }
         return config;
     },
     error => Promise.error(error)
@@ -39,46 +41,4 @@ instance.interceptors.response.use(
     }
 );
 
-export function login(data) {
-    instance.post('/api/loginCheck', data).then(result => {
-        if (result.status !== 200) {
-            message.error(result.message);
-            return
-        }
-        message.success(result.message);
-        sessionStorage.setItem('crabapples-token', result.data);
-        router.push('/')
-    }).catch(exception => {
-        notification.error(exception)
-    })
-}
-
-export function logout(data) {
-    instance.post('/api/logout', data).then(response => {
-        const result = response.data;
-        console.log('通过api获取到的数据:', result);
-        sessionStorage.removeItem('crabapples-token')
-    }).catch(exception => {
-        notification.error(exception)
-    })
-}
-
-export function get(url) {
-    return instance.get(url).then(response => {
-        return Promise.resolve(response);
-    }).catch(exception => {
-        return Promise.reject(exception);
-    })
-}
-
-export function post(url, data) {
-    return instance.post(url, data).then(response => {
-        return Promise.resolve(response);
-    }).catch(exception => {
-        console.error('系统错误', exception);
-        return Promise.reject(exception);
-    })
-}
-
-
-export default {instance, login, logout, get, post}
+export default instance

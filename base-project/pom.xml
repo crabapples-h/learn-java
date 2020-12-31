@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>base-project</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!--jwt-->

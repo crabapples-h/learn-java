@@ -9,7 +9,7 @@
         name: 'App',
         mounted() {
             this.getUserInfo()
-            // this.$router.push({path: "/login"})
+            // this.$router.push({path: "/loginApi"})
         },
         methods: {
             getUserInfo() {

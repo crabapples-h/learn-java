@@ -13,7 +13,7 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: url(/portal/login/grass.jpg) no-repeat 50% 0;
+      background: url(/portal/loginApi/grass.jpg) no-repeat 50% 0;
       font-size: 12px;
     }
 
@@ -25,7 +25,7 @@
       width: 468px;
       height: 468px;
       margin: 100px auto;
-      background: url(/portal/login/login_bg.png) no-repeat;
+      background: url(/portal/loginApi/login_bg.png) no-repeat;
     }
 
     .lg_top {
@@ -52,7 +52,7 @@
       color: #666;
       width: 236px;
       margin: 4px 28px;
-      background: url(/portal/login/user.png) no-repeat;
+      background: url(/portal/loginApi/user.png) no-repeat;
       padding-left: 10px;
       font-size: 12px;
       font-family: Arial, Helvetica, sans-serif;
@@ -65,7 +65,7 @@
       color: #666;
       width: 236px;
       margin: 4px 28px;
-      background: url(/portal/login/password.png) no-repeat;
+      background: url(/portal/loginApi/password.png) no-repeat;
       padding-left: 10px;
       font-size: 12px;
       font-family: Arial, Helvetica, sans-serif;
@@ -74,7 +74,7 @@
     .bn {
       width: 330px;
       height: 72px;
-      background: url(/portal/login/enter.png) no-repeat;
+      background: url(/portal/loginApi/enter.png) no-repeat;
       border: 0;
       display: block;
       font-size: 18px;
@@ -109,7 +109,7 @@
       </div>
     </div>
     <div class="lg_foot">
-      <input type="submit" value="登录" class="bn" @click="login"/></div>
+      <input type="submit" value="登录" class="bn" @click="loginApi"/></div>
   </div>
 </div>
 <script data-th-src="@{/layui/layui.all.js}"></script>
@@ -125,7 +125,7 @@
             }
         },
         methods: {
-            login() {
+            loginApi() {
                 let data = {
                     username: this.username,
                     password: this.password

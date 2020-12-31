@@ -4,11 +4,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>用户登录</title>
-	<div data-th-include="/common/login :: meta"></div>
-	<div data-th-replace="/common/login :: style"></div>
+	<div data-th-include="/common/loginApi :: meta"></div>
+	<div data-th-replace="/common/loginApi :: style"></div>
 </head>
-<body class="login-bg">
-<div class="login layui-anim layui-anim-up">
+<body class="loginApi-bg">
+<div class="loginApi layui-anim layui-anim-up">
 	<div class="message">用户登录</div>
 	<div id="darkbannerwrap"></div>
 	<form method="post" class="layui-form" id="loginForm">
@@ -16,11 +16,11 @@
 		<hr class="hr15">
 		<input autocomplete="off" placeholder="密码" type="password" v-model="password">
 		<hr class="hr15">
-		<input style="width:100%;" type="button" value="立即登录" @click="login">
+		<input style="width:100%;" type="button" value="立即登录" @click="loginApi">
 		<hr class="hr15">
 	</form>
 </div>
-<div data-th-replace="/common/login :: javascript"></div>
+<div data-th-replace="/common/loginApi :: javascript"></div>
 <script>
     let vue = new Vue({
         el: '#loginForm',
@@ -32,7 +32,7 @@
             }
         },
         methods: {
-            login() {
+            loginApi() {
                 let data = {
                     username: this.username,
                     password: this.password

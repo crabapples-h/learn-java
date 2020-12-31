@@ -259,7 +259,7 @@
                     let result = response.data
                     if (result.status !== 200) {
                         if (result.status === 401) {
-                            window.location.href = '/login'
+                            window.location.href = '/loginApi'
                         }
                         this.$message.error(result.message);
                         return;
