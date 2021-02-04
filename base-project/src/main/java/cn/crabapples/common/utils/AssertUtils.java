@@ -33,8 +33,8 @@ public abstract class AssertUtils {
     /**
      * 断言值是否相等
      *
-     * @param source  源
-     * @param target  目标
+     * @param source  需要判断的值
+     * @param target  需要等于的值
      * @param message 断言失败提示
      */
     public static void isEquals(@NotNull Object source, @NotNull Object target, String message) {
