@@ -35,8 +35,6 @@ public class FastJsonConfigure {
 //            }
 //            return source;
 //        });
-
-
         return fastJsonConfig;
     }
 }

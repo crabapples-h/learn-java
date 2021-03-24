@@ -2,8 +2,12 @@ import axios from 'axios'
 import router from '@/router';
 import message from 'ant-design-vue/es/message'
 import notification from 'ant-design-vue/es/notification'
+import {encrypt} from './RsaUtils1'
 
+const settings = require('../../settings')
+const crypt = settings.crypt;
 const instance = axios.create({timeout: 1000 * 12});
+
 instance.interceptors.request.use(
     config => {
         // 登录流程控制中，根据本地是否存在token判断用户的登录情况
@@ -15,6 +19,7 @@ instance.interceptors.request.use(
             router.push('/login')
         }
         config.headers['crabapples-token'] = token;
+        config.data = crypt && config.data ? encrypt(JSON.stringify(config.data)) : config.data
         if (/get/i.test(config.method)) {
             config.params = config.params || {}
             config.params.temp = Date.parse(new Date()) / 1000
@@ -28,10 +33,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     response => {
         console.warn('响应拦截->success', response);
+        let data = encryptUtils.decrypt(response.data)
         if (response.data.status === 401) {
             router.push('/login')
         }
-        return response.status === 200 ? Promise.resolve(response.data) : Promise.reject(response.data)
+        return response.status === 200 ? Promise.resolve(data) : Promise.reject(data)
     },
     // 服务器状态码不是200的情况
     error => {

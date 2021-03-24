@@ -1,4 +1,4 @@
-package cn.crabapples.common.utils;
+package cn.crabapples.common.utils.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

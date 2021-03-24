@@ -1,6 +1,7 @@
-package demo.security;
+package cn.crabapples.common.utils.security;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,46 +24,8 @@ import java.util.Map;
  * qq 294046317
  * pc-name 29404
  */
-public class Rsa1Demo {
-    private static final Logger logger = LoggerFactory.getLogger(Rsa1Demo.class);
-    private static final String CONTENT = "missyou";
-    private static final String SEED = "missyou";
-    private static String enStr = "oBLS6T95oCnS2mKoV6WcSdvrxtluyVsn6h/z3jDZkamX+D29DGrWYzLL5n8UP89H5M1y8hnnw+JNpJpL+EcevSeNKKkAwKDuxVm9a5MCqkrHX6zcS/es6mUbiX5pEPjUUiElH4u8WPhLbTf4gzfsF8JZYgzt7lNXuCEa2Mb2fOA=";
-    private static String key = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAL7TgOg1HsOhjOoa" +
-            "+niKa/ezj/wMOh6SyRnUftuF/XS9jQD56V5GoAO3xPvm+7ShjxAyIaVjan5f+WVY" +
-            "X/yL6y6SnmNnpq1UTVFMYfFHgviHRYePL4vFw4Nl8jA7qex3CusEXJt8hRPjTfRx" +
-            "S23HqtSrIVUFSwK9pfr+zzc1/KyzAgMBAAECgYAae3GtSAnv7lCHAJ138wXOx12Z" +
-            "Bf1e1tIPwpykTHEDLXcPBp+rVLPKMEunBcQyqiUXg02GDUjvJtSOivgvLR/DBfbc" +
-            "Il9jJPGxTE6gkL3C+8H52f/dowhKYJXuIoRMT4WHGLXYhxHHKtvCDF7PZBpP9F01" +
-            "M+kP3pNwoP0rWVlYKQJBAPwgbBBuNUEVW8LhruIEiVFlvKfc6e8hfrnaequUOVt8" +
-            "BShZgCk5wkPnbZUfDX2Xp6hGes5KwHLtyoU+l/uBYSUCQQDBwf7ZeMVqJGPRgQXe" +
-            "i95STdwS/LycAQg457KfeBuKEbWUfctVQYRThHM1qF8xrfTWkxbBpbcV2Z9kNO/F" +
-            "gor3AkBSa4boGB7wl7rXik9RM4pwQYHani0bLyfuOa3ASUQ20+QbvKZY07jd2dnI" +
-            "1c3jMKBuMhwTM/yVlYaO6FdmsHTBAkEAkAq5fFD1akgtUOW7SEvw9nzde9waF1wJ" +
-            "EczmFPmEd6tcs0ylafcv+arAv4YxZsxs9UwaIdIhfwPvI97a1ZmL1wJAO271Vt6t" +
-            "bxN+YiEATYeLav1BYM0R8NiLKE7k4yJU1pGrX+1+gaUKyB5EEcLNAUlFRBUzxT5o" +
-            "vDhcQzFTuqYs7w==";
-
-    //
-//    public static void main(String[] args) throws Exception {
-//        //生成公钥和私钥
-//        Map<String, Key> keyMap = createKey(SEED);
-//        //加密字符串
-//        Key publicKey = keyMap.get("publicKey");
-//        Key privateKey = keyMap.get("privateKey");
-//        String publicKeyString = keyToString(publicKey);
-//        String privateKeyString = keyToString(privateKey);
-//        logger.info("公钥：[{}]",publicKeyString);
-//        logger.info("私钥：[{}]",privateKeyString);
-//        String encodeStr = encrypt(CONTENT,publicKeyString);
-//        logger.info("加密后的字符串为：[{}]",encodeStr);
-//        String decodeStr = decrypt(encodeStr,privateKeyString);
-//        logger.info("还原后的字符串为：[{}]",decodeStr);
-//    }
-    public static void main(String[] args) throws Exception {
-        String decodeStr = decrypt(enStr, key);
-        logger.info("还原后的字符串为：[{}]", decodeStr);
-    }
+public class RsaUtils {
+    private static final Logger logger = LoggerFactory.getLogger(RsaUtils.class);
 
     /**
      * 随机生成密钥对
@@ -97,7 +60,7 @@ public class Rsa1Demo {
      * @return 密文
      * @throws Exception 加密过程中的异常信息
      */
-    private static String encrypt(String content, String publicKey) throws Exception {
+    private static String encryptString(String content, String publicKey) throws Exception {
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
@@ -115,7 +78,7 @@ public class Rsa1Demo {
      * @return 密文
      * @throws Exception 解密过程中的异常信息
      */
-    private static String decrypt(String content, String privateKey) throws Exception {
+    public static String decryptString(String content, String privateKey) throws Exception {
         //64位解码加密后的字符串
         byte[] inputByte = Base64.decodeBase64(content.getBytes(StandardCharsets.UTF_8));
         //base64编码的私钥
@@ -125,6 +88,22 @@ public class Rsa1Demo {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, priKey);
         return new String(cipher.doFinal(inputByte));
+    }
+
+    public static String decryptByteArray(byte[] content, String privateKey) throws Exception {
+        //base64编码的私钥
+        byte[] decoded = Base64.decodeBase64(privateKey);
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        //RSA解密
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, priKey);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < content.length; i += 256) {
+            byte[] data = ArrayUtils.subarray(content, i, i + 256);
+            byte[] doFinal = cipher.doFinal(data);
+            sb.append(new String(doFinal, StandardCharsets.UTF_8));
+        }
+        return sb.toString();
     }
 
 }

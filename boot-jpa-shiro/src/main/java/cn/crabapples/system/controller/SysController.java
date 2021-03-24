@@ -29,6 +29,7 @@ import java.util.List;
 @RestController
 @Api("系统管理")
 @Slf4j
+@RequestMapping("/api")
 public class SysController extends BaseController {
 
     private final SysService sysService;
@@ -44,7 +45,7 @@ public class SysController extends BaseController {
      * @return 登录成功返回token
      */
     @JwtIgnore
-    @PostMapping("/loginCheck")
+    @PostMapping("/login")
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO loginCheck(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);

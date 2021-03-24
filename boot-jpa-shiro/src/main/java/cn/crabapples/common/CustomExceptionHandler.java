@@ -16,16 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(CustomExceptionHandler.class);
 
-//    @ExceptionHandler
-//    protected String exceptionHandler(Exception e) {
-//        String info = "";
-//        if (e instanceof UnauthorizedException) {
-//            info = "未获授权";
-//        }
-//        logger.warn("出现异常:[{}][{}]", info, e.getMessage());
-//        return null;
-//    }
-
     @ResponseBody
     @ExceptionHandler
     protected ResponseDTO applicationExceptionHandler(Exception e) {

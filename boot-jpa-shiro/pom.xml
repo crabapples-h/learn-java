@@ -61,7 +61,7 @@
         <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>base-project</artifactId>
-            <version>1.0</version>
+            <version>1.0.1</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
