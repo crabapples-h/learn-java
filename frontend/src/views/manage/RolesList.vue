@@ -186,10 +186,14 @@ export default {
         }
       })
     },
-    formatDefaultMenusOption(ids, tree) {
-      tree.forEach(e => {
-        ids.push(e.id)
-        this.formatDefaultMenusOption(ids, e.children)
+    formatDefaultMenusOption(ids, rolesMenus) {
+      rolesMenus.forEach(e => {
+        let children = e.children
+        if (children.length > 0) {
+          this.formatDefaultMenusOption(ids, children)
+        } else {
+          ids.push(e.id)
+        }
       })
     },
 
