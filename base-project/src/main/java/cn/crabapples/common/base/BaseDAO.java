@@ -22,6 +22,7 @@ import java.util.Optional;
 public abstract class BaseDAO {
     protected final static Sort DES_CREATE_TIME = Sort.by("createTime").descending();
     protected final static Sort ASC_CREATE_TIME = Sort.by("createTime").ascending();
+    protected final static Sort ASC_SORT = Sort.by("sort").ascending();
 
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     protected <T> T checkOptional(@NotNull Optional<T> optional) {

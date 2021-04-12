@@ -1,6 +1,7 @@
 package cn.crabapples.common.dto;
 
 import cn.crabapples.common.DIC;
+import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.ResponseCode;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -35,11 +36,15 @@ public class ResponseDTO {
         this.page = page;
         this.time = System.currentTimeMillis();
     }
-
     private ResponseDTO(ResponseCode status, String message, Object data) {
         this.status = status.getCode();
         this.message = message;
         this.data = data;
+        this.time = System.currentTimeMillis();
+    }
+    private ResponseDTO(ResponseCode status, String message) {
+        this.status = status.getCode();
+        this.message = message;
         this.time = System.currentTimeMillis();
     }
 
@@ -70,7 +75,7 @@ public class ResponseDTO {
 
     /*---------------- ERROR -----------------*/
     public static ResponseDTO returnError(String message) {
-        return returnError(message);
+        return new ResponseDTO(ResponseCode.ERROR,message);
     }
 
     /*---------------- AUTH_FAIL -------------*/

@@ -1,6 +1,5 @@
-package cn.crabapples.common.dto;
+package cn.crabapples.common;
 
-import cn.crabapples.common.DIC;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

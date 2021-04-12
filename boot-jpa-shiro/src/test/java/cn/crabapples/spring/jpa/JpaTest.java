@@ -1,7 +1,7 @@
 package cn.crabapples.spring.jpa;
 
-import cn.crabapples.system.dao.jpa.SysMenuRepository;
-import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.dao.MenusDAO;
+import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.service.UserService;
@@ -34,7 +34,7 @@ public class JpaTest {
     UserService userService;
 
     @Autowired
-    SysMenuRepository sysMenuRepository;
+    MenusDAO menusDAO;
 
     @Test
     public void jpaTest() {
@@ -50,7 +50,7 @@ public class JpaTest {
         userService.findAll().forEach(e -> {
             List<SysRole> sysRoles = e.getSysRoles();
             sysRoles.forEach(t -> {
-                List<SysMenu> sysMenus = t.getSysMenus();
+                List<SysMenus> sysMenus = t.getSysMenus();
                 sysMenus.forEach(System.err::println);
             });
         });

@@ -25,7 +25,8 @@ public class FastJsonConfigure {
                 SerializerFeature.WriteNullStringAsEmpty,
                 SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteDateUseDateFormat);
+                SerializerFeature.WriteDateUseDateFormat,
+                SerializerFeature.DisableCircularReferenceDetect);
 //        fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
 //            if (source == null) {
 //                /*

@@ -1,9 +1,9 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.DIC;
+import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.UserRepository;
-import cn.crabapples.common.dto.PageDTO;
 import cn.crabapples.system.entity.SysUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

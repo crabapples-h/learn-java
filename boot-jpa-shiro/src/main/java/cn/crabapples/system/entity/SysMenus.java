@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.List;
 
@@ -22,8 +23,8 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class SysMenu extends BaseEntity {
-    @Column(columnDefinition = "int(4) default -1 comment '菜单排序号'")
+public class SysMenus extends BaseEntity {
+    @Column(columnDefinition = "tinyint(4) default -1 comment '菜单排序号'")
     private Integer sort;
 
     @Column(columnDefinition = "varchar(64) comment '菜单图标'")
@@ -35,11 +36,11 @@ public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "varchar(64) comment '菜单链接'")
     private String url;
 
-    @Column(columnDefinition = "int(2) default 0 comment '菜单类型 1:目录 2:菜单 3:外链 4:按钮'")
-    private Integer menuType;
+    @Column(columnDefinition = "tinyint(2) default 0 comment '菜单类型 1:目录 2:菜单 3:外链 4:按钮'")
+    private Integer menusType;
 
-    @Column(columnDefinition = "varchar(64) default null comment '上级菜单id'")
-    private String parentId;
+    @Column(columnDefinition = "tinyint(1) default 0 comment '是否为跟目录 0:是 1:否'")
+    private int isRoot;
 
     @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
     private Integer level;
@@ -47,8 +48,8 @@ public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "varchar(64) default null comment '授权标识'")
     private String permission;
 
-    @Transient
-    private List<SysMenu> children;
+    @OneToMany
+    private List<SysMenus> children;
 
     @Transient
     private boolean showFlag;

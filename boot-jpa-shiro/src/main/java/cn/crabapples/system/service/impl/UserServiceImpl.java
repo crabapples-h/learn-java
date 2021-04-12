@@ -1,10 +1,10 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.DIC;
+import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.UserDAO;
-import cn.crabapples.common.dto.PageDTO;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
@@ -117,9 +117,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SysUserDTO> getUserList(HttpServletRequest request, PageDTO page) {
-        page.setDataCount(userDAO.count());
         Page<SysUser> userPage = userDAO.findAll(page);
         Pageable pageable = userPage.getPageable();
+        page.setDataCount(userDAO.count());
         page.setPageIndex(pageable.getPageNumber());
         return userDAO.findAll(page).stream().map(e -> e.toDTO(new SysUserDTO())).collect(Collectors.toList());
     }
@@ -127,8 +127,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public SysUser lockUser(String id) {
         SysUser user = userDAO.findById(id);
-        SysUserDTO dto = user.toDTO(new SysUserDTO());
-        System.err.println(dto);
         user.setStatus(DIC.USER_LOCK);
         return userDAO.save(user);
     }

@@ -1,10 +1,10 @@
 package cn.crabapples.system.controller;
 
+import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.common.groups.IsAdd;
 import cn.crabapples.common.groups.IsEdit;
-import cn.crabapples.common.dto.PageDTO;
-import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;

@@ -25,7 +25,7 @@ public class SysRole extends BaseEntity {
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<SysMenu> sysMenus;
+    private List<SysMenus> sysMenus;
 
     @Override
     public String toString() {

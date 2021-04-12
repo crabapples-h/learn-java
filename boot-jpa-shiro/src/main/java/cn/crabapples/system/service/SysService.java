@@ -1,6 +1,9 @@
 package cn.crabapples.system.service;
 
-import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.common.PageDTO;
+import cn.crabapples.common.base.BaseService;
+import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.form.UserForm;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +18,15 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-public interface SysService {
+public interface SysService extends BaseService {
     String loginCheck(UserForm form);
 
-    List<SysMenu> getSysMenus(HttpServletRequest request);
+
+    List<SysMenus> getMenusList(HttpServletRequest request, PageDTO page);
+
+    SysMenus saveMenus(MenusForm form);
+
+    List<SysMenus> getUserMenus(HttpServletRequest request);
+
+    SysMenus removeMenus(String id);
 }

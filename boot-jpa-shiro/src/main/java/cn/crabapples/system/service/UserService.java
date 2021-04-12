@@ -1,7 +1,7 @@
 package cn.crabapples.system.service;
 
+import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.common.dto.PageDTO;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
