@@ -22,53 +22,43 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<SysUser, String> {
-    /**
-     * 根据 [用户名] 查询用户
-     * @param username 用户名
-     * @return 查询到的用户
-     */
-    Optional<SysUser> findByUsername(String username);
+    Optional<SysUser> findByDelFlagAndUsername(int delFlag, String username);
 
-    /**
-     * 根据姓名查询
-     * @param name 姓名
-     * @return 查询到的用户集合
-     */
-    List<SysUser> findByName(String name);
+    Optional<SysUser> findByDelFlagAndId(int delFlag, String id);
 
-    /**
-     * 根据名字和年龄查询
-     * @param name 姓名
-     * @param age 年龄
-     * @return 查询到的用户集合
-     */
-    List<SysUser> findByNameAndAge(String name, Integer age);
+    Optional<SysUser> findByDelFlagAndIdAndStatus(int delFlag, String id, int status);
 
-    /**
-     * 根据姓名模糊查询
-     * @param name 姓名
-     * @return 查询到的用户集合
-     */
-    List<SysUser> findByNameLike(String name);
+    List<SysUser> findByDelFlagAndIdIn(int delFlag, List<String> ids);
+
+    List<SysUser> findByDelFlagAndName(int delFlag, String name);
+
+    List<SysUser> findByDelFlagAndNameLike(int delFlag, String name);
+
+
+    List<SysUser> findByDelFlag(int delFlag);
+
 
     /**
      * 删除用户
+     *
      * @param id 用户ID
      */
     @Query("update SysUser set delFlag = 1 where id=:name")
     @Modifying
-    void delUser(@Param("name")String id);
+    void delUser(@Param("name") String id);
 
     /**
      * 禁用用户
+     *
      * @param id 用户ID
      */
     @Query("update SysUser set status = 1 where id = :id")
     @Modifying
-    void unActiveUser(@Param("id")String id);
+    void unActiveUser(@Param("id") String id);
 
     /**
      * 激活用户
+     *
      * @param id 用户ID
      */
     @Query("update SysUser set status = 0 where id = :id")
@@ -77,10 +67,11 @@ public interface UserRepository extends JpaRepository<SysUser, String> {
 
     /**
      * 根据[用户名] [密码] [状态] [删除标记] 查询用户
+     *
      * @param username 用户名
      * @param password 密码
-     * @param status 状态
-     * @param delFlag 删除标记
+     * @param status   状态
+     * @param delFlag  删除标记
      * @return 查询到的用户
      */
     Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);

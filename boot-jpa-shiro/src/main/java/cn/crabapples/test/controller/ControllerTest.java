@@ -1,6 +1,6 @@
 package cn.crabapples.test.controller;
 
-import cn.crabapples.common.BaseController;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.config.ApplicationConfigure;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsNotNull;

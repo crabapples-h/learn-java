@@ -1,9 +1,9 @@
 <template>
   <a-layout>
-    <a-layout-header style="color: #fff">
+    <a-layout-header>
       <a-row>
         <a-col :span="4">
-          <span style="font-size: 20px">管理系统</span>
+          <span class="title">管理系统</span>
         </a-col>
         <a-col :span="3" :offset="17">
           <a-dropdown>
@@ -101,7 +101,6 @@ export default {
         newPassword: '',
         rePassword: ''
       },
-
       show: {
         changePassword: false
       },
@@ -111,150 +110,21 @@ export default {
       menus: [
         {
           key: '1',
-          name: '首页管理',
+          name: '科研管理',
           icon: 'appstore',
           url: '',
           children: [
             {
               key: '11',
-              name: '第一版管理',
+              name: '课题申报管理',
               icon: 'appstore',
-              url: '',
-              children: [
-                {
-                  key: '111',
-                  name: '第一页管理',
-                  icon: 'appstore',
-                  url: '/banners/banners-no1',
-                  children: []
-                },
-                {
-                  key: '112',
-                  name: '第二页管理',
-                  icon: 'appstore',
-                  url: '/banners/banners-no2',
-                  children: []
-                },
-                {
-                  key: '113',
-                  name: '第三页管理',
-                  icon: 'appstore',
-                  url: '/banners/banners-no3',
-                  children: []
-                }
-              ]
+              url: '/manage-index/sub-apply',
             },
-            {
-              key: '12',
-              name: '第二版管理',
-              icon: 'appstore',
-              url: '/',
-              children: [
-                {
-                  key: '121',
-                  name: '技能培训',
-                  icon: 'appstore',
-                  url: '/banners/page-no2/list01',
-                },
-                {
-                  key: '122',
-                  name: '企业合作',
-                  icon: 'appstore',
-                  url: '/banners/page-no2/list02',
-                },
-                {
-                  key: '123',
-                  name: '重点国防定向培养',
-                  icon: 'appstore',
-                  url: '/banners/page-no2/list03',
-                },
-                {
-                  key: '124',
-                  name: '热点大学简介',
-                  icon: 'appstore',
-                  url: '/banners/page-no2/list04',
-                }
-              ]
-            },
-            {
-              key: '13',
-              name: '第三版管理',
-              icon: 'appstore',
-              url: '/banners/page-no3',
-              children: [
-                {
-                  key: '131',
-                  name: '国际本科4+0模式',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list01',
-                },
-                {
-                  key: '132',
-                  name: '全日制本科4+1模式',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list02',
-                },
-                {
-                  key: '133',
-                  name: '热门技能培训学校',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list03',
-                },
-                {
-                  key: '134',
-                  name: '国防生定向培养',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list04',
-                },
-                {
-                  key: '135',
-                  name: '研学旅行',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list05',
-                },
-                {
-                  key: '136',
-                  name: '热门高薪专业',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list06',
-                },
-                {
-                  key: '137',
-                  name: '医学护理专业',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list07',
-                },
-                {
-                  key: '138',
-                  name: '职业规划辅导',
-                  icon: 'appstore',
-                  url: '/banners/page-no3/list08',
-                }
-              ]
-            },
-            // {
-            //   key: '14',
-            //   name: '第四版管理',
-            //   icon: 'appstore',
-            //   url: '/',
-            // },
-            {
-              key: '15',
-              name: '第五版管理',
-              icon: 'appstore',
-              url: '/banners/page-no5',
-            },
-            // {
-            //   key: '100',
-            //   name: '测试',
-            //   icon: 'appstore',
-            //   url: '/',
-            // }
           ]
         },
         {
           key: '2',
-          name: '锦途工程',
+          name: '数据共享',
           icon: 'appstore',
           url: '/',
           children: [
@@ -286,93 +156,16 @@ export default {
         },
         {
           key: '3',
-          name: '实训项目',
+          name: '科研分析',
           icon: 'appstore',
           url: '/really-projects/list',
         },
         {
           key: '4',
-          name: '校企合作',
+          name: '数据对接',
           icon: 'appstore',
           url: '/school-org/list',
           children: []
-        },
-        {
-          key: '5',
-          name: '个人简历',
-          icon: 'appstore',
-          url: '/resume/list-personal',
-          children: []
-        },
-        {
-          key: '6',
-          name: '志愿简历',
-          icon: 'appstore',
-          url: '/resume/list-volunteer',
-          children: []
-        },
-        {
-          key: '7',
-          name: '手机版',
-          icon: 'appstore',
-          url: '',
-          children: [
-            {
-              key: '71',
-              name: '首页轮播图',
-              icon: 'appstore',
-              url: '/wap/banner/list',
-            },
-            {
-              key: '72',
-              name: '学校简介',
-              icon: 'appstore',
-              url: '/wap/data-info/info',
-              children: []
-            },
-            {
-              key: '73',
-              name: '交流合作',
-              icon: 'appstore',
-              url: '/wap/data-list/jiaoliuhezhuo',
-              children: []
-            },
-            {
-              key: '74',
-              name: '专业设置',
-              icon: 'appstore',
-              url: '/wap/data-list/zhuanyeshezhi',
-              children: []
-            },
-            {
-              key: '75',
-              name: '安置就业',
-              icon: 'appstore',
-              url: '/wap/data-list/anzhijiuye',
-              children: []
-            },
-            {
-              key: '76',
-              name: '学校环境',
-              icon: 'appstore',
-              url: '/wap/data-list/xuexiaohuanjing',
-              children: []
-            },
-            {
-              key: '77',
-              name: '校园生活',
-              icon: 'appstore',
-              url: '/wap/data-list/xiaoyuanshenghuo',
-              children: []
-            },
-            {
-              key: '78',
-              name: '报名信息',
-              icon: 'appstore',
-              url: '/wap/data-list/baoming',
-              children: []
-            },
-          ]
         },
         // {
         //   key: '99',
@@ -460,6 +253,12 @@ export default {
 .ant-layout-header, .ant-layout-footer {
   background: #7dbcea;
   color: #fff;
+  height: 5vh;
+  line-height: 5vh;
+}
+
+.title {
+  font-size: 20px
 }
 
 .ant-layout-footer {
@@ -468,19 +267,17 @@ export default {
 
 .ant-layout-sider {
   width: 100%;
-  height: 823px;
-  /*background: #ffffff;*/
+  height: 90vh;
+  background: #fff;
   /*color: #fff;*/
   /*line-height: 120px;*/
 }
 
 .ant-layout-content {
-  /*padding: 16px;*/
+  padding: 16px;
   background: #fff;
-  color: #fff;
   min-height: 120px;
-  line-height: 120px;
-  height: 823px;
+  height: 90vh;
 }
 
 .container-parent {

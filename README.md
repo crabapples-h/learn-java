@@ -1,5 +1,7 @@
 # 20190704
+
 # 这是一个用于记录学习的项目
+
 * 20190704
     * 加入springboot演示代码
     * 加入AES加密字符串演示 `AesStringDemo.java`
@@ -7,7 +9,7 @@
 * 20190815
     * 加入AES加密文件演示 `AesFileDemo.java`
 * 20190920
-    * 加入jsr303校验演示 
+    * 加入jsr303校验演示
 * 20190921
     * 加入异常类 `ApplicationException.java`
 * 20191114
@@ -24,7 +26,7 @@
 * 20200117
     * 加入swagger测试 `Swagger2Configure.java`
 * 20200127
-    * 加入jpa测试crud 
+    * 加入jpa测试crud
 * 20200129
     * 用户操作相关逻辑实现
 * 20200130
@@ -39,8 +41,8 @@
     * 引入nacos作为配置中心
 * 20200302
     * 修复aesKey在linux下使用相同种子生成密钥不一致问题
-      * Linux下默认的算法是“NativePRNG”
-      * windows下默认是“SHA1PRNG”（sun提供的算法)
+        * Linux下默认的算法是“NativePRNG”
+        * windows下默认是“SHA1PRNG”（sun提供的算法)
 * 20200303
     * 修改springCache配置,缓存至redis乱码问题`RedisTemplateConfigure.java`
 * 20200304
@@ -84,14 +86,16 @@
     * 加入原型(克隆)模式 `pattern23.prototype.*`
 * 20200817
     * 加入前端模块
-      * 前端的axiosUtils中默认定义登录地址为 `/api/loginCheck`
-      * 前端的axiosUtils中默认定义退出地址为 `/api/logout`
+        * 前端的axiosUtils中默认定义登录地址为 `/api/loginCheck`
+        * 前端的axiosUtils中默认定义退出地址为 `/api/logout`
 * 20200825
     * 加入jwt
-      * 拦截所有url(可以使用`@JwtIgnore`来标记不需要拦截的url)
+        * 拦截所有url(可以使用`@JwtIgnore`来标记不需要拦截的url)
 * 20200829
     * 加入mongodb
 * 20200905
     * 加入多数据源配置(根据包名)
     * 加入多数据源配置(使用AOP动态切换)
-      * 使用spring的配置文件扫描功能,从classpath:datasource.properties中读取数据源信息
+        * 使用spring的配置文件扫描功能,从classpath:datasource.properties中读取数据源信息
+* 20210325
+    * 前端请求参数加密

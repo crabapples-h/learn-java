@@ -1,6 +1,6 @@
 package cn.crabapples.system.controller;
 
-import cn.crabapples.common.BaseController;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsLogin;
 import cn.crabapples.system.dto.ResponseDTO;

@@ -1,18 +1,19 @@
 package cn.crabapples.system.controller;
 
-import cn.crabapples.common.BaseController;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.groups.IsAdd;
 import cn.crabapples.common.groups.IsEdit;
-import cn.crabapples.common.groups.IsStatusChange;
+import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.system.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysUser;
-import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -65,21 +66,31 @@ public class UserController extends BaseController {
         return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @PostMapping("/changeStatus")
-    @ApiOperation(value = "修改用户状态", notes = "修改用户状态接口")
-    public ResponseDTO changeStatus(@RequestBody UserForm form) {
-        super.validator(form, IsStatusChange.class);
-        logger.info("收到请求->修改用户状态,id:[{}]", form.getId());
-        userService.changeStatus(form.getId());
-        logger.info("返回结果->修改用户状态完成");
+    @JwtIgnore
+    @PostMapping("/lock-user/{id}")
+    @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
+    public ResponseDTO lockUser(@PathVariable String id) {
+        logger.info("收到请求->锁定用户,id:[{}]", id);
+        userService.lockUser(id);
+        logger.info("返回结果->锁定用户完成");
+        return ResponseDTO.returnSuccess("操作成功");
+    }
+
+    @JwtIgnore
+    @PostMapping("/unlock-user/{id}")
+    @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
+    public ResponseDTO unlockUser(@PathVariable String id) {
+        logger.info("收到请求->解锁用户,id:[{}]", id);
+        userService.unlockUser(id);
+        logger.info("返回结果->解锁用户完成");
         return ResponseDTO.returnSuccess("操作成功");
     }
 
     @GetMapping("/getUserInfo")
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo() {
+    public ResponseDTO getUserInfo(HttpServletRequest request) {
         logger.info("收到请求->获取当前用户信息");
-        SysUser sysUser = userService.getUserInfo();
+        SysUser sysUser = userService.getUserInfo(request);
         logger.info("返回结果->获取当前用户信息结束:[{}]", sysUser);
         return ResponseDTO.returnSuccess("操作成功", sysUser);
     }

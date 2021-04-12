@@ -1,6 +1,8 @@
 package cn.crabapples.system.service.impl;
 
-import cn.crabapples.common.config.ApplicationConfigure;
+import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.DIC;
+import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.jpa.SysMenuRepository;
@@ -9,17 +11,13 @@ import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
 import cn.crabapples.system.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import cn.hutool.crypto.digest.MD5;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -33,36 +31,24 @@ import java.util.List;
  * pc-name 29404
  */
 @Service
+@Slf4j
 //@CacheConfig(cacheNames = "user:")
 public class SysServiceImpl implements SysService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SysServiceImpl.class);
-    private String aesKey;
-    private String redisPrefix;
-    private Long tokenCacheTime;
-    private String salt;
     @Value("${isDebug}")
     private boolean isDebug;
-
     private final UserService userService;
-
     private final SysMenuRepository sysMenuRepository;
-
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtConfigure jwtConfigure;
 
-    public SysServiceImpl(ApplicationConfigure applicationConfigure,
-                          UserService userService,
+    public SysServiceImpl(UserService userService,
                           SysMenuRepository sysMenuRepository,
                           RedisTemplate<String, Object> redisTemplate,
                           JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.sysMenuRepository = sysMenuRepository;
         this.redisTemplate = redisTemplate;
-        this.aesKey = applicationConfigure.aesKey;
-        this.redisPrefix = applicationConfigure.redisPrefix;
-        this.tokenCacheTime = applicationConfigure.tokenCacheTime;
-        this.salt = applicationConfigure.salt;
         this.jwtConfigure = jwtConfigure;
     }
 
@@ -83,24 +69,17 @@ public class SysServiceImpl implements SysService {
     @Override
     public String loginCheck(UserForm form) {
         String username = form.getUsername();
-        String password = String.valueOf(new Md5Hash(form.getPassword(), salt));
-        logger.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-        SysUser sysUser = shiroCheckLogin(username, password);
-        return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getUsername(), jwtConfigure);
-    }
-
-    /**
-     * shiro认证
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @return 认证成功后的用户对象
-     */
-    private SysUser shiroCheckLogin(String username, String password) {
-        AuthenticationToken token = new UsernamePasswordToken(username, password);
-        Subject subject = SecurityUtils.getSubject();
-        subject.login(token);
-        return (SysUser) subject.getPrincipal();
+        String password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
+        log.info("开始登录->用户名:[{}],密码:[{}]", username, password);
+        SysUser sysUser = userService.findByUsername(username);
+        AssertUtils.notNull(sysUser, "用户名不存在");
+        if (sysUser.getStatus() == DIC.USER_LOCK) {
+            throw new ApplicationException("账户已被禁用，请联系管理员");
+        }
+        if (sysUser.getPassword().equals(password)) {
+            return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getUsername(), jwtConfigure);
+        }
+        throw new ApplicationException("密码错误");
     }
 
     /**

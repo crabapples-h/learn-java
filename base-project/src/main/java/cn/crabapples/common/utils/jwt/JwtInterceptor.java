@@ -1,6 +1,5 @@
 package cn.crabapples.common.utils.jwt;
 
-import cn.crabapples.common.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpMethod;
@@ -48,7 +47,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
         log.debug("授权Token:[{}]", authHeader);
         if (StringUtils.isBlank(authHeader)) {
             log.debug("token认证失败");
-            throw new ApplicationException("登录信息异常", 401);
+//            throw new ApplicationException("登录信息异常", 401);
         }
         JwtTokenUtils.parseJWT(authHeader, jwtConfigure.getBase64Secret());
         return true;

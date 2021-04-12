@@ -1,18 +1,20 @@
 package cn.crabapples.system.service.impl;
 
-import cn.crabapples.common.utils.AssertUtils;
+import cn.crabapples.common.DIC;
+import cn.crabapples.common.utils.jwt.JwtConfigure;
+import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.UserDAO;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,23 +27,28 @@ import java.util.List;
  * pc-name 29404
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Value("${isDebug}")
     private boolean isDebug;
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
     private final UserDAO userDAO;
+    private final JwtConfigure jwtConfigure;
 
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, JwtConfigure jwtConfigure) {
         this.userDAO = userDAO;
+        this.jwtConfigure = jwtConfigure;
     }
 
-    /**
-     * 根据 [用户名] 查询用户
-     *
-     * @param username 用户名
-     * @return 查询到的用户
-     */
+    @Override
+    public SysUser findById(String id) {
+        return userDAO.findById(id);
+    }
+
+    @Override
+    public List<SysUser> findByIds(List<String> ids) {
+        return userDAO.findByIds(ids);
+    }
+
     @Override
     public SysUser findByUsername(String username) {
         return userDAO.findByUsername(username);
@@ -49,21 +56,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SysUser addUser(UserForm form) {
-        return userDAO.save(form);
+        SysUser user = new SysUser();
+        BeanUtils.copyProperties(form, user);
+        return userDAO.save(user);
     }
 
     @Override
     public SysUser editUser(UserForm form) {
         SysUser user = userDAO.findById(form.getId());
-        AssertUtils.notNull(user, "用户不存在");
-        return userDAO.save(form);
+        BeanUtils.copyProperties(form, user);
+        return userDAO.save(user);
     }
 
     @Override
-    public void delUser(String id) {
+    public SysUser delUser(String id) {
         SysUser user = userDAO.findById(id);
-        AssertUtils.notNull(user, "用户不存在");
-        userDAO.delUser(id);
+        user.setDelFlag(DIC.IS_DEL);
+        return userDAO.save(user);
     }
 
     @Override
@@ -72,48 +81,45 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeStatus(String id) {
-        SysUser user = userDAO.findById(id);
-        AssertUtils.notNull(user, "用户不存在");
-        user.setStatus(Math.abs(user.getStatus() - 1));
-        userDAO.save(user);
+    public List<SysUser> findByNameLike(String name) {
+        return userDAO.findByNameLike(name);
     }
 
     @Override
     public List<SysUser> findAll() {
-        logger.info("开始获取所有用户");
         return userDAO.findAll();
     }
 
-    /**
-     * 根据[用户名] [密码] [状态] [删除标记] 查询用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param status   状态
-     * @param delFlag  删除标记
-     * @return 查询到的用户
-     */
     @Override
-    public SysUser findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag) {
-        return userDAO.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, status, delFlag);
+    public SysUser lockUser(String id) {
+        SysUser user = userDAO.findById(id);
+        SysUserDTO dto = user.toDTO(new SysUserDTO());
+        System.err.println(dto);
+//        user.setStatus(DIC.USER_LOCK);
+        return userDAO.save(user);
     }
 
     @Override
-    public SysUser getUserInfo() {
-        Subject subject = SecurityUtils.getSubject();
-        SysUser user = (SysUser) subject.getPrincipal();
-        String username;
-        if (user == null) {
-            if (isDebug) {
-                username = "admin";
-            } else {
-                throw new UnauthenticatedException("用户尚未登录");
-            }
-        } else {
-            username = user.getUsername();
+    public SysUser unlockUser(String id) {
+        SysUser user = userDAO.findById(id);
+        user.setStatus(DIC.USER_UNLOCK);
+        return userDAO.save(user);
+    }
+
+    @Override
+    public SysUser getUserInfo(HttpServletRequest request) {
+        return getUserInfo(request, jwtConfigure, userDAO, isDebug);
+    }
+
+
+    private SysUser getUserInfo(HttpServletRequest request, JwtConfigure configure, UserDAO userDAO, boolean isDebug) {
+        String userId = "001";
+        if (!isDebug) {
+            final String authHeader = request.getHeader(configure.getAuthKey());
+            Claims claims = JwtTokenUtils.parseJWT(authHeader, configure.getBase64Secret());
+            userId = String.valueOf(claims.get("userId"));
         }
-        return userDAO.findByUsername(username);
+        System.err.println(userDAO.findById(userId));
+        return userDAO.findById(userId);
     }
-
 }

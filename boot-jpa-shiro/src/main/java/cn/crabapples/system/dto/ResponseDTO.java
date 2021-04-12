@@ -1,6 +1,5 @@
 package cn.crabapples.system.dto;
 
-import ch.qos.logback.core.status.Status;
 import cn.crabapples.common.ResponseCode;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -47,7 +46,7 @@ public class ResponseDTO {
     }
 
     public static ResponseDTO returnError(String message, Object data) {
-        return new ResponseDTO(Status.ERROR, message, data);
+        return new ResponseDTO(ResponseCode.ERROR, message, data);
     }
 
     public static ResponseDTO returnError(String message) {

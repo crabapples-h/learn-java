@@ -27,6 +27,9 @@ spring:
         max-active: 10
     redis:
       time-to-live: 60000
+  servlet:
+    multipart:
+      max-file-size: 100MB
 logging:
   file:
     name: d:/logs/springboot-shiro-jpa

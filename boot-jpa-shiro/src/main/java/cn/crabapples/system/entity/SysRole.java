@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.BaseEntity;
+import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;

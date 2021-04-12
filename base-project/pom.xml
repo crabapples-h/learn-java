@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.7</version>
+        </dependency>
         <!--jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

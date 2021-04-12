@@ -76,24 +76,6 @@
             <artifactId>java-jwt</artifactId>
             <version>3.2.0</version>
         </dependency>
-        <!--thymeleaf-->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.0.11.RELEASE</version>
-        </dependency>
-        <!-- thymeleaf-shiro -->
-        <dependency>
-            <groupId>com.github.theborakompanioni</groupId>
-            <artifactId>thymeleaf-extras-shiro</artifactId>
-            <version>${thymeleafShiro.version}</version>
-        </dependency>
-        <!-- shiro-spring -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
         <!-- spring-webSocket -->
         <dependency>
             <groupId>org.springframework</groupId>

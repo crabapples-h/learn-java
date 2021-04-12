@@ -6,6 +6,7 @@ import {encrypt} from './RsaUtils1'
 
 const settings = require('../../settings')
 const crypt = settings.crypt;
+const isDebug = settings.isDebug;
 const instance = axios.create({timeout: 1000 * 12});
 
 instance.interceptors.request.use(
@@ -16,7 +17,8 @@ instance.interceptors.request.use(
         // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
         const token = sessionStorage.getItem('crabapples-token');
         if (token === null) {
-            router.push('/login')
+            if (!isDebug)
+                router.push('/login')
         }
         config.headers['crabapples-token'] = token;
         config.data = crypt && config.data ? encrypt(JSON.stringify(config.data)) : config.data
@@ -33,7 +35,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     response => {
         console.warn('响应拦截->success', response);
-        let data = encryptUtils.decrypt(response.data)
+        let data = response.data
         if (response.data.status === 401) {
             router.push('/login')
         }

@@ -60,7 +60,7 @@ public class RsaUtils {
      * @return 密文
      * @throws Exception 加密过程中的异常信息
      */
-    private static String encryptString(String content, String publicKey) throws Exception {
+    public static String encryptString(String content, String publicKey) throws Exception {
         //base64编码的公钥
         byte[] decoded = Base64.decodeBase64(publicKey);
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
@@ -104,6 +104,22 @@ public class RsaUtils {
             sb.append(new String(doFinal, StandardCharsets.UTF_8));
         }
         return sb.toString();
+    }
+
+    public static String encryptByteArray(byte[] content, String privateKey) throws Exception {
+        //base64编码的私钥
+        byte[] decoded = Base64.decodeBase64(privateKey);
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        //RSA解密
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, priKey);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < content.length; i += 128) {
+            byte[] data = ArrayUtils.subarray(content, i, i + 128);
+            byte[] doFinal = cipher.doFinal(data);
+            sb.append(new String(doFinal, StandardCharsets.UTF_8));
+        }
+        return Base64.encodeBase64String(sb.toString().getBytes(StandardCharsets.UTF_8));
     }
 
 }

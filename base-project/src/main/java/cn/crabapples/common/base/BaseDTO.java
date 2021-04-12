@@ -1,4 +1,4 @@
-package cn.crabapples.common;
+package cn.crabapples.common.base;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class BaseDTO {
-    private String userId;
+    private String id;
 
     @Override
     public String toString() {

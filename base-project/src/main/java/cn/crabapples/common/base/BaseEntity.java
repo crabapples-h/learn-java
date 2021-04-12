@@ -1,10 +1,11 @@
-package cn.crabapples.common;
+package cn.crabapples.common.base;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +27,7 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity implements Serializable, Cloneable {
     /**
      * Id uuid主键
      * GeneratedValue 自增长
@@ -64,5 +65,15 @@ public abstract class BaseEntity implements Serializable {
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public <T> T toDTO(T dto) {
+        BeanUtils.copyProperties(this, dto);
+        return dto;
     }
 }

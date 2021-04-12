@@ -10,8 +10,3 @@ export function encrypt(data) {
     let enc = jsrsasign.KJUR.crypto.Cipher.encrypt(data, key);
     return jsrsasign.hextob64(enc);
 }
-
-// export function decrypt(decryptData) {
-//     let key = jsrsasign.KEYUTIL.getKey(privateKey);
-//     return jsrsasign.KJUR.crypto.Cipher.decrypt(jsrsasign.b64utohex(decryptData), key);
-// }
