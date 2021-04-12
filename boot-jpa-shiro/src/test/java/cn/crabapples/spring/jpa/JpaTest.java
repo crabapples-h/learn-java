@@ -2,7 +2,7 @@ package cn.crabapples.spring.jpa;
 
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRole;
+import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.service.UserService;
 import cn.crabapples.test.service.UserServiceTest;
@@ -48,7 +48,7 @@ public class JpaTest {
     @Test
     public void getAllUserTest() {
         userService.findAll().forEach(e -> {
-            List<SysRole> sysRoles = e.getSysRoles();
+            List<SysRoles> sysRoles = e.getSysRoles();
             sysRoles.forEach(t -> {
                 List<SysMenus> sysMenus = t.getSysMenus();
                 sysMenus.forEach(System.err::println);

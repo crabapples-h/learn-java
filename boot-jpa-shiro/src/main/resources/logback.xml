@@ -2,7 +2,7 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
     <property name="LOG_DIR" value="/tmp/log/"/>
-    <property name="APP_NAME" value="hongyi-guizhou"/>
+    <property name="APP_NAME" value="crabapples-springboot"/>
     <!-- ERROR级别日志 -->
     <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -16,7 +16,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_DIR}${APP_NAME}/%d{yyyy-MM-dd}-error-log.log</FileNamePattern>
+            <FileNamePattern>${LOG_DIR}${APP_NAME}/%d{yyyy-MM-dd}-error.log</FileNamePattern>
             <maxHistory>60</maxHistory>
         </rollingPolicy>
         <encoder>

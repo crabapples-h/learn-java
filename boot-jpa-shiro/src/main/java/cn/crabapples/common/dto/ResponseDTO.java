@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -22,7 +23,8 @@ import java.util.Collection;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResponseDTO {
+public class ResponseDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int status;
     private String message;
     private Object data;
@@ -36,12 +38,14 @@ public class ResponseDTO {
         this.page = page;
         this.time = System.currentTimeMillis();
     }
+
     private ResponseDTO(ResponseCode status, String message, Object data) {
         this.status = status.getCode();
         this.message = message;
         this.data = data;
         this.time = System.currentTimeMillis();
     }
+
     private ResponseDTO(ResponseCode status, String message) {
         this.status = status.getCode();
         this.message = message;
@@ -75,7 +79,7 @@ public class ResponseDTO {
 
     /*---------------- ERROR -----------------*/
     public static ResponseDTO returnError(String message) {
-        return new ResponseDTO(ResponseCode.ERROR,message);
+        return new ResponseDTO(ResponseCode.ERROR, message);
     }
 
     /*---------------- AUTH_FAIL -------------*/
@@ -93,4 +97,5 @@ public class ResponseDTO {
     public String toString() {
         return JSONObject.toJSONString(this);
     }
+
 }

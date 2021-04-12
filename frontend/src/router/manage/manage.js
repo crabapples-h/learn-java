@@ -1,5 +1,6 @@
 import Index from '@/views/manage/Index'
 import UserList from '@/views/manage/UserList'
+import RolesList from '@/views/manage/RolesList'
 
 const manageRouter = {
     path: '/manage-index',
@@ -11,6 +12,11 @@ const manageRouter = {
             path: 'user-list',
             components: {innerView: UserList},
             name: 'user-list',
+        },
+        {
+            path: 'roles-list',
+            components: {innerView: RolesList},
+            name: 'roles-list',
         },
     ]
 }

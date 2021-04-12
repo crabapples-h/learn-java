@@ -3,18 +3,23 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
+import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.MenusDAO;
+import cn.crabapples.system.dao.RolesDAO;
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRole;
+import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
+import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
 import cn.crabapples.system.service.UserService;
 import cn.hutool.crypto.digest.MD5;
+import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,15 +53,16 @@ public class SysServiceImpl implements SysService {
     @Value("${isDebug}")
     private boolean isDebug;
     private final UserService userService;
+    private final RolesDAO rolesDAO;
     private final MenusDAO menusDAO;
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtConfigure jwtConfigure;
 
-    public SysServiceImpl(UserService userService,
-                          MenusDAO menusDAO,
+    public SysServiceImpl(UserService userService, RolesDAO rolesDAO, MenusDAO menusDAO,
                           RedisTemplate<String, Object> redisTemplate,
                           JwtConfigure jwtConfigure) {
         this.userService = userService;
+        this.rolesDAO = rolesDAO;
         this.menusDAO = menusDAO;
         this.redisTemplate = redisTemplate;
         this.jwtConfigure = jwtConfigure;
@@ -100,18 +107,22 @@ public class SysServiceImpl implements SysService {
     @Override
     public List<SysMenus> getUserMenus(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
-        List<SysRole> roles = user.getSysRoles();
-        System.err.println(roles);
-//        List<SysMenus> menus = menusDAO.findRoot();
-
-//        Subject subject = SecurityUtils.getSubject();
-//        Object object = subject.getSession().getAttribute("user");
-//        System.err.println(object);
-//        List<SysMenus> menus = menusDAO.findRoot();
-//        insertChildrenMenus(menus);
-//        menus.forEach(System.err::println);
-//        return menus;
-        throw new ApplicationException("暂未实现");
+        List<SysRoles> roles = user.getSysRoles();
+        List<String> menusId = new ArrayList<>();
+        roles.forEach(e -> {
+            String ids = e.getMenusIds();
+            if (!StringUtils.isBlank(ids)) {
+                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
+                menusId.addAll(idList);
+            }
+        });
+        List<String> menusList = menusId.stream().distinct().collect(Collectors.toList());
+        System.err.println(menusList);
+        List<SysMenus> allMenus = menusDAO.findRoot();
+        List<SysMenus> sysMenus = filterRootMenus(menusList, allMenus);
+        System.err.println(sysMenus);
+        return sysMenus;
+//        throw new ApplicationException("暂未实现");
     }
 
     @Override
@@ -163,13 +174,86 @@ public class SysServiceImpl implements SysService {
 
     private SysMenus addChildrenMenus(String prentId, SysMenus entity) {
         log.info("添加新子菜单,parentId:[{}],[{}]", prentId, entity);
-        entity.setIsRoot(DIC.NOT_ROOT);
-        entity = menusDAO.save(entity);
         SysMenus root = menusDAO.findById(prentId);
         List<SysMenus> children = root.getChildren();
+        entity.setIsRoot(DIC.NOT_ROOT);
+        entity = menusDAO.save(entity);
         children.add(entity);
         root.setChildren(children);
         return menusDAO.save(root);
+    }
+
+    @Override
+    public List<SysRolesDTO> getUserRolesList(HttpServletRequest request) {
+        SysUser user = userService.getUserInfo(request);
+        return user.getSysRoles().stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SysRoles> getRolesList(HttpServletRequest request, PageDTO page) {
+        Page<SysRoles> rolesPage = rolesDAO.findAll(page);
+        Pageable pageable = rolesPage.getPageable();
+        page.setDataCount(rolesDAO.count());
+        page.setPageIndex(pageable.getPageNumber());
+        List<SysRoles> sysRoles = rolesPage.stream().collect(Collectors.toList());
+        sysRoles = formatMenus(sysRoles);
+        return sysRoles;
+    }
+
+    private List<SysRoles> formatMenus(List<SysRoles> source) {
+        List<SysMenus> allMenus = menusDAO.findRoot();
+        List<SysRoles> sysRoles = source.stream().peek(e -> {
+            String ids = e.getMenusIds();
+            if (!StringUtils.isBlank(ids)) {
+                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
+                List<SysMenus> sysMenus = filterRootMenus(idList, allMenus);
+                e.setSysMenus(sysMenus);
+            }
+        }).collect(Collectors.toList());
+        System.err.println(sysRoles);
+        return sysRoles;
+    }
+
+    @Override
+    public SysRoles saveRoles(RolesForm form) {
+        String id = form.getId();
+        SysRoles entity;
+        if (StringUtils.isBlank(id)) {
+            entity = new SysRoles();
+        } else {
+            entity = rolesDAO.findById(form.getId());
+        }
+        BeanUtils.copyProperties(form, entity);
+        String menusIds = JSONArray.toJSONString(form.getMenusList());
+        entity.setMenusIds(menusIds);
+        return rolesDAO.save(entity);
+    }
+
+    private void formatRolesMenus(List<String> menusIds) {
+        List<SysMenus> allMenus = menusDAO.findRoot();
+        List<SysMenus> roots = menusDAO.findRootsByIds(menusIds);
+        List<String> rootsIds = roots.stream().map(BaseEntity::getId).collect(Collectors.toList());
+    }
+
+    private List<SysMenus> filterRootMenus(List<String> menusIds, List<SysMenus> allMenus) {
+        return allMenus.stream().filter(e -> {
+            System.err.println(menusIds);
+            System.err.println(e.getId());
+            List<SysMenus> children = filterRootMenus(menusIds, e.getChildren());
+            if (children.size() > 0) {
+                e.setChildren(children);
+                return true;
+            }
+            return menusIds.contains(e.getId());
+        }).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public SysRoles removeRoles(String id) {
+        SysRoles entity = rolesDAO.findById(id);
+        entity.setDelFlag(DIC.IS_DEL);
+        return rolesDAO.save(entity);
     }
 
     //    @Override

@@ -50,7 +50,19 @@ public class MenusDAO extends BaseDAO {
         return menusRepository.findByDelFlagAndIsRoot(pageable, DIC.NOT_DEL, DIC.IS_ROOT);
     }
 
+    public List<SysMenus> findRoot() {
+        return menusRepository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
+    }
+
     public List<SysMenus> findByParentId(String id) {
         throw new ApplicationException("暂未实现");
+    }
+
+    public List<SysMenus> findByIds(List<String> ids) {
+        return menusRepository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
+    }
+
+    public List<SysMenus> findRootsByIds(List<String> ids) {
+        return menusRepository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.IS_ROOT, ids);
     }
 }

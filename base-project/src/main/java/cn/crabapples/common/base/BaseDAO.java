@@ -48,8 +48,4 @@ public abstract class BaseDAO {
         return repository.findAll(page);
     }
 
-    protected <T, ID> long count(JpaRepository<T, ID> repository) {
-        return repository.count();
-    }
-
 }

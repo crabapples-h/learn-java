@@ -20,11 +20,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class SysRole extends BaseEntity {
+public class SysRoles extends BaseEntity {
     @Column(columnDefinition = "varchar(64) ")
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(columnDefinition = "longtext comment '菜单Id'")
+    private String menusIds;
+    @Transient
     private List<SysMenus> sysMenus;
 
     @Override

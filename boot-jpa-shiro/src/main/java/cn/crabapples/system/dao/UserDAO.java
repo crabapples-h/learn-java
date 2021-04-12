@@ -22,7 +22,7 @@ public class UserDAO extends BaseDAO {
     }
 
     public long count() {
-        return count(userRepository);
+        return userRepository.countByDelFlag(DIC.NOT_DEL);
     }
 
 

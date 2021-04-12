@@ -1,8 +1,6 @@
 package cn.crabapples.system.dao.jpa;
 
 import cn.crabapples.system.entity.SysUser;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,22 +21,16 @@ import java.util.Optional;
  * pc-name 29404
  */
 @Repository
-public interface UserRepository extends JpaRepository<SysUser, String> {
+public interface UserRepository extends JpaRepository<SysUser, String>,BaseRepository<SysUser> {
     Optional<SysUser> findByDelFlagAndUsername(int delFlag, String username);
 
-    Optional<SysUser> findByDelFlagAndId(int delFlag, String id);
-
     Optional<SysUser> findByDelFlagAndIdAndStatus(int delFlag, String id, int status);
-
-    List<SysUser> findByDelFlagAndIdIn(int delFlag, List<String> ids);
 
     List<SysUser> findByDelFlagAndName(int delFlag, String name);
 
     List<SysUser> findByDelFlagAndNameLike(int delFlag, String name);
 
     List<SysUser> findByDelFlag(int delFlag);
-
-    Page<SysUser> findByDelFlag(Pageable pageable, int delFlag);
 
 
     /**

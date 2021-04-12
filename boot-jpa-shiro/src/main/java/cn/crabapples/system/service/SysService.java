@@ -2,8 +2,11 @@ package cn.crabapples.system.service;
 
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.form.MenusForm;
+import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.form.UserForm;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,4 +32,12 @@ public interface SysService extends BaseService {
     List<SysMenus> getUserMenus(HttpServletRequest request);
 
     SysMenus removeMenus(String id);
+
+    List<SysRolesDTO> getUserRolesList(HttpServletRequest request);
+
+    List<SysRoles> getRolesList(HttpServletRequest request, PageDTO page);
+
+    SysRoles saveRoles(RolesForm form);
+
+    SysRoles removeRoles(String id);
 }

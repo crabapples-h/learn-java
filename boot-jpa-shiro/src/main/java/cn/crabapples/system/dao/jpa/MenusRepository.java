@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * TODO 系统菜单持久层
@@ -18,13 +18,13 @@ import java.util.Optional;
  * pc-name root
  */
 @Repository
-public interface MenusRepository extends JpaRepository<SysMenus, String> {
+public interface MenusRepository extends JpaRepository<SysMenus, String>, BaseRepository<SysMenus> {
 
     long countByDelFlagAndIsRoot(int delFlag, int isRoot);
 
-    Optional<SysMenus> findByDelFlagAndId(int notDel, String id);
-
-    Page<SysMenus> findByDelFlag(Pageable pageable, int notDel);
-
     Page<SysMenus> findByDelFlagAndIsRoot(Pageable pageable, int delFlag, int isRoot);
+
+    List<SysMenus> findByDelFlagAndIsRoot(int delFlag, int isRoot);
+
+    List<SysMenus> findByDelFlagAndIsRootAndIdIn(int delFlag, int isRoot, List<String> ids);
 }

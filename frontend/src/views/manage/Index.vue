@@ -114,6 +114,12 @@ export default {
           icon: 'appstore',
           url: '/manage-index/user-list',
         },
+        {
+          key: '12',
+          name: '',
+          icon: 'appstore',
+          url: '/manage-index/roles-list',
+        },
         // {
         //   key: '99',
         //   name: '系统管理',
