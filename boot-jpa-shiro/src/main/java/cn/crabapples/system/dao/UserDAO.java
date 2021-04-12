@@ -1,9 +1,13 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.common.DIC;
+import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.UserRepository;
+import cn.crabapples.common.dto.PageDTO;
 import cn.crabapples.system.entity.SysUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,17 +21,23 @@ public class UserDAO extends BaseDAO {
         this.userRepository = userRepository;
     }
 
+    public long count() {
+        return count(userRepository);
+    }
+
+
     public List<SysUser> findAll() {
         return userRepository.findByDelFlag(DIC.NOT_DEL);
+    }
+
+    public Page<SysUser> findAll(PageDTO page) {
+        Pageable pageable = PageRequest.of(page.getPageIndex(), page.getPageSize(), ASC_CREATE_TIME);
+        return userRepository.findByDelFlag(pageable, DIC.NOT_DEL);
     }
 
     public SysUser findByUsername(String username) {
         Optional<SysUser> optional = userRepository.findByDelFlagAndUsername(DIC.NOT_DEL, username);
         return checkOptional(optional);
-    }
-
-    public SysUser save(SysUser user) {
-        return userRepository.save(user);
     }
 
     public SysUser findById(String id) {
@@ -51,5 +61,10 @@ public class UserDAO extends BaseDAO {
     public List<SysUser> findByNameLike(String name) {
         return userRepository.findByDelFlagAndNameLike(DIC.NOT_DEL, name);
     }
+
+    public SysUser save(SysUser user) {
+        return userRepository.save(user);
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package cn.crabapples.system.dao.jpa;
 
 import cn.crabapples.system.entity.SysUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -34,8 +36,9 @@ public interface UserRepository extends JpaRepository<SysUser, String> {
 
     List<SysUser> findByDelFlagAndNameLike(int delFlag, String name);
 
-
     List<SysUser> findByDelFlag(int delFlag);
+
+    Page<SysUser> findByDelFlag(Pageable pageable, int delFlag);
 
 
     /**
@@ -65,16 +68,6 @@ public interface UserRepository extends JpaRepository<SysUser, String> {
     @Modifying
     void activeUser(@Param("id") String id);
 
-    /**
-     * 根据[用户名] [密码] [状态] [删除标记] 查询用户
-     *
-     * @param username 用户名
-     * @param password 密码
-     * @param status   状态
-     * @param delFlag  删除标记
-     * @return 查询到的用户
-     */
-    Optional<SysUser> findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag);
 
 
 }

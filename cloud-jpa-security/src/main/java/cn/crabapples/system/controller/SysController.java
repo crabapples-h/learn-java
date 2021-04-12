@@ -2,7 +2,7 @@ package cn.crabapples.system.controller;
 
 import cn.crabapples.common.groups.IsLogin;
 import cn.crabapples.system.common.BaseController;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;

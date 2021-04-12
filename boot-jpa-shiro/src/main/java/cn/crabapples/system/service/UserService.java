@@ -1,8 +1,11 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
+import cn.crabapples.common.dto.PageDTO;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
+import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -41,5 +44,9 @@ public interface UserService extends BaseService {
 
     List<SysUser> findAll();
 
+    Page<SysUser> findAll(PageDTO page);
+
     SysUser getUserInfo(HttpServletRequest request);
+
+    List<SysUserDTO> getUserList(HttpServletRequest request, PageDTO page);
 }

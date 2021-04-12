@@ -5,7 +5,7 @@ import cn.crabapples.common.config.ApplicationConfigure;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsNotNull;
 import cn.crabapples.common.groups.IsNull;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.form.DemoPostForm1;
 import cn.crabapples.test.form.DemoPostForm2;

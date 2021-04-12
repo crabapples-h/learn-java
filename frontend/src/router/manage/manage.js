@@ -1,5 +1,5 @@
 import Index from '@/views/manage/Index'
-import subApply from '@/views/manage/sub-apply'
+import UserList from '@/views/manage/UserList'
 
 const manageRouter = {
     path: '/manage-index',
@@ -8,9 +8,9 @@ const manageRouter = {
     meta: {title: '首页', icon: 'clipboard'},
     children: [
         {
-            path: 'sub-apply',
-            components: {innerView: subApply},
-            name: 'sub-apply',
+            path: 'user-list',
+            components: {innerView: UserList},
+            name: 'user-list',
         },
     ]
 }

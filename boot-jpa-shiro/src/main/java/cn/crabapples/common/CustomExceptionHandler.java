@@ -1,6 +1,6 @@
 package cn.crabapples.common;
 
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.slf4j.Logger;
@@ -29,6 +29,6 @@ public class CustomExceptionHandler {
         if (e instanceof HttpMessageNotReadableException) {
             return ResponseDTO.returnError("参数错误");
         }
-        return ResponseDTO.returnError("操作失败", e.getMessage());
+        return ResponseDTO.returnError("操作失败:" + e.getMessage());
     }
 }

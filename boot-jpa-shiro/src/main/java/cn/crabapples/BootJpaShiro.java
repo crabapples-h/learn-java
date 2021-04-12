@@ -37,7 +37,7 @@ public class BootJpaShiro {
 
     public static void main(String[] args) {
         SpringApplication.run(BootJpaShiro.class, args);
-        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] [shiro] >>>>>>>>>");
+        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] >>>>>>>>>");
     }
     @Bean
     public RestTemplate restTemplate() {

@@ -1,9 +1,13 @@
-package cn.crabapples.system.dto;
+package cn.crabapples.common.dto;
 
+import cn.crabapples.common.DIC;
 import cn.crabapples.common.ResponseCode;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 /**
  * TODO 通用返回值DTO
@@ -16,11 +20,21 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class ResponseDTO {
     private int status;
     private String message;
     private Object data;
     private long time;
+    private PageDTO page;
+
+    private ResponseDTO(ResponseCode status, String message, Object data, PageDTO page) {
+        this.status = status.getCode();
+        this.message = message;
+        this.data = data;
+        this.page = page;
+        this.time = System.currentTimeMillis();
+    }
 
     private ResponseDTO(ResponseCode status, String message, Object data) {
         this.status = status.getCode();
@@ -36,31 +50,36 @@ public class ResponseDTO {
         this.time = System.currentTimeMillis();
     }
 
+    /*---------------- SUCCESS -------------*/
+    public static <T> ResponseDTO returnSuccess(Collection<T> data, PageDTO page) {
+        return new ResponseDTO(ResponseCode.SUCCESS, DIC.BASE_SUCCESS_MESSAGE, data, page);
+    }
+
     public static ResponseDTO returnSuccess(String message, Object data) {
         return new ResponseDTO(ResponseCode.SUCCESS, message, data);
     }
 
-    public static ResponseDTO returnSuccess(String message) {
-        return returnSuccess(message, null);
-
+    public static ResponseDTO returnSuccess(Object data) {
+        return returnSuccess(null, data);
     }
 
-    public static ResponseDTO returnError(String message, Object data) {
-        return new ResponseDTO(ResponseCode.ERROR, message, data);
+    public static ResponseDTO returnSuccess() {
+        return returnSuccess(DIC.BASE_SUCCESS_MESSAGE, null);
     }
 
+
+    /*---------------- ERROR -----------------*/
     public static ResponseDTO returnError(String message) {
-        return returnError(message, null);
+        return returnError(message);
     }
 
-    public static ResponseDTO returnAuthFail(String message, Object data) {
-        return new ResponseDTO(ResponseCode.AUTH_FAIL, message, data);
-    }
+    /*---------------- AUTH_FAIL -------------*/
 
     public static ResponseDTO returnAuthFail(String message) {
-        return returnAuthFail(message, null);
+        return returnAuthFail(message);
     }
 
+    /*---------------- CUSTOM ----------------*/
     public static ResponseDTO returnCustom(int status, String message, Object data) {
         return new ResponseDTO(status, message, data);
     }

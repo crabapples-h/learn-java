@@ -1,7 +1,9 @@
-package cn.crabapples.system.dto;
+package cn.crabapples.common.dto;
 
+import cn.crabapples.common.DIC;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -15,10 +17,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class PageDTO {
-    protected int pageSize;
     protected int pageIndex;
-    protected int dataCount;
+    protected int pageSize = DIC.PAGE_SIZE;
+    protected long dataCount;
 
     @Override
     public String toString() {

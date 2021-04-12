@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -89,7 +90,8 @@ public class SysServiceImpl implements SysService {
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public List<SysMenu> getSysMenus(SysUser user) {
+    public List<SysMenu> getSysMenus(HttpServletRequest request) {
+        SysUser user = userService.getUserInfo(request);
 //        Subject subject = SecurityUtils.getSubject();
 //        Object object = subject.getSession().getAttribute("user");
 //        System.err.println(object);

@@ -110,62 +110,9 @@ export default {
       menus: [
         {
           key: '1',
-          name: '科研管理',
+          name: '',
           icon: 'appstore',
-          url: '',
-          children: [
-            {
-              key: '11',
-              name: '课题申报管理',
-              icon: 'appstore',
-              url: '/manage-index/sub-apply',
-            },
-          ]
-        },
-        {
-          key: '2',
-          name: '数据共享',
-          icon: 'appstore',
-          url: '/',
-          children: [
-            {
-              key: '21',
-              name: '锦途工程介绍',
-              icon: 'appstore',
-              url: '/jingtu-projects/info',
-            },
-            {
-              key: '22',
-              name: '国际本科4+0模式介绍',
-              icon: 'appstore',
-              url: '/jingtu-projects/4and0',
-            },
-            {
-              key: '23',
-              name: '全日制本科4+1模式介绍',
-              icon: 'appstore',
-              url: '/jingtu-projects/4and1',
-            },
-            {
-              key: '24 ',
-              name: '重点国防生定向培养',
-              icon: 'appstore',
-              url: '/jingtu-projects/countries',
-            },
-          ]
-        },
-        {
-          key: '3',
-          name: '科研分析',
-          icon: 'appstore',
-          url: '/really-projects/list',
-        },
-        {
-          key: '4',
-          name: '数据对接',
-          icon: 'appstore',
-          url: '/school-org/list',
-          children: []
+          url: '/manage-index/user-list',
         },
         // {
         //   key: '99',

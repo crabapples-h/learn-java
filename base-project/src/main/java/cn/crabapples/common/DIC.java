@@ -17,4 +17,5 @@ public class DIC {
     public final static int NOT_DEL = 0;
 
     public final static int PAGE_SIZE = 20;
+    public final static String BASE_SUCCESS_MESSAGE = "操作成功";
 }

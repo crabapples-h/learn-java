@@ -3,17 +3,19 @@ package cn.crabapples.system.controller;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.groups.IsAdd;
 import cn.crabapples.common.groups.IsEdit;
-import cn.crabapples.common.utils.jwt.JwtIgnore;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.PageDTO;
+import cn.crabapples.common.dto.ResponseDTO;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -28,71 +30,77 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping(value = "/api/user")
 @Api("用户管理")
+@Slf4j
 public class UserController extends BaseController {
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/add")
     @ApiOperation(value = "添加用户", notes = "添加用户接口")
-    public ResponseDTO addUser(@RequestBody cn.crabapples.system.form.UserForm form) {
-        logger.info("收到请求->添加用户:[{}]", form);
+    public ResponseDTO addUser(@RequestBody UserForm form) {
+        log.info("收到请求->添加用户:[{}]", form);
         super.validator(form, IsAdd.class);
-        SysUser user = userService.addUser(form);
-        logger.info("返回结果->用户添加完成:[{}]", user);
-        return ResponseDTO.returnSuccess("操作成功", user);
+        SysUser entity = userService.addUser(form);
+        log.info("返回结果->用户添加完成:[{}]", entity);
+        return ResponseDTO.returnSuccess("操作成功", entity);
     }
 
-    @PostMapping("/editUser")
+    @PostMapping("/edit")
     @ApiOperation(value = "修改用户", notes = "修改用户接口")
-    public ResponseDTO editUser(@RequestBody cn.crabapples.system.form.UserForm form) {
-        logger.info("收到请求->修改用户:[{}]", form);
+    public ResponseDTO editUser(@RequestBody UserForm form) {
+        log.info("收到请求->修改用户:[{}]", form);
         super.validator(form, IsEdit.class);
-        SysUser user = userService.editUser(form);
-        logger.info("返回结果->用户修改完成:[{}]", user);
-        return ResponseDTO.returnSuccess("操作成功", user);
+        SysUser entity = userService.editUser(form);
+        log.info("返回结果->用户修改完成:[{}]", entity);
+        return ResponseDTO.returnSuccess("操作成功", entity);
     }
 
-    @PostMapping("/delUser")
+    @PostMapping("/del/{id}")
     @ApiOperation(value = "删除用户", notes = "删除用户接口")
-    public ResponseDTO delUser(@RequestBody cn.crabapples.system.form.UserForm form) {
-        super.validator(form, cn.crabapples.common.groups.IsStatusChange.class);
-        logger.info("收到请求->删除用户:[{}]", form.getId());
-        userService.delUser(form.getId());
-        logger.info("返回结果->用户删除完成");
+    public ResponseDTO delUser(@PathVariable String id) {
+        log.info("收到请求->删除用户:[{}]", id);
+        userService.delUser(id);
+        log.info("返回结果->用户删除完成");
         return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @JwtIgnore
-    @PostMapping("/lock-user/{id}")
+    @PostMapping("/lock/{id}")
     @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
     public ResponseDTO lockUser(@PathVariable String id) {
-        logger.info("收到请求->锁定用户,id:[{}]", id);
+        log.info("收到请求->锁定用户,id:[{}]", id);
         userService.lockUser(id);
-        logger.info("返回结果->锁定用户完成");
+        log.info("返回结果->锁定用户完成");
         return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @JwtIgnore
-    @PostMapping("/unlock-user/{id}")
+    @PostMapping("/unlock/{id}")
     @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
     public ResponseDTO unlockUser(@PathVariable String id) {
-        logger.info("收到请求->解锁用户,id:[{}]", id);
+        log.info("收到请求->解锁用户,id:[{}]", id);
         userService.unlockUser(id);
-        logger.info("返回结果->解锁用户完成");
+        log.info("返回结果->解锁用户完成");
         return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @GetMapping("/getUserInfo")
+    @GetMapping("/info")
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
     public ResponseDTO getUserInfo(HttpServletRequest request) {
-        logger.info("收到请求->获取当前用户信息");
-        SysUser sysUser = userService.getUserInfo(request);
-        logger.info("返回结果->获取当前用户信息结束:[{}]", sysUser);
-        return ResponseDTO.returnSuccess("操作成功", sysUser);
+        log.info("收到请求->获取当前用户信息");
+        SysUser entity = userService.getUserInfo(request);
+        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
+        return ResponseDTO.returnSuccess(entity);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    public ResponseDTO getUserList(HttpServletRequest request, PageDTO page) {
+        log.info("收到请求->获取用户列表");
+        List<SysUserDTO> list = userService.getUserList(request, page);
+        log.info("返回结果->获取当前用户信息结束:[{}]", list);
+        return ResponseDTO.returnSuccess(list, page);
     }
 
 }

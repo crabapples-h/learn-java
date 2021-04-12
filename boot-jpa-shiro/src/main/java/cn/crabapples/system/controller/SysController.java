@@ -3,17 +3,16 @@ package cn.crabapples.system.controller;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.common.groups.IsLogin;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ import java.util.List;
 @RestController
 @Api("系统管理")
 @Slf4j
-@RequestMapping("/api")
+@RequestMapping("/api/sys/")
 public class SysController extends BaseController {
 
     private final SysService sysService;
@@ -56,30 +55,17 @@ public class SysController extends BaseController {
     }
 
     /**
-     * 进入主页面
-     *
-     * @return 登录后的主页面
-     */
-    @GetMapping("/index")
-//    @RequiresPermissions("abc:wewe")
-    public String index() {
-        log.info("收到请求->进入主页");
-        return "index";
-    }
-
-    /**
      * 获取系统菜单
      *
      * @return 返回当前用户拥有的系统菜单
      */
     @GetMapping("/getSysMenus")
     @ResponseBody
-    public ResponseDTO getSysMenus() {
-        SysUser user = (SysUser) SecurityUtils.getSubject().getPrincipal();
-        log.info("收到请求->获取用户[{}]的菜单列表", user.getId());
-        List<SysMenu> menus = sysService.getSysMenus(user);
+    public ResponseDTO getSysMenus(HttpServletRequest request) {
+        log.info("收到请求->获取用户菜单列表");
+        List<SysMenu> menus = sysService.getSysMenus(request);
         log.info("获取菜单列表成功:[{}]", menus);
-        return ResponseDTO.returnSuccess("操作成功", menus);
+        return ResponseDTO.returnSuccess(menus);
     }
 
 }

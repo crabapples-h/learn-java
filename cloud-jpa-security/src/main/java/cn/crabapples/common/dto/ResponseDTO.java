@@ -1,4 +1,4 @@
-package cn.crabapples.system.dto;
+package cn.crabapples.common.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;

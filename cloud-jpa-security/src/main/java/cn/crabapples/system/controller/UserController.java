@@ -4,7 +4,7 @@ import cn.crabapples.common.groups.IsAdd;
 import cn.crabapples.common.groups.IsEdit;
 import cn.crabapples.common.groups.IsStatusChange;
 import cn.crabapples.system.common.BaseController;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;

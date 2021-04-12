@@ -1,9 +1,9 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -16,15 +16,7 @@ import java.util.List;
  * pc-name 29404
  */
 public interface SysService {
-    /**
-     * 用户登录
-     * @return 登录成功后返回token
-     */
     String loginCheck(UserForm form);
 
-    /**
-     * 获取当前用户系统菜单
-     * @return 当前用户拥有的菜单
-     */
-    List<SysMenu> getSysMenus(SysUser user);
+    List<SysMenu> getSysMenus(HttpServletRequest request);
 }

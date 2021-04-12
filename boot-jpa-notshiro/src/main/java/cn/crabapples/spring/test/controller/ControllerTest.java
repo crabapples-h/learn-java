@@ -3,7 +3,7 @@ package cn.crabapples.spring.test.controller;
 import cn.crabapples.system.common.BaseController;
 import cn.crabapples.system.common.groups.IsNotNull;
 import cn.crabapples.system.common.groups.IsNull;
-import cn.crabapples.system.dto.ResponseDTO;
+import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.spring.test.form.DemoPostForm1;
 import cn.crabapples.spring.test.form.DemoPostForm2;
 import cn.crabapples.spring.test.service.ServiceTest;
