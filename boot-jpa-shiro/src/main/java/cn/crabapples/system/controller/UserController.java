@@ -3,7 +3,6 @@ package cn.crabapples.system.controller;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.dto.ResponseDTO;
-import cn.crabapples.common.groups.IsAdd;
 import cn.crabapples.common.groups.IsEdit;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
@@ -42,7 +41,6 @@ public class UserController extends BaseController {
     @ApiOperation(value = "添加用户", notes = "添加用户接口")
     public ResponseDTO addUser(@RequestBody UserForm form) {
         log.info("收到请求->添加用户:[{}]", form);
-        super.validator(form, IsAdd.class);
         SysUser entity = userService.addUser(form);
         log.info("返回结果->用户添加完成:[{}]", entity);
         return ResponseDTO.returnSuccess("操作成功", entity);
@@ -77,7 +75,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/unlock/{id}")
-    @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
+    @ApiOperation(value = "解锁用户", notes = "锁定用户接口")
     public ResponseDTO unlockUser(@PathVariable String id) {
         log.info("收到请求->解锁用户,id:[{}]", id);
         userService.unlockUser(id);

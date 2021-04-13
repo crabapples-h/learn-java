@@ -110,13 +110,13 @@ export default {
       menus: [
         {
           key: '1',
-          name: '',
+          name: '用户管理',
           icon: 'appstore',
           url: '/manage-index/user-list',
         },
         {
           key: '12',
-          name: '',
+          name: '菜单管理',
           icon: 'appstore',
           url: '/manage-index/roles-list',
         },
@@ -137,12 +137,17 @@ export default {
       ],
     };
   },
+  activated() {
+    this.checkUserInfo()
+  },
   mounted() {
-    let token = sessionStorage.getItem('crabapples-token')
     // this.getUserInfo()
     // this.$router.push({name: 'welcome'})
   },
   methods: {
+    checkUserInfo() {
+      console.log(this.$store.state)
+    },
     titleClick(e) {
       console.log('titleClick', e);
     },
@@ -169,6 +174,7 @@ export default {
         }
         if (result.data !== null) {
           this.userInfo = result.data;
+          sessionStorage.setItem("userInfo", result.data)
         }
       }).catch(function (error) {
         console.error('出现错误:', error);

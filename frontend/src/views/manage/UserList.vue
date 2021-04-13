@@ -16,6 +16,9 @@
         <a-form-model-item label="邮箱" prop="mail">
           <a-input v-model="form.userInfo.mail" placeholder="请输入邮箱"/>
         </a-form-model-item>
+        <a-form-model-item label="电话" prop="phone">
+          <a-input v-model="form.userInfo.phone" placeholder="请输入电话号码"/>
+        </a-form-model-item>
         <span v-if="form.userInfo.role === 0">
           <a-form-model-item label="权限" prop="role">
             <a-radio-group v-model="form.userInfo.role" default-value="2">
@@ -24,8 +27,8 @@
             </a-radio-group>
           </a-form-model-item>
         </span>
-        <a-form-model-item label="标签" prop="tags">
-          <a-select mode="multiple" v-model="form.userInfo.tags" placeholder="请选择标签">
+        <a-form-model-item label="角色" prop="tags">
+          <a-select mode="multiple" v-model="form.userInfo.tags" placeholder="请选择角色">
             <a-select-option v-for="item in tagsOptions" :key="item.id">
               {{ item.name }}
             </a-select-option>
@@ -59,16 +62,16 @@
       </span>
       <span slot="status" slot-scope="status">
         <a-tag color="green" v-if="status === 0">正常</a-tag>
-        <a-tag color="red" v-else>禁用</a-tag>
+        <a-tag color="red" v-else>锁定</a-tag>
       </span>
       <span slot="action" slot-scope="text, record">
         <span v-if="record.role !== 0">
-          <a-button type="default" size="small" @click="changeStatus(record)" v-if="record.status === 0">禁用</a-button>
-          <a-button type="primary" size="small" @click="changeStatus(record)" v-if="record.status === 1">启用</a-button>
+          <c-pop-button title="确认要锁定吗" text="锁定" @ok="lockUser(record)" type="primary" v-if="record.status === 0"/>
+          <c-pop-button title="确认要解锁吗" text="解锁" @ok="unlockUser(record)" v-if="record.status === 1"/>
           <a-divider type="vertical"/>
         </span>
         <span v-if="record.role !== 0">
-          <a-button type="danger" size="small" @click="removeUser(record)">删除</a-button>
+          <c-button text="删除" type="danger" @click="removeUser(record)"/>
           <a-divider type="vertical"/>
         </span>
         <a-button type="primary" size="small" @click="editUser(record)">编辑</a-button>
@@ -81,41 +84,56 @@
 </template>
 
 <script>
+
+import CPopButton from "@/components/c-pop-button";
+import CButton from "@/components/c-button";
+
 export default {
   name: "user-list",
+  components: {CButton, CPopButton},
   data() {
     return {
+      a: {
+        color: 'red',
+        background: 'pink',
+        border: '1px solid pink',
+      },
       rules: {
         username: [
-          {required: true, message: '请输入用户名', trigger: 'blur'},
-          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'blur'},
-          {whitespace: true, message: '请输入用户名', trigger: 'blur'}
+          {required: true, message: '请输入用户名', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入用户名', trigger: 'change'}
         ],
         name: [
-          {required: true, message: '请输入名称', trigger: 'blur'},
-          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'blur'},
-          {whitespace: true, message: '请输入名称', trigger: 'blur'}
+          {required: true, message: '请输入名称', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入名称', trigger: 'change'}
         ],
         age: [
-          {required: true, message: '请输入年龄', trigger: 'blur'},
+          {required: true, message: '请输入年龄', trigger: 'change'},
         ],
         mail: [
-          {required: true, message: '请输入邮箱', trigger: 'blur'},
-          {whitespace: true, message: '请输入邮箱', trigger: 'blur'}
+          {required: true, message: '请输入邮箱', trigger: 'change'},
+          {whitespace: true, message: '请输入邮箱', trigger: 'change'}
+        ],
+        phone: [
+          {required: true, message: '请输入电话', trigger: 'change'},
+          {whitespace: true, message: '请输入电话', trigger: 'change'},
+          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
         ],
         role: [
-          {required: true, message: '请选择权限', trigger: 'change'},
+          {required: true, message: '请选择角色', trigger: 'change'},
         ],
         tags: [],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'blur'},
-          {whitespace: true, message: '请输入密码', trigger: 'blur'}
+          {required: true, message: '请输入密码', trigger: 'change'},
+          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入密码', trigger: 'change'}
         ],
         rePassword: [
-          {required: true, message: '请重复输入密码', trigger: 'blur'},
-          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'blur'},
-          {whitespace: true, message: '请重复输入密码', trigger: 'blur'}
+          {required: true, message: '请重复输入密码', trigger: 'change'},
+          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请重复输入密码', trigger: 'change'}
         ],
       },
       columns: [
@@ -140,10 +158,9 @@ export default {
           key: 'mail',
         },
         {
-          dataIndex: 'tags',
-          title: '标签',
-          key: 'tags',
-          scopedSlots: {customRender: 'tags'}
+          dataIndex: 'phone',
+          title: '电话',
+          key: 'phone',
         },
         {
           dataIndex: 'role',
@@ -174,6 +191,7 @@ export default {
           name: '',
           age: '',
           mail: '',
+          phone: '',
           role: 1,
           status: null,
           tags: [],
@@ -191,6 +209,8 @@ export default {
       },
       sysUser: sessionStorage.getItem("sysUser")
     };
+  },
+  activated() {
   },
   mounted() {
     this.getList()
@@ -226,26 +246,30 @@ export default {
         console.error('出现错误:', error);
       });
     },
-    changeStatus(e) {
-      const _this = this;
-      this.$confirm({
-        title: '确认操作?',
-        cancelText: '取消',
-        okText: '确定',
-        onOk() {
-          _this.form.userInfo = e
-          _this.form.userInfo.status = Math.abs(_this.form.userInfo.status - 1)
-          _this.$http.post('/api/user/changeStatus', _this.form.userInfo).then(result => {
-            console.log('通过api获取到的数据:', result);
-            if (result.status !== 200) {
-              _this.$message.error(result.message);
-              return
-            }
-            _this.$message.success(result.message)
-          }).catch(function (error) {
-            console.log('请求出现错误:', error);
-          });
-        },
+    lockUser(e) {
+      this.$http.post(`/api/user/lock/${e.id}`).then(result => {
+        console.log('通过api获取到的数据:', result);
+        if (result.status !== 200) {
+          this.$message.error(result.message);
+          return
+        }
+        this.refreshData()
+        this.$message.success(result.message)
+      }).catch(function (error) {
+        console.log('请求出现错误:', error);
+      });
+    },
+    unlockUser(e) {
+      this.$http.post(`/api/user/unlock/${e.id}`).then(result => {
+        console.log('通过api获取到的数据:', result);
+        if (result.status !== 200) {
+          this.$message.error(result.message);
+          return
+        }
+        this.refreshData()
+        this.$message.success(result.message)
+      }).catch(function (error) {
+        console.log('请求出现错误:', error);
       });
     },
     removeUser(e) {
@@ -256,13 +280,14 @@ export default {
         okText: '确定',
         onOk() {
           console.log(e)
-          _this.$http.post('/api/user/delUser', e).then(result => {
+          _this.$http.post(`/api/user/del/${e.id}`).then(result => {
             console.log('通过api获取到的数据:', result);
             if (result.status !== 200) {
               _this.$message.error(result.message);
               return
             }
             _this.$message.success(result.message)
+            _this.this.refreshData()
           }).catch(function (error) {
             console.log('请求出现错误:', error);
           });
@@ -275,17 +300,18 @@ export default {
     },
     editUser(e) {
       this.form.type = 1
-      this.form.userInfo.id = e.id
-      this.form.userInfo.username = e.username
-      this.form.userInfo.password = e.password
-      this.form.userInfo.name = e.name
-      this.form.userInfo.age = e.age
-      this.form.userInfo.mail = e.mail
-      this.form.userInfo.role = e.role + ''
-      this.form.userInfo.status = e.status
-      this.form.userInfo.tags = e.tags.map(r => {
-        return r.id
-      })
+      // this.form.userInfo.id = e.id
+      // this.form.userInfo.username = e.username
+      // this.form.userInfo.password = e.password
+      // this.form.userInfo.name = e.name
+      // this.form.userInfo.age = e.age
+      // this.form.userInfo.mail = e.mail
+      // this.form.userInfo.role = e.role + ''
+      // this.form.userInfo.status = e.status
+      this.form.userInfo = e
+      // this.form.userInfo.tags = e.tags.map(r => {
+      //   return r.id
+      // })
       console.log(this.form.userInfo.role)
       this.show.userInfo = true
     },
@@ -304,12 +330,13 @@ export default {
     },
     submitForm() {
       console.log(this.form)
-      let url = this.form.type === 0 ? '/api/user/addUser' : '/api/user/editUser'
+      let url = this.form.type === 0 ? '/api/user/add' : '/api/user/edit'
       this.$http.post(url, this.form.userInfo).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
         }
+        this.closeForm()
       }).catch(function (error) {
         console.error('出现错误:', error);
       });

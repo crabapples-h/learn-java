@@ -20,17 +20,15 @@ import javax.validation.constraints.*;
 @Data
 @ApiModel("登录")
 public class UserForm {
-    @NotBlank(message = "id不能为空", groups = IsEdit.class)
-    @NotBlank(message = "id不能为空", groups = IsStatusChange.class)
-    @Null(message = "id必须为空", groups = IsAdd.class)
+    @NotBlank(message = "id不能为空", groups = {IsNotNull.class, IsEdit.class})
     private String id;
 
-    @Length(max = 32 ,message = "长度错误",groups = {IsCheckLength.class, IsLogin.class})
+    @Length(max = 32, message = "长度错误", groups = {IsCheckLength.class, IsLogin.class})
     @NotBlank(message = "用户名不能为空", groups = {IsNotNull.class, IsLogin.class})
     @ApiModelProperty(example = "admin")
     private String username;
 
-    @Length(max = 32 ,message = "长度错误",groups = {IsCheckLength.class, IsLogin.class})
+    @Length(max = 32, message = "长度错误", groups = {IsCheckLength.class, IsLogin.class})
     @NotBlank(message = "密码不能为空", groups = {IsNotNull.class, IsLogin.class})
     @ApiModelProperty(example = "123456")
     private String password;
@@ -38,6 +36,9 @@ public class UserForm {
     @Length(max = 32)
     @NotBlank(message = "姓名不能为空", groups = {IsAdd.class, IsEdit.class})
     private String name;
+
+    private String mail;
+    private String phone;
 
     @Length(max = 3)
     @NotNull(message = "年龄不能为空", groups = {IsAdd.class, IsEdit.class})

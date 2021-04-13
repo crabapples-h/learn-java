@@ -1,7 +1,7 @@
 import Index from '@/views/manage/Index'
 import UserList from '@/views/manage/UserList'
 import RolesList from '@/views/manage/RolesList'
-
+console.log(666666666666)
 const manageRouter = {
     path: '/manage-index',
     component: Index,
@@ -10,7 +10,8 @@ const manageRouter = {
     children: [
         {
             path: 'user-list',
-            components: {innerView: UserList},
+            components: {innerView: () => import('@/views/manage/UserList')},
+            // components: {innerView: RolesList},
             name: 'user-list',
         },
         {

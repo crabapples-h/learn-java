@@ -48,7 +48,7 @@ public class JpaTest {
     @Test
     public void getAllUserTest() {
         userService.findAll().forEach(e -> {
-            List<SysRoles> sysRoles = e.getSysRoles();
+            List<SysRoles> sysRoles = e.getRolesList();
             sysRoles.forEach(t -> {
                 List<SysMenus> sysMenus = t.getSysMenus();
                 sysMenus.forEach(System.err::println);

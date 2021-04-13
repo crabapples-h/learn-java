@@ -69,7 +69,7 @@ public class ResponseDTO implements Serializable {
     }
 
     public static ResponseDTO returnSuccess(Object data) {
-        return returnSuccess(null, data);
+        return returnSuccess(DIC.BASE_SUCCESS_MESSAGE, data);
     }
 
     public static ResponseDTO returnSuccess() {

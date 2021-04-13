@@ -108,7 +108,7 @@ public class SysServiceImpl implements SysService {
     @Override
     public List<SysMenus> getUserMenus(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
-        List<SysRoles> roles = user.getSysRoles();
+        List<SysRoles> roles = user.getRolesList();
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
             String ids = e.getMenusIds();
@@ -183,7 +183,7 @@ public class SysServiceImpl implements SysService {
     @Override
     public List<SysRolesDTO> getUserRolesList(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
-        return user.getSysRoles().stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
+        return user.getRolesList().stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
     }
 
     @Override

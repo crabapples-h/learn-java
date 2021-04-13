@@ -38,6 +38,12 @@ public class SysUser extends BaseEntity {
     @Column(columnDefinition = "varchar(32) comment '姓名'")
     private String name;
 
+    @Column(columnDefinition = "varchar(32) comment '姓名'")
+    private String mail;
+
+    @Column(columnDefinition = "varchar(15) comment '电话'")
+    private String phone;
+
     /**
      * Column nullable = false 数据字段不能为空
      */
@@ -50,13 +56,10 @@ public class SysUser extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JSONField(serialize = false)
-    private List<SysRoles> sysRoles;
+    private List<SysRoles> rolesList;
 
     @Column(columnDefinition = "bit(1) default 0 not null comment '用户状态标记 0:正常 1:禁用'")
-    private Integer status;
-
-    @Column(columnDefinition = "bit(1) default 1 not null comment '是否为超级管理员 0:是 1:否'")
-    private Integer isAdmin;
+    private int status;
 
     @Override
     public String toString() {

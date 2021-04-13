@@ -44,6 +44,18 @@ public class SysController extends BaseController {
     }
 
     /**
+     * 测试接口
+     */
+    @JwtIgnore
+    @PostMapping("/test/{id}")
+    @ApiOperation(value = "测试接口", notes = "测试接口")
+    public ResponseDTO test(@PathVariable String id) {
+        log.info("收到请求->测试接口:[{}]", id);
+        log.info("返回结果->测试接口");
+        return ResponseDTO.returnSuccess("测试");
+    }
+
+    /**
      * 发起登录请求
      *
      * @param form 用户名和密码

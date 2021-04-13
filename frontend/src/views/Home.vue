@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <a-button type="primary">Button></a-button>
+<!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
+<!--    <a-button type="primary">Button></a-button>-->
+    <p>hello,world</p>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   },
   mounted() {
     this.$message.success(
-            'This is a prompt message for success, and it will disappear in 10 seconds',
+            'hello,world',
             10,
     );
   }

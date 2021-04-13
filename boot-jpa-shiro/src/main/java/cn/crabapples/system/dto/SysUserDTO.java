@@ -1,9 +1,12 @@
 package cn.crabapples.system.dto;
 
 import cn.crabapples.common.base.BaseDTO;
+import cn.crabapples.system.entity.SysRoles;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * TODO 用户基本信息DTO
@@ -20,6 +23,10 @@ public class SysUserDTO extends BaseDTO {
     private String username;
     private String name;
     private int age;
+    private String mail;
+    private String phone;
+    private int status;
+    private List<SysRoles> rolesList;
 
     @Override
     public String toString() {
