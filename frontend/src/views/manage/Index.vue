@@ -3,7 +3,7 @@
     <a-layout-header>
       <a-row>
         <a-col :span="4">
-          <span class="title">管理系统</span>
+          <span class="title">{{ title }}</span>
         </a-col>
         <a-col :span="3" :offset="17">
           <a-dropdown>
@@ -107,6 +107,7 @@ export default {
       userInfo: {
         name: ''
       },
+      title: '管理系统',
       menus: [
         {
           key: '1',
@@ -116,9 +117,15 @@ export default {
         },
         {
           key: '12',
-          name: '菜单管理',
+          name: '角色管理',
           icon: 'appstore',
           url: '/manage-index/roles-list',
+        },
+        {
+          key: '13',
+          name: '菜单管理',
+          icon: 'appstore',
+          url: '/manage-index/menus-list',
         },
         // {
         //   key: '99',
@@ -208,16 +215,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+@import "~@public/color.less";
+
 .ant-layout-header, .ant-layout-footer {
-  background: #7dbcea;
+  background: @primary-color;
   color: #fff;
   height: 5vh;
   line-height: 5vh;
 }
 
 .title {
-  font-size: 20px
+  font-size: 20px;
+  color: #fff
 }
 
 .ant-layout-footer {

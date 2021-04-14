@@ -1,7 +1,12 @@
 import Index from '@/views/manage/Index'
 import UserList from '@/views/manage/UserList'
 import RolesList from '@/views/manage/RolesList'
-console.log(666666666666)
+import MenusList from '@/views/manage/MenusList'
+import AxiosUtils from "@/utils/AxiosUtils";
+
+AxiosUtils.get('/api/user/info').then(res => {
+    console.log('测试123--->', res)
+})
 const manageRouter = {
     path: '/manage-index',
     component: Index,
@@ -18,6 +23,11 @@ const manageRouter = {
             path: 'roles-list',
             components: {innerView: RolesList},
             name: 'roles-list',
+        },
+        {
+            path: 'menus-list',
+            components: {innerView: MenusList},
+            name: 'menus-list',
         },
     ]
 }

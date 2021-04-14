@@ -1,7 +1,6 @@
 package cn.crabapples.test.form;
 
-import cn.crabapples.common.groups.IsNotNull;
-import cn.crabapples.common.groups.IsNull;
+import cn.crabapples.common.Groups;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Setter;
 
@@ -19,8 +18,8 @@ import javax.validation.constraints.*;
 @Setter
 //@Api
 public class DemoPostForm2 {
-    @Null(message = "ID必须为空",groups = {IsNull.class})
-    @NotNull(message = "ID不能为空",groups = {IsNotNull.class})
+    @Null(message = "ID必须为空",groups = {Groups.IsNull.class})
+    @NotNull(message = "ID不能为空",groups = {Groups.IsNotNull.class})
     private String id;
     @Size(min = 2,max = 5,message = "姓名有误")
     private String name;

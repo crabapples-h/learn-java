@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>boot-jpa-shiro</artifactId>
+    <artifactId>boot-jpa-jwt</artifactId>
 
     <properties>
         <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>

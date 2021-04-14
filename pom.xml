@@ -7,7 +7,7 @@
     <modules>
         <module>boot-jpa-notshiro</module>
         <module>boot-jpa-security</module>
-        <module>boot-jpa-shiro</module>
+        <module>boot-jpa-jwt</module>
         <module>cloud-jpa-security</module>
         <module>learn</module>
         <module>base-project</module>

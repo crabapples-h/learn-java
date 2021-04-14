@@ -1,4 +1,4 @@
-module.exports = {
+const settings = {
     baseUrl: 'http://localhost:9093/', //测试环境
     // fileServBaseUrl: 'http://www.gz.10086.cn/queue/', //文件服务器前缀
     fileServBaseUrl: 'http://118.31.40.95:10372/', //开发文件服务器前缀
@@ -22,3 +22,5 @@ module.exports = {
     isEny: 1, //密码RSA加密
     customBaseUrl: false, //自定义baseUrl
 };
+
+export default {settings}

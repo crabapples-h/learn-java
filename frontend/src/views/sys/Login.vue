@@ -4,7 +4,7 @@
       <div class="title">用户登录</div>
       <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username" class="input-text"></a-input>
       <a-input autocomplete="off" placeholder="密码" type="password" v-model="password" class="input-text"></a-input>
-      <a-button style="width:100%;" type="button" @click="submit" class="loginApi-button">立即登录</a-button>
+      <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        this.$router.push('/manage-index')
+        // this.$router.push('/manage-index')
       }
     },
     submit() {
@@ -75,10 +75,11 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
+@import "~@public/color.less";
 
 .loginApi-bg {
-  background: url(/src/assets/login-backgroud.png) no-repeat center;
+  background: url(~@assets/login-backgroud.png) no-repeat center;
   background-size: 100%;
   overflow: hidden;
   height: 100vh;
@@ -97,7 +98,7 @@ export default {
 .title {
   margin: 10px 0 0 -58px;
   padding: 18px 10px 18px 60px;
-  background: #189F92;
+  background: @primary-color;
   position: relative;
   color: #fff;
   font-size: 16px;
@@ -110,8 +111,6 @@ export default {
 }
 
 .loginApi-button {
-  color: #ffffff;
-  background-color: #189F92;
   height: 50px;
   border: none;
 }

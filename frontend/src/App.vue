@@ -31,4 +31,5 @@ export default {
 .c-button-red {
   color: red;
 }
+
 </style>

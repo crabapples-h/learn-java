@@ -10,7 +10,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+
 /**
  * TODO 系统角色DAO
  *
@@ -45,5 +47,9 @@ public class RolesDAO extends BaseDAO {
     public Page<SysRoles> findAll(PageDTO page) {
         Pageable pageable = PageRequest.of(page.getPageIndex(), page.getPageSize(), ASC_CREATE_TIME);
         return rolesRepository.findByDelFlag(pageable, DIC.NOT_DEL);
+    }
+
+    public List<SysRoles> findByIds(List<String> ids) {
+        return rolesRepository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
     }
 }

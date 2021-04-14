@@ -4,7 +4,8 @@ import message from 'ant-design-vue/es/message'
 import notification from 'ant-design-vue/es/notification'
 import {encrypt} from './RsaUtils1'
 
-const settings = require('../../settings')
+import settings from '../../settings'
+
 const crypt = settings.crypt;
 const isDebug = settings.isDebug;
 const instance = axios.create({timeout: 1000 * 12});
@@ -34,7 +35,8 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     response => {
-        console.warn('响应拦截->success', response);
+        if (!isDebug)
+            console.warn('响应拦截->success', response);
         let data = response.data
         if (response.data.status === 401) {
             router.push('/login')
@@ -43,7 +45,8 @@ instance.interceptors.response.use(
     },
     // 服务器状态码不是200的情况
     error => {
-        console.warn('响应拦截->error', error);
+        if (!isDebug)
+            console.warn('响应拦截->error', error);
         notification.error({message: '服务器异常'});
         return Promise.reject(error.response)
     }

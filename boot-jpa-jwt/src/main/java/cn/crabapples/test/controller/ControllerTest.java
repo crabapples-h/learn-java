@@ -2,10 +2,9 @@ package cn.crabapples.test.controller;
 
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.config.ApplicationConfigure;
-import cn.crabapples.common.utils.jwt.JwtIgnore;
-import cn.crabapples.common.groups.IsNotNull;
-import cn.crabapples.common.groups.IsNull;
 import cn.crabapples.common.dto.ResponseDTO;
+import cn.crabapples.common.Groups;
+import cn.crabapples.common.utils.jwt.JwtIgnore;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.form.DemoPostForm1;
 import cn.crabapples.test.form.DemoPostForm2;
@@ -124,9 +123,9 @@ public class ControllerTest extends BaseController {
     public ResponseDTO postDemo2(@RequestBody DemoPostForm2 demoPostForm) {
         try {
             if (demoPostForm.getType() == 0) {
-                super.validator(demoPostForm, IsNull.class);
+                super.validator(demoPostForm, Groups.IsNull.class);
             } else {
-                super.validator(demoPostForm, IsNotNull.class);
+                super.validator(demoPostForm, Groups.IsNotNull.class);
             }
             return ResponseDTO.returnSuccess("收到");
         } catch (Exception e) {

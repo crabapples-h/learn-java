@@ -32,12 +32,12 @@ import org.springframework.web.client.RestTemplate;
 //@Import({DynamicDataSourceRegister.class})
 //@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 //@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
-public class BootJpaShiro {
-    private static final Logger logger = LoggerFactory.getLogger(BootJpaShiro.class);
+public class BootJpaJwt {
+    private static final Logger logger = LoggerFactory.getLogger(BootJpaJwt.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(BootJpaShiro.class, args);
-        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] >>>>>>>>>");
+        SpringApplication.run(BootJpaJwt.class, args);
+        logger.info(">>>>>>>>SpringBoot服务启动成功 [nacos] [jpa] [jwt] >>>>>>>>>");
     }
     @Bean
     public RestTemplate restTemplate() {

@@ -6,7 +6,7 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import router from './router'
 import AxiosUtils from '@/utils/AxiosUtils'
-// import settings from 'settings'
+import '../public/color.less'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)

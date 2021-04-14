@@ -28,8 +28,8 @@
           </a-form-model-item>
         </span>
         <a-form-model-item label="角色" prop="tags">
-          <a-select mode="multiple" v-model="form.userInfo.tags" placeholder="请选择角色">
-            <a-select-option v-for="item in tagsOptions" :key="item.id">
+          <a-select mode="multiple" v-model="form.userInfo.rolesList" placeholder="请选择角色">
+            <a-select-option v-for="item in rolesOptions" :key="item.id">
               {{ item.name }}
             </a-select-option>
           </a-select>
@@ -43,11 +43,11 @@
     <a-modal title="重置密码" :visible.sync="show.resetPassword" width="30%" ok-text="确认" cancel-text="取消"
              @ok="submitResetPassword" @cancel="closeResetPassword">
       <a-form-model :model="form.resetPassword" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="新密码" prop="password">
-          <a-input-password v-model="form.resetPassword.password"/>
+        <a-form-model-item label="新密码" prop="newPassword">
+          <a-input-password v-model="form.resetPassword.newPassword"/>
         </a-form-model-item>
-        <a-form-model-item label="重复密码" prop="rePassword">
-          <a-input-password v-model="form.resetPassword.rePassword"/>
+        <a-form-model-item label="重复密码" prop="againPassword">
+          <a-input-password v-model="form.resetPassword.againPassword"/>
         </a-form-model-item>
       </a-form-model>
     </a-modal>
@@ -71,7 +71,7 @@
           <a-divider type="vertical"/>
         </span>
         <span v-if="record.role !== 0">
-          <c-button text="删除" type="danger" @click="removeUser(record)"/>
+          <c-pop-button title="确认要删除吗" text="删除" @ok="removeUser(record)" type="danger"/>
           <a-divider type="vertical"/>
         </span>
         <a-button type="primary" size="small" @click="editUser(record)">编辑</a-button>
@@ -93,11 +93,6 @@ export default {
   components: {CButton, CPopButton},
   data() {
     return {
-      a: {
-        color: 'red',
-        background: 'pink',
-        border: '1px solid pink',
-      },
       rules: {
         username: [
           {required: true, message: '请输入用户名', trigger: 'change'},
@@ -125,12 +120,12 @@ export default {
           {required: true, message: '请选择角色', trigger: 'change'},
         ],
         tags: [],
-        password: [
+        newPassword: [
           {required: true, message: '请输入密码', trigger: 'change'},
           {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
           {whitespace: true, message: '请输入密码', trigger: 'change'}
         ],
-        rePassword: [
+        againPassword: [
           {required: true, message: '请重复输入密码', trigger: 'change'},
           {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
           {whitespace: true, message: '请重复输入密码', trigger: 'change'}
@@ -183,7 +178,7 @@ export default {
       dataSource: [],
       labelCol: {span: 5},
       wrapperCol: {span: 16},
-      tagsOptions: [],
+      rolesOptions: [],
       form: {
         type: 0,
         userInfo: {
@@ -194,12 +189,12 @@ export default {
           phone: '',
           role: 1,
           status: null,
-          tags: [],
+          rolesList: [],
         },
         resetPassword: {
           id: '',
-          password: '',
-          rePassword: '',
+          newPassword: '',
+          againPassword: '',
         },
       },
       show: {
@@ -207,24 +202,22 @@ export default {
         userInfo: false,
         resetPassword: false,
       },
-      sysUser: sessionStorage.getItem("sysUser")
     };
   },
   activated() {
   },
   mounted() {
     this.getList()
-    // this.getTagsList()
   },
   methods: {
-    getTagsList() {
-      this.$http.get('/api/tags/list').then(result => {
+    getRolesList() {
+      this.$http.get('/api/sys/roles/list').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
         }
         if (result.data !== null) {
-          this.tagsOptions = result.data;
+          this.rolesOptions = result.data;
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
@@ -296,23 +289,17 @@ export default {
     },
     addUser() {
       this.form.type = 0
+      this.getRolesList()
       this.show.userInfo = true
     },
     editUser(e) {
       this.form.type = 1
-      // this.form.userInfo.id = e.id
-      // this.form.userInfo.username = e.username
-      // this.form.userInfo.password = e.password
-      // this.form.userInfo.name = e.name
-      // this.form.userInfo.age = e.age
-      // this.form.userInfo.mail = e.mail
-      // this.form.userInfo.role = e.role + ''
-      // this.form.userInfo.status = e.status
       this.form.userInfo = e
-      // this.form.userInfo.tags = e.tags.map(r => {
-      //   return r.id
-      // })
-      console.log(this.form.userInfo.role)
+      this.form.userInfo.rolesList = e.rolesList.map(r => {
+        return r.id
+      })
+      console.log(this.form.userInfo.rolesList)
+      this.getRolesList()
       this.show.userInfo = true
     },
     closeForm() {
@@ -329,7 +316,7 @@ export default {
       this.refreshData()
     },
     submitForm() {
-      console.log(this.form)
+      console.log(this.form.userInfo)
       let url = this.form.type === 0 ? '/api/user/add' : '/api/user/edit'
       this.$http.post(url, this.form.userInfo).then(result => {
         if (result.status !== 200) {
@@ -343,20 +330,21 @@ export default {
     },
     closeResetPassword() {
       this.show.resetPassword = false
+      this.refreshData()
     },
     showResetPassword(e) {
       this.form.resetPassword.id = e.id
       this.show.resetPassword = true
     },
     submitResetPassword() {
-      console.log(this.form.resetPassword)
-      this.$http.post('/api/user/resetPassword', this.form.resetPassword).then(result => {
+      this.$http.post('/api/user/password/reset', this.form.resetPassword).then(result => {
         console.log('通过api获取到的数据:', result);
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
         }
         this.$message.success(result.message)
+        this.closeResetPassword()
       }).catch(function (error) {
         console.log('请求出现错误:', error);
       });

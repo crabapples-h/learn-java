@@ -21,30 +21,31 @@
       </div>
     </a-drawer>
     <a-modal :visible.sync="show.test" width="50%" ok-text="确认" cancel-text="取消" @ok="" @cancel=""></a-modal>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
-      <span slot="action" slot-scope="text, record">
-        <c-pop-button title="确定要删除吗" type="danger" size="small" @ok="removeRoles(record)" text="删除"/>
-        <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="editRoles(record)">编辑</a-button>
-        <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="editRoles(record)">分配菜单</a-button>
-      </span>
-    </a-table>
+    <!--    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">-->
+    <!--      <span slot="action" slot-scope="text, record">-->
+    <!--        <a-button type="danger" size="small" @click="removeRoles(record)">删除</a-button>-->
+    <!--        <a-divider type="vertical"/>-->
+    <!--        <a-button type="primary" size="small" @click="editRoles(record)">编辑</a-button>-->
+    <!--        <a-divider type="vertical"/>-->
+    <!--        <a-button type="primary" size="small" @click="editRoles(record)">分配菜单</a-button>-->
+    <!--      </span>-->
+    <!--    </a-table>-->
+    <!--    :row-selection="rowSelection"-->
+    <a-table :columns="columns" :data-source="dataSource"/>
   </div>
 </template>
 
 <script>
 import {TreeSelect} from "ant-design-vue";
-import CPopButton from "@/components/c-pop-button";
 
 export default {
-  name: "roles-list",
-  components: {CPopButton},
+  name: "menus-list",
   data() {
     return {
       SHOW_PARENT: TreeSelect.SHOW_PARENT,
       labelCol: {span: 5},
       wrapperCol: {span: 16},
+      sysUser: sessionStorage.getItem("sysUser"),
       columns: [
         {
           dataIndex: 'name',
@@ -102,7 +103,7 @@ export default {
       this.getList()
     },
     getList() {
-      this.$http.get('/api/sys/roles/list').then(result => {
+      this.$http.get('/api/sys/menus/list').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -115,16 +116,25 @@ export default {
       });
     },
     removeRoles(e) {
-      this.$http.post(`/api/sys/roles/remove/${e.id}`).then(result => {
-        console.log('通过api获取到的数据:', result);
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return
-        }
-        this.$message.success(result.message)
-        this.refreshData()
-      }).catch(function (error) {
-        console.log('请求出现错误:', error);
+      const _this = this;
+      this.$confirm({
+        title: '确认操作?',
+        cancelText: '取消',
+        okText: '确定',
+        onOk() {
+          console.log(e)
+          _this.$http.post(`/api/sys/roles/remove/${e.id}`).then(result => {
+            console.log('通过api获取到的数据:', result);
+            if (result.status !== 200) {
+              _this.$message.error(result.message);
+              return
+            }
+            _this.getList()
+            _this.$message.success(result.message)
+          }).catch(function (error) {
+            console.log('请求出现错误:', error);
+          });
+        },
       });
     },
     addRoles() {

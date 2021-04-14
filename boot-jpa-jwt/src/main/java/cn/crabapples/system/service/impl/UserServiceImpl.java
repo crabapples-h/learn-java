@@ -1,14 +1,19 @@
 package cn.crabapples.system.service.impl;
 
+import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
+import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
+import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dao.UserDAO;
 import cn.crabapples.system.dto.SysUserDTO;
+import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;
+import cn.hutool.crypto.digest.MD5;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -18,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,10 +42,12 @@ public class UserServiceImpl implements UserService {
     @Value("${isDebug}")
     private boolean isDebug;
     private final UserDAO userDAO;
+    private final RolesDAO rolesDAO;
     private final JwtConfigure jwtConfigure;
 
-    public UserServiceImpl(UserDAO userDAO, JwtConfigure jwtConfigure) {
+    public UserServiceImpl(UserDAO userDAO, RolesDAO rolesDAO, JwtConfigure jwtConfigure) {
         this.userDAO = userDAO;
+        this.rolesDAO = rolesDAO;
         this.jwtConfigure = jwtConfigure;
     }
 
@@ -76,16 +84,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SysUser addUser(UserForm form) {
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(form, user);
-        return userDAO.save(user);
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(form, entity);
+        setRolesList(form.getRolesList(), entity);
+        return userDAO.save(entity);
     }
 
     @Override
     public SysUser editUser(UserForm form) {
-        SysUser user = userDAO.findById(form.getId());
-        BeanUtils.copyProperties(form, user);
-        return userDAO.save(user);
+        SysUser entity = userDAO.findById(form.getId());
+        BeanUtils.copyProperties(form, entity);
+        setRolesList(form.getRolesList(), entity);
+        return userDAO.save(entity);
+    }
+
+    private void setRolesList(List<String> ids, SysUser entity) {
+        List<SysRoles> roles = rolesDAO.findByIds(ids);
+        entity.setRolesList(roles);
     }
 
     @Override
@@ -138,5 +153,36 @@ public class UserServiceImpl implements UserService {
         return userDAO.save(user);
     }
 
+    @Override
+    public SysUser updatePassword(UserForm form) {
+        String password = form.getPassword();
+        String newPassword = form.getNewPassword();
+        String againPassword = form.getAgainPassword();
+        if (!newPassword.equals(againPassword)) {
+            throw new ApplicationException("两次密码不一致");
+        }
+        SysUser user = userDAO.findById(form.getId());
+        AssertUtils.notNull(user, "用户不存在");
+        password = MD5.create().digestHex(password.getBytes(StandardCharsets.UTF_8));
+        if (user.getPassword().equals(password)) {
+            newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
+            user.setPassword(newPassword);
+            return userDAO.save(user);
+        }
+        throw new ApplicationException("密码错误");
+    }
 
+    @Override
+    public SysUser resetPassword(UserForm form) {
+        String newPassword = form.getNewPassword();
+        String againPassword = form.getAgainPassword();
+        if (!newPassword.equals(againPassword)) {
+            throw new ApplicationException("两次密码不一致");
+        }
+        SysUser user = userDAO.findById(form.getId());
+        AssertUtils.notNull(user, "用户不存在");
+        newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
+        user.setPassword(newPassword);
+        return userDAO.save(user);
+    }
 }
