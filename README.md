@@ -99,3 +99,37 @@
         * 使用spring的配置文件扫描功能,从classpath:datasource.properties中读取数据源信息
 * 20210325
     * 前端请求参数加密
+* 20210412
+    * 增加字典信息
+    * 加入entity2DTO方法
+    * 重写dao相关方法
+        * 增加基础dao并加入基础方法
+        * 判断查询结果是否为空，如果为空则直接抛出ApplicationException
+    * 移除shiro
+    * 引入elasticsearch
+    * 增加分页查询功能
+    * 系统菜单树后端生成
+* 20210413
+    * 增加系统角色模块
+    * 角色和菜单关联
+    * 用户和角色关联
+    * 前端增加两个自定义组件
+        * 带确认信息的按钮
+        * 自定义颜色的按钮
+    * 增加404跳转
+    * 增加首页标题自定义
+    * 加入vuex模块
+    * 增加用户信息缓存
+    * 修改token缓存机制
+        * 先存入sessionStorage，然后从sessionStorage读入vuex的store中
+    * 增加登录页面判断是否登录过逻辑
+    * 后端api接口地址大量修改
+    * 增加BaseRepository类
+        * 加入一些基本查询方法
+* 20210413
+    * jsr验证组合并入同一个文件
+    * 修改ResponseDTO构造方法
+    * 增加less支持
+    * 引入antd自定义样式表
+    * 修改模块名
+        * boot-jpa-shiro -> boot-jpa-jwt

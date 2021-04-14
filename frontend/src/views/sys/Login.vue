@@ -30,7 +30,7 @@ export default {
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        // this.$router.push('/manage-index')
+        this.$router.push('/manage-index')
       }
     },
     submit() {
@@ -52,8 +52,9 @@ export default {
             console.log(this.$store.state)
             _this.$message.success(result.message);
             _this.$router.push('/manage-index')
+          } else {
+            _this.$message.error('登录信息获取失败')
           }
-          _this.$message.error('登录信息获取失败')
         })
       })
     },
