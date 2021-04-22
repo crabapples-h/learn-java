@@ -25,7 +25,6 @@ export default {
     this.checkLoginStatus()
   },
   mounted() {
-    console.log('page:login')
   },
   methods: {
     checkLoginStatus() {
@@ -48,11 +47,11 @@ export default {
           _this.$message.error(result.message);
           return
         }
-        setToken(result.data)
         _this.getUserInfo().then(res => {
           if (res.status) {
-            _this.$store.state.token = result.data
-            _this.$store.state.userInfo = res.userInfo
+            setToken(result.data)
+            setUserInfo(res.userInfo)
+            _this.getRouterMap()
             console.log(this.$store.state)
             _this.$message.success(result.message);
             _this.$router.push('/index')
@@ -77,6 +76,21 @@ export default {
         console.error('出现错误:', error);
       })
     },
+    getRouterMap() {
+      return this.$http.get('/api/sys/user/menus').then(result => {
+        if (result.status !== 200) {
+          return;
+        }
+        if (result.data !== null) {
+          console.log('获取路由')
+          setRouterMap(result.data)
+          return result.data;
+        }
+      }).catch(function (error) {
+        console.error('出现错误:', error);
+      });
+    }
+
   }
 }
 </script>

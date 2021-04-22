@@ -37,13 +37,11 @@
 </template>
 
 <script>
-import {manageRouter, manageRouter1} from "@/router/manage/manage";
-import RolesList from "@/views/manage/RolesList";
-import MenusList from "@/views/manage/MenusList";
 import CPageHeader from "@/views/common/C-PageHeader";
 import CPageMenus from "@/views/common/C-PageMenus";
 import CPageFooter from "@/views/common/C-PageFooter";
-import {getToken, getUserInfo, setRouterMap} from "@/utils/sessionUtils";
+import {getToken, getUserInfo, getRouterMap} from "@/utils/sessionUtils";
+import {$addRouters} from "@/router";
 
 export default {
   name: "Index",
@@ -95,15 +93,13 @@ export default {
   },
   activated() {
     this.checkLoginStatus()
-    this.getUserMenus()
+    this.initRouterMap()
   },
   mounted() {
   },
   methods: {
     clickMenu(e) {
       this.$router.push(e)
-    },
-    getUserMenus() {
     },
     checkLoginStatus() {
       let token = getToken()
@@ -112,40 +108,16 @@ export default {
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
         this.$router.push('/index')
-      }else{
+      } else {
         this.$router.push('/login')
       }
     },
     initRouterMap() {
-      this.$http.get('/api/sys/user/menus').then(result => {
-        if (result.status !== 200) {
-          return;
-        }
-        if (result.data !== null) {
-          console.log('注册路由')
-          let manageRouterMap = {
-            path: '/',
-            component: resolve => require(['@/views/manage/Index.vue'], resolve),
-            name: 'layout',
-            meta: {title: '首页', icon: 'clipboard'},
-            children: null
-          }
-          manageRouterMap.children = result.data.map(e => {
-            return {
-              path: e.path,
-              components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
-              name: e.name,
-            }
-          })
-          let routers = [manageRouterMap]
-          setRouterMap(routers)
-          return routers;
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    }
-
+      let routerMap = getRouterMap()
+      if (routerMap && routerMap.length) {
+        $addRouters(routerMap)
+      }
+    },
   }
 }
 </script>

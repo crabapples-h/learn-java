@@ -9,7 +9,11 @@
 
 export default {
   name: 'App',
-  components: {
+  components: {},
+  data() {
+    return {}
+  },
+  created() {
   },
   mounted() {
   },

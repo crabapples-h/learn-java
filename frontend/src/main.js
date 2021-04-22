@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import Antd from 'ant-design-vue';
-import router from './router'
+import {router, $addRouters} from './router'
 import AxiosUtils from '@/utils/AxiosUtils'
 import {store} from '@/utils/store'
 import {auth} from '@/utils/v-auth'
@@ -10,9 +10,6 @@ import '../public/color.less'
 
 Vue.config.productionTip = false
 Vue.use(Antd)
-
-console.log('init menus')
-
 Vue.prototype.$http = AxiosUtils
 new Vue({
     router,

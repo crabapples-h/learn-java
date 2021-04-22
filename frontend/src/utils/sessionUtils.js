@@ -7,10 +7,8 @@
  * qq 294046317
  * pc-name mrhe
  */
-import {store} from '@/utils/store'
 
 function setToken(token) {
-    store.state.token = token
     sessionStorage.setItem('token', token)
 }
 
@@ -19,7 +17,6 @@ function getToken() {
 }
 
 function setUserInfo(userInfo) {
-    store.state.userInfo = userInfo
     userInfo = JSON.stringify(userInfo)
     sessionStorage.setItem('userInfo', userInfo)
 }
@@ -30,7 +27,7 @@ function getUserInfo() {
 }
 
 function setRouterMap(routerMap) {
-    store.state.routerMap = routerMap
+    console.log('setRouterMap()-->', routerMap)
     routerMap = JSON.stringify(routerMap)
     sessionStorage.setItem('routerMap', routerMap)
 }

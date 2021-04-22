@@ -8,9 +8,10 @@
  * pc-name mrhe
  */
 import axios from 'axios'
-import router from '@/router';
+import {router} from '@/router';
 import notification from 'ant-design-vue/es/notification'
 import {encrypt} from './RsaUtils1'
+import {getToken} from '@/utils/sessionUtils'
 
 import settings from '../../settings'
 
@@ -24,10 +25,11 @@ instance.interceptors.request.use(
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
         // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
         // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
-        const token = sessionStorage.getItem('crabapples-token');
+        const token = getToken();
         if (token === null) {
-            if (!isDebug)
+            if (!isDebug) {
                 router.push('/login')
+            }
         }
         config.headers['crabapples-token'] = token;
         config.data = crypt && config.data ? encrypt(JSON.stringify(config.data)) : config.data
