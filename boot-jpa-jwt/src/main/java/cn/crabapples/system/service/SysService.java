@@ -1,5 +1,6 @@
 package cn.crabapples.system.service;
 
+import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.dto.SysRolesDTO;
@@ -46,6 +47,7 @@ public interface SysService extends BaseService {
     /**
      * 生成菜单树(思路为:从所有菜单中逐级递归过滤出角色没有权限的菜单，保留角色拥有的菜单)
      * 递归遍历所有菜单，判断菜单ID是否为角色所拥有，从最后一级菜单开始逐级返回子菜单中角色所拥有的菜单
+     * 如果菜单被标记删除则直接将该菜单及其子菜单移除
      *
      * @param menusIds 当前角色所拥有的菜单的ID
      * @param allMenus 所有根菜单
@@ -53,11 +55,17 @@ public interface SysService extends BaseService {
      */
     default List<SysMenus> filterRootMenusTree(List<String> menusIds, List<SysMenus> allMenus) {
         return allMenus.stream().filter(e -> {
-            List<SysMenus> children = filterRootMenusTree(menusIds, e.getChildren());
-            if (children.size() > 0) {
-                e.setChildren(children);
-                return true;
+            /*
+             * 判断当前菜单是否被标记删除
+             */
+            if (e.getDelFlag() == DIC.IS_DEL) {
+                return false;
             }
+            List<SysMenus> children = filterRootMenusTree(menusIds, e.getChildren());
+            e.setChildren(children);
+            /*
+             * 判断当前菜单是否所属于角色
+             */
             return menusIds.contains(e.getId());
         }).collect(Collectors.toList());
     }

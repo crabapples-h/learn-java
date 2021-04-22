@@ -1,6 +1,14 @@
+/**
+ * TODO http工具
+ *
+ * @author Mr.He
+ * 2021/4/15 14:41
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mrhe
+ */
 import axios from 'axios'
 import router from '@/router';
-import message from 'ant-design-vue/es/message'
 import notification from 'ant-design-vue/es/notification'
 import {encrypt} from './RsaUtils1'
 

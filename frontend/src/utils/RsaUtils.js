@@ -1,3 +1,12 @@
+/**
+ * TODO rsa工具(pkcs1)
+ *
+ * @author Mr.He
+ * 2021/4/15 14:41
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mrhe
+ */
 import JSEncrypt from 'jsencrypt'
 
 const instance = new JSEncrypt()

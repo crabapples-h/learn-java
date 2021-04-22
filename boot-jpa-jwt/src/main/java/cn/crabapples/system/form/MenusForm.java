@@ -31,6 +31,10 @@ public class MenusForm extends BaseForm {
     //    @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
     private Integer level;
 
+    private String path;
+
+    private String filePath;
+
     private String permission;
 
     @Override

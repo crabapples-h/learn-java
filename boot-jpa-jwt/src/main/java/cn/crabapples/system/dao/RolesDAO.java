@@ -52,4 +52,10 @@ public class RolesDAO extends BaseDAO {
     public List<SysRoles> findByIds(List<String> ids) {
         return rolesRepository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
     }
+
+    public List<SysRoles> findByMenusId(String menusId) {
+        return rolesRepository.findByDelFlagAndMenusIdsContains(DIC.NOT_DEL, menusId);
+    }
+
+
 }

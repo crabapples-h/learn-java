@@ -45,6 +45,12 @@ public class SysMenus extends BaseEntity {
     @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
     private Integer level;
 
+    @Column(columnDefinition = "varchar(64) default null comment '浏览器路径'")
+    private String path;
+
+    @Column(columnDefinition = "varchar(64) default null comment '文件路径'")
+    private String filePath;
+
     @Column(columnDefinition = "varchar(64) default null comment '授权标识'")
     private String permission;
 

@@ -4,15 +4,15 @@
     <a-divider/>
     <a-drawer title="" width="50%" :visible="show.roles" @close="closeRolesForm">
       <a-form-model :model="form.roles" :rules="rules.roles" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="ID">
-          <a-input v-model="form.roles.id" disabled placeholder="新建角色时自动生成"/>
+        <a-form-model-item label="ID" style="display: none">
+          <a-input v-model="form.roles.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="名称" prop="name">
           <a-input v-model="form.roles.name"/>
         </a-form-model-item>
         <a-form-model-item label="菜单">
           <a-tree-select :tree-data="menusOptions" v-model="form.roles.menusList" tree-checkable
-                         :show-checked-strategy="SHOW_PARENT"/>
+                         :show-checked-strategy="SHOW_ALL" :show-line="show.treeLine" :checkStrictly="false"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -20,14 +20,25 @@
         <a-button type="primary" @click="submitRolesForm">保存</a-button>
       </div>
     </a-drawer>
-    <a-modal :visible.sync="show.test" width="50%" ok-text="确认" cancel-text="取消" @ok="" @cancel=""></a-modal>
+    <a-modal :visible.sync="show.menus" width="50%" :footer="null" @cancel="closeShowMenus">
+      <a-table :data-source="menusDataSource" rowKey="id" :columns="menusColumns" :pagination="false">
+        <span slot="icon" slot-scope="text, record">
+        <a-icon :type='text.substring(text.indexOf("\"") + 1,text.lastIndexOf("\"")) || "appstore"'/>
+      </span>
+        <span slot="type" slot-scope="text, record">
+        <a-tag size="small" color="green" v-if="record.menusType === 1">菜单</a-tag>
+        <a-tag size="small" color="blue" v-if="record.menusType === 2">按钮</a-tag>
+        <a-tag size="small" color="purple" v-if="record.menusType === 3">超链接</a-tag>
+      </span>
+      </a-table>
+    </a-modal>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
       <span slot="action" slot-scope="text, record">
-        <c-pop-button title="确定要删除吗" type="danger" size="small" @ok="removeRoles(record)" text="删除"/>
+        <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="removeRoles(record)"/>
         <a-divider type="vertical"/>
         <a-button type="primary" size="small" @click="editRoles(record)">编辑</a-button>
         <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="editRoles(record)">分配菜单</a-button>
+        <a-button type="primary" size="small" @click="showMenus(record)">查看菜单</a-button>
       </span>
     </a-table>
   </div>
@@ -42,7 +53,7 @@ export default {
   components: {CPopButton},
   data() {
     return {
-      SHOW_PARENT: TreeSelect.SHOW_PARENT,
+      SHOW_ALL: TreeSelect.SHOW_ALL,
       labelCol: {span: 5},
       wrapperCol: {span: 16},
       columns: [
@@ -60,6 +71,27 @@ export default {
         },
       ],
       dataSource: [],
+      menusColumns: [
+        {
+          dataIndex: 'name',
+          title: '名称',
+        },
+        {
+          dataIndex: 'icon',
+          title: '图标',
+          scopedSlots: {customRender: 'icon'},
+        },
+        {
+          dataIndex: 'sort',
+          title: '排序',
+        },
+        {
+          dataIndex: 'type',
+          title: '类型',
+          scopedSlots: {customRender: 'type'},
+        },
+      ],
+      menusDataSource: [],
       rules: {
         roles: {
           name: [
@@ -77,11 +109,11 @@ export default {
         },
       },
       show: {
+        treeLine: true,
         roles: false,
-        test: false,
+        menus: false,
       },
       menusOptions: [],
-      defaultMenusOptions: [],
     };
   },
   activated() {
@@ -135,8 +167,11 @@ export default {
       this.form.roles.id = e.id
       this.form.roles.name = e.name
       let ids = []
+      console.log('sysmenus--->', e.sysMenus)
+      console.log('ids--->', ids)
       this.formatDefaultMenusOption(ids, e.sysMenus)
       this.form.roles.menusList = ids
+
       this.getMenusList()
       this.show.roles = true
     },
@@ -184,12 +219,19 @@ export default {
         let children = e.children
         if (children.length > 0) {
           this.formatDefaultMenusOption(ids, children)
-        } else {
+        }
+        if (e.delFlag === 0) {
           ids.push(e.id)
         }
       })
     },
-
+    showMenus(e) {
+      this.menusDataSource = e.sysMenus
+      this.show.menus = true
+    },
+    closeShowMenus() {
+      this.show.menus = false
+    },
     closeResetPassword() {
       this.show.resetPassword = false
     },

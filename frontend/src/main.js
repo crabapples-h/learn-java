@@ -1,29 +1,22 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import App from './App'
-import VueAxios from 'vue-axios'
 import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
 import router from './router'
 import AxiosUtils from '@/utils/AxiosUtils'
+import {store} from '@/utils/store'
+import {auth} from '@/utils/v-auth'
+import 'ant-design-vue/dist/antd.css';
 import '../public/color.less'
 
 Vue.config.productionTip = false
-Vue.use(Vuex)
-Vue.use(
-    Antd,
-    VueAxios,
-    // settings,
-)
-const store = new Vuex.Store({
-    state: {
-        token: '',
-        userInfo: {}
-    }
-})
+Vue.use(Antd)
+
+console.log('init menus')
+
 Vue.prototype.$http = AxiosUtils
 new Vue({
     router,
-    render: h => h(App),
     store,
+    auth,
+    render: h => h(App),
 }).$mount('#app')

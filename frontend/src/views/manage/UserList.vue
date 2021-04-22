@@ -4,14 +4,17 @@
     <a-divider/>
     <a-drawer width="30%" :visible="show.userInfo" @close="closeForm">
       <a-form-model :model="form.userInfo" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+        <a-form-model-item label="id" prop="id" style="display: none">
+          <a-input v-model="form.userInfo.id" disabled placeholder="新建时自动生成"/>
+        </a-form-model-item>
         <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.userInfo.username" placeholder="请输入用户名"/>
+          <a-input v-model="form.userInfo.username" :disabled="form.type===1" placeholder="请输入用户名"/>
         </a-form-model-item>
         <a-form-model-item label="姓名" prop="name">
           <a-input v-model="form.userInfo.name" placeholder="请输入姓名"/>
         </a-form-model-item>
         <a-form-model-item label="年龄" prop="age">
-          <a-input-number style="width:100%" v-model="form.userInfo.age" placeholder="请输入年龄"/>
+          <a-input-number v-model="form.userInfo.age" placeholder="请输入年龄"/>
         </a-form-model-item>
         <a-form-model-item label="邮箱" prop="mail">
           <a-input v-model="form.userInfo.mail" placeholder="请输入邮箱"/>
@@ -51,7 +54,7 @@
         </a-form-model-item>
       </a-form-model>
     </a-modal>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
+    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
       <span slot="tags" slot-scope="tags">
         <a-tag v-for="tag in tags" :rowKey="tag.id" :color="tag.color">{{ tag.name }}</a-tag>
       </span>
@@ -66,12 +69,12 @@
       </span>
       <span slot="action" slot-scope="text, record">
         <span v-if="record.role !== 0">
-          <c-pop-button title="确认要锁定吗" text="锁定" @ok="lockUser(record)" type="primary" v-if="record.status === 0"/>
-          <c-pop-button title="确认要解锁吗" text="解锁" @ok="unlockUser(record)" v-if="record.status === 1"/>
+          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary" v-if="record.status === 0"/>
+          <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"/>
           <a-divider type="vertical"/>
         </span>
         <span v-if="record.role !== 0">
-          <c-pop-button title="确认要删除吗" text="删除" @ok="removeUser(record)" type="danger"/>
+          <c-pop-button title="确认要删除吗" text="删除" @click="removeUser(record)" type="danger"/>
           <a-divider type="vertical"/>
         </span>
         <a-button type="primary" size="small" @click="editUser(record)">编辑</a-button>
@@ -93,6 +96,23 @@ export default {
   components: {CButton, CPopButton},
   data() {
     return {
+      pagination: {
+        pageSize: 4,
+        pageSizeOptions: ['10', '20', '30', '40'],
+        total: 50,
+        size: 'middle',
+        showSizeChanger: true,
+        onChange: ((page, pageSize) => {
+          console.log(page, pageSize)
+        }),
+        // showSizeChange: (current, size) => {
+        //   console.log(current, size)
+
+        // },
+        showSizeChange: ((current, size) => {
+          console.log(current, size)
+        })
+      },
       rules: {
         username: [
           {required: true, message: '请输入用户名', trigger: 'change'},
@@ -207,7 +227,8 @@ export default {
   activated() {
   },
   mounted() {
-    this.getList()
+    console.log(122223)
+    // this.getList()
   },
   methods: {
     getRolesList() {
@@ -227,6 +248,7 @@ export default {
       this.getList()
     },
     getList() {
+      console.log(123)
       this.$http.get('/api/user/list').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);

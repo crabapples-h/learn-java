@@ -11,6 +11,7 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
+import {setToken, getToken, setUserInfo, getUserInfo, setRouterMap} from '@/utils/sessionUtils'
 
 export default {
   name: 'Login',
@@ -21,16 +22,19 @@ export default {
     }
   },
   activated() {
-    this.checkUserInfo()
+    this.checkLoginStatus()
+  },
+  mounted() {
+    console.log('page:login')
   },
   methods: {
-    checkUserInfo() {
-      let token = sessionStorage.getItem('crabapples-token')
-      let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+    checkLoginStatus() {
+      let token = getToken()
+      let userInfo = getUserInfo()
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        this.$router.push('/manage-index')
+        this.$router.push('/index')
       }
     },
     submit() {
@@ -44,14 +48,14 @@ export default {
           _this.$message.error(result.message);
           return
         }
-        sessionStorage.setItem('crabapples-token', result.data);
+        setToken(result.data)
         _this.getUserInfo().then(res => {
           if (res.status) {
             _this.$store.state.token = result.data
             _this.$store.state.userInfo = res.userInfo
             console.log(this.$store.state)
             _this.$message.success(result.message);
-            _this.$router.push('/manage-index')
+            _this.$router.push('/index')
           } else {
             _this.$message.error('登录信息获取失败')
           }
@@ -66,7 +70,7 @@ export default {
         }
         if (result.data !== null) {
           this.userInfo = result.data;
-          sessionStorage.setItem("userInfo", JSON.stringify(result.data))
+          setUserInfo(result.data)
           return Promise.resolve({status: true, userInfo: result.data})
         }
       }).catch(function (error) {

@@ -4,6 +4,8 @@ import cn.crabapples.system.entity.SysRoles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 /**
  * TODO 系统用户持久层
@@ -17,4 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RolesRepository extends JpaRepository<SysRoles, String>, BaseRepository<SysRoles> {
 
+    List<SysRoles> findByDelFlagAndMenusIdsContains(int delFlag, String menusId);
 }

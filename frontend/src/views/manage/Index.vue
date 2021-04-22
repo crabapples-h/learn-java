@@ -1,216 +1,151 @@
 <template>
-  <a-layout>
-    <a-layout-header>
-      <a-row>
-        <a-col :span="4">
-          <span class="title">{{ title }}</span>
-        </a-col>
-        <a-col :span="3" :offset="17">
-          <a-dropdown>
-            <a-icon type="setting"/>
-            <a-menu slot="overlay">
-              <a-menu-item key="1" @click="changePassword">
-                <a-icon type="user"/>
-                修改密码
-              </a-menu-item>
-              <a-menu-item key="2" @click="logout">
-                <a-icon type="user"/>
-                退出登录
-              </a-menu-item>
-            </a-menu>
-            <a-button style="margin-left: 8px"> Button
-              <a-icon type="down"/>
-            </a-button>
-          </a-dropdown>
-          <span>{{ userInfo.name }}</span>
-        </a-col>
-      </a-row>
-    </a-layout-header>
+  <div>
     <a-layout>
-      <a-layout-sider>
-        <a-menu style="width: 200px;height: 100%" mode="inline">
-          <a-sub-menu :key="menu.key" @titleClick="titleClick" v-for="menu in menus"
-                      v-if="menu.children && menu.children.length">
-            <span slot="title"><a-icon :type="menu.icon"/><span>{{ menu.name }}</span></span>
-            <a-sub-menu :key="child.key" v-if="child.children && child.children.length" v-for="child in menu.children">
-              <span slot="title"><a-icon :type="child.icon"/><span>{{ child.name }}</span></span>
-              <a-menu-item :key="item.key" v-for="item in child.children" @click="clickMenu(item.url)">
+      <c-page-header/>
+      <a-layout>
+        <a-layout-sider>
+          <a-menu style="width: 200px;height: 100%" mode="inline">
+            <a-sub-menu :key="item.key" v-for="item in menus" v-if="item.children && item.children.length">
+              <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
+              <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
+                <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
+                <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item.url)">
+                  <a-icon :type="item.icon"/>
+                  <span>{{ item.name }}</span>
+                </a-menu-item>
+              </a-sub-menu>
+              <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
                 <a-icon :type="item.icon"/>
                 <span>{{ item.name }}</span>
               </a-menu-item>
             </a-sub-menu>
-            <a-menu-item :key="child.key" v-else @click="clickMenu(child.url)">
-              <a-icon :type="child.icon"/>
-              <span>{{ child.name }}</span>
+            <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
+              <a-icon :type="item.icon"/>
+              <span>{{ item.name }}</span>
             </a-menu-item>
-          </a-sub-menu>
-          <a-menu-item :key="menu.key" v-else @click="clickMenu(menu.url)">
-            <a-icon :type="menu.icon"/>
-            <span>{{ menu.name }}</span>
-          </a-menu-item>
-        </a-menu>
-      </a-layout-sider>
-      <a-layout-content class="content">
-        <a-modal title="修改密码" :visible.sync="show.changePassword" width="25%" ok-text="确认" cancel-text="取消"
-                 @ok="submitForm" @cancel="closeModal">
-          <a-form-model ref="ruleForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-            <a-form-model-item ref="password" label="原密码" prop="password">
-              <a-input-password v-model="form.password"/>
-            </a-form-model-item>
-            <a-form-model-item ref="newPassword" label="新密码" prop="newPassword">
-              <a-input-password v-model="form.newPassword"/>
-            </a-form-model-item>
-            <a-form-model-item ref="rePassword" label="重复密码" prop="rePassword">
-              <a-input-password v-model="form.rePassword"/>
-            </a-form-model-item>
-          </a-form-model>
-        </a-modal>
-        <keep-alive>
-          <router-view name="innerView"></router-view>
-        </keep-alive>
-      </a-layout-content>
+          </a-menu>
+        </a-layout-sider>
+        <a-layout-content class="content">
+          <keep-alive>
+            <router-view name="innerView"></router-view>
+          </keep-alive>
+        </a-layout-content>
+      </a-layout>
+      <c-page-footer/>
     </a-layout>
-    <a-layout-footer></a-layout-footer>
-  </a-layout>
+  </div>
 </template>
 
 <script>
+import {manageRouter, manageRouter1} from "@/router/manage/manage";
+import RolesList from "@/views/manage/RolesList";
+import MenusList from "@/views/manage/MenusList";
+import CPageHeader from "@/views/common/C-PageHeader";
+import CPageMenus from "@/views/common/C-PageMenus";
+import CPageFooter from "@/views/common/C-PageFooter";
+import {getToken, getUserInfo, setRouterMap} from "@/utils/sessionUtils";
+
 export default {
   name: "Index",
+  components: {
+    CPageHeader,
+    CPageMenus,
+    CPageFooter,
+  },
   data() {
     return {
-      labelCol: {span: 5},
-      wrapperCol: {span: 16},
-      openKeys: [],
-      rules: {
-        password: [
-          {required: true, message: '请输入原密码', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16位', trigger: 'change'},
-        ],
-        newPassword: [
-          {required: true, message: '请输入新密码', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16位', trigger: 'change'},
-        ],
-        rePassword: [
-          {required: true, message: '请重复新密码', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16位', trigger: 'change'},
-        ],
-      },
-      form: {
-        password: '',
-        newPassword: '',
-        rePassword: ''
-      },
-      show: {
-        changePassword: false
-      },
       userInfo: {
         name: ''
       },
-      title: '管理系统',
       menus: [
         {
           key: '1',
           name: '用户管理',
           icon: 'appstore',
-          url: '/manage-index/user-list',
+          url: '/sys/user-list',
         },
         {
           key: '12',
           name: '角色管理',
           icon: 'appstore',
-          url: '/manage-index/roles-list',
+          url: '/sys/roles-list',
         },
         {
           key: '13',
           name: '菜单管理',
           icon: 'appstore',
-          url: '/manage-index/menus-list',
+          url: '/sys/menus-list',
         },
-        // {
-        //   key: '99',
-        //   name: '系统管理',
-        //   icon: 'appstore',
-        //   url: '/',
-        //   children: [
-        //     {
-        //       key: '12331',
-        //       name: '菜单管理',
-        //       icon: 'appstore',
-        //       url: '/settings-menu',
-        //     }
-        //   ]
-        // },
+        {
+          key: '99',
+          name: '系统管理',
+          icon: 'appstore',
+          url: '/',
+          children: [
+            {
+              key: '12331',
+              name: '菜单管理',
+              icon: 'appstore',
+              url: '/settings-menu',
+            }
+          ]
+        },
       ],
     };
   },
   activated() {
-    this.checkUserInfo()
+    this.checkLoginStatus()
+    this.getUserMenus()
   },
   mounted() {
-    // this.getUserInfo()
-    // this.$router.push({name: 'welcome'})
   },
   methods: {
-    checkUserInfo() {
-      console.log(this.$store.state)
+    clickMenu(e) {
+      this.$router.push(e)
     },
-    titleClick(e) {
-      console.log('titleClick', e);
+    getUserMenus() {
     },
-    changePassword() {
-      this.show.changePassword = true
+    checkLoginStatus() {
+      let token = getToken()
+      let userInfo = getUserInfo()
+      this.$store.state.token = token
+      this.$store.state.userInfo = userInfo
+      if (!!(token && userInfo)) {
+        this.$router.push('/index')
+      }else{
+        this.$router.push('/login')
+      }
     },
-    closeModal() {
-      this.show.changePassword = false
-      this.$refs.ruleForm.resetFields();
-    },
-    logout() {
-      this.$http.logout()
-    },
-
-    clickMenu(url) {
-      this.$router.push({path: url})
-      console.log(url)
-    },
-    getUserInfo() {
-      this.$http.get('/api/getUserInfo').then(result => {
+    initRouterMap() {
+      this.$http.get('/api/sys/user/menus').then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
           return;
         }
         if (result.data !== null) {
-          this.userInfo = result.data;
-          sessionStorage.setItem("userInfo", result.data)
+          console.log('注册路由')
+          let manageRouterMap = {
+            path: '/',
+            component: resolve => require(['@/views/manage/Index.vue'], resolve),
+            name: 'layout',
+            meta: {title: '首页', icon: 'clipboard'},
+            children: null
+          }
+          manageRouterMap.children = result.data.map(e => {
+            return {
+              path: e.path,
+              components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
+              name: e.name,
+            }
+          })
+          let routers = [manageRouterMap]
+          setRouterMap(routers)
+          return routers;
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
       });
-    },
-    submitForm() {
-      this.$refs.ruleForm.validate(valid => {
-        if (valid) {
-          console.info('success', this.form);
-          if (this.form.newPassword !== this.form.rePassword) {
-            this.$message.error('两次密码不一致');
-            return
-          }
-          this.$http.post('/api/updatePassword', this.form).then(result => {
-            if (result.status !== 200) {
-              this.$message.error(result.message);
-              return;
-            }
-            this.$message.success(result.message);
-            this.closeModal()
-          }).catch(function (error) {
-            console.error('出现错误:', error);
-          });
-        } else {
-          console.log('验证失败');
-          return false;
-        }
-      })
-    },
+    }
+
   }
 }
 </script>
@@ -218,38 +153,62 @@ export default {
 <style scoped lang="less">
 @import "~@public/color.less";
 
-.ant-layout-header, .ant-layout-footer {
-  background: @primary-color;
-  color: #fff;
-  height: 5vh;
-  line-height: 5vh;
-}
-
 .title {
   font-size: 20px;
-  color: #fff
+  color: #fff;
+  font-weight: 700;
+}
+
+.ant-layout-header {
+  background: @primary-color;
+  color: #fff;
+  height: 7vh;
+  line-height: 7vh;
 }
 
 .ant-layout-footer {
-  line-height: 1.5;
+  background: @primary-color;
+  color: #fff;
+  height: 10vh;
+  line-height: 7vh;
 }
 
 .ant-layout-sider {
   width: 100%;
-  height: 90vh;
+  height: 83vh;
   background: #fff;
-  /*color: #fff;*/
-  /*line-height: 120px;*/
 }
 
 .ant-layout-content {
-  padding: 16px;
+  box-shadow: inset 0 0 5px fade(@primary-color, 20%);
+  padding: 12px;
   background: #fff;
   min-height: 120px;
-  height: 90vh;
+  height: 83vh;
+  overflow: auto;
 }
 
-.container-parent {
-  padding: 16px;
+/*滚动条整体样式*/
+.ant-layout-content::-webkit-scrollbar {
+  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+  margin-right: 10px;
+  opacity: 0.2;
+}
+
+/*滚动条里面小方块(滑块 )*/
+.ant-layout-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px @primary-color;
+  background: fade(@primary-color, 20%);
+  opacity: 0.2;
+}
+
+/*滚动条里面轨道(背景)*/
+.ant-layout-content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 5px @primary-color;
+  border-radius: 10px;
+  background: fade(@primary-color, 20%);
+  opacity: 0.2;
 }
 </style>

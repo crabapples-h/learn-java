@@ -126,7 +126,17 @@ public class SysServiceImpl implements SysService {
     public SysMenus removeMenus(String id) {
         SysMenus entity = menusDAO.findById(id);
         entity.setDelFlag(DIC.IS_DEL);
+        removeRolesMenus(id);
         return menusDAO.save(entity);
+    }
+
+    void removeRolesMenus(String id) {
+        List<SysRoles> sysRoles = rolesDAO.findByMenusId(id);
+        sysRoles.forEach(e -> {
+            String menusIds = e.getMenusIds().replace(id, "");
+            e.setMenusIds(menusIds);
+            rolesDAO.save(e);
+        });
     }
 
     @Override
@@ -135,7 +145,20 @@ public class SysServiceImpl implements SysService {
         Pageable pageable = menusPage.getPageable();
         page.setDataCount(menusDAO.count());
         page.setPageIndex(pageable.getPageNumber());
-        return menusPage.stream().collect(Collectors.toList());
+        List<SysMenus> sysMenus = menusPage.stream().collect(Collectors.toList());
+        sysMenus = filterMenusByDelFlag(sysMenus);
+        return sysMenus;
+    }
+
+    /**
+     * 返回前端时移除菜单树中标记为删除的数据
+     */
+    private List<SysMenus> filterMenusByDelFlag(List<SysMenus> sysMenus) {
+        return sysMenus.stream().filter(e -> {
+            List<SysMenus> children = filterMenusByDelFlag(e.getChildren());
+            e.setChildren(children);
+            return e.getDelFlag() == DIC.NOT_DEL;
+        }).collect(Collectors.toList());
     }
 
     @Override
