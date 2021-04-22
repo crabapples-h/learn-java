@@ -27,7 +27,6 @@ function getUserInfo() {
 }
 
 function setRouterMap(routerMap) {
-    console.log('setRouterMap()-->', routerMap)
     routerMap = JSON.stringify(routerMap)
     sessionStorage.setItem('routerMap', routerMap)
 }

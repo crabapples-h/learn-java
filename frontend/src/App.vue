@@ -6,6 +6,8 @@
   </div>
 </template>
 <script>
+import {getRouterMap} from '@/utils/sessionUtils'
+import {$addRouters} from '@/router'
 
 export default {
   name: 'App',
@@ -14,6 +16,16 @@ export default {
     return {}
   },
   created() {
+    let routerMap = getRouterMap()
+    $addRouters(routerMap)
+    let path = sessionStorage.getItem("pathName")
+    sessionStorage.removeItem("pathName")
+    if (!!path) {
+      this.$router.push({path: path})
+    }
+    window.addEventListener("beforeunload", () => {
+      sessionStorage.setItem("pathName", window.location.pathname)
+    })
   },
   mounted() {
   },

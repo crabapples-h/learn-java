@@ -5,7 +5,7 @@ import Index from '@/views/manage/Index'
 import {getRouterMap, getToken} from '@/utils/sessionUtils'
 
 Vue.use(VueRouter)
-const sysRoutes = [
+const baseRoutes = [
     {
         path: '/',
         redirect: '/index',
@@ -21,6 +21,8 @@ const sysRoutes = [
         component: Login,
         meta: {title: '登录', icon: ''},
     },
+]
+const errorRoutes = [
     {
         path: '/404',
         component: () => import('@/views/sys/404'),
@@ -41,14 +43,18 @@ let customRouter = {
     meta: {title: '首页', icon: 'clipboard'},
     children: null
 }
+
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    sysRoutes
+    routes: baseRoutes,
 });
 
 export function $addRouters(children) {
-    console.log('$addRouters-->', {children})
+    // 重置路由规则
+    router.matcher = new VueRouter({
+        routes: baseRoutes
+    }).matcher
     customRouter.children = children.map(e => {
         return {
             path: e.path,
@@ -58,32 +64,14 @@ export function $addRouters(children) {
     })
     let routerMap = [customRouter]
     router.addRoutes(routerMap)
+    router.addRoutes(errorRoutes)
 }
 
 router.onReady(() => {
-    console.log('路由加载-->', 'router.onReady')
     let routerMap = getRouterMap()
     if (!!routerMap) {
         $addRouters(routerMap)
     }
-    window.addEventListener("beforeunload", () => {
-        //重点：暂存页面刷新的地址
-        sessionStorage.setItem("pathName", window.location.pathname)
-        let path = sessionStorage.getItem("pathName")
-        console.log(path)
-        // debugger
-        if (!!path) {
-            return next({path: path});
-        }
-        // sessionStorage.setItem("routesInfo", JSON.stringify(this.$store.getters.getRouterArray))
-    })
-    // const status = true // 判断用户已登录且已有权限
-    // if (status) {
-    //     store.dispatch('getJurisdiction') // 请求动态路由
-    //         .then(e => {
-    //             router.addRoutes(e.list) // 添加动态路由,这里不必用$addRoutes，因为刷新后就没有上一次的动态路由，故不必清除
-    //         })
-    // }
 })
 
 router.beforeEach((to, form, next) => {

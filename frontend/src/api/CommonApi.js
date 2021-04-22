@@ -15,6 +15,8 @@ const commonApi = {
         })
     },
     logout() {
+        sessionStorage.clear()
+        localStorage.clear()
         return instance({
             url: '/api/sys/logout',
             method: 'get',

@@ -44,10 +44,7 @@
 </template>
 
 <script>
-import {manageRouter, manageRouter1} from "@/router/manage/manage";
-import RolesList from "@/views/manage/RolesList";
-import MenusList from "@/views/manage/MenusList";
-
+import CommonApi from "@/api/CommonApi";
 export default {
   name: "C-PageHeader",
   props: {
@@ -125,7 +122,7 @@ export default {
       })
     },
     logout() {
-      this.$http.logout()
+      CommonApi.logout()
     },
   }
 }
