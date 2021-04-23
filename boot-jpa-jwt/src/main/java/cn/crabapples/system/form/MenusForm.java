@@ -1,9 +1,13 @@
 package cn.crabapples.system.form;
 
+import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseForm;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * TODO 用户菜单Form
@@ -21,11 +25,13 @@ public class MenusForm extends BaseForm {
 
     private String icon;
 
+    @NotBlank(message = "菜单名称不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private String name;
 
     private String url;
 
     //    @Column(columnDefinition = "int(2) default 0 comment '菜单类型 1:目录 2:菜单 3:外链 4:按钮'")
+    @NotNull(message = "菜单类型不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private Integer menusType;
 
     //    @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")

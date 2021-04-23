@@ -107,6 +107,26 @@ public class SysServiceImpl implements SysService {
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
     public List<SysMenus> getUserMenus(HttpServletRequest request) {
+        log.info("获取用户拥有的所有菜单");
+        List<String> menusList = getUserMenusIds(request);
+        List<SysMenus> allMenus = menusDAO.findRoot();
+        List<SysMenus> list = filterRootMenusTree(menusList, allMenus);
+        log.info("用户拥有的所有菜单[{}]", list);
+        return list;
+    }
+
+    @Override
+    public List<String> getUserPermissions(HttpServletRequest request) {
+        log.info("获取用户拥有的所有权限");
+        List<String> menusList = getUserMenusIds(request);
+        List<SysMenus> buttons = menusDAO.findButtonsByIds(menusList);
+        return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取当前用户所拥有的角色的所有菜单并去重
+     */
+    private List<String> getUserMenusIds(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
         List<SysRoles> roles = user.getRolesList();
         List<String> menusId = new ArrayList<>();
@@ -117,9 +137,7 @@ public class SysServiceImpl implements SysService {
                 menusId.addAll(idList);
             }
         });
-        List<String> menusList = menusId.stream().distinct().collect(Collectors.toList());
-        List<SysMenus> allMenus = menusDAO.findRoot();
-        return filterRootMenusTree(menusList, allMenus);
+        return menusId.stream().distinct().collect(Collectors.toList());
     }
 
     @Override
@@ -172,6 +190,9 @@ public class SysServiceImpl implements SysService {
         }
     }
 
+    /**
+     * 保存菜单时如果是编辑菜单
+     */
     private SysMenus editMenus(String id, MenusForm form) {
         SysMenus entity = menusDAO.findById(id);
         BeanUtils.copyProperties(form, entity);
@@ -179,6 +200,9 @@ public class SysServiceImpl implements SysService {
         return menusDAO.save(entity);
     }
 
+    /**
+     * 保存菜单时如果是添加菜单
+     */
     private SysMenus addMenus(MenusForm form) {
         SysMenus entity = new SysMenus();
         BeanUtils.copyProperties(form, entity);
@@ -192,6 +216,9 @@ public class SysServiceImpl implements SysService {
         }
     }
 
+    /**
+     * 保存菜单时如果是添加子菜单
+     */
     private SysMenus addChildrenMenus(String prentId, SysMenus entity) {
         log.info("添加新子菜单,parentId:[{}],[{}]", prentId, entity);
         SysMenus root = menusDAO.findById(prentId);
@@ -203,26 +230,48 @@ public class SysServiceImpl implements SysService {
         return menusDAO.save(root);
     }
 
+    /**
+     * 获取用户拥有的角色列表
+     */
     @Override
     public List<SysRolesDTO> getUserRolesList(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
         return user.getRolesList().stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
     }
 
+    /**
+     * 获取角色列表(分页)
+     */
     @Override
     public List<SysRoles> getRolesList(HttpServletRequest request, PageDTO page) {
+        log.info("获取[分页]角色列表:[{}]", page);
         Page<SysRoles> rolesPage = rolesDAO.findAll(page);
         Pageable pageable = rolesPage.getPageable();
         page.setDataCount(rolesDAO.count());
         page.setPageIndex(pageable.getPageNumber());
         List<SysRoles> sysRoles = rolesPage.stream().collect(Collectors.toList());
-        List<SysMenus> allMenus = menusDAO.findRoot();
-        sysRoles = createMenusTree(sysRoles, allMenus);
+        sysRoles = setRoleMenus(sysRoles);
+        log.info("返回[分页]角色列表:[{}],页码:[{}]", sysRoles, page);
         return sysRoles;
+    }
+
+    /**
+     * 获取角色时设置角色拥有的菜单
+     */
+    private List<SysRoles> setRoleMenus(List<SysRoles> source) {
+        return source.stream().peek(e -> {
+            String ids = e.getMenusIds();
+            if (!StringUtils.isBlank(ids)) {
+                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
+                menusDAO.findByIds(idList);
+                e.setSysMenus(menusDAO.findByIds(idList));
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override
     public SysRoles saveRoles(RolesForm form) {
+        log.info("保存角色:[{}]", form);
         String id = form.getId();
         SysRoles entity;
         if (StringUtils.isBlank(id)) {
@@ -233,15 +282,26 @@ public class SysServiceImpl implements SysService {
         BeanUtils.copyProperties(form, entity);
         String menusIds = JSONArray.toJSONString(form.getMenusList());
         entity.setMenusIds(menusIds);
+        entity.setPermissionList(getPermissionList(form.getMenusList()));
+        log.info("保存角色:[{}]", entity);
         return rolesDAO.save(entity);
+    }
+
+    /**
+     * 保存角色时设置角色拥有的权限
+     */
+    private String getPermissionList(List<String> menusIds) {
+        log.info("获取角色权限:[{}]", menusIds);
+        String permissions = menusDAO.findButtonsByIds(menusIds).stream().map(SysMenus::getPermission).collect(Collectors.toList()).toString();
+        log.info("角色权限:[{}]", permissions);
+        return permissions;
     }
 
     @Override
     public SysRoles removeRoles(String id) {
+        log.info("删除角色:[{}]", id);
         SysRoles entity = rolesDAO.findById(id);
         entity.setDelFlag(DIC.IS_DEL);
         return rolesDAO.save(entity);
     }
-
-
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-button @click="addUser">添加用户</a-button>
+    <a-button @click="addUser" v-auth:sys:user:add>添加用户</a-button>
     <a-divider/>
     <a-drawer width="30%" :visible="show.userInfo" @close="closeForm">
       <a-form-model :model="form.userInfo" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
@@ -58,29 +58,25 @@
       <span slot="tags" slot-scope="tags">
         <a-tag v-for="tag in tags" :rowKey="tag.id" :color="tag.color">{{ tag.name }}</a-tag>
       </span>
-      <span slot="role" slot-scope="role">
-          <a-tag color="green" v-if="role === 0">超级管理员</a-tag>
-          <a-tag color="orange" v-if="role === 1">科研管理员</a-tag>
-          <a-tag color="blue" v-if="role === 2">科研人员</a-tag>
-      </span>
       <span slot="status" slot-scope="status">
         <a-tag color="green" v-if="status === 0">正常</a-tag>
         <a-tag color="red" v-else>锁定</a-tag>
       </span>
       <span slot="action" slot-scope="text, record">
         <span v-if="record.role !== 0">
-          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary" v-if="record.status === 0"/>
-          <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"/>
+          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary" v-if="record.status === 0"
+                        v-auth:sys:user:lock/>
+          <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"
+                        v-auth:sys:user:unlock/>
           <a-divider type="vertical"/>
         </span>
         <span v-if="record.role !== 0">
-          <c-pop-button title="确认要删除吗" text="删除" @click="removeUser(record)" type="danger"/>
+          <c-pop-button title="确认要删除吗" text="删除" @click="removeUser(record)" type="danger" v-auth:sys:user:del/>
           <a-divider type="vertical"/>
         </span>
-        <a-button type="primary" size="small" @click="editUser(record)">编辑</a-button>
+        <a-button type="primary" size="small" @click="editUser(record)" v-auth:sys:user:edit>编辑</a-button>
         <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="showResetPassword(record)">重置密码</a-button>
-        <a-divider type="vertical"/>
+        <a-button type="primary" size="small" @click="showResetPassword(record)" v-auth:sys:user:reset>重置密码</a-button>
       </span>
     </a-table>
   </div>
@@ -225,10 +221,9 @@ export default {
     };
   },
   activated() {
+    this.getList()
   },
   mounted() {
-    console.log(122223)
-    // this.getList()
   },
   methods: {
     getRolesList() {
@@ -248,7 +243,6 @@ export default {
       this.getList()
     },
     getList() {
-      console.log(123)
       this.$http.get('/api/user/list').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);

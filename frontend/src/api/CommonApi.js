@@ -8,12 +8,6 @@ const commonApi = {
             data: data
         })
     },
-    getUserInfo() {
-        return instance({
-            url: '/api/user/info',
-            method: 'get',
-        })
-    },
     logout() {
         sessionStorage.clear()
         localStorage.clear()
@@ -21,6 +15,24 @@ const commonApi = {
             url: '/api/sys/logout',
             method: 'get',
         })
-    }
+    },
+    getUserInfo() {
+        return instance({
+            url: '/api/user/info',
+            method: 'get',
+        })
+    },
+    getUserMenus() {
+        return instance({
+            url: '/api/sys/user/menus',
+            method: 'get',
+        })
+    },
+    getUserPermissions() {
+        return instance({
+            url: '/api/sys/user/permissions',
+            method: 'get',
+        })
+    },
 }
 export default commonApi

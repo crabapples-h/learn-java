@@ -167,11 +167,8 @@ export default {
       this.form.roles.id = e.id
       this.form.roles.name = e.name
       let ids = []
-      console.log('sysmenus--->', e.sysMenus)
-      console.log('ids--->', ids)
       this.formatDefaultMenusOption(ids, e.sysMenus)
       this.form.roles.menusList = ids
-
       this.getMenusList()
       this.show.roles = true
     },
@@ -217,7 +214,7 @@ export default {
     formatDefaultMenusOption(ids, rolesMenus) {
       rolesMenus.forEach(e => {
         let children = e.children
-        if (children.length > 0) {
+        if (children.length >= 0) {
           this.formatDefaultMenusOption(ids, children)
         }
         if (e.delFlag === 0) {
@@ -231,26 +228,6 @@ export default {
     },
     closeShowMenus() {
       this.show.menus = false
-    },
-    closeResetPassword() {
-      this.show.resetPassword = false
-    },
-    showResetPassword(e) {
-      this.form.resetPassword.id = e.id
-      this.show.resetPassword = true
-    },
-    submitResetPassword() {
-      console.log(this.form.resetPassword)
-      this.$http.post('/api/user/resetPassword', this.form.resetPassword).then(result => {
-        console.log('通过api获取到的数据:', result);
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return
-        }
-        this.$message.success(result.message)
-      }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
     },
   }
 }

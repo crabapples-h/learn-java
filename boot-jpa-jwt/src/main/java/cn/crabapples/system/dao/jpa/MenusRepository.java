@@ -27,4 +27,7 @@ public interface MenusRepository extends JpaRepository<SysMenus, String>, BaseRe
     List<SysMenus> findByDelFlagAndIsRoot(int delFlag, int isRoot);
 
     List<SysMenus> findByDelFlagAndIsRootAndIdIn(int delFlag, int isRoot, List<String> ids);
+
+    List<SysMenus> findByDelFlagAndIdInAndMenusType(int delFlag, List<String> ids, int menusType);
+
 }

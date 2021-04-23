@@ -36,6 +36,16 @@ function getRouterMap() {
     return JSON.parse(routerMap)
 }
 
+function setPermissions(permissions) {
+    permissions = JSON.stringify(permissions)
+    sessionStorage.setItem('permissions', permissions)
+}
+
+function getPermissions() {
+    let permissions = sessionStorage.getItem('permissions')
+    return JSON.parse(permissions)
+}
+
 export {
     setToken,
     getToken,
@@ -43,4 +53,6 @@ export {
     getUserInfo,
     setRouterMap,
     getRouterMap,
+    setPermissions,
+    getPermissions,
 }

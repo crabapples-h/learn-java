@@ -11,7 +11,7 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
-import {setToken, getToken, setUserInfo, getUserInfo, setRouterMap} from '@/utils/sessionUtils'
+import {setToken, getToken, setUserInfo, getUserInfo, setRouterMap, setPermissions} from '@/utils/sessionUtils'
 
 export default {
   name: 'Login',
@@ -48,17 +48,28 @@ export default {
           _this.$message.error(result.message);
           return
         }
-        _this.getUserInfo().then(res => {
-          if (res.status) {
-            setToken(result.data)
-            setUserInfo(res.userInfo)
-            _this.getRouterMap()
-            console.log(this.$store.state)
-            _this.$message.success(result.message);
-            _this.$router.push('/index')
-          } else {
-            _this.$message.error('登录信息获取失败')
-          }
+        let userInfo = _this.getUserInfo()
+        let routerMap = _this.getRouterMap()
+        let permissions = _this.getPermissions()
+        let userInfoStatus, routerStatus, permissionsStatus
+        userInfo.then(userInfoRes => {
+          userInfoStatus = userInfoRes.status
+          routerMap.then(routerRes => {
+            routerStatus = routerRes.status
+            permissions.then(permissionsRes => {
+              permissionsStatus = permissionsRes.status
+              console.log(userInfoStatus, routerStatus, permissionsStatus)
+              if (userInfoStatus && routerStatus && permissionsStatus) {
+                setToken(result.data)
+                setUserInfo(userInfoRes.data)
+                setRouterMap(routerRes.data)
+                setPermissions(permissionsRes.data)
+                _this.$router.push('/index')
+              } else {
+                _this.$message.error('登录信息获取失败')
+              }
+            })
+          })
         })
       })
     },
@@ -70,22 +81,31 @@ export default {
         }
         if (result.data !== null) {
           this.userInfo = result.data;
-          setUserInfo(result.data)
-          return Promise.resolve({status: true, userInfo: result.data})
+          return Promise.resolve({status: true, data: result.data})
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
       })
     },
     getRouterMap() {
-      return this.$http.get('/api/sys/user/menus').then(result => {
+      return commonApi.getUserMenus().then(result => {
         if (result.status !== 200) {
           return;
         }
         if (result.data !== null) {
-          console.log('获取路由')
-          setRouterMap(result.data)
-          return result.data;
+          return Promise.resolve({status: true, data: result.data})
+        }
+      }).catch(function (error) {
+        console.error('出现错误:', error);
+      });
+    },
+    getPermissions() {
+      return commonApi.getUserPermissions().then(result => {
+        if (result.status !== 200) {
+          return;
+        }
+        if (result.data !== null) {
+          return Promise.resolve({status: true, data: result.data})
         }
       }).catch(function (error) {
         console.error('出现错误:', error);

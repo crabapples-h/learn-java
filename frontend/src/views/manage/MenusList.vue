@@ -33,13 +33,13 @@
         <a-form-model-item label="名称" prop="name">
           <a-input v-model="form.menus.name"/>
         </a-form-model-item>
-        <a-form-model-item label="图标" prop="icon">
+        <a-form-model-item label="图标" prop="icon" v-if="form.menus.menusType === 1">
           <a-input v-model="form.menus.icon"/>
         </a-form-model-item>
-        <a-form-model-item label="排序" prop="sort">
+        <a-form-model-item label="排序" prop="sort" v-if="form.menus.menusType === 1">
           <a-input-number :min="0" :max="9999" v-model="form.menus.sort"/>
         </a-form-model-item>
-        <a-form-model-item label="类型">
+        <a-form-model-item label="类型" prop="menusType">
           <a-radio-group name="radioGroup" v-model="form.menus.menusType">
             <a-radio :value="1">
               <a-tag size="small" color="green">菜单</a-tag>
@@ -58,7 +58,7 @@
         <a-form-model-item label="文件路径" prop="filePath" v-if="form.menus.menusType === 1">
           <a-input addon-before="@/views/" addon-after=".vue" v-model="form.menus.filePath"/>
         </a-form-model-item>
-        <a-form-model-item label="授权标识" prop="permission">
+        <a-form-model-item label="授权标识" prop="permission" v-if="form.menus.menusType === 2">
           <a-input v-model="form.menus.permission"/>
         </a-form-model-item>
       </a-form-model>
@@ -123,6 +123,10 @@ export default {
           scopedSlots: {customRender: 'type'},
         },
         {
+          dataIndex: 'permission',
+          title: '授权标识',
+        },
+        {
           dataIndex: 'action',
           title: '操作',
           scopedSlots: {customRender: 'action'},
@@ -135,6 +139,9 @@ export default {
             {required: true, message: '请输入菜单名称', trigger: 'change'},
             {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
             {whitespace: true, message: '请输入菜单名称', trigger: 'change'}
+          ],
+          menusType: [
+            {required: true, message: '类型不能为空', trigger: 'change'},
           ],
         },
       },

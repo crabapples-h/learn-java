@@ -86,6 +86,14 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(menus);
     }
 
+    @GetMapping("/user/permissions")
+    @ResponseBody
+    public ResponseDTO getUserPermissions(HttpServletRequest request) {
+        log.info("收到请求->获取所有权限列表");
+        List<String> list = sysService.getUserPermissions(request);
+        log.info("返回结果->获取菜单列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
 
     @GetMapping("/menus/list")
     @ResponseBody
@@ -96,9 +104,11 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list, page);
     }
 
+
     @PostMapping("/menus/save")
     @ResponseBody
     public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
+        super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
         sysService.saveMenus(form);
         log.info("返回结果->保存菜单成功");

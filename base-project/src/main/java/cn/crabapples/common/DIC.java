@@ -21,4 +21,8 @@ public class DIC {
 
     public final static int PAGE_SIZE = 20;
     public final static String BASE_SUCCESS_MESSAGE = "操作成功";
+
+    public final static int MENUS_TYPE_MENUS = 1;
+    public final static int MENUS_TYPE_BUTTON = 2;
+    public final static int MENUS_TYPE_HREF = 3;
 }

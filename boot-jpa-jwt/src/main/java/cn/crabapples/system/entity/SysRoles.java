@@ -26,6 +26,9 @@ public class SysRoles extends BaseEntity {
 
     @Column(columnDefinition = "longtext comment '菜单Id'")
     private String menusIds;
+
+    @Column(columnDefinition = "longtext comment '权限列表'")
+    private String permissionList;
     @Transient
     private List<SysMenus> sysMenus;
 

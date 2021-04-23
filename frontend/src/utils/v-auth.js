@@ -8,20 +8,23 @@
  * pc-name mrhe
  */
 import Vue from 'vue'
-// 注册一个全局自定义指令 `v-focus`
+import {getPermissions} from "@/utils/sessionUtils";
+
+// 注册一个全局自定义指令 `v-auth`
 const auth = Vue.directive('auth', {
     bind: (el, binding) => {
-        console.log('binding-->', binding.arg)
-        // console.log('binding-->111'，, binding)
-        // console.log('binding-->', binding)
-        // console.log('binding-->', binding.value)
-        setTimeout(() => {
-            if (el.parentNode == null) {
-                el.style.display = 'none'
-            } else {
-                // el.parentNode.removeChild(el)
-            }
-        }, 10)
+        let permissions = getPermissions()
+        console.log(permissions)
+        let exist = permissions.includes(binding.arg)
+        if (!exist) {
+            setTimeout(() => {
+                if (el.parentNode == null) {
+                    el.style.display = 'none'
+                } else {
+                    el.parentNode.removeChild(el)
+                }
+            }, 10)
+        }
     },
 })
 export {auth}

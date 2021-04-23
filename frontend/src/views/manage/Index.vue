@@ -43,7 +43,7 @@
 import CPageHeader from "@/views/common/C-PageHeader";
 import CPageMenus from "@/views/common/C-PageMenus";
 import CPageFooter from "@/views/common/C-PageFooter";
-import {getToken, getUserInfo, getRouterMap} from "@/utils/sessionUtils";
+import {getRouterMap, getToken, getUserInfo} from "@/utils/sessionUtils";
 import {$addRouters} from "@/router";
 
 export default {
@@ -125,26 +125,25 @@ export default {
     initMenus() {
       let menusSource = getRouterMap()
       let format = function (data) {
-        let menus = data.map(e => {
-          console.log('e-->', e)
-          return {
-            key: e.id,
-            name: e.name,
-            icon: e.icon,
-            url: e.path,
-            sort: e.sort,
-            children: format(e.children)
+        return data.map(e => {
+          if (e.menusType !== 10) {
+            return {
+              key: e.id,
+              name: e.name,
+              icon: e.icon,
+              url: e.path,
+              sort: e.sort,
+              children: () => {
+                return e.children && e.children.length > 0 ? format(e.children) : null
+              }
+            }
           }
-        })
-        menus.sort((a, b) => {
+        }).sort((a, b) => {
           return a.sort - b.sort
-        })
-        return menus;
+        });
       }
-      let menus = format(menusSource)
-      this.menus = menus
-      console.log('menus-->', menus)
-    }
+      this.menus = format(menusSource)
+    },
 
   }
 }
