@@ -10,17 +10,20 @@
               <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
                 <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
                 <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item.url)">
-                  <a-icon :type="item.icon"/>
+                  <a-icon
+                      :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
                   <span>{{ item.name }}</span>
                 </a-menu-item>
               </a-sub-menu>
               <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
-                <a-icon :type="item.icon"/>
+                <a-icon
+                    :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
                 <span>{{ item.name }}</span>
               </a-menu-item>
             </a-sub-menu>
             <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
-              <a-icon :type="item.icon"/>
+              <a-icon
+                  :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
               <span>{{ item.name }}</span>
             </a-menu-item>
           </a-menu>
@@ -93,6 +96,7 @@ export default {
   },
   activated() {
     this.checkLoginStatus()
+    this.initMenus()
     this.initRouterMap()
   },
   mounted() {
@@ -118,6 +122,30 @@ export default {
         $addRouters(routerMap)
       }
     },
+    initMenus() {
+      let menusSource = getRouterMap()
+      let format = function (data) {
+        let menus = data.map(e => {
+          console.log('e-->', e)
+          return {
+            key: e.id,
+            name: e.name,
+            icon: e.icon,
+            url: e.path,
+            sort: e.sort,
+            children: format(e.children)
+          }
+        })
+        menus.sort((a, b) => {
+          return a.sort - b.sort
+        })
+        return menus;
+      }
+      let menus = format(menusSource)
+      this.menus = menus
+      console.log('menus-->', menus)
+    }
+
   }
 }
 </script>

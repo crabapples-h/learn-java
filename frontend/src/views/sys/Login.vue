@@ -36,6 +36,7 @@ export default {
         this.$router.push('/index')
       }
     },
+
     submit() {
       const _this = this
       let data = {
@@ -89,8 +90,7 @@ export default {
       }).catch(function (error) {
         console.error('出现错误:', error);
       });
-    }
-
+    },
   }
 }
 </script>
