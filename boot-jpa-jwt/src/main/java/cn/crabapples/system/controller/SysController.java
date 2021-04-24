@@ -66,7 +66,6 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess("登录成功", token);
     }
 
-
     @GetMapping("/permissions")
     public ResponseDTO getUserPermissions(HttpServletRequest request) {
         log.info("收到请求->获取所有权限列表");
@@ -82,5 +81,14 @@ public class SysController extends BaseController {
         SysUser entity = sysService.getUserInfo(request);
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
+    }
+
+    @GetMapping("/checkUsername/{username}")
+    @ApiOperation(value = "检测用户名是否被使用", notes = "检测用户名是否被使用接口")
+    public ResponseDTO checkUsername(@PathVariable String username) {
+        log.info("收到请求->检测用户名是否被使用:[{}]", username);
+        boolean exist = sysService.checkUsername(username);
+        log.info("返回结果->检测用户名是否被使用:[{}]", exist);
+        return ResponseDTO.returnSuccess("用户名未被使用", exist);
     }
 }

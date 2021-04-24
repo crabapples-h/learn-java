@@ -24,6 +24,9 @@ public interface SysUserService extends BaseService {
 
     SysUser findByUsername(String username);
 
+    long countByUsername(String username);
+
+
     SysUser addUser(UserForm form);
 
     SysUser editUser(UserForm form);

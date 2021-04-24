@@ -39,6 +39,10 @@ public class UserDAO extends BaseDAO {
         return checkOptional(optional);
     }
 
+    public long countByUsername(String username) {
+        return userRepository.countByUsername(username);
+    }
+
     public SysUser findById(String id) {
         Optional<SysUser> optional = userRepository.findByDelFlagAndId(DIC.NOT_DEL, id);
         return checkOptional(optional);

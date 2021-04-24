@@ -8,7 +8,8 @@
           <a-input v-model="form.userInfo.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.userInfo.username" :disabled="form.type===1" placeholder="请输入用户名"/>
+          <a-input v-model="form.userInfo.username" :disabled="form.type===1" placeholder="请输入用户名"
+                   @blur="checkUsername"/>
         </a-form-model-item>
         <a-form-model-item label="姓名" prop="name">
           <a-input v-model="form.userInfo.name" placeholder="请输入姓名"/>
@@ -188,6 +189,7 @@ export default {
         type: 0,
         userInfo: {
           id: '',
+          username: '',
           name: '',
           age: '',
           mail: '',
@@ -337,7 +339,6 @@ export default {
       this.refreshData()
     },
     submitForm() {
-      console.log(this.form.userInfo)
       let url = this.form.type === 0 ? '/api/user/add' : '/api/user/edit'
       this.$http.post(url, this.form.userInfo).then(result => {
         if (result.status !== 200) {
@@ -345,6 +346,18 @@ export default {
           return;
         }
         this.closeForm()
+      }).catch(function (error) {
+        console.error('出现错误:', error);
+      });
+    },
+    checkUsername() {
+      let username = this.form.userInfo.username
+      this.$http.get(`/api/sys//checkUsername/${username}`).then(result => {
+        if (result.status !== 200) {
+          this.$message.error(result.message);
+          return;
+        }
+        this.$message.success(result.message);
       }).catch(function (error) {
         console.error('出现错误:', error);
       });

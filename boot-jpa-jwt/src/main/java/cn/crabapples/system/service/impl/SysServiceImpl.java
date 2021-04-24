@@ -125,4 +125,13 @@ public class SysServiceImpl implements SysService {
     public SysUser getUserInfo(HttpServletRequest request) {
         return userService.getUserInfo(request);
     }
+
+    @Override
+    public boolean checkUsername(String username) {
+        long count = userService.countByUsername(username);
+        if (count > 0) {
+            throw new ApplicationException("用户名已被使用");
+        }
+        return true;
+    }
 }

@@ -21,7 +21,7 @@ import java.util.Optional;
  * pc-name 29404
  */
 @Repository
-public interface UserRepository extends JpaRepository<SysUser, String>,BaseRepository<SysUser> {
+public interface UserRepository extends JpaRepository<SysUser, String>, BaseRepository<SysUser> {
     Optional<SysUser> findByDelFlagAndUsername(int delFlag, String username);
 
     Optional<SysUser> findByDelFlagAndIdAndStatus(int delFlag, String id, int status);
@@ -32,6 +32,7 @@ public interface UserRepository extends JpaRepository<SysUser, String>,BaseRepos
 
     List<SysUser> findByDelFlag(int delFlag);
 
+    long countByUsername(String username);
 
     /**
      * 删除用户
@@ -59,7 +60,6 @@ public interface UserRepository extends JpaRepository<SysUser, String>,BaseRepos
     @Query("update SysUser set status = 0 where id = :id")
     @Modifying
     void activeUser(@Param("id") String id);
-
 
 
 }

@@ -66,12 +66,17 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
 
+    @Override
+    public SysUser findByUsername(String username) {
+        return userDAO.findByUsername(username);
+    }
+
     /**
      * 根据用户名查找用户
      */
     @Override
-    public SysUser findByUsername(String username) {
-        return userDAO.findByUsername(username);
+    public long countByUsername(String username) {
+        return userDAO.countByUsername(username);
     }
 
     /**

@@ -23,4 +23,6 @@ public interface SysService extends BaseService {
     List<String> getUserPermissions(HttpServletRequest request);
 
     SysUser getUserInfo(HttpServletRequest request);
+
+    boolean checkUsername(String username);
 }
