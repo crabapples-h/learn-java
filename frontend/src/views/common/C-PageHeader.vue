@@ -45,6 +45,8 @@
 
 <script>
 import CommonApi from "@/api/CommonApi";
+import {SysApis} from "@/api/Apis";
+
 export default {
   name: "C-PageHeader",
   props: {
@@ -105,7 +107,7 @@ export default {
             this.$message.error('两次密码不一致');
             return
           }
-          this.$http.post('/api/updatePassword', this.form).then(result => {
+          this.$http.post(SysApis.updatePassword, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message);
               return;

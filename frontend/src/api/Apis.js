@@ -1,8 +1,15 @@
 const SysApis = {
+    //sys
+    login: '/api/sys/login',
+    logout: '/api/sys/logout',
+    userInfo: '/api/sys/userInfo',
+    menus: '/api/sys/menus/user',
+    permissions: '/api/sys/permissions',
     //user
     addUser: '/api/sys/user/add',
     editUser: '/api/sys/user/edit',
-    resetPassword: '/api/user/password/reset',
+    resetPassword: '/api/sys/user/password/reset',
+    updatePassword: '/api/sys/updatePassword',
     userListPage: '/api/sys/user/page',
     delUser: '/api/sys/user/del',
     lockUser: '/api/sys/user/unlock',

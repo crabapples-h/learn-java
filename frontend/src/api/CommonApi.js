@@ -1,10 +1,10 @@
 import instance from "@/utils/AxiosUtils";
 import {setPermissions, setRouterMap} from "@/utils/sessionUtils"
-
+import {SysApis} from "@/api/Apis"
 const commonApi = {
     login(data) {
         return instance({
-            url: '/api/sys/login',
+            url: SysApis.login,
             method: 'post',
             data: data
         })
@@ -13,25 +13,25 @@ const commonApi = {
         sessionStorage.clear()
         localStorage.clear()
         return instance({
-            url: '/api/sys/logout',
+            url: SysApis.logout,
             method: 'get',
         })
     },
     getUserInfo() {
         return instance({
-            url: '/api/sys/userInfo',
+            url: SysApis.userInfo,
             method: 'get',
         })
     },
     getUserMenus() {
         return instance({
-            url: '/api/sys/menus/user',
+            url: SysApis.menus,
             method: 'get',
         })
     },
     getUserPermissions() {
         return instance({
-            url: '/api/sys/permissions',
+            url: SysApis.permissions,
             method: 'get',
         })
     },

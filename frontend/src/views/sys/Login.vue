@@ -37,40 +37,35 @@ export default {
       }
     },
 
-    submit() {
+    async submit() {
       const _this = this
       let data = {
         username: _this.username,
         password: _this.password
       };
-      commonApi.login(data).then(result => {
+      let token = await _this.getToken(data)
+      let userInfo = await _this.getUserInfo()
+      let routerMap = await _this.getRouterMap()
+      let permissions = await _this.getPermissions()
+      if (token.status && userInfo.status && routerMap.status && permissions.status) {
+        setToken(token.data)
+        setUserInfo(userInfo.data)
+        setRouterMap(routerMap.data)
+        setPermissions(permissions.data)
+        _this.$router.push('/index')
+      } else {
+        _this.$message.error('登录信息获取失败')
+      }
+    },
+    getToken(data) {
+      return commonApi.login(data).then(result => {
         if (result.status !== 200) {
-          _this.$message.error(result.message);
+          this.$message.error(result.message);
           return
         }
-        let userInfo = _this.getUserInfo()
-        let routerMap = _this.getRouterMap()
-        let permissions = _this.getPermissions()
-        let userInfoStatus, routerStatus, permissionsStatus
-        userInfo.then(userInfoRes => {
-          userInfoStatus = userInfoRes.status
-          routerMap.then(routerRes => {
-            routerStatus = routerRes.status
-            permissions.then(permissionsRes => {
-              permissionsStatus = permissionsRes.status
-              console.log(userInfoStatus, routerStatus, permissionsStatus)
-              if (userInfoStatus && routerStatus && permissionsStatus) {
-                setToken(result.data)
-                setUserInfo(userInfoRes.data)
-                setRouterMap(routerRes.data)
-                setPermissions(permissionsRes.data)
-                _this.$router.push('/index')
-              } else {
-                _this.$message.error('登录信息获取失败')
-              }
-            })
-          })
-        })
+        return Promise.resolve({status: true, data: result.data})
+      }).catch(function (error) {
+        console.error('出现错误:', error);
       })
     },
     getUserInfo() {
@@ -80,7 +75,6 @@ export default {
           return;
         }
         if (result.data !== null) {
-          this.userInfo = result.data;
           return Promise.resolve({status: true, data: result.data})
         }
       }).catch(function (error) {

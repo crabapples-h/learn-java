@@ -29,6 +29,7 @@
 import {manageRouter, manageRouter1} from "@/router/manage/manage";
 import RolesList from "@/views/manage/RolesList";
 import MenusList from "@/views/manage/MenusList";
+import {SysApis} from "@/api/Apis";
 
 export default {
   name: "C-PageMenus",
@@ -78,7 +79,7 @@ export default {
   },
   methods: {
     getUserMenus() {
-      this.$http.get('/api/sys/user/menus').then(result => {
+      this.$http.get(SysApis.menus).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
