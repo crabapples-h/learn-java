@@ -47,7 +47,13 @@ public interface SysService extends BaseService {
             /*
              * 判断用户拥有的菜单中是否包含当前菜单
              */
-            return menusIds.contains(e.getId());
+            boolean exist = menusIds.contains(e.getId());
+            /*
+             * 判断用户拥有的菜单中是否包含当前菜单的子菜单
+             */
+            boolean sizeZero = children.size() > 0;
+
+            return exist || sizeZero;
         }).collect(Collectors.toList());
     }
 

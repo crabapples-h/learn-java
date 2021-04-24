@@ -5,25 +5,28 @@
       <a-layout>
         <a-layout-sider>
           <a-menu style="width: 200px;height: 100%" mode="inline">
-            <a-sub-menu :key="item.key" v-for="item in menus" v-if="item.children && item.children.length">
-              <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-              <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
-                <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-                <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item.url)">
-                  <a-icon
-                      :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
+            <a-sub-menu :key="item.key" v-if="item.children " v-for="item in menus">
+              <span slot="title">
+                <a-icon :type='item.icon || "appstore"'/>
+                <span>{{ item.name }}</span>
+              </span>
+              <a-sub-menu :key="item.key" v-if="item.children" v-for="item in item.children">
+                <span slot="title">
+                <a-icon :type='item.icon || "appstore"'/>
+                <span>{{ item.name }}</span>
+              </span>
+                <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
+                  <a-icon :type='item.icon || "appstore"'/>
                   <span>{{ item.name }}</span>
                 </a-menu-item>
               </a-sub-menu>
-              <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
-                <a-icon
-                    :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
+              <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
+                <a-icon :type='item.icon || "appstore"'/>
                 <span>{{ item.name }}</span>
               </a-menu-item>
             </a-sub-menu>
-            <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
-              <a-icon
-                  :type='item.icon.substring(item.icon.indexOf("\"") + 1,item.icon.lastIndexOf("\"")) || "appstore"'/>
+            <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
+              <a-icon :type='item.icon || "appstore"'/>
               <span>{{ item.name }}</span>
             </a-menu-item>
           </a-menu>
@@ -103,7 +106,7 @@ export default {
   },
   methods: {
     clickMenu(e) {
-      this.$router.push(e)
+      this.$router.push(e.url)
     },
     checkLoginStatus() {
       let token = getToken()
@@ -126,20 +129,29 @@ export default {
       let menusSource = getRouterMap()
       let format = function (data) {
         return data.map(e => {
-          if (e.menusType !== 10) {
-            return {
-              key: e.id,
-              name: e.name,
-              icon: e.icon,
-              url: e.path,
-              sort: e.sort,
-              children: () => {
-                return e.children && e.children.length > 0 ? format(e.children) : null
-              }
-            }
+          if (e.menusType !== 1) {
+            return null
           }
+          let icon = e.icon.substring(e.icon.indexOf("\"") + 1, e.icon.lastIndexOf("\""))
+          let menus = {
+            id: e.id,
+            key: e.id,
+            name: e.name,
+            icon: icon,
+            url: e.path,
+            sort: e.sort,
+          }
+          if (e.children && e.children.length > 0) {
+            let children = format(e.children).filter(e => {
+              return !!e
+            })
+            if (children && children.length)
+              menus.children = children
+          }
+          return menus
         }).sort((a, b) => {
-          return a.sort - b.sort
+          if (a && b && a.sort && b   .sort)
+            return a.sort - b.sort
         });
       }
       this.menus = format(menusSource)

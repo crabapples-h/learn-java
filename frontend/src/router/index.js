@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/sys/Login'
 import Index from '@/views/manage/Index'
+import RoleList from '@/views/manage/RolesList'
 import {getRouterMap, getToken} from '@/utils/sessionUtils'
 
 Vue.use(VueRouter)
@@ -55,12 +56,21 @@ export function $addRouters(children) {
     router.matcher = new VueRouter({
         routes: baseRoutes
     }).matcher
+    if (!children) {
+        return
+    }
+    console.log('重置路由-->', children)
     customRouter.children = children.map(e => {
         return {
             path: e.path,
             components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
             name: e.name,
         }
+    })
+    customRouter.children.push({
+        path: '/sys/role-list',
+        components: {innerView: RoleList},
+        name: 'e.name',
     })
     let routerMap = [customRouter]
     router.addRoutes(routerMap)

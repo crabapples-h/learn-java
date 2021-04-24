@@ -12,7 +12,7 @@
         </a-form-model-item>
         <a-form-model-item label="菜单">
           <a-tree-select :tree-data="menusOptions" v-model="form.roles.menusList" tree-checkable
-                         :show-checked-strategy="SHOW_ALL" :show-line="show.treeLine" :checkStrictly="false"/>
+                         :show-checked-strategy="SHOW_TYPE" :show-line="show.treeLine" :checkStrictly="false"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -47,13 +47,14 @@
 <script>
 import {TreeSelect} from "ant-design-vue";
 import CPopButton from "@/components/c-pop-button";
-
+import {SHOW_CHILD} from "ant-design-vue/lib/vc-tree-select";
+import commonApi from "@/api/CommonApi"
 export default {
   name: "roles-list",
   components: {CPopButton},
   data() {
     return {
-      SHOW_ALL: TreeSelect.SHOW_ALL,
+      SHOW_TYPE: TreeSelect.SHOW_CHILD,
       labelCol: {span: 5},
       wrapperCol: {span: 16},
       columns: [
@@ -175,6 +176,7 @@ export default {
     closeRolesForm() {
       this.show.roles = false
       this.refreshData()
+      commonApi.refreshSysData()
     },
     submitRolesForm() {
       this.$http.post('/api/sys/roles/save', this.form.roles).then(result => {
@@ -223,7 +225,24 @@ export default {
       })
     },
     showMenus(e) {
-      this.menusDataSource = e.sysMenus
+      let format = function (data) {
+        return data.map(e => {
+          let menus = {
+            key: e.id,
+            name: e.name,
+            icon: e.icon,
+            url: e.path,
+            sort: e.sort
+          }
+          if (e.children && e.children.length > 0) {
+            menus.children = format(e.children)
+          }
+          return menus
+        }).sort((a, b) => {
+          return a.sort - b.sort
+        });
+      }
+      this.menusDataSource = format(e.sysMenus)
       this.show.menus = true
     },
     closeShowMenus() {

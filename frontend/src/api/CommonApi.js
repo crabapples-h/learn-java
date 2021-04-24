@@ -1,4 +1,5 @@
 import instance from "@/utils/AxiosUtils";
+import {setPermissions, setRouterMap} from "@/utils/sessionUtils"
 
 const commonApi = {
     login(data) {
@@ -34,5 +35,15 @@ const commonApi = {
             method: 'get',
         })
     },
+    refreshSysData() {
+        this.getUserPermissions().then(res => {
+            if (res.status === 200)
+                setPermissions(res.data)
+        })
+        this.getUserMenus().then(res => {
+            if (res.status === 200)
+                setRouterMap(res.data)
+        })
+    }
 }
 export default commonApi

@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import {getRouterMap, setPermissions, setRouterMap, setToken, setUserInfo} from '@/utils/sessionUtils'
+import {getRouterMap, setPermissions} from '@/utils/sessionUtils'
 import {$addRouters} from '@/router'
 import commonApi from "@/api/CommonApi";
 
@@ -25,16 +25,6 @@ export default {
     if (!!path) {
       _this.$router.push({path: path})
     }
-    let permissions = _this.getPermissions()
-    permissions.then(res => {
-      console.log(res)
-      if (res.status) {
-        setPermissions(res.data)
-        _this.$router.push('/index')
-      } else {
-        _this.$message.error('登录信息获取失败')
-      }
-    })
     window.addEventListener("beforeunload", () => {
       sessionStorage.setItem("pathName", window.location.pathname)
     })

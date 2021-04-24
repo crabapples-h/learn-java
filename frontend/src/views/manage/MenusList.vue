@@ -67,7 +67,7 @@
         <a-button type="primary" @click="submitMenusForm">保存</a-button>
       </div>
     </a-modal>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
+    <a-table :data-source="dataSource" key="id" :columns="columns" :pagination="false">
       <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="removeMenus(record)" v-auth:sys:menus:del/>
         <a-divider type="vertical"/>
@@ -75,7 +75,7 @@
         <span v-if="record.menusType === 1">
           <a-divider type="vertical"/>
           <a-button type="primary" size="small" @click="addChildMenus(record)"
-                    v-auth:sys:menus:addChildren>添加子菜单</a-button>
+                    v-auth:sys:menus:add-children>添加子菜单</a-button>
         </span>
       </span>
       <span slot="icon" slot-scope="text, record">
@@ -93,6 +93,7 @@
 <script>
 
 import CPopButton from "@comp/c-pop-button";
+import commonApi from "@/api/CommonApi";
 
 export default {
   name: "menus-list",
@@ -194,8 +195,29 @@ export default {
           return;
         }
         if (result.data !== null) {
-          this.dataSource = result.data;
-          console.log('data-->', result.data)
+          let format = function (data) {
+            return data.map(e => {
+              let menus = {
+                id: e.id,
+                key: e.id,
+                name: e.name,
+                icon: e.icon,
+                url: e.path,
+                sort: e.sort,
+                menusType: e.menusType,
+                path: e.path,
+                filePath: e.filePath,
+                permission: e.permission,
+              }
+              if (e.children && e.children.length > 0) {
+                menus.children = format(e.children)
+              }
+              return menus
+            }).sort((a, b) => {
+              return a.sort - b.sort
+            });
+          }
+          this.dataSource = format(result.data)
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
@@ -222,12 +244,14 @@ export default {
       this.show.menus = true
     },
     editMenus(e) {
+      console.log(e)
       this.form.menus = e
       this.show.menus = true
     },
     closeMenusForm() {
       this.show.menus = false
       this.refreshData()
+      commonApi.refreshSysData()
     },
     submitMenusForm() {
       this.$http.post('/api/sys/menus/save', this.form.menus).then(result => {
