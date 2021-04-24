@@ -6,7 +6,7 @@ import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.form.RolesForm;
-import cn.crabapples.system.service.SysService;
+import cn.crabapples.system.service.SysRolesService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -30,19 +30,19 @@ import java.util.List;
 @RequestMapping("/api/sys/roles")
 public class SysRolesController extends BaseController {
 
-    private final SysService sysService;
+    private final SysRolesService rolesService;
 
-    public SysRolesController(SysService sysService) {
-        this.sysService = sysService;
+    public SysRolesController(SysRolesService rolesService) {
+        this.rolesService = rolesService;
     }
 
     /**
      * 获取[当前用户]角色列表
      */
     @GetMapping("/user")
-    public ResponseDTO getUserRolesList(HttpServletRequest request) {
+    public ResponseDTO getUserRoles(HttpServletRequest request) {
         log.info("收到请求->获取[当前用户]角色列表");
-        List<SysRolesDTO> list = sysService.getUserRolesList(request);
+        List<SysRolesDTO> list = rolesService.getUserRoles(request);
         log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -53,7 +53,7 @@ public class SysRolesController extends BaseController {
     @GetMapping("/list")
     public ResponseDTO getRolesList(HttpServletRequest request) throws IOException {
         log.info("收到请求->获取[所有]角色列表");
-        List<SysRoles> list = sysService.getRolesList(request);
+        List<SysRoles> list = rolesService.getRolesList(request);
         log.info("返回结果->获取[所有]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -62,9 +62,9 @@ public class SysRolesController extends BaseController {
      * 获取[分页]角色列表
      */
     @GetMapping("/page")
-    public ResponseDTO getRolesListPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getRolesPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取[分页]角色列表");
-        List<SysRoles> list = sysService.getRolesListPage(request, page);
+        List<SysRoles> list = rolesService.getRolesPage(request, page);
         log.info("返回结果->获取[分页]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }
@@ -75,7 +75,7 @@ public class SysRolesController extends BaseController {
     @PostMapping("/save")
     public ResponseDTO saveRoles(HttpServletRequest request, @RequestBody RolesForm form) {
         log.info("收到请求->保存角色:[{}]", form);
-        sysService.saveRoles(form);
+        rolesService.saveRoles(form);
         log.info("返回结果->保存角色成功");
         return ResponseDTO.returnSuccess();
     }
@@ -86,7 +86,7 @@ public class SysRolesController extends BaseController {
     @PostMapping("/remove/{id}")
     public ResponseDTO removeRoles(HttpServletRequest request, @PathVariable String id) {
         log.info("收到请求->删除角色:[{}]", id);
-        sysService.removeRoles(id);
+        rolesService.removeRoles(id);
         log.info("返回结果->删除角色成功");
         return ResponseDTO.returnSuccess();
     }

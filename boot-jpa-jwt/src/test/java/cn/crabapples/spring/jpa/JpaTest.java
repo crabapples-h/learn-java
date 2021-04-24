@@ -4,7 +4,7 @@ import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
-import cn.crabapples.system.service.UserService;
+import cn.crabapples.system.service.SysUserService;
 import cn.crabapples.test.service.UserServiceTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class JpaTest {
     @Autowired
     UserServiceTest userServiceTest;
     @Autowired
-    UserService userService;
+    SysUserService userService;
 
     @Autowired
     MenusDAO menusDAO;

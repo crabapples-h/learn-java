@@ -7,7 +7,7 @@ import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import cn.crabapples.system.service.UserService;
+import cn.crabapples.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +31,9 @@ import java.util.List;
 @Api("系统管理[用户]")
 @Slf4j
 public class SysUserController extends BaseController {
-    private final UserService userService;
+    private final SysUserService userService;
 
-    public SysUserController(UserService userService) {
+    public SysUserController(SysUserService userService) {
         this.userService = userService;
     }
 

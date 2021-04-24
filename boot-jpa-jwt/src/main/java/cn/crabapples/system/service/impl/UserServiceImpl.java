@@ -12,7 +12,7 @@ import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import cn.crabapples.system.service.UserService;
+import cn.crabapples.system.service.SysUserService;
 import cn.hutool.crypto.digest.MD5;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements SysUserService {
     @Value("${isDebug}")
     private boolean isDebug;
     private final UserDAO userDAO;

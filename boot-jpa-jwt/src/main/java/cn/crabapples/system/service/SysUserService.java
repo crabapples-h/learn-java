@@ -20,7 +20,7 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-public interface UserService extends BaseService {
+public interface SysUserService extends BaseService {
 
     SysUser findById(String id);
 

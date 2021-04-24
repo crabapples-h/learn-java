@@ -6,7 +6,7 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.form.MenusForm;
-import cn.crabapples.system.service.SysService;
+import cn.crabapples.system.service.SysMenusService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +30,10 @@ import java.util.List;
 @RequestMapping("/api/sys/menus")
 public class SysMenusController extends BaseController {
 
-    private final SysService sysService;
+    private final SysMenusService menusService;
 
-    public SysMenusController(SysService sysService) {
-        this.sysService = sysService;
+    public SysMenusController(SysMenusService menusService) {
+        this.menusService = menusService;
     }
 
     /**
@@ -42,7 +42,7 @@ public class SysMenusController extends BaseController {
     @GetMapping("/user")
     public ResponseDTO getUserMenus(HttpServletRequest request) {
         log.info("收到请求->获取[当前用户]菜单列表");
-        List<SysMenus> menus = sysService.getUserMenus(request);
+        List<SysMenus> menus = menusService.getUserMenus(request);
         log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
@@ -53,7 +53,7 @@ public class SysMenusController extends BaseController {
     @GetMapping("/list")
     public ResponseDTO getMenusList(HttpServletRequest request) {
         log.info("收到请求->获取[所有]菜单列表");
-        List<SysMenus> list = sysService.getMenusList(request);
+        List<SysMenus> list = menusService.getMenusList(request);
         log.info("返回结果->获取[所有]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -62,19 +62,11 @@ public class SysMenusController extends BaseController {
      * 获取[分页]菜单列表
      */
     @GetMapping("/page")
-    public ResponseDTO getMenusListPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getMenusPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取[分页]菜单列表");
-        List<SysMenus> list = sysService.getMenusListPage(request, page);
+        List<SysMenus> list = menusService.getMenusPage(request, page);
         log.info("返回结果->获取[分页]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
-    }
-
-    @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions(HttpServletRequest request) {
-        log.info("收到请求->获取[当前用户]所有权限列表");
-        List<String> list = sysService.getUserPermissions(request);
-        log.info("返回结果->获取[当前用户]所有权限列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
     }
 
     /**
@@ -84,7 +76,7 @@ public class SysMenusController extends BaseController {
     public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
-        sysService.saveMenus(form);
+        menusService.saveMenus(form);
         log.info("返回结果->保存菜单成功");
         return ResponseDTO.returnSuccess();
     }
@@ -95,7 +87,7 @@ public class SysMenusController extends BaseController {
     @PostMapping("/remove/{id}")
     public ResponseDTO removeMenus(HttpServletRequest request, @PathVariable String id) {
         log.info("收到请求->删除菜单:[{}]", id);
-        sysService.removeMenus(id);
+        menusService.removeMenus(id);
         log.info("返回结果->删除菜单成功");
         return ResponseDTO.returnSuccess();
     }
