@@ -19,7 +19,7 @@ const commonApi = {
     },
     getUserInfo() {
         return instance({
-            url: '/api/sys/user/info',
+            url: '/api/sys/userInfo',
             method: 'get',
         })
     },

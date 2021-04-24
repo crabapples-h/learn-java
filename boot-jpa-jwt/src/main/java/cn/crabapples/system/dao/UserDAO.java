@@ -25,7 +25,6 @@ public class UserDAO extends BaseDAO {
         return userRepository.countByDelFlag(DIC.NOT_DEL);
     }
 
-
     public List<SysUser> findAll() {
         return userRepository.findByDelFlag(DIC.NOT_DEL);
     }

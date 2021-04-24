@@ -15,7 +15,6 @@ import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * TODO 系统相关服务实现类
+ * TODO 系统相关服务实现类[角色]
  *
  * @author Mr.He
  * 2020/1/28 23:23
@@ -40,8 +39,6 @@ import java.util.stream.Collectors;
 //@CacheConfig(cacheNames = "user:")
 public class SysRolesServiceImpl implements SysRolesService {
 
-    @Value("${isDebug}")
-    private boolean isDebug;
     private final SysUserService userService;
     private final RolesDAO rolesDAO;
     private final MenusDAO menusDAO;
@@ -54,20 +51,6 @@ public class SysRolesServiceImpl implements SysRolesService {
         this.menusDAO = menusDAO;
         this.redisTemplate = redisTemplate;
     }
-
-
-    /**
-     * 删除菜单后将所拥有该菜单的角色中把该菜单移除
-     */
-    void removeRolesMenus(String id) {
-        List<SysRoles> sysRoles = rolesDAO.findByMenusId(id);
-        sysRoles.forEach(e -> {
-            String menusIds = e.getMenusIds().replace(id, "");
-            e.setMenusIds(menusIds);
-            rolesDAO.save(e);
-        });
-    }
-
 
     /**
      * 获取用户拥有的角色列表

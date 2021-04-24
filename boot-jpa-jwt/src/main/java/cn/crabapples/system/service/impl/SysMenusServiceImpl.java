@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * TODO 系统相关服务实现类
+ * TODO 系统相关服务实现类[菜单]
  *
  * @author Mr.He
  * 2020/1/28 23:23
@@ -40,8 +39,6 @@ import java.util.stream.Collectors;
 //@CacheConfig(cacheNames = "user:")
 public class SysMenusServiceImpl implements SysMenusService {
 
-    @Value("${isDebug}")
-    private boolean isDebug;
     private final SysUserService userService;
     private final RolesDAO rolesDAO;
     private final MenusDAO menusDAO;

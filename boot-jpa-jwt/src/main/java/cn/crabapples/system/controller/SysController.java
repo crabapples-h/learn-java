@@ -4,6 +4,7 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
+import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
 import io.swagger.annotations.Api;
@@ -74,5 +75,12 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list);
     }
 
-
+    @GetMapping("/userInfo")
+    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
+    public ResponseDTO getUserInfo(HttpServletRequest request) {
+        log.info("收到请求->获取当前用户信息");
+        SysUser entity = sysService.getUserInfo(request);
+        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
+        return ResponseDTO.returnSuccess(entity);
+    }
 }

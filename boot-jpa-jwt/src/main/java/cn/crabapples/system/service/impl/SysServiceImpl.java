@@ -6,6 +6,7 @@ import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.MenusDAO;
+import cn.crabapples.system.dao.UserDAO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
@@ -45,14 +46,16 @@ public class SysServiceImpl implements SysService {
     private boolean isDebug;
     private final SysUserService userService;
     private final MenusDAO menusDAO;
+    private final UserDAO userDAO;
     private final RedisTemplate<String, Object> redisTemplate;
     private final JwtConfigure jwtConfigure;
 
     public SysServiceImpl(SysUserService userService, MenusDAO menusDAO,
-                          RedisTemplate<String, Object> redisTemplate,
+                          UserDAO userDAO, RedisTemplate<String, Object> redisTemplate,
                           JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.menusDAO = menusDAO;
+        this.userDAO = userDAO;
         this.redisTemplate = redisTemplate;
         this.jwtConfigure = jwtConfigure;
     }
@@ -102,7 +105,7 @@ public class SysServiceImpl implements SysService {
      * 获取当前用户所拥有的角色的所有菜单并去重
      */
     private List<String> getUserMenusIds(HttpServletRequest request) {
-        SysUser user = userService.getUserInfo(request);
+        SysUser user = getUserInfo(request);
         List<SysRoles> roles = user.getRolesList();
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
@@ -113,5 +116,13 @@ public class SysServiceImpl implements SysService {
             }
         });
         return menusId.stream().distinct().collect(Collectors.toList());
+    }
+
+    /**
+     * 获取当前登录用户的信息
+     */
+    @Override
+    public SysUser getUserInfo(HttpServletRequest request) {
+        return userService.getUserInfo(request);
     }
 }

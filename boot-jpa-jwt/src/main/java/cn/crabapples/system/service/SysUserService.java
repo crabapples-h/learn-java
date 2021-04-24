@@ -12,19 +12,15 @@ import java.util.List;
 
 
 /**
- * TODO 用户相关服务
+ * TODO 系统相关服务[用户]
  *
  * @author Mr.He
- * 2020/1/27 2:10
+ * 2021/4/25 0:34
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
- * pc-name 29404
+ * pc-name mrhe
  */
 public interface SysUserService extends BaseService {
-
-    SysUser findById(String id);
-
-    List<SysUser> findByIds(List<String> ids);
 
     SysUser findByUsername(String username);
 
@@ -34,10 +30,6 @@ public interface SysUserService extends BaseService {
 
     SysUser delUser(String id);
 
-    List<SysUser> findByName(String name);
-
-    List<SysUser> findByNameLike(String name);
-
     SysUser lockUser(String id);
 
     SysUser unlockUser(String id);
@@ -46,11 +38,20 @@ public interface SysUserService extends BaseService {
 
     Page<SysUser> findAll(PageDTO page);
 
-    SysUser getUserInfo(HttpServletRequest request);
-
-    List<SysUserDTO> getUserListPage(HttpServletRequest request, PageDTO page);
+    List<SysUserDTO> getUserPage(HttpServletRequest request, PageDTO page);
 
     SysUser updatePassword(UserForm form);
 
     SysUser resetPassword(UserForm form);
+
+    SysUser getUserInfo(HttpServletRequest request);
+
+    SysUser findById(String id);
+
+    List<SysUser> findByIds(List<String> ids);
+
+    List<SysUser> findByName(String name);
+
+    List<SysUser> findByNameLike(String name);
+
 }

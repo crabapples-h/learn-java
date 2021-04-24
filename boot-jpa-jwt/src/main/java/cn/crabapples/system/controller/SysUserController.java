@@ -42,9 +42,9 @@ public class SysUserController extends BaseController {
      */
     @GetMapping("/page")
     @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
-    public ResponseDTO getUserListPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getUserPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取[分页]用户列表");
-        List<SysUserDTO> list = userService.getUserListPage(request, page);
+        List<SysUserDTO> list = userService.getUserPage(request, page);
         log.info("返回结果->获取[分页]用户列表结束:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }
@@ -116,12 +116,4 @@ public class SysUserController extends BaseController {
         return ResponseDTO.returnSuccess();
     }
 
-    @GetMapping("/info")
-    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo(HttpServletRequest request) {
-        log.info("收到请求->获取当前用户信息");
-        SysUser entity = userService.getUserInfo(request);
-        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
-    }
 }

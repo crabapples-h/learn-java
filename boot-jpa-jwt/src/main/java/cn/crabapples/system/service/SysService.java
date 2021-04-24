@@ -1,6 +1,7 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
+import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,4 +22,5 @@ public interface SysService extends BaseService {
 
     List<String> getUserPermissions(HttpServletRequest request);
 
+    SysUser getUserInfo(HttpServletRequest request);
 }

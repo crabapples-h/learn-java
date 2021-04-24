@@ -10,15 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
- * TODO 用户相关服务
+ * TODO 系统相关服务[菜单]
  *
  * @author Mr.He
- * 2020/1/27 2:10
+ * 2021/4/25 0:34
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
- * pc-name 29404
+ * pc-name mrhe
  */
 public interface SysMenusService extends BaseService {
     /**
