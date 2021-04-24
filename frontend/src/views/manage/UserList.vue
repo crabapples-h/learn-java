@@ -237,7 +237,6 @@ export default {
         }
         if (result.data !== null) {
           this.rolesOptions = result.data;
-          this.count = result.page.dataCount
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
@@ -247,7 +246,7 @@ export default {
       this.getList()
     },
     getList(page) {
-      this.$http.get('/api/user/list/page', {params: page}).then(result => {
+      this.$http.get('/api/sys/user/page', {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

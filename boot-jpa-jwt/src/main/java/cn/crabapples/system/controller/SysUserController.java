@@ -18,23 +18,35 @@ import java.util.List;
 
 
 /**
- * TODO 用户管理接口类
+ * TODO 系统用户相关接口
  *
  * @author Mr.He
- * 2020/1/27 2:09
+ * 2021/4/24 23:58
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
- * pc-name 29404
+ * pc-name mrhe
  */
 @RestController
-@RequestMapping(value = "/api/user")
-@Api("用户管理")
+@RequestMapping(value = "/api/sys/user")
+@Api("系统管理[用户]")
 @Slf4j
-public class UserController extends BaseController {
+public class SysUserController extends BaseController {
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public SysUserController(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * 获取[分页]用户列表
+     */
+    @GetMapping("/page")
+    @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
+    public ResponseDTO getUserListPage(HttpServletRequest request, PageDTO page) {
+        log.info("收到请求->获取[分页]用户列表");
+        List<SysUserDTO> list = userService.getUserListPage(request, page);
+        log.info("返回结果->获取[分页]用户列表结束:[{}]", list);
+        return ResponseDTO.returnSuccess(list, page);
     }
 
     @PostMapping("/add")
@@ -112,14 +124,4 @@ public class UserController extends BaseController {
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
     }
-
-    @GetMapping("/list/page")
-    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
-    public ResponseDTO getUserListPage(HttpServletRequest request, PageDTO page) {
-        log.info("收到请求->获取用户列表");
-        List<SysUserDTO> list = userService.getUserListPage(request, page);
-        log.info("返回结果->获取当前用户信息结束:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
-    }
-
 }

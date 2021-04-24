@@ -19,19 +19,19 @@ const commonApi = {
     },
     getUserInfo() {
         return instance({
-            url: '/api/user/info',
+            url: '/api/sys/user/info',
             method: 'get',
         })
     },
     getUserMenus() {
         return instance({
-            url: '/api/sys/user/menus',
+            url: '/api/sys/menus/user',
             method: 'get',
         })
     },
     getUserPermissions() {
         return instance({
-            url: '/api/sys/user/permissions',
+            url: '/api/sys/permissions',
             method: 'get',
         })
     },

@@ -1,15 +1,9 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.dto.ResponseDTO;
 import cn.crabapples.common.utils.jwt.JwtIgnore;
-import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRoles;
-import cn.crabapples.system.form.MenusForm;
-import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
 import io.swagger.annotations.Api;
@@ -18,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -72,20 +65,8 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess("登录成功", token);
     }
 
-    /**
-     * 获取系统菜单
-     *
-     * @return 返回当前用户拥有的系统菜单
-     */
-    @GetMapping("/user/menus")
-    public ResponseDTO getUserMenus(HttpServletRequest request) {
-        log.info("收到请求->获取用户菜单列表");
-        List<SysMenus> menus = sysService.getUserMenus(request);
-        log.info("返回结果->获取菜单列表成功:[{}]", menus);
-        return ResponseDTO.returnSuccess(menus);
-    }
 
-    @GetMapping("/user/permissions")
+    @GetMapping("/permissions")
     public ResponseDTO getUserPermissions(HttpServletRequest request) {
         log.info("收到请求->获取所有权限列表");
         List<String> list = sysService.getUserPermissions(request);
@@ -93,77 +74,5 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list);
     }
 
-    @GetMapping("/menus/list/page")
-    public ResponseDTO getMenusListPage(HttpServletRequest request, PageDTO page) {
-        log.info("收到请求->获取[分页]菜单列表");
-        List<SysMenus> list = sysService.getMenusListPage(request, page);
-        log.info("返回结果->获取菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
-    }
-
-    @GetMapping("/menus/list")
-    public ResponseDTO getMenusList(HttpServletRequest request) {
-        log.info("收到请求->获取[分页]菜单列表");
-        List<SysMenus> list = sysService.getMenusList(request);
-        log.info("返回结果->获取菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
-    }
-
-    @PostMapping("/menus/save")
-    public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
-        super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
-        log.info("收到请求->保存菜单:[{}]", form);
-        sysService.saveMenus(form);
-        log.info("返回结果->保存菜单成功");
-        return ResponseDTO.returnSuccess();
-    }
-
-    @PostMapping("/menus/remove/{id}")
-    public ResponseDTO removeMenus(HttpServletRequest request, @PathVariable String id) {
-        log.info("收到请求->删除菜单:[{}]", id);
-        sysService.removeMenus(id);
-        log.info("返回结果->删除菜单成功");
-        return ResponseDTO.returnSuccess();
-    }
-
-    @GetMapping("/roles")
-    public ResponseDTO getUserRolesList(HttpServletRequest request) {
-        log.info("收到请求->获取用户角色列表");
-        List<SysRolesDTO> list = sysService.getUserRolesList(request);
-        log.info("返回结果->获取菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
-    }
-
-    @GetMapping("/roles/list/page")
-    public ResponseDTO getRolesListPage(HttpServletRequest request, PageDTO page) {
-        log.info("收到请求->获取[分页]角色列表");
-        List<SysRoles> list = sysService.getRolesListPage(request, page);
-        log.info("返回结果->获取[分页]角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
-    }
-
-    @GetMapping("/roles/list")
-    public ResponseDTO getRolesList(HttpServletRequest request) throws IOException {
-        log.info("收到请求->获取角色列表");
-        List<SysRoles> list = sysService.getRolesList(request);
-        log.info("返回结果->获取角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
-    }
-
-    @PostMapping("/roles/save")
-    public ResponseDTO saveRoles(HttpServletRequest request, @RequestBody RolesForm form) {
-        log.info("收到请求->保存角色:[{}]", form);
-        sysService.saveRoles(form);
-        log.info("返回结果->保存角色成功");
-        return ResponseDTO.returnSuccess();
-    }
-
-    @PostMapping("/roles/remove/{id}")
-    public ResponseDTO removeRoles(HttpServletRequest request, @PathVariable String id) {
-        log.info("收到请求->删除角色:[{}]", id);
-        sysService.removeRoles(id);
-        log.info("返回结果->删除角色成功");
-        return ResponseDTO.returnSuccess();
-    }
 
 }
