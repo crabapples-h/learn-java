@@ -234,6 +234,8 @@ export default {
             });
           }
           this.dataSource = format(result.data)
+          this.pagination.total = result.page.dataCount
+          this.pagination.current = result.page.pageIndex + 1
         }
       }).catch(function (error) {
         console.error('出现错误:', error);

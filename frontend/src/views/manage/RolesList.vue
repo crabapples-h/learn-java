@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-button @click="addRoles">添加角色</a-button>
+    <a-button @click="addRoles" v-auth:sys:roles:add>添加角色</a-button>
     <a-divider/>
     <a-drawer title="" width="50%" :visible="show.roles" @close="closeRolesForm">
       <a-form-model :model="form.roles" :rules="rules.roles" :label-col="labelCol" :wrapper-col="wrapperCol">
@@ -21,7 +21,7 @@
       </div>
     </a-drawer>
     <a-modal :visible.sync="show.menus" width="50%" :footer="null" @cancel="closeShowMenus">
-      <a-table :data-source="menusDataSource" rowKey="id" :columns="menusColumns" :pagination="false">
+      <a-table :data-source="menusDataSource" key="id" :columns="menusColumns" :pagination="false">
         <span slot="icon" slot-scope="text, record">
         <a-icon :type='text.substring(text.indexOf("\"") + 1,text.lastIndexOf("\"")) || "appstore"'/>
       </span>
@@ -34,9 +34,10 @@
     </a-modal>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
-        <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="removeRoles(record)"/>
+        <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="removeRoles(record)"
+                      v-auth:sys:roles:del/>
         <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="editRoles(record)">编辑</a-button>
+        <a-button type="primary" size="small" @click="editRoles(record)" v-auth:sys:roles:edit>编辑</a-button>
         <a-divider type="vertical"/>
         <a-button type="primary" size="small" @click="showMenus(record)">查看菜单</a-button>
       </span>
@@ -122,7 +123,6 @@ export default {
     };
   },
   activated() {
-    console.log('page-->', this.pagination)
     this.getList()
   },
   mounted() {
@@ -162,6 +162,8 @@ export default {
         }
         if (result.data !== null) {
           this.dataSource = result.data;
+          this.pagination.total = result.page.dataCount
+          this.pagination.current = result.page.pageIndex + 1
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
@@ -245,6 +247,7 @@ export default {
       })
     },
     showMenus(e) {
+      console.log(e)
       let format = function (data) {
         return data.map(e => {
           let menus = {
@@ -252,7 +255,8 @@ export default {
             name: e.name,
             icon: e.icon,
             url: e.path,
-            sort: e.sort
+            sort: e.sort,
+            menusType: e.menusType,
           }
           if (e.children && e.children.length > 0) {
             menus.children = format(e.children)
@@ -263,6 +267,7 @@ export default {
         });
       }
       this.menusDataSource = format(e.sysMenus)
+      console.log(this.menusDataSource)
       this.show.menus = true
     },
     closeShowMenus() {

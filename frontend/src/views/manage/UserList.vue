@@ -180,6 +180,7 @@ export default {
       ],
       dataSource: [],
       pagination: initCPagination(this.changeIndex, this.changeSize),
+      count: 0,
       labelCol: {span: 5},
       wrapperCol: {span: 16},
       rolesOptions: [],
@@ -236,6 +237,7 @@ export default {
         }
         if (result.data !== null) {
           this.rolesOptions = result.data;
+          this.count = result.page.dataCount
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
@@ -252,6 +254,8 @@ export default {
         }
         if (result.data !== null) {
           this.dataSource = result.data;
+          this.pagination.total = result.page.dataCount
+          this.pagination.current = result.page.pageIndex + 1
         }
       }).catch(function (error) {
         console.error('出现错误:', error);
