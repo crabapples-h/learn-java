@@ -62,6 +62,8 @@ public interface SysService extends BaseService {
 
     List<SysMenus> getMenusListPage(HttpServletRequest request, PageDTO page);
 
+    List<SysMenus> getMenusList(HttpServletRequest request);
+
     SysMenus saveMenus(MenusForm form);
 
     List<SysMenus> getUserMenus(HttpServletRequest request);
@@ -74,7 +76,11 @@ public interface SysService extends BaseService {
 
     List<SysRoles> getRolesListPage(HttpServletRequest request, PageDTO page);
 
+    List<SysRoles> getRolesList(HttpServletRequest request);
+
+
     SysRoles saveRoles(RolesForm form);
 
     SysRoles removeRoles(String id);
+
 }

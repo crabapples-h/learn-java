@@ -181,6 +181,16 @@ public class SysServiceImpl implements SysService {
     }
 
     /**
+     * 获取菜单列表(全部)
+     */
+    @Override
+    public List<SysMenus> getMenusList(HttpServletRequest request) {
+        List<SysMenus> sysMenus = menusDAO.findRoot();
+        sysMenus = filterMenusByDelFlag(sysMenus);
+        return sysMenus;
+    }
+
+    /**
      * 返回前端时移除菜单树中标记为删除的数据
      */
     private List<SysMenus> filterMenusByDelFlag(List<SysMenus> sysMenus) {
@@ -267,6 +277,18 @@ public class SysServiceImpl implements SysService {
         List<SysRoles> sysRoles = rolesPage.stream().collect(Collectors.toList());
         sysRoles = setRoleMenus(sysRoles);
         log.info("返回[分页]角色列表:[{}],页码:[{}]", sysRoles, page);
+        return sysRoles;
+    }
+
+    /**
+     * 获取角色列表(全部)
+     */
+    @Override
+    public List<SysRoles> getRolesList(HttpServletRequest request) {
+        log.info("获取[全部]角色列表");
+        List<SysRoles> sysRoles = rolesDAO.findAll();
+        sysRoles = setRoleMenus(sysRoles);
+        log.info("返回[全部]角色列表:[{}]", sysRoles);
         return sysRoles;
     }
 

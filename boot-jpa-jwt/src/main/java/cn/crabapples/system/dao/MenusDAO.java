@@ -65,7 +65,8 @@ public class MenusDAO extends BaseDAO {
     public List<SysMenus> findRootsByIds(List<String> ids) {
         return menusRepository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.IS_ROOT, ids);
     }
+
     public List<SysMenus> findButtonsByIds(List<String> ids) {
-        return menusRepository.findByDelFlagAndIdInAndMenusType(DIC.NOT_DEL, ids,DIC.MENUS_TYPE_BUTTON);
+        return menusRepository.findByDelFlagAndIdInAndMenusType(DIC.NOT_DEL, ids, DIC.MENUS_TYPE_BUTTON);
     }
 }

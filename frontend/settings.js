@@ -9,7 +9,7 @@ const settings = {
         return this.fileServBaseUrl + path;
     },
     isDebug: true,
-    crypt: false, //接口加密
+    isCrypt: false, //接口加密
     publicKey: '-----BEGIN PUBLIC KEY-----\n' +
         'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtEdgPwBkPuulvFSr0ESP\n' +
         'jRFUG6x/oNL52rNEDamf1Qr2d8viNsLbYHJpSnpmis1IIIQq9xufFMtexj9eDhtA\n' +

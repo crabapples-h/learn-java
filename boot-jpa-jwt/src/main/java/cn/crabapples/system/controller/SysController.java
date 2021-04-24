@@ -101,6 +101,13 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list, page);
     }
 
+    @GetMapping("/menus/list")
+    public ResponseDTO getMenusList(HttpServletRequest request) {
+        log.info("收到请求->获取[分页]菜单列表");
+        List<SysMenus> list = sysService.getMenusList(request);
+        log.info("返回结果->获取菜单列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
 
     @PostMapping("/menus/save")
     public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
@@ -128,11 +135,19 @@ public class SysController extends BaseController {
     }
 
     @GetMapping("/roles/list/page")
-    public ResponseDTO getRolesList(HttpServletRequest request, PageDTO page) throws IOException {
+    public ResponseDTO getRolesListPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取[分页]角色列表");
         List<SysRoles> list = sysService.getRolesListPage(request, page);
-        log.info("返回结果->获取菜单列表成功:[{}]", list);
+        log.info("返回结果->获取[分页]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
+    }
+
+    @GetMapping("/roles/list")
+    public ResponseDTO getRolesList(HttpServletRequest request) throws IOException {
+        log.info("收到请求->获取角色列表");
+        List<SysRoles> list = sysService.getRolesList(request);
+        log.info("返回结果->获取角色列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
     }
 
     @PostMapping("/roles/save")

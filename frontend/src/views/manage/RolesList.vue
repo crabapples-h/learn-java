@@ -32,7 +32,7 @@
       </span>
       </a-table>
     </a-modal>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
+    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="removeRoles(record)"/>
         <a-divider type="vertical"/>
@@ -47,16 +47,20 @@
 <script>
 import {TreeSelect} from "ant-design-vue";
 import CPopButton from "@/components/c-pop-button";
-import {SHOW_CHILD} from "ant-design-vue/lib/vc-tree-select";
+import {initCPagination} from "@/views/common/C-Pagination.js";
 import commonApi from "@/api/CommonApi"
+
 export default {
   name: "roles-list",
-  components: {CPopButton},
+  components: {
+    CPopButton,
+  },
   data() {
     return {
       SHOW_TYPE: TreeSelect.SHOW_CHILD,
       labelCol: {span: 5},
       wrapperCol: {span: 16},
+      pagination: initCPagination(this.changeIndex, this.changeSize),
       columns: [
         {
           dataIndex: 'name',
@@ -118,11 +122,27 @@ export default {
     };
   },
   activated() {
+    console.log('page-->', this.pagination)
     this.getList()
   },
   mounted() {
   },
   methods: {
+    changeIndex(pageIndex, pageSize) {
+      let page = {
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
+    changeSize(current, pageSize) {
+      let page = {
+        pageIndex: current,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
+
     resetRolesForm() {
       this.form.roles = {
         id: '',
@@ -134,8 +154,8 @@ export default {
       this.resetRolesForm()
       this.getList()
     },
-    getList() {
-      this.$http.get('/api/sys/roles/list/page').then(result => {
+    getList(page) {
+      this.$http.get('/api/sys/roles/list/page', {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

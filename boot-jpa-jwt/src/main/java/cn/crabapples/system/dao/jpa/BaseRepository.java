@@ -29,6 +29,8 @@ public interface BaseRepository<T> {
 
     Page<T> findByDelFlag(Pageable pageable, int delFlag);
 
+    List<T> findByDelFlag(int delFlag);
+
     //    Optional<SysRoles> findByDelFlagAndIdAndStatus(int delFlag, String id, int status);
 
 

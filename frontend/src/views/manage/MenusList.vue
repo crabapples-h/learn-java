@@ -67,7 +67,7 @@
         <a-button type="primary" @click="submitMenusForm">保存</a-button>
       </div>
     </a-modal>
-    <a-table :data-source="dataSource" key="id" :columns="columns" :pagination="false">
+    <a-table :data-source="dataSource" key="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="removeMenus(record)" v-auth:sys:menus:del/>
         <a-divider type="vertical"/>
@@ -93,14 +93,13 @@
 <script>
 
 import CPopButton from "@comp/c-pop-button";
-import Pagination from "@/views/common/Pagination";
+import {initCPagination} from "@/views/common/C-Pagination";
 import commonApi from "@/api/CommonApi";
 
 export default {
   name: "menus-list",
   components: {
     CPopButton,
-    Pagination,
   },
   data() {
     return {
@@ -136,6 +135,7 @@ export default {
         },
       ],
       dataSource: [],
+      pagination: initCPagination(this.changeIndex, this.changeSize),
       rules: {
         menus: {
           name: [
@@ -173,6 +173,20 @@ export default {
   mounted() {
   },
   methods: {
+    changeIndex(pageIndex, pageSize) {
+      let page = {
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
+    changeSize(current, pageSize) {
+      let page = {
+        pageIndex: current,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
     resetMenusForm() {
       this.form.menus = {
         id: '',
@@ -190,8 +204,8 @@ export default {
       this.resetMenusForm()
       this.getList()
     },
-    getList() {
-      this.$http.get('/api/sys/menus/list/page').then(result => {
+    getList(page) {
+      this.$http.get('/api/sys/menus/list/page', {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

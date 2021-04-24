@@ -15,7 +15,7 @@ import {getToken} from '@/utils/sessionUtils'
 
 import settings from '../../settings'
 
-const crypt = settings.crypt;
+const isCrypt = settings.isCrypt;
 const isDebug = settings.isDebug;
 const instance = axios.create({timeout: 1000 * 12});
 
@@ -32,10 +32,13 @@ instance.interceptors.request.use(
             }
         }
         config.headers['crabapples-token'] = token;
-        config.data = crypt && config.data ? encrypt(JSON.stringify(config.data)) : config.data
+        config.data = isCrypt && config.data ? encrypt(JSON.stringify(config.data)) : config.data
         if (/get/i.test(config.method)) {
             config.params = config.params || {}
             config.params.temp = Date.parse(new Date()) / 1000
+            if (!!config.params.pageIndex) {
+                config.params.pageIndex--
+            }
         }
         return config;
     },

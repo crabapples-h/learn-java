@@ -86,29 +86,16 @@
 
 import CPopButton from "@/components/c-pop-button";
 import CButton from "@/components/c-button";
+import {initCPagination} from "@/views/common/C-Pagination";
 
 export default {
   name: "user-list",
-  components: {CButton, CPopButton},
+  components: {
+    CButton,
+    CPopButton,
+  },
   data() {
     return {
-      pagination: {
-        pageSize: 4,
-        pageSizeOptions: ['10', '20', '30', '40'],
-        total: 50,
-        size: 'middle',
-        showSizeChanger: true,
-        onChange: ((page, pageSize) => {
-          console.log(page, pageSize)
-        }),
-        // showSizeChange: (current, size) => {
-        //   console.log(current, size)
-
-        // },
-        showSizeChange: ((current, size) => {
-          console.log(current, size)
-        })
-      },
       rules: {
         username: [
           {required: true, message: '请输入用户名', trigger: 'change'},
@@ -192,6 +179,7 @@ export default {
         },
       ],
       dataSource: [],
+      pagination: initCPagination(this.changeIndex, this.changeSize),
       labelCol: {span: 5},
       wrapperCol: {span: 16},
       rolesOptions: [],
@@ -226,6 +214,20 @@ export default {
   mounted() {
   },
   methods: {
+    changeIndex(pageIndex, pageSize) {
+      let page = {
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
+    changeSize(current, pageSize) {
+      let page = {
+        pageIndex: current,
+        pageSize: pageSize,
+      }
+      this.getList(page)
+    },
     getRolesList() {
       this.$http.get('/api/sys/roles/list').then(result => {
         if (result.status !== 200) {
@@ -242,8 +244,8 @@ export default {
     refreshData() {
       this.getList()
     },
-    getList() {
-      this.$http.get('/api/user/list/page').then(result => {
+    getList(page) {
+      this.$http.get('/api/user/list/page', {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
