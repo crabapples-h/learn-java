@@ -133,3 +133,29 @@
     * 引入antd自定义样式表
     * 修改模块名
         * boot-jpa-shiro -> boot-jpa-jwt
+* 20210423
+    * 动态生成路由表
+        * 登录时获取路由数据存入sessionStorage
+        * 登录时获取路由数据存入vuex
+    * 动态生成菜单
+        * 登录时获取菜单数据存入sessionStorage
+        * 登录时获取菜单数据存入vuex
+    * 登录时获取token存入sessionStorage
+    * 登录时获取token存入vuex
+    * 登录时获取用户信息存入sessionStorage
+    * 登录时获取用户信息存入vuex
+    * 动态控制菜单
+        * 登录时获取授权信息存入sessionStorage
+        * 登录时获取授权信息数据存入vuex
+    * 增加vue自定义指令`v-auth`用与鉴权用户是否有对应功能操作权限
+* 20210424
+    * 增加分页查询方法
+    * 修复编辑用户后密码被清空bug
+    * 分离代码
+        * 将`SysController`中方法分离至`SysRolesController`、`SysMenusController`、`SysUsersController`
+        * 将`SysService`中方法分离至`SysRolesService`、`SysMenusService`、`SysUsersService`
+        * 将`SysServiceImpl`中方法分离至`SysRolesServiceImpl`、`SysMenusServiceImpl`、`SysUsersServiceImpl`
+    * 完善各种注释
+    * 增加添加用户时验证用户名是否被使用
+    * 前端登录时使用`async`和`await`关键字使获取数据的方法同步
+    * 前端Api接口提入单独js文件`src/api/Apis.js`
