@@ -95,6 +95,8 @@
 import CPopButton from "@comp/c-pop-button";
 import {initCPagination} from "@/views/common/C-Pagination";
 import commonApi from "@/api/CommonApi";
+import {SysApis} from "@/api/Apis";
+
 
 export default {
   name: "menus-list",
@@ -205,7 +207,7 @@ export default {
       this.getList()
     },
     getList(page) {
-      this.$http.get('/api/sys/menus/page', {params: page}).then(result => {
+      this.$http.get(SysApis.menusListPage, {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -242,8 +244,7 @@ export default {
       });
     },
     removeMenus(e) {
-      this.$http.post(`/api/sys/menus/remove/${e.id}`).then(result => {
-        console.log('通过api获取到的数据:', result);
+      this.$http.post(`${SysApis.delMenus}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
@@ -272,7 +273,7 @@ export default {
       commonApi.refreshSysData()
     },
     submitMenusForm() {
-      this.$http.post('/api/sys/menus/save', this.form.menus).then(result => {
+      this.$http.post(SysApis.saveMenus, this.form.menus).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

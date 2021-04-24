@@ -50,6 +50,7 @@ import {TreeSelect} from "ant-design-vue";
 import CPopButton from "@/components/c-pop-button";
 import {initCPagination} from "@/views/common/C-Pagination.js";
 import commonApi from "@/api/CommonApi"
+import {SysApis} from "@/api/Apis";
 
 export default {
   name: "roles-list",
@@ -155,7 +156,7 @@ export default {
       this.getList()
     },
     getList(page) {
-      this.$http.get('/api/sys/roles/page', {params: page}).then(result => {
+      this.$http.get(SysApis.rolesListPage, {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -170,8 +171,7 @@ export default {
       });
     },
     removeRoles(e) {
-      this.$http.post(`/api/sys/roles/remove/${e.id}`).then(result => {
-        console.log('通过api获取到的数据:', result);
+      this.$http.post(`${SysApis.delRoles}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
@@ -201,7 +201,7 @@ export default {
       commonApi.refreshSysData()
     },
     submitRolesForm() {
-      this.$http.post('/api/sys/roles/save', this.form.roles).then(result => {
+      this.$http.post(SysApis.saveRoles, this.form.roles).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -212,7 +212,7 @@ export default {
       });
     },
     getMenusList() {
-      this.$http.get('/api/sys/menus/list').then(result => {
+      this.$http.get(SysApis.menusList).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

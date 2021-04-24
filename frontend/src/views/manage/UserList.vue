@@ -88,6 +88,7 @@
 import CPopButton from "@/components/c-pop-button";
 import CButton from "@/components/c-button";
 import {initCPagination} from "@/views/common/C-Pagination";
+import {SysApis} from "@/api/Apis";
 
 export default {
   name: "user-list",
@@ -232,7 +233,7 @@ export default {
       this.getList(page)
     },
     getRolesList() {
-      this.$http.get('/api/sys/roles/list').then(result => {
+      this.$http.get(SysApis.rolesList).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -248,7 +249,7 @@ export default {
       this.getList()
     },
     getList(page) {
-      this.$http.get('/api/sys/user/page', {params: page}).then(result => {
+      this.$http.get(SysApis.userListPage, {params: page}).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -263,8 +264,7 @@ export default {
       });
     },
     lockUser(e) {
-      this.$http.post(`/api/user/lock/${e.id}`).then(result => {
-        console.log('通过api获取到的数据:', result);
+      this.$http.post(`${SysApis.lockUser}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
@@ -276,8 +276,7 @@ export default {
       });
     },
     unlockUser(e) {
-      this.$http.post(`/api/user/unlock/${e.id}`).then(result => {
-        console.log('通过api获取到的数据:', result);
+      this.$http.post(`${SysApis.unlockUser}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
@@ -295,9 +294,7 @@ export default {
         cancelText: '取消',
         okText: '确定',
         onOk() {
-          console.log(e)
-          _this.$http.post(`/api/user/del/${e.id}`).then(result => {
-            console.log('通过api获取到的数据:', result);
+          _this.$http.post(`${SysApis.delUser}/${e.id}`).then(result => {
             if (result.status !== 200) {
               _this.$message.error(result.message);
               return
@@ -339,7 +336,7 @@ export default {
       this.refreshData()
     },
     submitForm() {
-      let url = this.form.type === 0 ? '/api/user/add' : '/api/user/edit'
+      let url = this.form.type === 0 ? SysApis.addUser : SysApis.editUser
       this.$http.post(url, this.form.userInfo).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
@@ -352,7 +349,7 @@ export default {
     },
     checkUsername() {
       let username = this.form.userInfo.username
-      this.$http.get(`/api/sys//checkUsername/${username}`).then(result => {
+      this.$http.get(`${SysApis.checkUsername}/${username}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;
@@ -371,8 +368,7 @@ export default {
       this.show.resetPassword = true
     },
     submitResetPassword() {
-      this.$http.post('/api/user/password/reset', this.form.resetPassword).then(result => {
-        console.log('通过api获取到的数据:', result);
+      this.$http.post(SysApis.resetPassword, this.form.resetPassword).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return
