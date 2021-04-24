@@ -135,7 +135,7 @@ export default {
       this.getList()
     },
     getList() {
-      this.$http.get('/api/sys/roles/list').then(result => {
+      this.$http.get('/api/sys/roles/list/page').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

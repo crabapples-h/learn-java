@@ -243,7 +243,7 @@ export default {
       this.getList()
     },
     getList() {
-      this.$http.get('/api/user/list').then(result => {
+      this.$http.get('/api/user/list/page').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

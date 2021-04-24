@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SysUserDTO> getUserList(HttpServletRequest request, PageDTO page) {
+    public List<SysUserDTO> getUserListPage(HttpServletRequest request, PageDTO page) {
         Page<SysUser> userPage = userDAO.findAll(page);
         Pageable pageable = userPage.getPageable();
         page.setDataCount(userDAO.count());

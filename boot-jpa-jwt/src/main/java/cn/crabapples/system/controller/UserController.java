@@ -113,11 +113,11 @@ public class UserController extends BaseController {
         return ResponseDTO.returnSuccess(entity);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list/page")
     @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
-    public ResponseDTO getUserList(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getUserListPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取用户列表");
-        List<SysUserDTO> list = userService.getUserList(request, page);
+        List<SysUserDTO> list = userService.getUserListPage(request, page);
         log.info("返回结果->获取当前用户信息结束:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }

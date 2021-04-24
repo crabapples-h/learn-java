@@ -78,7 +78,6 @@ public class SysController extends BaseController {
      * @return 返回当前用户拥有的系统菜单
      */
     @GetMapping("/user/menus")
-    @ResponseBody
     public ResponseDTO getUserMenus(HttpServletRequest request) {
         log.info("收到请求->获取用户菜单列表");
         List<SysMenus> menus = sysService.getUserMenus(request);
@@ -87,7 +86,6 @@ public class SysController extends BaseController {
     }
 
     @GetMapping("/user/permissions")
-    @ResponseBody
     public ResponseDTO getUserPermissions(HttpServletRequest request) {
         log.info("收到请求->获取所有权限列表");
         List<String> list = sysService.getUserPermissions(request);
@@ -95,18 +93,16 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list);
     }
 
-    @GetMapping("/menus/list")
-    @ResponseBody
-    public ResponseDTO getMenusList(HttpServletRequest request, PageDTO page) {
-        log.info("收到请求->获取所有菜单列表");
-        List<SysMenus> list = sysService.getMenusList(request, page);
+    @GetMapping("/menus/list/page")
+    public ResponseDTO getMenusListPage(HttpServletRequest request, PageDTO page) {
+        log.info("收到请求->获取[分页]菜单列表");
+        List<SysMenus> list = sysService.getMenusListPage(request, page);
         log.info("返回结果->获取菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }
 
 
     @PostMapping("/menus/save")
-    @ResponseBody
     public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
@@ -116,7 +112,6 @@ public class SysController extends BaseController {
     }
 
     @PostMapping("/menus/remove/{id}")
-    @ResponseBody
     public ResponseDTO removeMenus(HttpServletRequest request, @PathVariable String id) {
         log.info("收到请求->删除菜单:[{}]", id);
         sysService.removeMenus(id);
@@ -125,7 +120,6 @@ public class SysController extends BaseController {
     }
 
     @GetMapping("/roles")
-    @ResponseBody
     public ResponseDTO getUserRolesList(HttpServletRequest request) {
         log.info("收到请求->获取用户角色列表");
         List<SysRolesDTO> list = sysService.getUserRolesList(request);
@@ -133,17 +127,15 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess(list);
     }
 
-    @GetMapping("/roles/list")
-    @ResponseBody
+    @GetMapping("/roles/list/page")
     public ResponseDTO getRolesList(HttpServletRequest request, PageDTO page) throws IOException {
-        log.info("收到请求->获取所有角色列表");
-        List<SysRoles> list = sysService.getRolesList(request, page);
+        log.info("收到请求->获取[分页]角色列表");
+        List<SysRoles> list = sysService.getRolesListPage(request, page);
         log.info("返回结果->获取菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }
 
     @PostMapping("/roles/save")
-    @ResponseBody
     public ResponseDTO saveRoles(HttpServletRequest request, @RequestBody RolesForm form) {
         log.info("收到请求->保存角色:[{}]", form);
         sysService.saveRoles(form);
@@ -152,7 +144,6 @@ public class SysController extends BaseController {
     }
 
     @PostMapping("/roles/remove/{id}")
-    @ResponseBody
     public ResponseDTO removeRoles(HttpServletRequest request, @PathVariable String id) {
         log.info("收到请求->删除角色:[{}]", id);
         sysService.removeRoles(id);

@@ -93,12 +93,14 @@
 <script>
 
 import CPopButton from "@comp/c-pop-button";
+import Pagination from "@/views/common/Pagination";
 import commonApi from "@/api/CommonApi";
 
 export default {
   name: "menus-list",
   components: {
-    CPopButton
+    CPopButton,
+    Pagination,
   },
   data() {
     return {
@@ -189,7 +191,7 @@ export default {
       this.getList()
     },
     getList() {
-      this.$http.get('/api/sys/menus/list').then(result => {
+      this.$http.get('/api/sys/menus/list/page').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

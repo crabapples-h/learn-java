@@ -115,6 +115,9 @@ public class SysServiceImpl implements SysService {
         return list;
     }
 
+    /**
+     * 获取用户拥有的权限
+     */
     @Override
     public List<String> getUserPermissions(HttpServletRequest request) {
         log.info("获取用户拥有的所有权限");
@@ -140,6 +143,9 @@ public class SysServiceImpl implements SysService {
         return menusId.stream().distinct().collect(Collectors.toList());
     }
 
+    /**
+     * 删除菜单
+     */
     @Override
     public SysMenus removeMenus(String id) {
         SysMenus entity = menusDAO.findById(id);
@@ -148,6 +154,9 @@ public class SysServiceImpl implements SysService {
         return menusDAO.save(entity);
     }
 
+    /**
+     * 删除菜单后将所拥有该菜单的角色中把该菜单移除
+     */
     void removeRolesMenus(String id) {
         List<SysRoles> sysRoles = rolesDAO.findByMenusId(id);
         sysRoles.forEach(e -> {
@@ -157,8 +166,11 @@ public class SysServiceImpl implements SysService {
         });
     }
 
+    /**
+     * 获取菜单列表(分页)
+     */
     @Override
-    public List<SysMenus> getMenusList(HttpServletRequest request, PageDTO page) {
+    public List<SysMenus> getMenusListPage(HttpServletRequest request, PageDTO page) {
         Page<SysMenus> menusPage = menusDAO.findRoot(page);
         Pageable pageable = menusPage.getPageable();
         page.setDataCount(menusDAO.count());
@@ -179,6 +191,9 @@ public class SysServiceImpl implements SysService {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * 保存菜单并判断是增加还是编辑
+     */
     @Override
     public SysMenus saveMenus(MenusForm form) {
         String id = String.valueOf(form.getId());
@@ -243,7 +258,7 @@ public class SysServiceImpl implements SysService {
      * 获取角色列表(分页)
      */
     @Override
-    public List<SysRoles> getRolesList(HttpServletRequest request, PageDTO page) {
+    public List<SysRoles> getRolesListPage(HttpServletRequest request, PageDTO page) {
         log.info("获取[分页]角色列表:[{}]", page);
         Page<SysRoles> rolesPage = rolesDAO.findAll(page);
         Pageable pageable = rolesPage.getPageable();
@@ -269,6 +284,9 @@ public class SysServiceImpl implements SysService {
         }).collect(Collectors.toList());
     }
 
+    /**
+     * 保存角色
+     */
     @Override
     public SysRoles saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
@@ -297,6 +315,9 @@ public class SysServiceImpl implements SysService {
         return permissions;
     }
 
+    /**
+     * 删除角色
+     */
     @Override
     public SysRoles removeRoles(String id) {
         log.info("删除角色:[{}]", id);

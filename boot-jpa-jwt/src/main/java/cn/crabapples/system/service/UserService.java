@@ -48,7 +48,7 @@ public interface UserService extends BaseService {
 
     SysUser getUserInfo(HttpServletRequest request);
 
-    List<SysUserDTO> getUserList(HttpServletRequest request, PageDTO page);
+    List<SysUserDTO> getUserListPage(HttpServletRequest request, PageDTO page);
 
     SysUser updatePassword(UserForm form);
 
