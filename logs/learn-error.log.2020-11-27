@@ -1,0 +1,12 @@
+[2020-11-27 10:42:10] [ERROR] [DefaultQuartzScheduler_QuartzSchedulerThread]  org.quartz.core.ErrorLogger.schedulerError(2401) :
+ An error occured instantiating job to be executed. job= 'DEFAULT.6da64b5bd2ee-1c7ecf80-4b53-43a9-9aa9-736e5a99b636'
+org.quartz.SchedulerException: Problem instantiating class 'demo.QuartzDemo$JobDemo' [See nested exception: java.lang.IllegalAccessException: Class org.quartz.simpl.SimpleJobFactory can not access a member of class demo.QuartzDemo$JobDemo with modifiers ""]
+	at org.quartz.simpl.SimpleJobFactory.newJob(SimpleJobFactory.java:58)
+	at org.quartz.simpl.PropertySettingJobFactory.newJob(PropertySettingJobFactory.java:69)
+	at org.quartz.core.JobRunShell.initialize(JobRunShell.java:127)
+	at org.quartz.core.QuartzSchedulerThread.run(QuartzSchedulerThread.java:392)
+Caused by: java.lang.IllegalAccessException: Class org.quartz.simpl.SimpleJobFactory can not access a member of class demo.QuartzDemo$JobDemo with modifiers ""
+	at sun.reflect.Reflection.ensureMemberAccess(Reflection.java:102)
+	at java.lang.Class.newInstance(Class.java:436)
+	at org.quartz.simpl.SimpleJobFactory.newJob(SimpleJobFactory.java:56)
+	... 3 more
