@@ -112,7 +112,7 @@ export default {
 @import "~@public/color.less";
 
 .loginApi-bg {
-  background: url(~@assets/login-backgroud.png) no-repeat center;
+  background: url(~@assets/login-background.png) no-repeat center;
   background-size: 100%;
   overflow: hidden;
   height: 100vh;
