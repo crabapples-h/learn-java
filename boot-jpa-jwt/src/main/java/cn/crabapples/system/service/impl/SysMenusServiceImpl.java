@@ -91,7 +91,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     }
 
     /**
-     * 删除菜单
+     * 删除菜单-逻辑
      */
     @Override
     public SysMenus removeMenus(String id) {
@@ -99,6 +99,14 @@ public class SysMenusServiceImpl implements SysMenusService {
         entity.setDelFlag(DIC.IS_DEL);
         removeRolesMenus(id);
         return menusDAO.save(entity);
+    }
+
+    /**
+     * 删除菜单-物理
+     */
+    @Override
+    public void removeReallyMenus(String id) {
+        menusDAO.remove(id);
     }
 
     /**

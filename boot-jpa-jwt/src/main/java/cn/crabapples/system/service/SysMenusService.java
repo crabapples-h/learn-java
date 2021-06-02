@@ -62,4 +62,5 @@ public interface SysMenusService extends BaseService {
 
     SysMenus removeMenus(String id);
 
+    void removeReallyMenus(String id);
 }
