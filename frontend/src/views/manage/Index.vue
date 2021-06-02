@@ -96,18 +96,21 @@ export default {
                 name: '菜单管理',
                 icon: 'appstore',
                 path: '/manage/menus-list',
+                sort: 999,
               },
               {
                 key: '12',
                 name: '角色管理',
                 icon: 'appstore',
                 path: '/manage/roles-list',
+                sort: 998,
               },
-                {
+              {
                 key: '1',
                 name: '用户管理',
                 icon: 'appstore',
                 path: '/manage/users-list',
+                sort: 997,
               },
             ]
           },
