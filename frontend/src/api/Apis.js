@@ -12,7 +12,7 @@ const SysApis = {
     updatePassword: '/api/sys/updatePassword',
     userListPage: '/api/sys/user/page',
     delUser: '/api/sys/user/del',
-    lockUser: '/api/sys/user/unlock',
+    lockUser: '/api/sys/user/lock',
     unlockUser: '/api/sys/user/unlock/',
     checkUsername: '/api/sys/checkUsername',
     //menus

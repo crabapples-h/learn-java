@@ -61,40 +61,58 @@ export default {
       userInfo: {
         name: ''
       },
-      menus: [
-        {
-          key: '1',
-          name: '用户管理',
-          icon: 'appstore',
-          url: '/sys/user-list',
-        },
-        {
-          key: '12',
-          name: '角色管理',
-          icon: 'appstore',
-          url: '/sys/roles-list',
-        },
-        {
-          key: '13',
-          name: '菜单管理',
-          icon: 'appstore',
-          url: '/sys/menus-list',
-        },
-        {
-          key: '99',
-          name: '系统管理',
-          icon: 'appstore',
-          url: '/',
-          children: [
-            {
-              key: '12331',
-              name: '菜单管理',
-              icon: 'appstore',
-              url: '/settings-menu',
-            }
-          ]
-        },
-      ],
+      menus: [],
+      demo: {
+        routerMap: [
+          {
+            path: '/',
+            redirect: '/index',
+          },
+          {
+            path: '/manage/users-list',
+            name: 'users-list',
+            filePath: 'manage/UsersList',
+          },
+          {
+            path: '/manage/roles-list',
+            name: 'roles-list',
+            filePath: 'manage/RolesList',
+          },
+          {
+            path: '/manage/menus-list',
+            name: 'menus-list',
+            filePath: 'manage/MenusList',
+          },
+        ],
+        menus: [
+          {
+            key: '99',
+            name: '系统管理',
+            icon: 'appstore',
+            path: '/',
+            children: [
+              {
+                key: '13',
+                name: '菜单管理',
+                icon: 'appstore',
+                path: '/manage/menus-list',
+              },
+              {
+                key: '12',
+                name: '角色管理',
+                icon: 'appstore',
+                path: '/manage/roles-list',
+              },
+                {
+                key: '1',
+                name: '用户管理',
+                icon: 'appstore',
+                path: '/manage/users-list',
+              },
+            ]
+          },
+        ]
+      }
     };
   },
   activated() {
@@ -106,7 +124,7 @@ export default {
   },
   methods: {
     clickMenu(e) {
-      this.$router.push(e.url)
+      this.$router.push(e.path)
     },
     checkLoginStatus() {
       let token = getToken()
@@ -114,13 +132,14 @@ export default {
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        this.$router.push('/index')
+        this.$router.push('/manage/index')
       } else {
         this.$router.push('/login')
       }
     },
     initRouterMap() {
       let routerMap = getRouterMap()
+      // let routerMap = this.demo.routerMap
       if (routerMap && routerMap.length) {
         $addRouters(routerMap)
       }
@@ -138,7 +157,7 @@ export default {
             key: e.id,
             name: e.name,
             icon: icon,
-            url: e.path,
+            path: e.path,
             sort: e.sort,
           }
           if (e.children && e.children.length > 0) {
@@ -150,11 +169,13 @@ export default {
           }
           return menus
         }).sort((a, b) => {
-          if (a && b && a.sort && b   .sort)
+          if (a && b && a.sort && b.sort)
             return a.sort - b.sort
         });
       }
       this.menus = format(menusSource)
+      // this.menus = this.demo.menus
+      // console.log('menus-->', this.menus)
     },
 
   }

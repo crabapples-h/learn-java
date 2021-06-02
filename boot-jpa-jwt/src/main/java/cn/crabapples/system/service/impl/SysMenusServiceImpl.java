@@ -74,7 +74,7 @@ public class SysMenusServiceImpl implements SysMenusService {
 
 
     /**
-     * 获取当前用户所拥有的角色的所有菜单并去重
+     * 获取当前用户所拥有的角色的所有菜单ID并去重
      */
     private List<String> getUserMenusIds(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);

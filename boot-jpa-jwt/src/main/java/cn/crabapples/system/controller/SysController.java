@@ -70,7 +70,7 @@ public class SysController extends BaseController {
     public ResponseDTO getUserPermissions(HttpServletRequest request) {
         log.info("收到请求->获取所有权限列表");
         List<String> list = sysService.getUserPermissions(request);
-        log.info("返回结果->获取菜单列表成功:[{}]", list);
+        log.info("返回结果->获取权限列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 

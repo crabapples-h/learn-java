@@ -33,8 +33,8 @@ public class SysMenus extends BaseEntity {
     @Column(columnDefinition = "varchar(64) comment '菜单名'")
     private String name;
 
-    @Column(columnDefinition = "varchar(64) comment '菜单链接'")
-    private String url;
+//    @Column(columnDefinition = "varchar(64) comment '菜单链接'")
+//    private String url;
 
     @Column(columnDefinition = "tinyint(2) default 0 comment '菜单类型 1:目录 2:菜单 3:外链 4:按钮'")
     private Integer menusType;
@@ -42,13 +42,13 @@ public class SysMenus extends BaseEntity {
     @Column(columnDefinition = "tinyint(1) default 0 comment '是否为跟目录 0:是 1:否'")
     private int isRoot;
 
-    @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
-    private Integer level;
+//    @Column(columnDefinition = "int(2) default 1 comment '菜单等级'")
+//    private Integer level;
 
-    @Column(columnDefinition = "varchar(64) default null comment '浏览器路径'")
+    @Column(columnDefinition = "varchar(64) default null comment '浏览器显示路径'")
     private String path;
 
-    @Column(columnDefinition = "varchar(64) default null comment '文件路径'")
+    @Column(columnDefinition = "varchar(64) default null comment '文件存放路径'")
     private String filePath;
 
     @Column(columnDefinition = "varchar(64) default null comment '授权标识'")

@@ -1,5 +1,6 @@
 package cn.crabapples.common;
 
+import cn.crabapples.common.utils.FileReadUtils;
 import cn.crabapples.common.utils.security.RsaUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Base64;
@@ -29,7 +30,6 @@ import java.nio.charset.StandardCharsets;
 //@Component
 //@ControllerAdvice
 public class HttpBodyHandler implements RequestBodyAdvice {
-    private String privateKey;
     @Value("${crypt:false}")
     private boolean crypt;
 
@@ -41,6 +41,7 @@ public class HttpBodyHandler implements RequestBodyAdvice {
     @SneakyThrows
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
+        String privateKey = FileReadUtils.read("private.key");
         InputStream inputStream = inputMessage.getBody();
         BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
         StringBuilder body = new StringBuilder();

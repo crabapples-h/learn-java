@@ -8,6 +8,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CountDownLatch;
 
@@ -42,8 +44,27 @@ public class FileDownloadDemo {
             "?ssig=0081e846ba8330aba92364247ba8420f7f851057&time_stamp=1621277920&fn=bd4ae0d1ae367bbbade5f5d8e8a27568";
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        new FileDownloadDemo(10, "download").start(DOWNLOAD_URL, "d:/");
+//        new FileDownloadDemo(10, "download").start(DOWNLOAD_URL, "d:/");
+        HttpURLConnection connection = (HttpURLConnection) new URL(DOWNLOAD_URL).openConnection();
+        connection.setConnectTimeout(100000);
+        System.err.println(connection.getContentLengthLong());
+//        String data = readStream(connection.getInputStream());
+//        System.err.println(data);
+
     }
+
+    private static String readStream(InputStream inputStream) throws IOException {
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader reader = new BufferedReader(inputStreamReader);
+        StringBuilder data = new StringBuilder();
+        for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+            data.append(line);
+        }
+        reader.close();
+        return data.toString();
+    }
+
+
 
     /**
      * 开始下载文件
