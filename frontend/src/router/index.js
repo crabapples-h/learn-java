@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/sys/Login'
 import Index from '@/views/manage/Index'
-import RoleList from '@/views/manage/RolesList'
+import Welcome from '@/views/manage/Welcome'
 import {getRouterMap, getToken} from '@/utils/sessionUtils'
 
 Vue.use(VueRouter)
@@ -76,11 +76,14 @@ export function $addRouters(children) {
         return
     }
     // 重置自定义路由
-    routers = []
+    routers = [{
+        path: '/manage/welcome',
+        name: 'manage-welcome',
+        components: {innerView: resolve => require([`@/views/manage/Welcome.vue`], resolve)},
+    }]
     createRouteMap(children)
     customRouter.children = routers
     let routerMap = [customRouter]
-    console.log('routerMap-->', routerMap)
     router.addRoutes(routerMap)
     router.addRoutes(errorRoutes)
 }
