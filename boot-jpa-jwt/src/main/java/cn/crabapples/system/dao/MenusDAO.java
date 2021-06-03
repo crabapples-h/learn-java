@@ -69,4 +69,8 @@ public class MenusDAO extends BaseDAO {
     public List<SysMenus> findButtonsByIds(List<String> ids) {
         return menusRepository.findByDelFlagAndIdInAndMenusType(DIC.NOT_DEL, ids, DIC.MENUS_TYPE_BUTTON);
     }
+
+    public void remove(String id) {
+        menusRepository.deleteById(id);
+    }
 }

@@ -18,6 +18,10 @@ import {getPermissions} from "@/utils/sessionUtils";
 const auth = Vue.directive('auth', {
     bind: (el, binding) => {
         let permissions = getPermissions()
+        if (!permissions) {
+            return
+        }
+        // return;
         let exist = permissions.includes(binding.arg)
         if (!exist) {
             setTimeout(() => {

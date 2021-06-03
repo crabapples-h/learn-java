@@ -48,7 +48,6 @@ public interface SysMenusService extends BaseService {
              * 判断用户拥有的菜单中是否包含当前菜单的子菜单
              */
             boolean sizeZero = children.size() > 0;
-
             return exist || sizeZero;
         }).collect(Collectors.toList());
     }
@@ -63,4 +62,5 @@ public interface SysMenusService extends BaseService {
 
     SysMenus removeMenus(String id);
 
+    void removeReallyMenus(String id);
 }

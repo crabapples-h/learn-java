@@ -48,4 +48,7 @@ public abstract class BaseDAO {
         return repository.findAll(page);
     }
 
+    public <T, ID> void remove(JpaRepository<T, ID> repository, ID id) {
+        repository.deleteById(id);
+    }
 }

@@ -82,13 +82,24 @@ public class SysMenusController extends BaseController {
     }
 
     /**
-     * 删除菜单
+     * 删除菜单-逻辑
      */
     @PostMapping("/remove/{id}")
     public ResponseDTO removeMenus(HttpServletRequest request, @PathVariable String id) {
-        log.info("收到请求->删除菜单:[{}]", id);
+        log.info("收到请求->[逻辑]删除菜单:[{}]", id);
         menusService.removeMenus(id);
-        log.info("返回结果->删除菜单成功");
+        log.info("返回结果->[逻辑]删除菜单成功");
+        return ResponseDTO.returnSuccess();
+    }
+
+    /**
+     * 删除菜单-物理(待测试)
+     */
+    @PostMapping("/remove/really/{id}")
+    public ResponseDTO removeReallyMenus(HttpServletRequest request, @PathVariable String id) {
+        log.info("收到请求->[物理]删除菜单:[{}]", id);
+        menusService.removeReallyMenus(id);
+        log.info("返回结果->[物理]删除菜单成功");
         return ResponseDTO.returnSuccess();
     }
 

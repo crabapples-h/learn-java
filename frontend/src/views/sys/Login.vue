@@ -33,7 +33,7 @@ export default {
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        this.$router.push('/index')
+        this.$router.push('/manage/index')
       }
     },
 
@@ -44,17 +44,19 @@ export default {
         password: _this.password
       };
       let token = await _this.getToken(data)
-      let userInfo = await _this.getUserInfo()
-      let routerMap = await _this.getRouterMap()
-      let permissions = await _this.getPermissions()
-      if (token.status && userInfo.status && routerMap.status && permissions.status) {
+      if (token.status) {
         setToken(token.data)
-        setUserInfo(userInfo.data)
-        setRouterMap(routerMap.data)
-        setPermissions(permissions.data)
-        _this.$router.push('/index')
-      } else {
-        _this.$message.error('登录信息获取失败')
+        let userInfo = await _this.getUserInfo()
+        let routerMap = await _this.getRouterMap()
+        let permissions = await _this.getPermissions()
+        if (userInfo.status && routerMap.status && permissions.status) {
+          setUserInfo(userInfo.data)
+          setRouterMap(routerMap.data)
+          setPermissions(permissions.data)
+          _this.$router.push('/manage/index')
+        } else {
+          _this.$message.error('登录失败')
+        }
       }
     },
     getToken(data) {

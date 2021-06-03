@@ -1,5 +1,5 @@
 import Index from '@/views/manage/Index'
-import UserList from '@/views/manage/UserList'
+import UserList from '@/views/manage/UsersList'
 import RolesList from '@/views/manage/RolesList'
 import MenusList from '@/views/manage/MenusList'
 import AxiosUtils from "@/utils/AxiosUtils";
@@ -15,7 +15,7 @@ const manageRouter = {
     children: [
         {
             path: '/sys/user-list',
-            components: {innerView: () => import('@/views/manage/UserList')},
+            components: {innerView: () => import('@/views/manage/UsersList')},
             // components: {innerView: RolesList},
             name: 'user-list',
         },

@@ -12,8 +12,8 @@ const baseRoutes = [
         redirect: '/index',
     },
     {
-        path: '/index',
-        name: 'index',
+        path: '/manage/index',
+        name: 'manage-index',
         component: Index
     },
     {
@@ -50,29 +50,37 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes: baseRoutes,
 });
+let routers = []
+
+//将所有路由数据存放在一个数组中(包括子路由也存放在这个数组中)
+function createRouteMap(children) {
+    children.forEach(e => {
+        let router = {
+            path: e.path,
+            components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
+            name: e.name,
+        }
+        routers.push(router)
+        if (e.children && e.children.length > 0) {
+            createRouteMap(e.children)
+        }
+    })
+}
 
 export function $addRouters(children) {
-    // 重置路由规则
+    // 重置基本路由
     router.matcher = new VueRouter({
         routes: baseRoutes
     }).matcher
     if (!children) {
         return
     }
-    console.log('重置路由-->', children)
-    customRouter.children = children.map(e => {
-        return {
-            path: e.path,
-            components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
-            name: e.name,
-        }
-    })
-    customRouter.children.push({
-        path: '/sys/role-list',
-        components: {innerView: RoleList},
-        name: 'e.name',
-    })
+    // 重置自定义路由
+    routers = []
+    createRouteMap(children)
+    customRouter.children = routers
     let routerMap = [customRouter]
+    console.log('routerMap-->', routerMap)
     router.addRoutes(routerMap)
     router.addRoutes(errorRoutes)
 }
@@ -89,7 +97,8 @@ router.beforeEach((to, form, next) => {
     //动态修改页面title
     document.title = to.meta.title ? to.meta.title : document.title
     // 当没有本地token ， 并且目标路由不是login时执行
-    if (to.path !== "/login" && !token) {
+    let path = to.path
+    if (path.startsWith('/manage') && path !== "/login" && !token) {
         return next({path: '/login'});
         // 当有token 没有数据时执行
     }
