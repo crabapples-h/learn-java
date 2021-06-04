@@ -18,7 +18,12 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      msg: '拖动滑块验证',
+      checked: false,
+      show: {
+        checkCode: false,
+      },
     }
   },
   activated() {
@@ -27,6 +32,21 @@ export default {
   mounted() {
   },
   methods: {
+    onSuccess(times) {
+      this.checked = true
+      this.closeCheckCode()
+      this.submit()
+    },
+    onFail() {
+    },
+    onAgain() {
+      console.log("检测到非人为操作的哦！");
+      this.$refs.slideblock.reset();
+    },
+    showCheckCode() {
+      this.show.checkCode = true
+      this.$refs.slideblock.reset();
+    },
     checkLoginStatus() {
       let token = getToken()
       let userInfo = getUserInfo()
@@ -39,6 +59,15 @@ export default {
 
     async submit() {
       const _this = this
+      // if (!_this.checked) {
+      //   if (_this.username.trim() && _this.password.trim()) {
+      //     _this.showCheckCode()
+      //     return
+      //   }
+      //   _this.$message.error("用户名或密码不能为空")
+      //   return
+      // }
+      _this.checked = false
       let data = {
         username: _this.username,
         password: _this.password

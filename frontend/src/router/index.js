@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/sys/Login'
+import Login from '../views/base/Login'
 import Index from '@/views/manage/Index'
 import Welcome from '@/views/manage/Welcome'
 import {getRouterMap, getToken} from '@/utils/sessionUtils'
