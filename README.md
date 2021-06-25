@@ -162,9 +162,13 @@
 * 20210518
     * 增加读取超大文本文件演示`ReadMaxFileDemo.java`
     * 增加多线程断点续传下载演示`FileDownloadDemo.java`
-* 202106028
+* 20210602
     * 修复嵌套路由无法生成路由表问题
     * 修复v-auth在没有获取到数据时报错问题
     * 修复日志名称错误
     * 修复锁定用户Api地址错误
     * 删除菜单类中无用字段
+* 20210628
+    * 修复rabbitMq消息投递不到指定队列问题`RabbitMqConfigure`
+    * 增加raabbitmq队列监听handler`NoticeQueueHandler`
+    * 增加内置redis功能`RedisServerConfigure`

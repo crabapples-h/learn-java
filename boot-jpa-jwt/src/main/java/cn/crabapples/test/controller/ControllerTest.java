@@ -12,6 +12,7 @@ import cn.crabapples.test.service.UserServiceTest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -37,7 +38,7 @@ import java.util.Map;
 @Api("测试接口")
 @RestController
 @RequestMapping(value = "/api/test")
-
+@Slf4j
 public class ControllerTest extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerTest.class);
@@ -67,22 +68,31 @@ public class ControllerTest extends BaseController {
         List<SysUser> userList = userServiceTest.findByHQL("admin");
         return ResponseDTO.returnSuccess("切换数据源2", userList);
     }
+    String routingKey = "noticeKey";
+    String queueName = "notice";
+    String exchangeName = "noticeExchange";
 
     @GetMapping("/mq/send")
-    public ResponseDTO mqSend(@RequestParam String name) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "小明");
-        map.put("age", 1);
-        map.put("amt", 9.9);
-        map.put("time", LocalDateTime.now());
-        rabbitTemplate.convertAndSend(name, map);
-        System.out.println(rabbitTemplate);
+    public ResponseDTO mqSend() {
+        rabbitTemplate.convertAndSend(exchangeName, routingKey, "hello world");
+        /*
+         correlationData：用于获取相关信息。convertAndSend的某个重载方法中设置了此信息。
+         b：交换机是否成功收到生产者发的信息。
+         s：若b为false，即交换机接收失败，s中有导致失败的原因。
+         */
+        rabbitTemplate.setConfirmCallback((correlationData, b, s) -> {
+            log.info("交换机接收数据状态:[{}]", b);
+            if (!b) {
+                log.info("交换机接收数据出现异常:[{}]", s);
+            }
+        });
         return ResponseDTO.returnSuccess("消息发送成功");
     }
 
     @GetMapping("/mq/get")
-    public ResponseDTO mqGet(@RequestParam String name) {
-        Message message = rabbitTemplate.receive(name);
+    public ResponseDTO mqGet() {
+//        final RabbitTemplate rabbitTemplate = rabbitAdmin.getRabbitTemplate();
+        Message message = rabbitTemplate.receive(queueName);
         System.err.println(message);
         return ResponseDTO.returnSuccess("消息消费成功", message);
     }
