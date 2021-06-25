@@ -1,11 +1,12 @@
 package cn.crabapples.spring.test.service.impl;
 
-import cn.crabapples.system.entity.SysUser;
-import cn.crabapples.spring.test.service.UserServiceTest;
+import cn.crabapples.spring.system.entity.SysUser;
 import cn.crabapples.spring.test.dao.UserRepositoryTest;
+import cn.crabapples.spring.test.service.UserServiceTest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 /**
  * TODO 用户相关服务测试

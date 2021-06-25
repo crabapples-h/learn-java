@@ -2,7 +2,7 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.config.ApplicationConfigure;
-import cn.crabapples.common.utils.AesUtils;
+import cn.crabapples.common.utils.security.AesUtils;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
@@ -49,9 +49,9 @@ public class SysServiceImpl implements SysService {
                           RedisTemplate<String,Object> redisTemplate) {
         this.userService = userService;
         this.redisTemplate = redisTemplate;
-        this.aesKey = applicationConfigure.AES_KEY;
-        this.redisPrefix = applicationConfigure.REDIS_PREFIX;
-        this.tokenCacheTime = applicationConfigure.TOKEN_CACHE_TIME;
+        this.aesKey = applicationConfigure.aesKey;
+        this.redisPrefix = applicationConfigure.redisPrefix;
+        this.tokenCacheTime = applicationConfigure.tokenCacheTime;
     }
 
     /**

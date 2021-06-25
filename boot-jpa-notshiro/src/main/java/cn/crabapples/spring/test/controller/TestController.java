@@ -1,6 +1,6 @@
 package cn.crabapples.spring.test.controller;
 
-import cn.crabapples.system.common.BaseController;
+import cn.crabapples.spring.system.common.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TestController extends BaseController {
 
-    private Logger logger = LoggerFactory.getLogger(TestController.class);
+    private final Logger logger = LoggerFactory.getLogger(TestController.class);
     private final String PREFIX = "crabapples/";
 
     @GetMapping("/welcome1")

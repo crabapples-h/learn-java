@@ -1,17 +1,18 @@
 <template>
   <div>
-    <a-layout>
-      <c-page-header :title="title"/>
-      <a-layout>
-        <c-page-menus :menus="menus"/>
-        <a-layout-content class="content">
-          <keep-alive>
-            <router-view name="innerView"></router-view>
-          </keep-alive>
-        </a-layout-content>
-      </a-layout>
-      <c-page-footer/>
-    </a-layout>
+    <p>6666666666666</p>
+<!--    <a-layout>-->
+<!--      <c-page-header :title="title"/>-->
+<!--      <a-layout>-->
+<!--        <c-page-menus :menus="menus"/>-->
+<!--        <a-layout-content class="content">-->
+<!--          <keep-alive>-->
+<!--            <router-view name="innerView"></router-view>-->
+<!--          </keep-alive>-->
+<!--        </a-layout-content>-->
+<!--      </a-layout>-->
+<!--      <c-page-footer/>-->
+<!--    </a-layout>-->
   </div>
 </template>
 
@@ -93,9 +94,9 @@ export default {
     };
   },
   activated() {
-    this.checkLoginStatus()
-    this.initMenus()
-    this.initRouterMap()
+    // this.checkLoginStatus()
+    // this.initMenus()
+    // this.initRouterMap()
   },
   mounted() {
   },

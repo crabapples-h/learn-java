@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Login from "@/views/sys/Login";
+import Login from "@/views/base/Login";
 import CPageHeader from "@/views/common/C-PageHeader";
 import CPageFooter from "@/views/common/C-PageFooter";
 

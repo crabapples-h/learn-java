@@ -1,7 +1,6 @@
 package demo.net;
 
 import ch.ethz.ssh2.crypto.Base64;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

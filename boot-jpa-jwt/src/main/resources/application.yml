@@ -12,6 +12,10 @@ nacos:
   config:
     server-addr: '192.168.3.20:8848'
 spring:
+#  mvc:
+#    static-path-pattern: /public/**
+#  resources:
+#    static-locations: classpath:/public/
   application:
     name: learn
   profiles:
