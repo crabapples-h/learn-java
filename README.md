@@ -172,3 +172,5 @@
     * 修复rabbitMq消息投递不到指定队列问题`RabbitMqConfigure`
     * 增加raabbitmq队列监听handler`NoticeQueueHandler`
     * 增加内置redis功能`RedisServerConfigure`
+    * 增加sse接口
+    * 修复websocket接口

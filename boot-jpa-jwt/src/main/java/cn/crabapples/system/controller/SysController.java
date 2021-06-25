@@ -66,6 +66,16 @@ public class SysController extends BaseController {
         return ResponseDTO.returnSuccess("登录成功", token);
     }
 
+    /**
+     * 注销登录
+     */
+    @JwtIgnore
+    @PostMapping("/logout")
+    @ApiOperation(value = "注销登录", notes = "注销登录接口")
+    public ResponseDTO logout(HttpServletRequest request) {
+        return ResponseDTO.returnSuccess("注销成功");
+    }
+
     @GetMapping("/permissions")
     public ResponseDTO getUserPermissions(HttpServletRequest request) {
         log.info("收到请求->获取所有权限列表");
