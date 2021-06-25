@@ -1,11 +1,11 @@
 package cn.crabapples.common.utils;
 
+import cn.crabapples.common.ApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Date;
 import java.util.UUID;
 
 public class FileUtils {
@@ -29,9 +29,7 @@ public class FileUtils {
      * @return 返回文件的保存路径
      */
     public String saveFile(MultipartFile multipartFile) {
-        Date date = new Date();
         String fullPath = ROOT;
-
         logger.info("保存文件,路径[{}]", fullPath);
         String fullName = UUID.randomUUID().toString().replace("-", "");
         logger.info("保存文件,文件名[{}]", fullName);
@@ -39,15 +37,20 @@ public class FileUtils {
         try {
             if (!fold.exists()) {
                 logger.debug("目录不存在,创建目录[{}]", fold.getPath());
-                fold.mkdirs();
+                if (!fold.mkdirs()) {
+                    logger.error("文件保存失败: 目录创建失败");
+                    throw new ApplicationException("文件保存失败: 目录创建失败");
+                }
             }
             String originalFilename = multipartFile.getOriginalFilename();
-            int last = originalFilename.lastIndexOf(".");
-            int length = originalFilename.length();
-            fullName += originalFilename.substring(last, length);
-            fullName = fullName.toLowerCase();
-            logger.debug("生成全文件名[{}]", fullName);
-            File file = new File(fullPath + "/" + fullName);
+            if (originalFilename != null) {
+                int suffixIndex = originalFilename.lastIndexOf(".");
+                int length = originalFilename.length();
+                String suffix = originalFilename.substring(suffixIndex, length);
+                fullName += suffix;
+                logger.debug("生成全文件名[{}],文件后缀为:[{}]", fullName, suffix);
+            }
+            File file = new File(fullPath + "/" + fullName.toLowerCase());
             logger.info("准备写入文件");
             writeFile(multipartFile, file);
             logger.info("文件写入完成");
@@ -74,7 +77,10 @@ public class FileUtils {
         InputStream is = mFile.getInputStream();
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
         if (!file.exists()) {
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                logger.error("文件写入失败,文件创建失败");
+                throw new ApplicationException("文件写入失败");
+            }
         }
         BufferedInputStream bis = new BufferedInputStream(is);
         byte[] b = new byte[1024];

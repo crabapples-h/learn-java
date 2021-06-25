@@ -23,16 +23,16 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = {"classpath:application-custom.properties"})
 @ConfigurationProperties(prefix = "crabapples.mail")
 public class MailConfigure {
-    private String host;
-    private String source;
-    private String port;
-    private String username;
-    private String password;
-    private boolean isAuth;
-    private boolean isDebug;
+    private String host;//邮件发送服务器地址
+    private String source; //发件人邮箱
+    private String port;//邮件发送服务器端口
+    private String username;//发件人账号
+    private String password;//发件人密码
+    private boolean isAuth;//是否需要授权
+    private boolean isDebug;//是否开启debug日志
     private String protocol;
     private String socketFactory;
-    private String[] targets = {};
+    private String[] targets = {};//收件人邮箱
 
     @Override
     public String toString() {

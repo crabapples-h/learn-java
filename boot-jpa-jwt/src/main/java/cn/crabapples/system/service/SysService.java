@@ -18,7 +18,8 @@ import java.util.List;
  */
 public interface SysService extends BaseService {
 
-    String loginCheck(UserForm form);
+    String login(UserForm form);
+    String loginV2(UserForm form);
 
     List<String> getUserPermissions(HttpServletRequest request);
 

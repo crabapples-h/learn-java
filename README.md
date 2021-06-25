@@ -174,3 +174,6 @@
     * 增加内置redis功能`RedisServerConfigure`
     * 增加sse接口
     * 修复websocket接口
+    * 部分配置文件添加注释
+    * 缓存工具优化
+    * 图片工具更名为二维码工具

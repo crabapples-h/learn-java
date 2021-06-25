@@ -15,6 +15,12 @@ import java.io.*;
  * pc-name mrhe
  */
 public class FileReadUtils {
+    /**
+     * 读取resource目录下的文件
+     *
+     * @param fileName 文件名
+     * @return 文件内容
+     */
     public static String read(String fileName) {
         try {
             InputStream inputStream = FileReadUtils.class.getResourceAsStream(fileName);

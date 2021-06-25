@@ -1,4 +1,4 @@
-package cn.crabapples.common.utils.jwt;
+package cn.crabapples.common.utils.cache;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -8,25 +8,21 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO jwt配置类
+ * TODO 缓存配置类
  *
  * @author Mr.He
- * 9/5/20 2:55 PM
+ * 2021/6/25 15:49
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
- * pc-name root
+ * pc-name admin
  */
-@Getter
-@Setter
 @Component
 @PropertySource(value = {"classpath:application-custom.properties"})
-@ConfigurationProperties(prefix = "crabapples.jwt")
-public class JwtConfigure {
-    private String authKey; // 授权信息在header中的key
-    private String clientId;
-    private String base64Secret;
-    private String name;
-    private int expiresSecond;
+@ConfigurationProperties(prefix = "crabapples.cache")
+@Getter
+@Setter
+public class CacheConfigure {
+    private long time;
 
     @Override
     public String toString() {

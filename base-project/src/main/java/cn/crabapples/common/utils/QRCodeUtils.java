@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 
 /**
- * TODO 图片工具类
+ * TODO 二维码工具类
  *
  * @author Mr.He
  * 2019/11/16 14:36
@@ -27,8 +27,8 @@ import java.util.Hashtable;
  * qq 294046317
  * pc-name 29404
  */
-public class ImageUtils {
-    private static final Logger logger = LoggerFactory.getLogger(ImageUtils.class);
+public class QRCodeUtils {
+    private static final Logger logger = LoggerFactory.getLogger(QRCodeUtils.class);
     /**
      * @param outputStream 文件输出流路径
      * @param content      二维码携带信息

@@ -58,10 +58,27 @@ public class SysController extends BaseController {
     @JwtIgnore
     @PostMapping("/login")
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-    public ResponseDTO loginCheck(@RequestBody UserForm form) {
+    public ResponseDTO login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);
-        String token = sysService.loginCheck(form);
+        String token = sysService.login(form);
+        log.info("返回结果->登录成功->token:[{}]", token);
+        return ResponseDTO.returnSuccess("登录成功", token);
+    }
+
+    /**
+     * 发起登录请求
+     *
+     * @param form 用户名和密码
+     * @return 登录成功返回token
+     */
+    @JwtIgnore
+    @PostMapping("/loginV2")
+    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
+    public ResponseDTO loginV2(@RequestBody UserForm form) {
+        log.info("收到请求->用户登陆验证:[{}]", form);
+        super.validator(form, Groups.IsLogin.class);
+        String token = sysService.loginV2(form);
         log.info("返回结果->登录成功->token:[{}]", token);
         return ResponseDTO.returnSuccess("登录成功", token);
     }
