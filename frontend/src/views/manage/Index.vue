@@ -1,36 +1,9 @@
 <template>
   <div>
     <a-layout>
-      <c-page-header/>
+      <c-page-header :title="title"/>
       <a-layout>
-        <a-layout-sider>
-          <a-menu style="width: 200px;height: 100%" mode="inline">
-            <a-sub-menu :key="item.key" v-if="item.children " v-for="item in menus">
-              <span slot="title">
-                <a-icon :type='item.icon || "appstore"'/>
-                <span>{{ item.name }}</span>
-              </span>
-              <a-sub-menu :key="item.key" v-if="item.children" v-for="item in item.children">
-                <span slot="title">
-                <a-icon :type='item.icon || "appstore"'/>
-                <span>{{ item.name }}</span>
-              </span>
-                <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
-                  <a-icon :type='item.icon || "appstore"'/>
-                  <span>{{ item.name }}</span>
-                </a-menu-item>
-              </a-sub-menu>
-              <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-                <a-icon :type='item.icon || "appstore"'/>
-                <span>{{ item.name }}</span>
-              </a-menu-item>
-            </a-sub-menu>
-            <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-              <a-icon :type='item.icon || "appstore"'/>
-              <span>{{ item.name }}</span>
-            </a-menu-item>
-          </a-menu>
-        </a-layout-sider>
+        <c-page-menus :menus="menus"/>
         <a-layout-content class="content">
           <keep-alive>
             <router-view name="innerView"></router-view>
@@ -58,6 +31,7 @@ export default {
   },
   data() {
     return {
+      title:'管理',
       userInfo: {
         name: ''
       },
@@ -135,7 +109,7 @@ export default {
       this.$store.state.token = token
       this.$store.state.userInfo = userInfo
       if (!!(token && userInfo)) {
-        this.$router.push('/manage/index')
+        this.$router.push('/manage/welcome')
       } else {
         this.$router.push('/login')
       }
@@ -145,6 +119,7 @@ export default {
       // let routerMap = this.demo.routerMap
       if (routerMap && routerMap.length) {
         $addRouters(routerMap)
+        this.checkLoginStatus()
       }
     },
     initMenus() {

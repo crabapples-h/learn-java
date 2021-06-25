@@ -6,17 +6,17 @@
           <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
           <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
             <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item.url)">
+            <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
               <a-icon :type="item.icon"/>
               <span>{{ item.name }}</span>
             </a-menu-item>
           </a-sub-menu>
-          <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
+          <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
             <a-icon :type="item.icon"/>
             <span>{{ item.name }}</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item :key="item.key" v-else @click="clickMenu(item.url)">
+        <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
           <a-icon :type="item.icon"/>
           <span>{{ item.name }}</span>
         </a-menu-item>
@@ -26,97 +26,29 @@
 </template>
 
 <script>
-import {manageRouter, manageRouter1} from "@/router/manage/manage";
-import RolesList from "@/views/manage/RolesList";
-import MenusList from "@/views/manage/MenusList";
-import {SysApis} from "@/api/Apis";
 
 export default {
   name: "C-PageMenus",
+  props: {
+    menus: {
+      type: Array,
+      required: true,
+      default: () => {
+        return []
+      }
+    }
+  },
   data() {
-    return {
-      menus: [
-        {
-          key: '1',
-          name: '用户管理',
-          icon: 'appstore',
-          url: '/sys/user-list',
-        },
-        {
-          key: '12',
-          name: '角色管理',
-          icon: 'appstore',
-          url: '/sys/roles-list',
-        },
-        {
-          key: '13',
-          name: '菜单管理',
-          icon: 'appstore',
-          url: '/sys/menus-list',
-        },
-        {
-          key: '99',
-          name: '系统管理',
-          icon: 'appstore',
-          url: '/',
-          children: [
-            {
-              key: '12331',
-              name: '菜单管理',
-              icon: 'appstore',
-              url: '/settings-menu',
-            }
-          ]
-        },
-      ],
-    };
+    return {};
   },
   activated() {
-    this.getUserMenus()
+    this.$router.push({path: '/manage/welcome'})
   },
   mounted() {
-    // this.$router.push({name: 'welcome'})
   },
   methods: {
-    getUserMenus() {
-      this.$http.get(SysApis.menus).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
-        }
-        console.log(12000)
-        let children = result.data.map(e => {
-          return {
-            path: e.path,
-            // components: {innerView: () => require('@/views/manage/UserList')},
-            // components: {innerView: resolve => require(['@/views/manage/UserList'], resolve),},
-            // components: {innerView: () => import('@/views/manage/UserList')},
-            name: 'user-list',
-          }
-        })
-        let routerMap = {
-          path: '/',
-          // component: import('@/views/manage'),
-          name: 'layout',
-          meta: {title: '首页', icon: 'clipboard'},
-          children: children
-        }
-        let array1 = [manageRouter]
-        let array = [routerMap]
-        console.log(array)
-        // console.log(manageRouter1)
-        // this.$router.addRoutes(array1)
-        this.$router.addRoutes(manageRouter1)
-        if (result.data !== null) {
-          // this.userInfo = result.data;
-          // sessionStorage.setItem("userInfo", result.data)
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    },
     clickMenu(e) {
-      this.$router.push(e)
+      this.$router.push(e.path)
     }
   }
 }
