@@ -1,19 +1,18 @@
 import Vue from 'vue'
 import App from './App'
 import Antd from 'ant-design-vue';
-import {router, $addRouters} from './router'
-import AxiosUtils from '@/utils/AxiosUtils'
-import {store} from '@/utils/store'
-import {auth} from '@/utils/v-auth'
+import router from '@/router'
+import store from '@/store'
+import axios from '@/utils/axios'
 import 'ant-design-vue/dist/antd.css';
-import '../public/color.less'
+import '@public/color.less'
+import '@/utils/permission'
 
 Vue.config.productionTip = false
 Vue.use(Antd)
-Vue.prototype.$http = AxiosUtils
+Vue.prototype.$http = axios
 new Vue({
     router,
     store,
-    auth,
     render: h => h(App),
 }).$mount('#app')

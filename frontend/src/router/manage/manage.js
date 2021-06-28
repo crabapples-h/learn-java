@@ -2,7 +2,7 @@ import Index from '@/views/manage/Index'
 import UserList from '@/views/manage/UsersList'
 import RolesList from '@/views/manage/RolesList'
 import MenusList from '@/views/manage/MenusList'
-import AxiosUtils from "@/utils/AxiosUtils";
+import AxiosUtils from "@/utils/axios";
 
 // AxiosUtils.get('/api/user/info').then(res => {
 //     console.log('测试123--->', res)

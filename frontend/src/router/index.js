@@ -1,24 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/base/Login'
-import Index from '@/views/manage/Index'
+import Index from "@/views/manage/Index";
+import Login from "@/views/base/Login";
 
 Vue.use(VueRouter)
 const baseRoutes = [
     {
-        path: '/',
-        redirect: '/index',
+        path: '/login',
+        component: Login,
+        hidden: true
     },
     {
         path: '/manage/index',
-        name: 'manage-index',
-        component: Index
-    },
-    {
-        path: '/login',
-        name: 'login',
-        component: Login,
-        meta: {title: '登录', icon: ''},
+        name: '/manage-index',
+        component: Index,
     },
     {
         path: '/404',
@@ -33,7 +28,7 @@ const baseRoutes = [
     {path: '*', redirect: '/404', hidden: true}
 ]
 
-const router = new VueRouter({
+let router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: baseRoutes,
@@ -45,4 +40,4 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 }
-export {router}
+export default router

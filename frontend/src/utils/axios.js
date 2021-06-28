@@ -8,10 +8,10 @@
  * pc-name mrhe
  */
 import axios from 'axios'
-import {router} from '@/router';
+import router from '@/router';
 import notification from 'ant-design-vue/es/notification'
 import {encrypt} from './RsaUtils1'
-import {getToken} from '@/utils/sessionUtils'
+import storage from '@/store/storage'
 
 import settings from '../../settings'
 
@@ -25,7 +25,7 @@ instance.interceptors.request.use(
         // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
         // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
         // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
-        const token = getToken();
+        const token = storage.getToken();
         if (token === null) {
             if (!isDebug) {
                 router.push('/login')
@@ -36,9 +36,6 @@ instance.interceptors.request.use(
         if (/get/i.test(config.method)) {
             config.params = config.params || {}
             config.params.temp = Date.parse(new Date()) / 1000
-            if (!!config.params.pageIndex) {
-                config.params.pageIndex--
-            }
         }
         return config;
     },
@@ -49,7 +46,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     response => {
         if (!isDebug)
-            console.warn('响应拦截->success', response);
+            console.info('响应拦截:[success]--->', response);
         let data = response.data
         if (response.data.status === 401) {
             router.push('/login')
@@ -59,7 +56,7 @@ instance.interceptors.response.use(
     // 服务器状态码不是200的情况
     error => {
         if (!isDebug)
-            console.warn('响应拦截->error', error);
+            console.error('响应拦截:[error]--->', error);
         notification.error({message: '服务器异常'});
         return Promise.reject(error.response)
     }

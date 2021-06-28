@@ -1,18 +1,18 @@
 <template>
   <div>
-    <p>6666666666666</p>
-<!--    <a-layout>-->
-<!--      <c-page-header :title="title"/>-->
-<!--      <a-layout>-->
-<!--        <c-page-menus :menus="menus"/>-->
-<!--        <a-layout-content class="content">-->
-<!--          <keep-alive>-->
-<!--            <router-view name="innerView"></router-view>-->
-<!--          </keep-alive>-->
-<!--        </a-layout-content>-->
-<!--      </a-layout>-->
-<!--      <c-page-footer/>-->
-<!--    </a-layout>-->
+    <p>666</p>
+    <!--    <a-layout>-->
+    <!--      <c-page-header :title="title"/>-->
+    <!--      <a-layout>-->
+    <!--        <c-page-menus :menus="menus"/>-->
+    <!--        <a-layout-content class="content">-->
+    <!--          <keep-alive>-->
+    <!--            <router-view name="innerView"></router-view>-->
+    <!--          </keep-alive>-->
+    <!--        </a-layout-content>-->
+    <!--      </a-layout>-->
+    <!--      <c-page-footer/>-->
+    <!--    </a-layout>-->
   </div>
 </template>
 
@@ -20,8 +20,7 @@
 import CPageHeader from "@/views/common/C-PageHeader";
 import CPageMenus from "@/views/common/C-PageMenus";
 import CPageFooter from "@/views/common/C-PageFooter";
-import {getRouterMap, getToken, getUserInfo} from "@/utils/sessionUtils";
-import {$addRouters} from "@/router";
+import storage from "@/store/storage";
 
 export default {
   name: "Index",
@@ -32,7 +31,7 @@ export default {
   },
   data() {
     return {
-      title:'管理',
+      title: '管理',
       userInfo: {
         name: ''
       },
@@ -99,6 +98,7 @@ export default {
     // this.initRouterMap()
   },
   mounted() {
+    this.$message.info('首页')
   },
   methods: {
     clickMenu(e) {
@@ -119,7 +119,7 @@ export default {
       let routerMap = getRouterMap()
       // let routerMap = this.demo.routerMap
       if (routerMap && routerMap.length) {
-        $addRouters(routerMap)
+        // $addRouters(routerMap)
         this.checkLoginStatus()
       }
     },

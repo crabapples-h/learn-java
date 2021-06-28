@@ -33,8 +33,8 @@ export default {
 
       // let token = sessionStorage.getItem('crabapples-token')
       // let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-      // this.$store.state.token = token
-      // this.$store.state.userInfo = userInfo
+      // this.$index.state.token = token
+      // this.$index.state.userInfo = userInfo
       // console.log('登录状态-->', !!(token && userInfo))
       // if (!!(token && userInfo)) {
       //   this.$router.push('/index')
