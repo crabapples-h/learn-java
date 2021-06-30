@@ -22,7 +22,7 @@
     </parent>
 
     <groupId>cn.crabapples</groupId>
-    <artifactId>learning-parent</artifactId>
+    <artifactId>learn-java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
