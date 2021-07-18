@@ -4,7 +4,24 @@ import Index from "@/views/manage/Index";
 import Login from "@/views/base/Login";
 
 Vue.use(VueRouter)
+let router = new VueRouter({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: baseRoutes,
+});
+// import {createRouter, createWebHistory} from 'vue-router'
+// // 还有 createWebHashHistory 和 createMemoryHistory
+//
+// let router = createRouter({
+//     history: createWebHistory(),
+//     routes: [],
+// })
 const baseRoutes = [
+    {
+        path: '/',
+        redirect: '/login',
+        hidden: true
+    },
     {
         path: '/login',
         component: Login,
@@ -27,12 +44,6 @@ const baseRoutes = [
     },
     {path: '*', redirect: '/404', hidden: true}
 ]
-
-let router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: baseRoutes,
-});
 
 //获取原型对象上的push函数
 const originalPush = VueRouter.prototype.push

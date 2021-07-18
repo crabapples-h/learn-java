@@ -1,18 +1,18 @@
 <template>
   <div>
-    <p>666</p>
-    <!--    <a-layout>-->
-    <!--      <c-page-header :title="title"/>-->
-    <!--      <a-layout>-->
-    <!--        <c-page-menus :menus="menus"/>-->
-    <!--        <a-layout-content class="content">-->
-    <!--          <keep-alive>-->
-    <!--            <router-view name="innerView"></router-view>-->
-    <!--          </keep-alive>-->
-    <!--        </a-layout-content>-->
-    <!--      </a-layout>-->
-    <!--      <c-page-footer/>-->
-    <!--    </a-layout>-->
+    <!--    <p>666</p>-->
+    <a-layout>
+      <c-page-header :title="title"/>
+      <a-layout>
+        <c-page-menus :menus="menus"/>
+        <a-layout-content class="content">
+          <keep-alive>
+            <router-view name="innerView"></router-view>
+          </keep-alive>
+        </a-layout-content>
+      </a-layout>
+      <c-page-footer/>
+    </a-layout>
   </div>
 </template>
 
@@ -93,9 +93,9 @@ export default {
     };
   },
   activated() {
-    // this.checkLoginStatus()
-    // this.initMenus()
-    // this.initRouterMap()
+    this.checkLoginStatus()
+    this.initMenus()
+    this.initRouterMap()
   },
   mounted() {
     this.$message.info('首页')
@@ -105,10 +105,8 @@ export default {
       this.$router.push(e.path)
     },
     checkLoginStatus() {
-      let token = getToken()
-      let userInfo = getUserInfo()
-      this.$store.state.token = token
-      this.$store.state.userInfo = userInfo
+      let token = this.$store.getters.token
+      let userInfo = this.$store.getters.userInfo
       if (!!(token && userInfo)) {
         this.$router.push('/manage/welcome')
       } else {
@@ -116,7 +114,7 @@ export default {
       }
     },
     initRouterMap() {
-      let routerMap = getRouterMap()
+      let routerMap = this.$store.getters.routers
       // let routerMap = this.demo.routerMap
       if (routerMap && routerMap.length) {
         // $addRouters(routerMap)
@@ -124,7 +122,8 @@ export default {
       }
     },
     initMenus() {
-      let menusSource = getRouterMap()
+      let menusSource = this.$store.getters.userMenus
+      console.log('menusSource', menusSource)
       let format = function (data) {
         return data.map(e => {
           if (e.menusType !== 1) {

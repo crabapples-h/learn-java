@@ -1,14 +1,9 @@
 const settings = {
     baseUrl: 'http://localhost:9093/', //测试环境
-    // fileServBaseUrl: 'http://www.gz.10086.cn/queue/', //文件服务器前缀
-    fileServBaseUrl: 'http://118.31.40.95:10372/', //开发文件服务器前缀
     url: function (path) {
         return this.baseUrl;
     },
-    fileurl: function (path) {
-        return this.fileServBaseUrl + path;
-    },
-    isDebug: true,
+    isDebug: false,
     isCrypt: false, //接口加密
     publicKey: '-----BEGIN PUBLIC KEY-----\n' +
         'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtEdgPwBkPuulvFSr0ESP\n' +

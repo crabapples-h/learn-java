@@ -45,7 +45,7 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     response => {
-        if (!isDebug)
+        if (isDebug)
             console.info('响应拦截:[success]--->', response);
         let data = response.data
         if (response.data.status === 401) {

@@ -3,7 +3,6 @@ import router from '@/router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import storage from '@/store/storage'
-import store from '@/store'
 import Login from '@/views/base/Login'
 import Index from '@/views/manage/Index'
 import notification from 'ant-design-vue/es/notification'
@@ -43,49 +42,38 @@ let parent = {
 
 //将所有树状路由信息转换为list
 function tree2list(children, routerList) {
-    children.forEach(e => {
-        let router = {
-            path: e.path,
-            components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
-            // component: () => import(`@/views/${e.filePath}.vue`),
-            // component: () => import(`@/views/${e.filePath}.vue`),
-            name: e.name,
-        }
-        routerList.push(router)
-        if (e.children && e.children.length > 0) {
-            tree2list(e.children, routerList)
-        }
-    })
+    if (children)
+        children.forEach(e => {
+            let router = {
+                path: e.path,
+                components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
+                name: e.name,
+            }
+            routerList.push(router)
+            if (e.children && e.children.length > 0) {
+                tree2list(e.children, routerList)
+            }
+        })
 }
 
+router.onError((a, b, c) => {
+    console.log('onError--->', a, b, c)
+})
 const whiteList = ['/login'] // 白名单
 router.beforeEach((to, from, next) => {
     NProgress.start() // 开始进度条
     const path = to.path
-    if (whiteList.includes(path)) {
-        console.log('进入白名单')
-        NProgress.done()
-        return next();
-    }
     let token = storage.getToken()
     console.log('path--->', path)
     if (token) {
         if (path === '/login') {
-            console.log('进入登陆页面')
-            // return next({path: '/manage-index'})
+            console.log('已经登陆过，直接进入首页')
+            return next({path: '/manage/index'})
         }
         let routerList = []
         tree2list(storage.getUserMenus(), routerList)
         parent.children = routerList
         router.addRoutes(routerList)
-        // console.log(routerList)
-        // document.title = to.meta.title ? to.meta.title : document.title
-
-        // setTimeout(function () {
-        // router.addRoutes(routerList)
-
-        // router.addRoutes(store.getters.routers)
-        // console.log(store.getters.routers)
         NProgress.done()
         console.log(1)
         const redirect = to.path
@@ -95,11 +83,14 @@ router.beforeEach((to, from, next) => {
         } else {
             next({path: redirect})
         }
-        // }, 2000)
     } else {
-        console.log(2)
-        notification.error({message: '路由拦截'});
-        // return next({path: '/login'});
+        if (whiteList.includes(path)) {
+            console.log('访问地址在白名单中：', path)
+            NProgress.done()
+            return next();
+        }
+        notification.error({message: '未检测到token且访问地址不在白名单中，即将跳转到登陆页面'});
+        return next({path: '/login'});
     }
 
 });
@@ -108,7 +99,7 @@ router.afterEach(() => {
     NProgress.done() // finish progress bar
 })
 router.onReady(() => {
-    console.log('准备----------------->')
+    console.log('onReady()----------------->')
     let routerList = []
     tree2list(storage.getUserMenus(), routerList)
     // router.addRoutes(routerList)

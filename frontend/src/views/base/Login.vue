@@ -22,17 +22,10 @@ export default {
     }
   },
   activated() {
-    // this.checkLoginStatus()
   },
   mounted() {
   },
   methods: {
-    checkLoginStatus() {
-      if (this.$store.getters.token) {
-        this.$router.push('/manage/index')
-      }
-    },
-
     async submit() {
       const _this = this
       let data = {
@@ -49,28 +42,12 @@ export default {
           this.$store.commit('setUserInfo', userInfo.data)
           this.$store.commit('setUserMenus', userMenus.data)
           this.$store.commit('setUserPermissions', permissions.data)
-          let routers = []
-          this.tree2list(userMenus.data, routers)
-          this.$store.commit('setRouters', routers)
-          await this.$router.push('/manage/index')
+          // _this.$route.push('/manage/index')
+          window.location.reload();
         } else {
           _this.$message.error('登录失败')
         }
       }
-    },
-    tree2list(children, routerList) {
-      children.forEach(e => {
-        let router = {
-          path: e.path,
-          components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
-          // components: () => import(`@/views/${e.filePath}.vue`),
-          name: e.name,
-        }
-        routerList.push(router)
-        if (e.children && e.children.length > 0) {
-          this.tree2list(e.children, routerList)
-        }
-      })
     },
     login(data) {
       return commonApi.login(data).then(result => {
