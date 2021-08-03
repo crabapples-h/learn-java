@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-
+import storage from '@/store/storage'
 export default {
   name: 'App',
   components: {},
@@ -25,6 +25,9 @@ export default {
     // window.addEventListener("beforeunload", () => {
     //   sessionStorage.setItem("pathName", window.location.pathname)
     // })
+    this.$store.commit('setUserInfo', storage.getUserInfo())
+    this.$store.commit('setUserMenus', storage.getUserMenus())
+    this.$store.commit('setUserPermissions', storage.getPermissions())
   },
   mounted() {
   },

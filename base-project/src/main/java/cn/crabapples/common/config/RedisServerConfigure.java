@@ -1,7 +1,6 @@
 package cn.crabapples.common.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.embedded.RedisServer;
 
@@ -9,7 +8,7 @@ import redis.embedded.RedisServer;
 @Slf4j
 public class RedisServerConfigure {
 
-    @Bean
+//    @Bean
     public RedisServer redisServer() {
         log.info("start init inner redis server");
         RedisServer redisServer = RedisServer.builder()
