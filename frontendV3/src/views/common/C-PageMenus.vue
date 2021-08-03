@@ -42,6 +42,7 @@ export default {
     return {};
   },
   activated() {
+    this.$router.push({path: '/manage/welcome'})
   },
   mounted() {
   },
@@ -54,7 +55,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "~@public/color.less";
 
 .title {
   font-size: 20px;

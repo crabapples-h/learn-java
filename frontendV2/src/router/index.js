@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from "@/views/manage/Index";
 import Login from "@/views/base/Login";
+import Welcome from "@/views/manage/Welcome";
 
 Vue.use(VueRouter)
 const baseRoutes = [
@@ -14,6 +15,11 @@ const baseRoutes = [
         path: '/manage/index',
         name: '/manage-index',
         component: Index,
+    },
+    {
+        path: '/manage/welcome',
+        name: '/manage-welcome',
+        component: Welcome,
     },
     {
         path: '/404',
@@ -36,8 +42,14 @@ let router = new VueRouter({
 
 //获取原型对象上的push函数
 const originalPush = VueRouter.prototype.push
+const originalReplace = VueRouter.prototype.replace
 //修改原型对象中的push方法
 VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
+}
+// replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+    return originalReplace.call(this, location).catch(err => err)
 }
 export default router

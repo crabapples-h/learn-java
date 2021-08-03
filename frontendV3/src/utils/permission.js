@@ -6,7 +6,6 @@ import storage from '@/store/storage'
 import Login from '@/views/base/Login'
 import Index from '@/views/manage/Index'
 import notification from 'ant-design-vue/es/notification'
-import Welcome from "@/views/manage/Welcome";
 
 let staticRouter = [
     {
@@ -18,11 +17,6 @@ let staticRouter = [
         path: '/manage/index',
         name: '/manage-index',
         component: Index,
-    },
-    {
-        path: '/manage/welcome',
-        name: '/manage-welcome',
-        component: Welcome,
     },
     {
         path: '/404',
@@ -38,7 +32,7 @@ let staticRouter = [
 ]
 NProgress.configure({showSpinner: false}) // 不显示进度环
 // router.addRoutes(staticRouter)
-let dynamicRouter = {
+let parent = {
     path: "/",
     component: Index,
     name: "首页",
@@ -62,15 +56,9 @@ function tree2list(children, routerList) {
         })
 }
 
-// router.onError((a, b, c) => {
-//     console.log('onError--->', a, b, c)
-// })
-
-function $initRouter(){
-    let routerList = []
-    tree2list(storage.getUserMenus(), routerList)
-    router.options.routes = staticRouter.concat(routerList)
-}
+router.onError((a, b, c) => {
+    console.log('onError--->', a, b, c)
+})
 const whiteList = ['/login'] // 白名单
 router.beforeEach((to, from, next) => {
     NProgress.start() // 开始进度条
@@ -82,11 +70,12 @@ router.beforeEach((to, from, next) => {
             console.log('已经登陆过，直接进入首页')
             return next({path: '/manage/index'})
         }
-
-        // router.addRoutes(routerList)
+        let routerList = []
+        tree2list(storage.getUserMenus(), routerList)
+        parent.children = routerList
+        router.addRoutes(routerList)
         NProgress.done()
         console.log(1)
-        console.log(router.options.routes)
         const redirect = to.path
         if (to.path === redirect) {
             console.log('页面地址:-->', to)
@@ -149,4 +138,4 @@ const auth = Vue.directive('auth', {
         }
     },
 })
-export {auth,$initRouter}
+export {auth}

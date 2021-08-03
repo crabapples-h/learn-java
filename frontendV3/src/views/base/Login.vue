@@ -11,7 +11,6 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
-import {$initRouter} from '@/utils/permission'
 import storage from '@/store/storage'
 
 export default {
@@ -43,9 +42,8 @@ export default {
           this.$store.commit('setUserInfo', userInfo.data)
           this.$store.commit('setUserMenus', userMenus.data)
           this.$store.commit('setUserPermissions', permissions.data)
-          $initRouter()
-          await _this.$router.replace('/manage/index')
-          // window.location.reload();
+          // _this.$route.push('/manage/index')
+          window.location.reload();
         } else {
           _this.$message.error('登录失败')
         }

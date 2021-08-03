@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "frontendV3",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "ant-design-vue": "^2.2.2",
+    "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "jsrsasign": "^10.3.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
@@ -24,7 +26,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "less": "^3.13.1",
+    "less-loader": "^5.0.0",
+    "style-resources-loader": "^1.4.1"
   }
 }

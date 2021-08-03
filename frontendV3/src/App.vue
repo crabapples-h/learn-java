@@ -1,30 +1,40 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <router-view v-slot="{ Component }">
+      <component :is="Component"/>
+    </router-view>
   </div>
-  <router-view/>
 </template>
+<script>
+import storage from '@/store/storage'
+import {reactive} from 'vue'
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+export default {
+  setup(e) {
+    console.log('setup', e)
+  },
+  created() {
+    // const _this = this
+    // let routerMap = getRouterMap()
+    // $addRouters(routerMap)
+    // let path = sessionStorage.getItem("pathName")
+    // sessionStorage.removeItem("pathName")
+    // if (!!path) {
+    //   _this.$router.push({path: path})
+    // }
+    // window.addEventListener("beforeunload", () => {
+    //   sessionStorage.setItem("pathName", window.location.pathname)
+    // })
+    // this.$store.commit('setUserInfo', storage.getUserInfo())
+    // this.$store.commit('setUserMenus', storage.getUserMenus())
+    // this.$store.commit('setUserPermissions', storage.getPermissions())
+  },
 }
+</script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+<style>
+#app {
+  margin: 0;
+  padding: 0;
 }
 </style>

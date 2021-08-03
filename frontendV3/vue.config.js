@@ -1,5 +1,5 @@
 // let url = global.setting && global.setting.baseUrl;
-let url = 'http://localhost:3300/';
+let url = 'http://localhost:9093/';
 let env = process.env.NODE_ENV;
 console.log(env);
 const path = require('path')
@@ -9,6 +9,7 @@ function resolve(dir) {
 }
 
 module.exports = {
+    lintOnSave: false,
     /** 区分打包环境与开发环境
      * process.env.NODE_ENV==='production'  (打包环境)
      * process.env.NODE_ENV==='development' (开发环境)
@@ -86,12 +87,17 @@ module.exports = {
         }
     },
     devServer: {
+        overlay: {
+            // warnings: false,
+            // errors: false
+        },
+
         open: process.platform === "darwin",
         disableHostCheck: false,
         host: "0.0.0.0",
         port: 8080,
         https: false,
-        hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
+        hotOnly: true, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
             '/api': {
                 target: url, // 接口的域名

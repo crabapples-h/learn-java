@@ -1,42 +1,23 @@
 <template>
   <div>
-    <a-layout-sider>
-      <a-menu style="width: 200px;height: 100%" mode="inline">
-        <a-sub-menu :key="item.key" v-for="item in menus" v-if="item.children && item.children.length">
-          <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-          <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
-            <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
-              <a-icon :type="item.icon"/>
-              <span>{{ item.name }}</span>
-            </a-menu-item>
-          </a-sub-menu>
-          <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-            <a-icon :type="item.icon"/>
-            <span>{{ item.name }}</span>
-          </a-menu-item>
-        </a-sub-menu>
-        <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-          <a-icon :type="item.icon"/>
-          <span>{{ item.name }}</span>
-        </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
+    <c-page-header/>
+    <!--    <login></login>-->
+
+    <c-page-footer/>
   </div>
 </template>
 
 <script>
+import Login from "@/views/base/Login";
+import CPageHeader from "@/views/common/C-PageHeader";
+import CPageFooter from "@/views/common/C-PageFooter";
 
 export default {
-  name: "C-PageMenus",
-  props: {
-    menus: {
-      type: Array,
-      required: true,
-      default: () => {
-        return []
-      }
-    }
+  name: "Layout",
+  components: {
+    Login,
+    CPageHeader,
+    CPageFooter,
   },
   data() {
     return {};
@@ -44,11 +25,23 @@ export default {
   activated() {
   },
   mounted() {
+    this.checkUserInfo()
   },
   methods: {
-    clickMenu(e) {
-      this.$router.push(e.path)
-    }
+    checkUserInfo() {
+      this.$router.push('/index')
+
+      // let token = sessionStorage.getItem('crabapples-token')
+      // let userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+      // this.$index.state.token = token
+      // this.$index.state.userInfo = userInfo
+      // console.log('登录状态-->', !!(token && userInfo))
+      // if (!!(token && userInfo)) {
+      //   this.$router.push('/index')
+      // } else {
+      //   this.$router.push('/login')
+      // }
+    },
   }
 }
 </script>

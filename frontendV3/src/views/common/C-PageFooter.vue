@@ -1,35 +1,12 @@
 <template>
-  <div>
-    <router-view/>
-  </div>
+  <a-layout-footer></a-layout-footer>
 </template>
 
 <script>
-import Login from "@/views/base/Login";
-import CPageHeader from "@/views/common/C-PageHeader";
-import CPageFooter from "@/views/common/C-PageFooter";
-
-export default {
-  name: "Layout",
-  components: {
-    Login,
-    CPageHeader,
-    CPageFooter,
-  },
-  data() {
-    return {};
-  },
-  activated() {
-  },
-  mounted() {
-  },
-  methods: {
-  }
-}
+export default {}
 </script>
 
 <style scoped lang="less">
-@import "~@public/color.less";
 
 .title {
   font-size: 20px;
