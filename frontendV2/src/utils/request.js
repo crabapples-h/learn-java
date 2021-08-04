@@ -10,7 +10,6 @@
 import axios from 'axios'
 import router from '@/router';
 import notification from 'ant-design-vue/es/notification'
-import {encrypt} from './RsaUtils1'
 import storage from '@/store/storage'
 
 import settings from '../../settings'

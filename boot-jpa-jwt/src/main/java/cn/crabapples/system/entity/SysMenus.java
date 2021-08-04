@@ -2,6 +2,7 @@ package cn.crabapples.system.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,6 +53,7 @@ public class SysMenus extends BaseEntity {
     private List<SysMenus> children;
 
     @Transient
+    @JSONField(serialize = false)
     private boolean showFlag;
 
     @Override

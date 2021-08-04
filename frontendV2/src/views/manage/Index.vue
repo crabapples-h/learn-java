@@ -1,10 +1,9 @@
 <template>
   <div>
-        <p>666</p>
     <a-layout>
       <c-page-header :title="title"/>
       <a-layout>
-        <c-page-menus :menus="menus"/>
+        <c-page-menus :menus="menus" @clickMenu="clickMenu"/>
         <a-layout-content class="content">
           <keep-alive>
             <router-view name="innerView"></router-view>
@@ -35,60 +34,6 @@ export default {
         name: ''
       },
       menus: [],
-      demo: {
-        routerMap: [
-          {
-            path: '/',
-            redirect: '/index',
-          },
-          {
-            path: '/manage/users-list',
-            name: 'users-list',
-            filePath: 'manage/UsersList',
-          },
-          {
-            path: '/manage/roles-list',
-            name: 'roles-list',
-            filePath: 'manage/RolesList',
-          },
-          {
-            path: '/manage/menus-list',
-            name: 'menus-list',
-            filePath: 'manage/MenusList',
-          },
-        ],
-        menus: [
-          {
-            key: '99',
-            name: '系统管理',
-            icon: 'appstore',
-            path: '/',
-            children: [
-              {
-                key: '13',
-                name: '菜单管理',
-                icon: 'appstore',
-                path: '/manage/menus-list',
-                sort: 999,
-              },
-              {
-                key: '12',
-                name: '角色管理',
-                icon: 'appstore',
-                path: '/manage/roles-list',
-                sort: 998,
-              },
-              {
-                key: '1',
-                name: '用户管理',
-                icon: 'appstore',
-                path: '/manage/users-list',
-                sort: 997,
-              },
-            ]
-          },
-        ]
-      }
     };
   },
   activated() {
@@ -102,6 +47,7 @@ export default {
   },
   methods: {
     clickMenu(e) {
+      console.log(e)
       this.$router.push(e.path)
     },
     checkLoginStatus() {
@@ -111,14 +57,6 @@ export default {
         this.$router.push('/manage/welcome')
       } else {
         this.$router.replace('/login')
-      }
-    },
-    initRouterMap() {
-      let routerMap = this.$store.getters.routers
-      // let routerMap = this.demo.routerMap
-      if (routerMap && routerMap.length) {
-        // $addRouters(routerMap)
-        this.checkLoginStatus()
       }
     },
     initMenus() {

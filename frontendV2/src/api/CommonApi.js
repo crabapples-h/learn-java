@@ -1,4 +1,4 @@
-import instance from "@/utils/axios";
+import instance from "@/utils/request";
 import storage from "@/store/storage"
 import {SysApis} from "@/api/Apis"
 

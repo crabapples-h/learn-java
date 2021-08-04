@@ -6,17 +6,17 @@
           <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
           <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
             <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
+            <a-menu-item :key="item.key" v-for="item in item.children" @click="click(item)">
               <a-icon :type="item.icon"/>
               <span>{{ item.name }}</span>
             </a-menu-item>
           </a-sub-menu>
-          <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
+          <a-menu-item :key="item.key" v-else @click="click(item)">
             <a-icon :type="item.icon"/>
             <span>{{ item.name }}</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
+        <a-menu-item :key="item.key" v-else @click="click(item)">
           <a-icon :type="item.icon"/>
           <span>{{ item.name }}</span>
         </a-menu-item>
@@ -36,7 +36,10 @@ export default {
       default: () => {
         return []
       }
-    }
+    },
+    clickMenu: {
+      type: Function,
+    },
   },
   data() {
     return {};
@@ -46,8 +49,8 @@ export default {
   mounted() {
   },
   methods: {
-    clickMenu(e) {
-      this.$router.push(e.path)
+    click(e) {
+      this.$emit("clickMenu", e)
     }
   }
 }

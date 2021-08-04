@@ -11,8 +11,6 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
-import {$initRouter} from '@/utils/permission'
-import storage from '@/store/storage'
 
 export default {
   name: 'Login',
@@ -43,7 +41,6 @@ export default {
           this.$store.commit('setUserInfo', userInfo.data)
           this.$store.commit('setUserMenus', userMenus.data)
           this.$store.commit('setUserPermissions', permissions.data)
-          $initRouter()
           await _this.$router.replace('/manage/index')
           // window.location.reload();
         } else {
