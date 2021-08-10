@@ -19,6 +19,7 @@
 import CPageHeader from "@/views/common/C-PageHeader";
 import CPageMenus from "@/views/common/C-PageMenus";
 import CPageFooter from "@/views/common/C-PageFooter";
+import permissions from "@/store/modules/permissions";
 
 export default {
   name: "Index",
@@ -60,38 +61,8 @@ export default {
       }
     },
     initMenus() {
-      let menusSource = this.$store.getters.userMenus
-      console.log('menusSource', menusSource)
-      let format = function (data) {
-        return data.map(e => {
-          if (e.menusType !== 1) {
-            return null
-          }
-          let icon = e.icon.substring(e.icon.indexOf("\"") + 1, e.icon.lastIndexOf("\""))
-          let menus = {
-            id: e.id,
-            key: e.id,
-            name: e.name,
-            icon: icon,
-            path: e.path,
-            sort: e.sort,
-          }
-          if (e.children && e.children.length > 0) {
-            let children = format(e.children).filter(e => {
-              return !!e
-            })
-            if (children && children.length)
-              menus.children = children
-          }
-          return menus
-        }).sort((a, b) => {
-          if (a && b && a.sort && b.sort)
-            return a.sort - b.sort
-        });
-      }
-      this.menus = format(menusSource)
-      // this.menus = this.demo.menus
-      // console.log('menus-->', this.menus)
+      this.menus = this.$store.getters.MENUS
+      console.log('menus-->', this.$store.getters.MENUS)
     },
 
   }

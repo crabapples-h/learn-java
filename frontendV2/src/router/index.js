@@ -6,6 +6,7 @@ import Welcome from "@/views/manage/Welcome";
 import RolesList from "@/views/manage/RolesList";
 import NProgress from "nprogress";
 import storage from "@/store/storage";
+import state from "@/store/index";
 import notification from "ant-design-vue/lib/notification";
 
 NProgress.configure({showSpinner: false}) // 不显示进度环
@@ -60,7 +61,7 @@ Vue.use(VueRouter)
 let router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes: staticRouter.concat(tree2list(storage.getUserMenus())),
+    routes: staticRouter,
 });
 
 //将树状路由转换为list
@@ -89,13 +90,15 @@ function tree2list(data) {
 router.beforeEach((to, from, next) => {
     const path = to.path
     console.log('path--->', path)
-    let routerList = tree2list(storage.getUserMenus())
-    console.log('routerList-->', routerList)
+    console.log('storage.getUserMenus()-->',storage.getUserMenus())
+    console.log('storage.getUserMenus(1111111111111)-->',state.getters.token)
+    // let routerList = tree2list(state.getUserMenus())
+    // console.log('routerList-->', routerList)
     // router.options.routes = staticRouter.concat(routerList)
     // routerList.forEach(e => {
     //     router.addRoute(e)
     // })
-
+    // router.addRoutes(routerList)
     console.log('routes-->', router.options.routes)
     next()
 
@@ -107,7 +110,7 @@ router.afterEach(() => {
 router.onReady(() => {
     console.log('onReady()----------------->')
     let routerList = []
-    tree2list(storage.getUserMenus(), routerList)
+    // tree2list(storage.getUserMenus(), routerList)
     // router.addRoutes(routerList)
 })
 //获取原型对象上的push函数

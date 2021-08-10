@@ -9,19 +9,19 @@
  */
 
 export default {
-    getToken: () => sessionStorage.getItem('token'),
-    setToken: (token) => sessionStorage.setItem('token', token),
+    getToken: () => localStorage.getItem('TOKEN'),
+    setToken: (token) => localStorage.setItem('TOKEN', token),
 
-    getUserInfo: () => JSON.parse(sessionStorage.getItem('userInfo')),
-    setUserInfo: (userInfo) => sessionStorage.setItem('userInfo', JSON.stringify(userInfo)),
+    getUserInfo: () => JSON.parse(localStorage.getItem('USER_INFO')),
+    setUserInfo: (userInfo) => localStorage.setItem('USER_INFO', JSON.stringify(userInfo)),
 
-    getUserMenus: () => JSON.parse(sessionStorage.getItem('menus')),
-    setUserMenus: (menus) => sessionStorage.setItem('menus', JSON.stringify(menus)),
+    getUserMenus: () => JSON.parse(localStorage.getItem('MENUS')),
+    setUserMenus: (menus) => localStorage.setItem('MENUS', JSON.stringify(menus)),
 
-    getPermissions: () => JSON.parse(sessionStorage.getItem('permissions')),
-    setPermissions: (permissions) => sessionStorage.setItem('permissions', JSON.stringify(permissions)),
+    getPermissions: () => JSON.parse(localStorage.getItem('PERMISSIONS')),
+    setPermissions: (permissions) => localStorage.setItem('PERMISSIONS', JSON.stringify(permissions)),
 
-    getRouters: () => JSON.parse(sessionStorage.getItem('routers')),
-    setRouters: (routers) => sessionStorage.setItem('routers', JSON.stringify(routers)),
+    getRouters: () => JSON.parse(localStorage.getItem('ROUTERS')),
+    setRouters: (routers) => localStorage.setItem('ROUTERS', JSON.stringify(routers)),
 
 }

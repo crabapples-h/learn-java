@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import commonApi from '@/api/CommonApi'
 
 export default {
   name: 'Login',
@@ -25,79 +24,16 @@ export default {
   mounted() {
   },
   methods: {
-    async submit() {
+    submit() {
       const _this = this
       let data = {
         username: _this.username,
         password: _this.password
       };
-      let token = await _this.login(data)
-      if (token.status === 200) {
-        this.$store.commit('setToken', token.data)
-        let userInfo = await _this.getUserInfo()
-        let userMenus = await _this.getUserMenus()
-        let permissions = await _this.getPermissions()
-        if (userInfo.status && userMenus.status && permissions.status) {
-          this.$store.commit('setUserInfo', userInfo.data)
-          this.$store.commit('setUserMenus', userMenus.data)
-          this.$store.commit('setUserPermissions', permissions.data)
-          await _this.$router.replace('/manage/index')
-          // window.location.reload();
-        } else {
-          _this.$message.error('登录失败')
-        }
-      }
-    },
-    login(data) {
-      return commonApi.login(data).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return
-        }
-        return Promise.resolve({status: 200, data: result.data})
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      })
-    },
-    //获取用户信息
-    getUserInfo() {
-      return commonApi.getUserInfo().then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      })
-    },
-    //获取用户拥有的菜单，并根据菜单生成路由表
-    getUserMenus() {
-      return commonApi.getUserMenus().then(result => {
-        if (result.status !== 200) {
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    },
-    //获取用户拥有的权限(按钮)
-    getPermissions() {
-      return commonApi.getUserPermissions().then(result => {
-        if (result.status !== 200) {
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+      this.$store.dispatch('LOGIN', data)
+      this.$store.dispatch('USER_INFO')
+      this.$store.dispatch('MENUS')
+      this.$store.dispatch('PERMISSIONS')
     },
   }
 }
