@@ -33,6 +33,7 @@ const user = {
                     return
                 }
                 object.commit('TOKEN', data)
+                storage.login()
                 router.replace('/manage/index')
             }).catch(function (error) {
                 console.error('出现错误:', error);
