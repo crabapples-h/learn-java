@@ -1,3 +1,12 @@
+/**
+ * TODO
+ *
+ * @author Mr.He
+ * 2021/8/12 23:54
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mrhe
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from "@/views/manage/Index";
@@ -5,9 +14,11 @@ import Login from "@/views/base/Login";
 import Welcome from "@/views/manage/Welcome";
 import RolesList from "@/views/manage/RolesList";
 import NProgress from "nprogress";
+import 'nprogress/nprogress.css'
 import storage from "@/store/storage";
-import state from "@/store/index";
-import notification from "ant-design-vue/lib/notification";
+import store from "@/store";
+
+Vue.use(VueRouter)
 
 NProgress.configure({showSpinner: false}) // 不显示进度环
 const staticRouter = [
@@ -43,6 +54,9 @@ const staticRouter = [
         meta: {title: '欢迎使用', icon: 'clipboard'},
         component: Welcome,
     },
+
+]
+const errorRouter = [
     {
         path: '/404',
         meta: {title: '找不到页面', icon: 'clipboard'},
@@ -57,7 +71,13 @@ const staticRouter = [
     },
     {path: '*', redirect: '/404', hidden: true}
 ]
-Vue.use(VueRouter)
+let customRouter = {
+    path: '/',
+    component: resolve => require(['@/views/manage/Index.vue'], resolve),
+    name: 'layout',
+    meta: {title: '首页', icon: 'clipboard'},
+    children: null
+}
 let router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
@@ -66,14 +86,16 @@ let router = new VueRouter({
 
 //将树状路由转换为list
 function tree2list(data) {
+    if (!data) {
+        return []
+    }
     let array = []
     data.map(e => {
         if (e.path) {
-            console.log(e.path, `@/views/${e.filePath}.vue`)
             if (e.path !== '/manage/roles-list') {
                 array.push({
                     path: e.path,
-                    components: {innerView: require([`@/views/${e.filePath}.vue`])},
+                    component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
                     name: e.name,
                 })
             }
@@ -86,32 +108,36 @@ function tree2list(data) {
     return array
 }
 
+const whiteList = ['/login'] // 白名单
 
 router.beforeEach((to, from, next) => {
+    NProgress.start()
     const path = to.path
-    console.log('path--->', path)
-    console.log('storage.getUserMenus()-->',storage.getUserMenus())
-    console.log('storage.getUserMenus(1111111111111)-->',state.getters.token)
-    // let routerList = tree2list(state.getUserMenus())
-    // console.log('routerList-->', routerList)
-    // router.options.routes = staticRouter.concat(routerList)
-    // routerList.forEach(e => {
-    //     router.addRoute(e)
-    // })
-    // router.addRoutes(routerList)
-    console.log('routes-->', router.options.routes)
+    console.log('路由地址----->path:', path)
+    if (storage.getToken()) {
+        console.log('token:', store.getters.TOKEN)
+    } else {
+        if (whiteList.includes(path)) {
+            console.log('访问地址在白名单中：', path)
+            NProgress.done()
+            return next();
+        } else {
+            console.error('t1oken不存在，且path不在白名单中，跳转重新登陆')
+            next({path: '/login'})
+        }
+    }
     next()
-
 })
 router.afterEach(() => {
-    // notification.info({message: '路由完成'})
     NProgress.done() // finish progress bar
 })
 router.onReady(() => {
-    console.log('onReady()----------------->')
-    let routerList = []
-    // tree2list(storage.getUserMenus(), routerList)
-    // router.addRoutes(routerList)
+    console.log('onReady()----------------->加载路由')
+    customRouter.children = tree2list(storage.getUserMenus())
+    router.addRoute(customRouter)
+    errorRouter.forEach(e => {
+        router.addRoute(e)
+    })
 })
 //获取原型对象上的push函数
 const originalPush = VueRouter.prototype.push

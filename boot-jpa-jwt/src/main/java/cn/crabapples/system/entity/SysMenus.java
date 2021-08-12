@@ -25,7 +25,7 @@ import java.util.List;
 @Getter
 @Entity
 public class SysMenus extends BaseEntity {
-    @Column(columnDefinition = "tinyint(4) default -1 comment '菜单排序号'")
+    @Column(columnDefinition = "tinyint(4) default -1 comment '排序'")
     private Integer sort;
 
     @Column(columnDefinition = "varchar(64) comment '菜单图标'")
@@ -40,7 +40,7 @@ public class SysMenus extends BaseEntity {
     @Column(columnDefinition = "tinyint(1) default 0 comment '是否为跟目录 0:是 1:否'")
     private int isRoot;
 
-    @Column(columnDefinition = "varchar(64) default null comment '浏览器显示路径'")
+    @Column(columnDefinition = "varchar(64) default null comment '浏览器访问路径'")
     private String path;
 
     @Column(columnDefinition = "varchar(64) default null comment '文件存放路径'")

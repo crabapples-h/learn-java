@@ -8,6 +8,8 @@
 import storage from "@/store/storage";
 import commonApi from "@/api/CommonApi";
 import router from "@/router";
+import message from "ant-design-vue/es/message"
+import notification from 'ant-design-vue/es/notification'
 
 const user = {
     state: {
@@ -27,17 +29,21 @@ const user = {
     },
     actions: {
         LOGIN(object, data) {
-            commonApi.login(data).then(({status, data, message}) => {
+            return commonApi.login(data).then(({status, data, message}) => {
                 if (status !== 200) {
-                    this.$message.error(message);
-                    return
+                    notification.error({message: message});
+                    return Promise.reject(message)
                 }
                 object.commit('TOKEN', data)
-                storage.login()
                 router.replace('/manage/index')
+                return Promise.resolve(message)
             }).catch(function (error) {
                 console.error('出现错误:', error);
+                return Promise.reject(message)
             })
+        },
+        INIT_TOKEN(object, data) {
+            object.commit('TOKEN', data)
         },
         USER_INFO(object, data) {
             commonApi.getUserInfo().then(({status, data, message}) => {

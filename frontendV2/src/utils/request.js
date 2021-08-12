@@ -38,6 +38,8 @@ instance.interceptors.response.use(
             console.info('响应拦截:[success]--->', response);
         let data = response.data
         if (response.data.status === 401) {
+            notification.error({message: response.data.message});
+            storage.logout()
             router.push('/login')
         }
         return response.status === 200 ? Promise.resolve(data) : Promise.reject(data)

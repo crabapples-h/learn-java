@@ -15,18 +15,24 @@ export default {
     return {}
   },
   created() {
-    if (storage.checkLoginStatus()) {
-      this.$store.dispatch('MENUS').then(e=>{
-        console.log('dispatch-->',e)
-      })
-      this.$store.dispatch('PERMISSIONS')
-      this.$store.dispatch('USER_INFO')
-    }
-
+    this.initToken()
   },
   mounted() {
   },
-  methods: {}
+  methods: {
+    initToken() {
+      const token = storage.getToken()
+      if (token) {
+        this.$store.dispatch('INIT_TOKEN', token)
+        this.$store.dispatch('MENUS')
+        this.$store.dispatch('PERMISSIONS')
+        this.$store.dispatch('USER_INFO')
+        this.$router.push('/manage/index')
+      } else {
+        console.log('token不存在:', token)
+      }
+    }
+  }
 }
 </script>
 

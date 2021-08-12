@@ -50,6 +50,8 @@ const permissions = {
                                 icon: icon,
                                 path: e.path,
                                 sort: e.sort,
+                                filePath: e.filePath,
+                                permission: e.permission,
                             }
                             if (e.children && e.children.length > 0) {
                                 let children = formatMenus(e.children).filter(e => {
@@ -71,6 +73,18 @@ const permissions = {
             });
         },
         PERMISSIONS(object, data) {
+            commonApi.getUserPermissions().then(({status, data}) => {
+                if (status !== 200) {
+                    return;
+                }
+                if (data !== null) {
+                    object.commit('PERMISSIONS', data)
+                }
+            }).catch(function (error) {
+                console.error('出现错误:', error);
+            });
+        },
+        ROUTERS(object, data) {
             commonApi.getUserPermissions().then(({status, data}) => {
                 if (status !== 200) {
                     return;

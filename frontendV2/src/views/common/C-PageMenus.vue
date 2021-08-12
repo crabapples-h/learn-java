@@ -7,17 +7,18 @@
           <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
             <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
             <a-menu-item :key="item.key" v-for="item in item.children" @click="click(item)">
-              <a-icon :type="item.icon"/>
-              <span>{{ item.name }}</span>
+              <a-icon :type="item.icon" v-if="item.icon"/>
+              <span>222{{ item.name }}</span>
+              <span>{{ item.icon }}</span>
             </a-menu-item>
           </a-sub-menu>
           <a-menu-item :key="item.key" v-else @click="click(item)">
-            <a-icon :type="item.icon"/>
+            <a-icon :type="item.icon" v-if="item.icon"/>
             <span>{{ item.name }}</span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item :key="item.key" v-else @click="click(item)">
-          <a-icon :type="item.icon"/>
+          <a-icon :type="item.icon" v-if="item.icon"/>
           <span>{{ item.name }}</span>
         </a-menu-item>
       </a-menu>

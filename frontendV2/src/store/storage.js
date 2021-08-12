@@ -24,9 +24,5 @@ export default {
     getRouters: () => JSON.parse(localStorage.getItem('ROUTERS')),
     setRouters: (routers) => localStorage.setItem('ROUTERS', JSON.stringify(routers)),
 
-    checkLoginStatus: () => localStorage.getItem('IS_LOGIN'),
-    login: () => localStorage.setItem('IS_LOGIN', 'true'),
-    logout: () => localStorage.removeItem('IS_LOGIN'),
-
-
+    logout: () => localStorage.removeItem('TOKEN'),
 }

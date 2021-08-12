@@ -1,5 +1,6 @@
 // let url = global.setting && global.setting.baseUrl;
-let url = 'http://localhost:3300/';
+// let url = 'http://localhost:3300/';
+let url = 'http://localhost:9093/';
 let env = process.env.NODE_ENV;
 console.log(env);
 const path = require('path')

@@ -3,10 +3,11 @@
     <a-layout>
       <c-page-header :title="title"/>
       <a-layout>
-        <c-page-menus :menus="menus" @clickMenu="clickMenu"/>
+        <c-page-menus :menus="$store.getters.MENUS" @clickMenu="clickMenu"/>
         <a-layout-content class="content">
+          {{$store.getters.ROUTERS}}
           <keep-alive>
-            <router-view name="innerView"></router-view>
+            <router-view ></router-view>
           </keep-alive>
         </a-layout-content>
       </a-layout>
@@ -34,37 +35,17 @@ export default {
       userInfo: {
         name: ''
       },
-      menus: [],
     };
   },
   activated() {
-    // this.checkLoginStatus()
-    this.initMenus()
-    // this.initRouterMap()
   },
   mounted() {
-    // this.$router.push({path: '/manage/welcome'})
     this.$message.info('首页')
   },
   methods: {
     clickMenu(e) {
-      console.log(e)
       this.$router.push(e.path)
     },
-    checkLoginStatus() {
-      let token = this.$store.getters.token
-      let userInfo = this.$store.getters.userInfo
-      if (!!(token && userInfo)) {
-        this.$router.push('/manage/welcome')
-      } else {
-        this.$router.replace('/login')
-      }
-    },
-    initMenus() {
-      this.menus = this.$store.getters.MENUS
-      console.log('menus-->', this.$store.getters.MENUS)
-    },
-
   }
 }
 </script>
