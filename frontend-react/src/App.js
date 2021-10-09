@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Form from './views/Form';
+import Context from "./utils/ContextUtils";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <Context.Provider value={{aa:'aa',bb:124}}>
+                <Form demo={123}>哈哈</Form>
+            </Context.Provider>
+        </div>
+    );
 }
+
+// class App extends React.Component {
+//     render() {
+//         return (
+//             <div>
+//                 <Context.Provider value="哈哈哈">
+//                     <Form/>
+//                 </Context.Provider>
+//             </div>
+//         );
+//     }
+// }
 
 export default App;

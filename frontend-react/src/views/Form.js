@@ -1,23 +1,29 @@
 import React from "react";
+import {Button} from 'antd';
+import List from './List'
+import PropTypes from "prop-types"
+
+import Context from "../utils/ContextUtils";
 
 class Form extends React.Component {
+
     state = {
-        name: '',
+        age: '',
         say: '',
         list: [],
     }
     add = () => {
-        let {list, name, say} = this.state
-        if (!(name.trim() && say.trim())) {
+        let {list, age, say} = this.state
+        if (!(age.trim() && say.trim())) {
             console.log('用户名或密码不能为空')
             return
         }
         list.push({
-            name: name,
+            age: age,
             say: say,
         })
         this.setState({
-            name: '',
+            age: '',
             say: '',
             list: list
         })
@@ -37,24 +43,50 @@ class Form extends React.Component {
         return this.state.list.map((e, index) => {
             return (
                 <li key={index}>
-                    <p>{e.name}-{e.say}</p>
+                    <p>{e.age}-{e.say}</p>
                 </li>
             )
         })
     }
+    del = (index) => {
+        console.log('del-->', index)
+        let list = this.state.list
+        list.splice(index, 1)
+        this.setState({list: list})
+    }
+    constructor(props) {
+        super(props);
+        console.log(this.props)
+    }
+    componentDidMount() {
+        console.log('componentDidMount-->')
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('componentDidUpdate-->',prevProps,prevState,snapshot)
+    }
 
     render() {
         return (
-            <div>
-                <p><input type="text" name="name" value={this.state.name} onChange={this.change}/></p>
-                <p><input type="text" name="say" value={this.state.say} onChange={this.change}/></p>
+            <>
+                <Context.Consumer>
+                    {value => console.log(value)}
+                </Context.Consumer>
+                <p><input name="age" value={this.state.age} onChange={this.change}/></p>
+                <p><input name="say" value={this.state.say} onChange={this.change}/></p>
                 <p>
-                    <button onClick={this.add}>添加</button>
+                    <Button type="primary" onClick={this.add}>添加</Button>
                 </p>
-                <ul>{this.list()}</ul>
-            </div>
+                <List list={this.state.list} del={this.del}/>
+            </>
         )
     }
+}
+Form.propTypes={
+    demo:PropTypes.number.isRequired,
+    demo1:PropTypes.string,
+}
+Form.defaultProps={
+    demo1:'PropTypes.number.isRequired'
 }
 
 export default Form
