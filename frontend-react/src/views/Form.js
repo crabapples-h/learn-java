@@ -1,6 +1,7 @@
 import React from "react";
 import {Button} from 'antd';
 import List from './List'
+import MouseListener from './MouseListener'
 import PropTypes from "prop-types"
 
 import Context from "../utils/ContextUtils";
@@ -68,6 +69,7 @@ class Form extends React.Component {
     render() {
         return (
             <>
+                <MouseListener/>
                 <Context.Consumer>
                     {value => console.log(value)}
                 </Context.Consumer>
