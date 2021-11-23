@@ -13,6 +13,7 @@
         <module>base-project</module>
         <module>frontendV2</module>
         <module>frontendV3</module>
+        <module>frontend-react</module>
     </modules>
 
     <parent>

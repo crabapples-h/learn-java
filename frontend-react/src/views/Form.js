@@ -69,7 +69,10 @@ class Form extends React.Component {
     render() {
         return (
             <>
-                <MouseListener/>
+                <MouseListener>{(e)=>{
+                    console.log(e)
+                return <p><span>{e.x}</span>-<span>{e.y}</span></p>}
+                }</MouseListener>
                 <Context.Consumer>
                     {value => console.log(value)}
                 </Context.Consumer>
