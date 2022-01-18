@@ -1,4 +1,4 @@
-package demo;
+package demo.mq;
 
 import com.rabbitmq.client.*;
 import demo.mq.RabbitmqDemoConfigure;

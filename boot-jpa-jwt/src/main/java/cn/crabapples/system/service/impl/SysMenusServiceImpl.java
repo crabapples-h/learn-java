@@ -74,7 +74,7 @@ public class SysMenusServiceImpl implements SysMenusService {
 
 
     /**
-     * 获取当前用户所拥有的角色的所有菜单并去重
+     * 获取当前用户所拥有的角色的所有菜单ID并去重
      */
     private List<String> getUserMenusIds(HttpServletRequest request) {
         SysUser user = userService.getUserInfo(request);
@@ -91,7 +91,7 @@ public class SysMenusServiceImpl implements SysMenusService {
     }
 
     /**
-     * 删除菜单
+     * 删除菜单-逻辑
      */
     @Override
     public SysMenus removeMenus(String id) {
@@ -99,6 +99,14 @@ public class SysMenusServiceImpl implements SysMenusService {
         entity.setDelFlag(DIC.IS_DEL);
         removeRolesMenus(id);
         return menusDAO.save(entity);
+    }
+
+    /**
+     * 删除菜单-物理
+     */
+    @Override
+    public void removeReallyMenus(String id) {
+        menusDAO.remove(id);
     }
 
     /**

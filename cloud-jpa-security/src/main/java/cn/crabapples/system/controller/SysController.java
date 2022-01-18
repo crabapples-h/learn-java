@@ -1,8 +1,8 @@
 package cn.crabapples.system.controller;
 
-import cn.crabapples.common.groups.IsLogin;
-import cn.crabapples.system.common.BaseController;
+import cn.crabapples.common.Groups;
 import cn.crabapples.common.dto.ResponseDTO;
+import cn.crabapples.system.common.BaseController;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SysService;
@@ -70,7 +70,7 @@ public class SysController extends BaseController {
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO login(@RequestBody UserForm form){
         logger.info("收到请求->用户登陆:[{}]",form);
-        super.validator(form, IsLogin.class);
+        super.validator(form, Groups.IsLogin.class);
         Map<String,String> tokenInfo = sysService.login(form);
         logger.info("登录成功->用户信息:[{}]",tokenInfo);
         return ResponseDTO.returnSuccess("操作成功",tokenInfo);

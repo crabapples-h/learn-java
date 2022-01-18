@@ -1,10 +1,8 @@
 package cn.crabapples.system.controller;
 
-import cn.crabapples.common.groups.IsAdd;
-import cn.crabapples.common.groups.IsEdit;
-import cn.crabapples.common.groups.IsStatusChange;
-import cn.crabapples.system.common.BaseController;
+import cn.crabapples.common.Groups;
 import cn.crabapples.common.dto.ResponseDTO;
+import cn.crabapples.system.common.BaseController;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.UserService;
@@ -42,29 +40,29 @@ public class UserController extends BaseController {
 
     @PostMapping("/addUser")
     @ApiOperation(value = "添加用户", notes = "添加用户接口")
-    public ResponseDTO addUser(@RequestBody UserForm form){
-        logger.info("收到请求->添加用户:[{}]",form);
-        super.validator(form, IsAdd.class);
+    public ResponseDTO addUser(@RequestBody UserForm form) {
+        logger.info("收到请求->添加用户:[{}]", form);
+        super.validator(form, Groups.IsAdd.class);
         SysUser user = userService.addUser(form);
-        logger.info("用户添加完成->用户信息:[{}]",user);
-        return ResponseDTO.returnSuccess("操作成功",user);
+        logger.info("用户添加完成->用户信息:[{}]", user);
+        return ResponseDTO.returnSuccess("操作成功", user);
     }
 
     @PostMapping("/editUser")
     @ApiOperation(value = "修改用户", notes = "修改用户接口")
-    public ResponseDTO editUser(@RequestBody UserForm form){
-        logger.info("收到请求->修改用户:[{}]",form);
-        super.validator(form, IsEdit.class);
+    public ResponseDTO editUser(@RequestBody UserForm form) {
+        logger.info("收到请求->修改用户:[{}]", form);
+        super.validator(form, Groups.IsEdit.class);
         SysUser user = userService.editUser(form);
-        logger.info("用户修改完成->用户信息:[{}]",user);
-        return ResponseDTO.returnSuccess("操作成功",user);
+        logger.info("用户修改完成->用户信息:[{}]", user);
+        return ResponseDTO.returnSuccess("操作成功", user);
     }
 
     @PostMapping("/delUser")
     @ApiOperation(value = "删除用户", notes = "删除用户接口")
-    public ResponseDTO delUser(@RequestBody UserForm form){
-        super.validator(form, IsStatusChange.class);
-        logger.info("收到请求->删除用户:[{}]",form.getId());
+    public ResponseDTO delUser(@RequestBody UserForm form) {
+        super.validator(form, Groups.IsStatusChange.class);
+        logger.info("收到请求->删除用户:[{}]", form.getId());
         userService.delUser(form.getId());
         logger.info("用户删除完成");
         return ResponseDTO.returnSuccess("操作成功");
@@ -72,9 +70,9 @@ public class UserController extends BaseController {
 
     @PostMapping("/unActiveUser")
     @ApiOperation(value = "禁用用户", notes = "禁用用户接口")
-    public ResponseDTO unActiveUser(@RequestBody UserForm form){
-        super.validator(form, IsStatusChange.class);
-        logger.info("收到请求->禁用用户:[{}]",form.getId());
+    public ResponseDTO unActiveUser(@RequestBody UserForm form) {
+        super.validator(form, Groups.IsStatusChange.class);
+        logger.info("收到请求->禁用用户:[{}]", form.getId());
         userService.unActiveUser(form.getId());
         logger.info("用户禁用完成");
         return ResponseDTO.returnSuccess("操作成功");
@@ -82,9 +80,9 @@ public class UserController extends BaseController {
 
     @PostMapping("/activeUser")
     @ApiOperation(value = "激活用户", notes = "激活用户接口")
-    public ResponseDTO activeUser(@RequestBody UserForm form){
-        super.validator(form, IsStatusChange.class);
-        logger.info("收到请求->激活用户:[{}]",form.getId());
+    public ResponseDTO activeUser(@RequestBody UserForm form) {
+        super.validator(form, Groups.IsStatusChange.class);
+        logger.info("收到请求->激活用户:[{}]", form.getId());
         userService.activeUser(form.getId());
         logger.info("用户激活完成");
         return ResponseDTO.returnSuccess("操作成功");

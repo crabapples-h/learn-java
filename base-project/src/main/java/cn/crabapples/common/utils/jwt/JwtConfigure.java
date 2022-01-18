@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @PropertySource(value = {"classpath:application-custom.properties"})
 @ConfigurationProperties(prefix = "crabapples.jwt")
 public class JwtConfigure {
-    private String authKey;
+    private String authKey; // 授权信息在header中的key
     private String clientId;
     private String base64Secret;
     private String name;

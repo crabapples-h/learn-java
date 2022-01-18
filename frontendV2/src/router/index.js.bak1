@@ -1,0 +1,138 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Index from "@/views/manage/Index";
+import Login from "@/views/base/Login";
+import Welcome from "@/views/manage/Welcome";
+import NProgress from "nprogress";
+import storage from "@/store/storage";
+import notification from "ant-design-vue/lib/notification";
+
+NProgress.configure({showSpinner: false}) // 不显示进度环
+const staticRouter = [
+    {
+        path: '/',
+        meta: {title: '首页', icon: 'clipboard'},
+        redirect: '/login',
+        hidden: true
+    },
+    {
+        path: '/login',
+        meta: {title: '登陆', icon: 'clipboard'},
+        component: Login,
+        hidden: true
+    },
+    {
+        path: '/manage/index',
+        name: '/manage-index',
+        meta: {title: '首页', icon: 'clipboar d'},
+        component: Index,
+    },
+    {
+        path: '/manage/welcome',
+        name: '/manage-welcome',
+        meta: {title: '欢迎使用', icon: 'clipboard'},
+        component: Welcome,
+    },
+    {
+        path: '/404',
+        meta: {title: '找不到页面', icon: 'clipboard'},
+        component: () => import('@/views/base/404'),
+        hidden: true
+    },
+    {
+        path: '/401',
+        meta: {title: '未获授权', icon: 'clipboard'},
+        component: () => import('@/views/base/401'),
+        hidden: true
+    },
+    {path: '*', redirect: '/404', hidden: true}
+]
+Vue.use(VueRouter)
+let router = new VueRouter({
+    mode: 'history',
+    base: process.env.BASE_URL,
+    routes: staticRouter,
+});
+
+//将树状路由转换为list
+function tree2list(data) {
+    let array = []
+    data.map(e => {
+        if (e.path) {
+            console.log(e.path)
+            array.push({
+                path: e.path,
+                components: {innerView: resolve => require([`@/views/${e.filePath}.vue`], resolve)},
+                name: e.name,
+            })
+        }
+        if (e.children) {
+            array.push(...tree2list(e.children))
+            e.children = null
+        }
+    })
+    return array
+}
+
+
+const whiteList = ['/login'] // 白名单
+router.beforeEach((to, from, next) => {
+    NProgress.start() // 开始进度条
+    const path = to.path
+    let token = storage.getToken()
+    console.log('path--->', path)
+    document.title = to.meta.title
+    if (token) {
+        if (path === '/login') {
+            console.log('已经登陆过，直接进入首页')
+            return next({path: '/manage/index'})
+        }
+        let routerList = tree2list(storage.getUserMenus())
+        console.log('1111-->', routerList)
+        router.options.routes = staticRouter.concat(routerList)
+        router.addRoutes([...routerList])
+        NProgress.done()
+        console.log(1)
+        console.log(router.options.routes)
+        const redirect = to.path
+        next()
+        // if (to.path === redirect) {
+        //     console.log('页面地址:-->', to)
+        //     next()
+        // } else {
+        //     next({path: redirect})
+        // }
+    } else {
+        if (whiteList.includes(path)) {
+            console.log('访问地址在白名单中：', path)
+            NProgress.done()
+            return next();
+        }
+        notification.error({message: '未检测到token且访问地址不在白名单中，即将跳转到登陆页面'});
+        return next({path: '/login'});
+    }
+
+})
+router.afterEach(() => {
+    // notification.info({message: '路由完成'})
+    NProgress.done() // finish progress bar
+})
+router.onReady(() => {
+    console.log('onReady()----------------->')
+    let routerList = []
+    tree2list(storage.getUserMenus(), routerList)
+    // router.addRoutes(routerList)
+})
+//获取原型对象上的push函数
+const originalPush = VueRouter.prototype.push
+const originalReplace = VueRouter.prototype.replace
+//修改原型对象中的push方法
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+// replace
+VueRouter.prototype.replace = function push(location, onResolve, onReject) {
+    if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+    return originalReplace.call(this, location).catch(err => err)
+}
+export default router

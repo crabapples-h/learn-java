@@ -1,6 +1,7 @@
 package cn.crabapples.spring.test.service;
 
-import cn.crabapples.system.entity.SysUser;
+
+import cn.crabapples.spring.system.entity.SysUser;
 
 import java.util.List;
 

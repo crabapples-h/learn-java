@@ -1,0 +1,20 @@
+{
+  "data": {
+    "age": 20,
+    "createTime": "2021-03-24 16:56:10 星期三",
+    "delFlag": 0,
+    "id": "001",
+    "lastModifiedBy": "",
+    "mail": "162165436@qq.com",
+    "name": "he quan",
+    "password": "1bbd886460827015e5d605ed44252251",
+    "phone": "11111111",
+    "status": 0,
+    "updateTime": "2021-06-02 23:02:30 星期三",
+    "username": "admin"
+  },
+  "message": "操作成功",
+  "page": null,
+  "status": 200,
+  "time": 1628009672417
+}

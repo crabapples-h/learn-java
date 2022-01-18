@@ -26,6 +26,7 @@ import java.util.Map;
 
 /**
  * TODO 动态数据源注册类(需要在主启动类上使用@Import注入)
+ * 使用datasource.properties 文件配置数据源
  *
  * @author Mr.He
  * 9/5/20 2:32 PM

@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
 @PropertySource(value = {"classpath:application-custom.properties"})
 @ConfigurationProperties(prefix = "crabapples.turing")
 public class TuringConfigure {
-    private String url;
-    private String appKey;
+    private String url; //图灵机器人url
+    private String appKey;//图灵机器人appkey
 
     @Override
     public String toString() {

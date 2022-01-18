@@ -1,6 +1,6 @@
 package cn.crabapples.spring.test.dao;
 
-import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.spring.system.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * TODO JPA中SQL和HQL演示
- * 
+ *
  * @author Mr.He
  * 2019/7/4 1422:51
  * e-mail crabapples.cn@gmail.com

@@ -34,4 +34,7 @@ public class Groups {
     public interface IsUpdatePassword {
     }
 
+    public interface IsStatusChange {
+    }
+
 }

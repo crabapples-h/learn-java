@@ -3,6 +3,7 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.utils.AssertUtils;
+import cn.crabapples.common.utils.cache.CacheUtils;
 import cn.crabapples.common.utils.jwt.JwtConfigure;
 import cn.crabapples.common.utils.jwt.JwtTokenUtils;
 import cn.crabapples.system.dao.MenusDAO;
@@ -46,18 +47,34 @@ public class SysServiceImpl implements SysService {
     private boolean isDebug;
     private final SysUserService userService;
     private final MenusDAO menusDAO;
-    private final UserDAO userDAO;
     private final RedisTemplate<String, Object> redisTemplate;
+    private final CacheUtils cacheUtils;
     private final JwtConfigure jwtConfigure;
 
     public SysServiceImpl(SysUserService userService, MenusDAO menusDAO,
                           UserDAO userDAO, RedisTemplate<String, Object> redisTemplate,
-                          JwtConfigure jwtConfigure) {
+                          CacheUtils cacheUtils, JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.menusDAO = menusDAO;
-        this.userDAO = userDAO;
         this.redisTemplate = redisTemplate;
+        this.cacheUtils = cacheUtils;
         this.jwtConfigure = jwtConfigure;
+    }
+
+    @Override
+    public String login(UserForm form) {
+        String username = form.getUsername();
+        String password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
+        log.info("开始登录->用户名:[{}],密码:[{}]", username, password);
+        SysUser sysUser = userService.findByUsername(username);
+        AssertUtils.notNull(sysUser, "用户名不存在");
+        if (sysUser.getStatus() == DIC.USER_LOCK) {
+            throw new ApplicationException("账户已被锁定，请联系管理员");
+        }
+        if (sysUser.getPassword().equals(password)) {
+            return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getUsername(), jwtConfigure);
+        }
+        throw new ApplicationException("密码错误");
     }
 
     /**
@@ -75,7 +92,7 @@ public class SysServiceImpl implements SysService {
      */
 //    @Cacheable(value = "login:token", key = "#p0.username")
     @Override
-    public String loginCheck(UserForm form) {
+    public String loginV2(UserForm form) {
         String username = form.getUsername();
         String password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
         log.info("开始登录->用户名:[{}],密码:[{}]", username, password);

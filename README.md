@@ -30,7 +30,7 @@
 * 20200129
     * 用户操作相关逻辑实现
 * 20200130
-    * service加入切面拦截 `cn.crabapples.spring.config.AopConfigure.java`
+    * service加入切面拦截 `AopConfigure.java`
 * 20200224
     * 前端页面加入登陆功能
 * 20200224
@@ -50,7 +50,7 @@
     * 前端模板加入form序列化工具`src/main/resources/static/js/common.js`
     * 前端模板加入thymeleaf公共代码`src/main/resources/templates/common.html`
     * 登陆返回数据修改为json格式`src/main/resources/templates/common.html`
-    * 加密文件的方法加入日志`cn.crabapples.demo.security.AesFileDemo.java`
+    * 加密文件的方法加入日志`AesFileDemo.java`
 * 20200305
     * 新增分支 springBoot-jpa-security
     * 新增分支 springBoot-jpa-shiro
@@ -159,3 +159,47 @@
     * 增加添加用户时验证用户名是否被使用
     * 前端登录时使用`async`和`await`关键字使获取数据的方法同步
     * 前端Api接口提入单独js文件`src/api/Apis.js`
+* 20210518
+    * 增加读取超大文本文件演示`ReadMaxFileDemo.java`
+    * 增加多线程断点续传下载演示`FileDownloadDemo.java`
+* 20210602
+    * 修复嵌套路由无法生成路由表问题
+    * 修复v-auth在没有获取到数据时报错问题
+    * 修复日志名称错误
+    * 修复锁定用户Api地址错误
+    * 删除菜单类中无用字段
+* 20210628
+    * 修复rabbitMq消息投递不到指定队列问题`RabbitMqConfigure`
+    * 增加raabbitmq队列监听handler`NoticeQueueHandler`
+    * 增加内置redis功能`RedisServerConfigure`
+    * 增加sse接口
+    * 修复websocket接口
+    * 部分配置文件添加注释
+    * 缓存工具优化
+    * 图片工具更名为二维码工具
+* 20210804
+  * 增加vue3版前端模块
+* 20210812
+  * 修复动态菜单，动态路由bug
+* 20211124
+  * 加入socket、io流演示
+  * 采用线程池处理socket连接
+* 20211129
+  * 加入GUI演示
+    * AWT 
+      * 基础窗口演示
+      * 按钮和输入框演示
+      * 滚动条演示
+      * FlowLayout布局演示
+      * BorderLayout布局演示
+      * GridLayout布局演示
+      * 计算器演示
+      * CardLayout布局演示-事件监听
+      * BoxLayout布局演示
+      * Box组件演示
+      * 基本组件综合应用
+      * dialog组件演示
+      * fileDialog组件演示
+      * 事件机制
+      * Menu组件演示
+      * PopupMenu组件演示

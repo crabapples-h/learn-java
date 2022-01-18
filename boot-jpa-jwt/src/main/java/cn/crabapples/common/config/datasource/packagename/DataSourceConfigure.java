@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 /**
  * TODO 数据源配置
+ * 使用springboot 配置文件配置数据源
  *
  * @author Mr.He
  * 9/5/20 2:34 PM
