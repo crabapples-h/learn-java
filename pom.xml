@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>base-project</module>
         <module>boot-jpa-notshiro</module>
         <module>boot-jpa-security</module>
         <module>boot-jpa-jwt</module>
         <module>cloud-jpa-security</module>
         <module>learn</module>
-        <module>base-project</module>
-        <module>frontendV2</module>
-        <module>frontendV3</module>
+        <module>frontend-vue2</module>
+        <module>frontend-vue3</module>
         <module>frontend-react</module>
     </modules>
 

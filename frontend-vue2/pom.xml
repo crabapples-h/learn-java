@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>frontendV2</artifactId>
+    <artifactId>frontend-vue2</artifactId>
     <properties>
         <backend>boot-jpa-jwt</backend>
     </properties>
