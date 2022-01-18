@@ -32,7 +32,6 @@ public class ServerDemo2 {
                     while ((line = bufferedReader.readLine()) != null) {
                         System.out.println(Thread.currentThread().getName()+":"+ line);
                     }
-
                 } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }

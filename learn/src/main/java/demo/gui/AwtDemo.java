@@ -47,49 +47,66 @@ public class AwtDemo {
     }
     static class Demo22Canvas extends Canvas{
         private BufferedImage bufferedImage;
-        Demo22Canvas(BufferedImage bufferedImage){
+        public void setBufferedImage(BufferedImage bufferedImage) {
             this.bufferedImage = bufferedImage;
         }
+
+        public BufferedImage getBufferedImage() {
+            return bufferedImage;
+        }
+
         @Override
         public void paint(Graphics g) {
-            g.drawImage();
+            g.drawImage(bufferedImage,0,0,null);
         }
     }
     /**
-     * BufferedImageIO
+     * ImageIO
      */
-    static void demo22() throws IOException {
-        Frame frame = createBaseWindow("BufferedImageIO");
+    static void demo22() {
+        Frame frame = createBaseWindow("ImageIO");
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("文件");
         String [] menus = {"打开","保存"};
         FileDialog dialog = new FileDialog(frame);
-        AtomicReference<String> file = null;
+        Demo22Canvas canvas = new Demo22Canvas();
         for (String s : menus) {
             MenuItem item = new MenuItem(s);
             item.addActionListener(e->{
-                String cmd = e.getActionCommand();
-                switch (cmd){
+                try {
+                    String cmd = e.getActionCommand();
+                    String filePath;
+                    switch (cmd){
                     case "打开":
                         dialog.setMode(FileDialog.LOAD);
+                        dialog.setVisible(true);
+                        filePath = dialog.getDirectory()+dialog.getFile();
+                        BufferedImage bufferedImage =ImageIO.read(new File(filePath));
+                        canvas.setBufferedImage(bufferedImage);
+                        int width = bufferedImage.getWidth();
+                        int height = bufferedImage.getHeight();
+                        canvas.setPreferredSize(new Dimension(width,height));
+                        canvas.repaint();
+                        frame.pack();
                         break;
                     case "保存":
                         dialog.setMode(FileDialog.SAVE);
+                        dialog.setVisible(true);
+                        filePath = dialog.getDirectory()+dialog.getFile();
+                        BufferedImage image = canvas.getBufferedImage();
+                        ImageIO.write(image,"png",new File(filePath));
                     break;
                 }
-                dialog.setVisible(true);
-                file.set(dialog.getFile());
-                System.out.println(file.get());
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             });
             menu.add(item);
         }
         menuBar.add(menu);
         frame.setMenuBar(menuBar);
-        Graphics graphics = ImageIO.read(new File(file.get())).getGraphics();
-        Demo22Canvas canvas = new Demo22Canvas();
-        canvas.setPreferredSize(new Dimension(DIMENSION));
         frame.add(canvas);
-        frame.pack();
     }
     static class Demo21Canvas extends Canvas{
         private final Image image;
