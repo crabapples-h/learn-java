@@ -1,4 +1,4 @@
-package demo.io.nio;
+package demo.io.bio;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,7 +54,7 @@ public class BioDemo2 {
             Socket socket = new Socket("localhost", 8888);
             OutputStream outputStream = socket.getOutputStream();
             PrintWriter printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-            printWriter.println("任务number:" + i);
+            printWriter.println("Task Number:" + i);
             printWriter.flush();
             printWriter.close();
         } catch (Exception e) {

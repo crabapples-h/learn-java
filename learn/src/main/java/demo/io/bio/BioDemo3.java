@@ -1,4 +1,4 @@
-package demo.io.nio;
+package demo.io.bio;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,38 +13,47 @@ import java.util.concurrent.*;
  */
 public class BioDemo3 {
     private static final Logger logger = LoggerFactory.getLogger(BioDemo3.class);
-     static class ThreadPool {
+    private static final int MAX_THREAD_COUNT = 30;
+    private static final int QUEUE_LENGTH = 4;
+    private static final int CORE_THREAD_COUNT = 5;
+    private static final int THREAD_KEEP_ALIVE_TIME = 30;
+
+    /**
+     * 线程池
+     */
+    static class ThreadPool {
         // 线程池任务执行者
         private final ExecutorService executorService;
+
         /**
-         * @param maxThreadCount 最大线程数量
-         * @param taskCount 队列最大长度
+         * 1.当[并发的任务数量]大于[核心线程数量]时会启动新的线程，但不会超过 MAX_THREAD_COUNT 所定义的最大线程数量
+         * 2.当[并发的任务数量]大于[最大线程数量]时，新的连接会被放入队列中，等待其他线程处理完成后才会进入从队列中被取出执行
+         * 3.当[并发的数量]大于[最大线程数量]加上[最大队列长度]时会导致程序异常
          *
-         * 1.当并发的任务数量大于核心线程数量时会启动新的线程，但不会超过 maxThreadCount 所定义的最大线程数量
-         * 2.当并发的任务数量大于队列最大长度时，新的连接会被阻塞，等待队列中的任务被处理完成后才会进入队列被依次处理
-         * 3.当同时并发的数量大于最大线程数量加上最大队列长度时会导致程序异常
+         * @param maxThreadCount 最大线程数量
+         * @param taskCount      队列最大长度
          */
         public ThreadPool(int maxThreadCount, int taskCount) {
             // 创建一个同步阻塞任务队列，队列最大长度为 taskCount
             BlockingQueue<Runnable> arrayBlockingQueue = new ArrayBlockingQueue<>(taskCount);
-            // 创建一个线程池执行者，核心线程为3，最大线程为maxThreadCount，线程存活时间为30秒
-            executorService = new ThreadPoolExecutor(3, maxThreadCount,
-                    30, TimeUnit.SECONDS, arrayBlockingQueue);
+            // 创建一个线程池执行者，核心线程数为3，最大线程数为maxThreadCount，线程存活时间为30秒
+            executorService = new ThreadPoolExecutor(CORE_THREAD_COUNT, maxThreadCount,
+                    THREAD_KEEP_ALIVE_TIME, TimeUnit.SECONDS, arrayBlockingQueue);
         }
-         /**
-          * 执行任务
-          */
+
+        /**
+         * 执行任务
+         */
         void execute(Runnable runnable) {
             //执行任务
             executorService.execute(runnable);
         }
-
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         new Thread(BioDemo3::server).start();
         Thread.sleep(1000L);
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 34; i++) {
             int finalI = i;
 //            Thread.sleep(3000L);
             new Thread(() -> client(finalI)).start();
@@ -56,7 +65,7 @@ public class BioDemo3 {
             logger.info("---server start---");
             ServerSocket serverSocket = new ServerSocket(8888);
             // 创建一个线程池对象
-            ThreadPool threadPool = new ThreadPool(20, 4);
+            ThreadPool threadPool = new ThreadPool(MAX_THREAD_COUNT, QUEUE_LENGTH);
             while (true) {
                 Socket socket = serverSocket.accept();
                 // 创建一个任务
@@ -69,7 +78,7 @@ public class BioDemo3 {
                         // 读取socket连接传输的数据并打印输出
                         String line;
                         while ((line = bufferedReader.readLine()) != null) {
-                            System.out.println(Thread.currentThread().getName()+":"+ line);
+                            System.out.println(Thread.currentThread().getName() + ":" + line);
                         }
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
@@ -89,10 +98,9 @@ public class BioDemo3 {
         try {
             logger.info("---client start---");
             Socket socket = new Socket("localhost", 8888);
-            System.out.println("任务number:" + i);
             OutputStream outputStream = socket.getOutputStream();
             PrintWriter printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-            printWriter.println("任务number:" + i);
+            printWriter.println("Task Number:" + i);
             printWriter.flush();
             printWriter.close();
         } catch (Exception e) {

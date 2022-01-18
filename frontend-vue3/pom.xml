@@ -28,6 +28,12 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
+        <profile>
+            <id>mac</id>
+            <properties>
+                <yarn>yarn</yarn>
+            </properties>
+        </profile>
     </profiles>
     <build>
         <plugins>

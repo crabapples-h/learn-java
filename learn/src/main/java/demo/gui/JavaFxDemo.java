@@ -1,4 +1,4 @@
-package demo;
+package demo.gui;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
- * TODO
+ * TODO javafx
  *
  * @author Mr.He
  * 2020/11/27 11:13
@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * pc-name mrhe
  */
 
-public class Demo extends Application {
+public class JavaFxDemo extends Application {
     public static void main(String[] args) {
         launch(args);
     }
