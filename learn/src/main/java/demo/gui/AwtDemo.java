@@ -43,7 +43,45 @@ public class AwtDemo {
 //        demo19();
 //        demo20();
 //        demo21();
-        demo22();
+        demo23();
+    }
+    static class Demo23Canvas extends Canvas{
+        private BufferedImage bufferedImage;
+        public void setBufferedImage(BufferedImage bufferedImage) {
+            this.bufferedImage = bufferedImage;
+        }
+
+        public BufferedImage getBufferedImage() {
+            return bufferedImage;
+        }
+
+        @Override
+        public void paint(Graphics g) {
+            g.drawImage(bufferedImage,0,0,null);
+        }
+    }
+    /**
+     * ImageIO
+     */
+    static void demo23() throws IOException {
+        Frame frame = createBaseWindow("ImageIO");
+        Demo23Canvas canvas = new Demo23Canvas();
+        BufferedImage bufferedImage = ImageIO.read(new File("/Users/mrhe/Desktop/bgi.png"));
+        canvas.setBufferedImage(bufferedImage);
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
+        canvas.setPreferredSize(new Dimension(width,height));
+        canvas.repaint();
+        canvas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                System.err.println(e.getX());
+                System.err.println(e.getY());
+            }
+        });
+        frame.add(canvas);
+        frame.pack();
+
     }
     static class Demo22Canvas extends Canvas{
         private BufferedImage bufferedImage;
@@ -63,7 +101,7 @@ public class AwtDemo {
     /**
      * ImageIO
      */
-    static void demo22() {
+    static void demo22() throws IOException {
         Frame frame = createBaseWindow("ImageIO");
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("文件");
@@ -312,7 +350,6 @@ public class AwtDemo {
         });
         timer.start();
     }
-
     static class Demo19Canvas extends Canvas {
         Demo19Canvas(Dimension dimension) {
             this.setPreferredSize(dimension);
@@ -330,7 +367,6 @@ public class AwtDemo {
 
         }
     }
-
     /**
      * Graphics组件演示
      */
@@ -359,7 +395,6 @@ public class AwtDemo {
         frame.pack();
         frame.repaint();
     }
-
     /**
      * PopupMenu组件演示
      */
@@ -388,7 +423,6 @@ public class AwtDemo {
         frame.add(panel, BorderLayout.SOUTH);
         frame.pack();
     }
-
     /**
      * Menu组件演示
      */
@@ -418,7 +452,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * 事件机制
      */
@@ -482,7 +515,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * window事件机制
      */
@@ -535,7 +567,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * fileDialog组件演示
      */
@@ -566,7 +597,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * dialog组件演示
      */
@@ -592,7 +622,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * 基本组件综合应用
      */
@@ -629,7 +658,6 @@ public class AwtDemo {
 
         frame.pack();
     }
-
     /**
      * Box组件-分割线
      */
@@ -648,7 +676,6 @@ public class AwtDemo {
         frame.add(box);
         frame.pack();
     }
-
     /**
      * BoxLayout布局
      */
@@ -662,7 +689,6 @@ public class AwtDemo {
         frame.add(buttons);
         frame.pack();
     }
-
     /**
      * CardLayout布局-事件监听
      */
@@ -704,7 +730,6 @@ public class AwtDemo {
         frame.add(buttons, BorderLayout.SOUTH);
         frame.pack();
     }
-
     /**
      * 计算器演示
      */
@@ -725,7 +750,6 @@ public class AwtDemo {
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
     }
-
     /**
      * GridLayout布局
      */
@@ -746,7 +770,6 @@ public class AwtDemo {
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
     }
-
     /**
      * BorderLayout布局-空白
      */
@@ -762,7 +785,6 @@ public class AwtDemo {
         frame.add(panel);
         frame.pack();
     }
-
     /**
      * BorderLayout布局
      */
@@ -779,7 +801,6 @@ public class AwtDemo {
         frame.add(new Button("中间按钮"), BorderLayout.CENTER);
         frame.pack();
     }
-
     /**
      * FlowLayout布局演示
      */
@@ -799,7 +820,6 @@ public class AwtDemo {
         // 设置窗口最佳大小(可能和你想象中的"最佳"不太一样...)
         frame.pack();
     }
-
     /**
      * 滚动条演示
      */
@@ -813,7 +833,6 @@ public class AwtDemo {
         scrollPane.add(new Button("这是测试按钮"));
         frame.add(scrollPane);
     }
-
     /**
      * 按钮和输入框演示
      */
@@ -835,7 +854,6 @@ public class AwtDemo {
         // 将创建的Panel组件添加到Frame中
         frame.add(panel);
     }
-
     /**
      * 基础窗口演示
      */
@@ -849,7 +867,6 @@ public class AwtDemo {
         // 设置窗口可见性(创建组件时默认为隐藏)
         frame.setVisible(true);
     }
-
     /**
      * 根据x,y,width,height创建基础窗口
      *
@@ -871,7 +888,6 @@ public class AwtDemo {
 
         return frame;
     }
-
     /**
      * 创建基础窗口
      *

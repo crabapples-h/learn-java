@@ -6,24 +6,19 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
 
 /**
- * BIO 模式基础-线程池实现
+ * BIO 模式基础-文件传输
  */
-public class BioDemo3 {
-    private static final Logger logger = LoggerFactory.getLogger(BioDemo3.class);
+public class BioDemo4 {
+    private static final Logger logger = LoggerFactory.getLogger(BioDemo4.class);
     private static final int MAX_THREAD_COUNT = 30;
     private static final int QUEUE_LENGTH = 4;
 
+
     public static void main(String[] args) throws IOException, InterruptedException {
-        new Thread(BioDemo3::server).start();
-        Thread.sleep(1000L);
-        for (int i = 0; i < 34; i++) {
-            int finalI = i;
-//            Thread.sleep(3000L);
-            new Thread(() -> client(finalI)).start();
-        }
+        new Thread(BioDemo4::server).start();
+        new Thread(BioDemo4::client).start();
     }
 
     public static void server() {
@@ -38,14 +33,19 @@ public class BioDemo3 {
                 Runnable runnable = () -> {
                     try {
                         InputStream inputStream = socket.getInputStream();
-                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                        DataInputStream dataInputStream = new DataInputStream(inputStream);
                         // 休眠3秒，模拟任务处理需要花费3秒
                         Thread.sleep(3000L);
                         // 读取socket连接传输的数据并打印输出
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            System.out.println(Thread.currentThread().getName() + ":" + line);
+                        String fileName = dataInputStream.readUTF();
+                        System.out.println(fileName);
+                        byte[] data = new byte[1024];
+                        int length;
+                        FileOutputStream fileOutputStream = new FileOutputStream("/Users/mrhe/Desktop/img1.png");
+                        while ((length = dataInputStream.read(data)) > 0) {
+                            fileOutputStream.write(data, 0, length);
                         }
+                        fileOutputStream.flush();
                     } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -60,15 +60,20 @@ public class BioDemo3 {
         }
     }
 
-    public static void client(int i) {
+    public static void client() {
         try {
             logger.info("---client start---");
             Socket socket = new Socket("localhost", 8888);
             OutputStream outputStream = socket.getOutputStream();
-            PrintWriter printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
-            printWriter.println("Task Number:" + i);
-            printWriter.flush();
-            printWriter.close();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeUTF("喜欢你");
+            FileInputStream fileInputStream = new FileInputStream("/Users/mrhe/Desktop/img.png");
+            byte[] data = new byte[1024];
+            for (int i = 0; i != -1; i = fileInputStream.read(data)) {
+                dataOutputStream.write(data, 0, i);
+            }
+            dataOutputStream.flush();
+//            socket.shutdownOutput();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
