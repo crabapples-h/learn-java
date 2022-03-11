@@ -11,19 +11,12 @@
 
     <artifactId>cloud-jpa-security</artifactId>
 
-    <properties>
-        <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>
-        <webSocket.version>5.1.6.RELEASE</webSocket.version>
-        <springCloudNacosConfig.version>2.2.0.RELEASE</springCloudNacosConfig.version>
-        <springCloudNacosDiscovery.version>2.2.0.RELEASE</springCloudNacosDiscovery.version>
-    </properties>
-
     <dependencies>
         <!--base-utils-->
         <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>base-project</artifactId>
-            <version>1.0.1</version>
+            <version>${crabapples-base-project.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -38,19 +31,19 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-            <version>${springCloudNacosConfig.version}</version>
+            <version>${spring-cloud-starter-alibaba-nacos-config.version}</version>
         </dependency>
         <!-- 服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-            <version>${springCloudNacosDiscovery.version}</version>
+            <version>${spring-cloud-starter-alibaba-nacos-discovery.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
-            <version>1.0.1</version>
+            <version>${nacos-client.version}</version>
         </dependency>
 
         <!-- thymeleaf模板引擎 -->
@@ -63,7 +56,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
-            <version>${webSocket.version}</version>
+            <version>${spring-websocket.version}</version>
         </dependency>
     </dependencies>
 </project>

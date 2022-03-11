@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!--    <parent>-->
-    <!--        <artifactId>learning</artifactId>-->
-    <!--        <groupId>cn.crabapples</groupId>-->
-    <!--        <version>1.0-SNAPSHOT</version>-->
-    <!--    </parent>-->
+    <parent>
+        <artifactId>learn-java</artifactId>
+        <groupId>cn.crabapples</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <groupId>cn.crabapples</groupId>
 
     <artifactId>learn</artifactId>
@@ -25,82 +25,64 @@
         </plugins>
     </build>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>net.zetetic</groupId>-->
-<!--            <artifactId>android-database-sqlcipher</artifactId>-->
-<!--            <version>3.5.7</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.rendersnake/rendersnake -->
         <dependency>
             <groupId>org.rendersnake</groupId>
             <artifactId>rendersnake</artifactId>
-            <version>1.8</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.zetetic</groupId>
-            <artifactId>android-database-sqlcipher</artifactId>
-            <version>3.5.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>2.44.0</version>
+            <version>${rendersnake.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.7</version>
+            <version>${javax.mail.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.21</version>
+            <version>${slf4j-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j-log4j12.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
             <artifactId>ganymed-ssh2</artifactId>
-            <version>262</version>
+            <version>${ganymed-ssh2.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.16</version>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>${fastjson.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.warrenstrange</groupId>
             <artifactId>googleauth</artifactId>
-            <version>1.2.0</version>
+            <version>${googleauth.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
-            <version>5.7.3</version>
+            <version>${amqp-client.version}</version>
             <scope>compile</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.7.2</version>
+            <version>${okhttp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.0</version>
+            <version>${quartz.version}</version>
         </dependency>
     </dependencies>
 

@@ -11,34 +11,33 @@
     <artifactId>base-project</artifactId>
     <version>1.0.1</version>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>com.github.kstyrc</groupId>
             <artifactId>embedded-redis</artifactId>
-            <version>0.6</version>
+            <version>${embedded-redis.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.5.7</version>
+            <version>${hutool-all.version}</version>
         </dependency>
         <!--jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.0</version>
+            <version>${jjwt.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j-log4j12.version}</version>
         </dependency>
         <!--邮件解析依赖-->
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
             <artifactId>ganymed-ssh2</artifactId>
-            <version>262</version>
+            <version>${ganymed-ssh2.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -46,14 +45,14 @@
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.7</version>
+            <version>${javax.mail.version}</version>
         </dependency>
 
         <!--xml解析工具-->
         <dependency>
             <groupId>org.jdom</groupId>
             <artifactId>jdom</artifactId>
-            <version>2.0.2</version>
+            <version>${jdom.version}</version>
         </dependency>
     </dependencies>
 </project>

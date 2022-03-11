@@ -10,42 +10,34 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>boot-jpa-jwt</artifactId>
-
-    <properties>
-        <springBootWebSocket.version>5.1.6.RELEASE</springBootWebSocket.version>
-        <bootNacosConfig.version>0.2.3</bootNacosConfig.version>
-        <shiro.version>1.4.0</shiro.version>
-        <thymeleafShiro.version>2.0.0</thymeleafShiro.version>
-    </properties>
-
     <dependencies>
         <!--nacos config-->
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba.boot</groupId>-->
         <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
-        <!--            <version>${bootNacosConfig.version}</version>-->
+        <!--            <version>${nacos-config-spring-boot-starter.version}</version>-->
         <!--        </dependency>-->
         <!-- elasticSearch依赖 -->
         <!--        <dependency>-->
         <!--            <groupId>org.elasticsearch.client</groupId>-->
         <!--            <artifactId>transport</artifactId>-->
-        <!--            <version>7.5.0</version>-->
+        <!--            <version>${elasticsearch-transport.version}</version>-->
         <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>org.elasticsearch.client</groupId>-->
         <!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-        <!--            <version>7.5.0</version>-->
+        <!--            <version>${elasticsearch-rest-high-level-client.version}</version>-->
         <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>org.elasticsearch</groupId>-->
         <!--            <artifactId>elasticsearch</artifactId>-->
-        <!--            <version>7.5.0</version>-->
+        <!--            <version>${elasticsearch.version}</version>-->
         <!--        </dependency>-->
         <!--druid-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <version>${druid-spring-boot-starter.version}</version>
         </dependency>
         <!--rabbitmq-->
         <dependency>
@@ -53,15 +45,15 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <!--mongo-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-data-mongodb</artifactId>-->
+        <!--        </dependency>-->
         <!--base-utils-->
         <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>base-project</artifactId>
-            <version>1.0.1</version>
+            <version>${crabapples-base-project.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -74,13 +66,13 @@
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.2.0</version>
+            <version>${java-jwt.version}</version>
         </dependency>
         <!-- spring-webSocket -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
-            <version>${springBootWebSocket.version}</version>
+            <version>${spring-websocket.version}</version>
         </dependency>
     </dependencies>
 </project>
