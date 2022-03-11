@@ -25,6 +25,11 @@
         </plugins>
     </build>
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>net.zetetic</groupId>-->
+<!--            <artifactId>android-database-sqlcipher</artifactId>-->
+<!--            <version>3.5.7</version>-->
+<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.rendersnake/rendersnake -->
         <dependency>
             <groupId>org.rendersnake</groupId>

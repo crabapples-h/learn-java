@@ -1,4 +1,4 @@
-package demo;
+package demo.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
