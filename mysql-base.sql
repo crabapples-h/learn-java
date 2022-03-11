@@ -10,6 +10,23 @@
 	7. limit 			指定分页条件
 */
 
+/*----------数据库控制start----------*/
+use mysql;
+select * from user;
+-- 创建用户 create user '用户名'@'主机名' identified by '密码'
+create user 'demo'@'%' identified by '123456';
+-- 修改用户密码 alter user '用户名'@'主机名' identified with 加密方式 by '新密码'
+alter user 'demo'@'localhost' identified with mysql_native_password by '000000';
+-- 删除用户 drop user '用户名'@'主机名'
+drop user 'demo'@'%';
+-- 查询用户权限 show grants for '用户名'@'主机名'
+show grants for 'demo'@'localhost';
+-- 增减用户权限 grant 权限列表 on 数据名.表名 to '用户名'@'主机名'
+grant select on learn.* to 'demo'@'localhost';
+-- 删除用户权限 revoke 权限列表 on 数据名.表名 from '用户名'@'主机名'
+revoke all on *.* from 'demo'@'localhost';
+/*----------数据库控制end----------*/
+
 /*----------建表start----------*/
 -- 查看所有数据库
 show databases;
@@ -63,12 +80,9 @@ insert into  employee values (5,'孙丽','女',21,'成都','','12345620010919123
 
 -- 修改数据
 update employee set birthday = '' where id = 1;
+update employee set address = lpad(address,10,'----------');
+update employee set address = replace(address,'-','');
 /*----------初始化数据end----------*/
-
-/*----------全局函数start----------*/
--- 查看数据库时间
-select now(), current_date();
-/*----------全局函数end----------*/
 
 /*----------基本查询start----------*/
 -- 查询 distinct 去重
@@ -76,7 +90,7 @@ select distinct * from employee;
 /*----------基本查询end----------*/
 
 /*----------条件查询start----------*/
--- > >= < <= = != <> like between...and... in and or 
+-- > >= < <= = != <> like between...and... in and or
 -- 条件查询 where:查询前过滤条件 having:查询后过滤条件
 -- where条件查询 substring(源数据,从第几位开始截取,截取长度)
 select *,substring(id_card,7,8) as birth from employee where substring(id_card,7,8) = birthday;
@@ -84,9 +98,9 @@ select *,substring(id_card,7,8) as birth from employee where substring(id_card,7
 select *,substring(id_card,7,8) as birth from employee having substring(id_card,7,8) = birthday;
 -- where条件查询 between...and...
 select * from employee where age between 21 and 22;
--- where条件查询 like '_' 通配符(单个字符) 
+-- where条件查询 like '_' 通配符(单个字符)
 select * from employee where address like '_京';
--- where条件查询 like '%' 通配符(多个字符) 
+-- where条件查询 like '%' 通配符(多个字符)
 select * from employee where address like '%京';
 /*----------条件查询end----------*/
 
@@ -105,9 +119,9 @@ select min(age) from employee;
 /*----------聚合函数end----------*/
 
 /*----------类型转换start----------*/
--- 类型转换 convert(源数据 , 需要转换的类型) 
+-- 类型转换 convert(源数据 , 需要转换的类型)
 select 	convert(id_card , unsigned) from employee;
--- 类型转换 cast(源数据 as 需要转换的类型) 
+-- 类型转换 cast(源数据 as 需要转换的类型)
 select 	cast(id_card as unsigned) from employee;
 /*----------类型转换end----------*/
 
@@ -139,3 +153,5 @@ select * from employee order by age asc, id asc;
 -- 语法:select 字段列表 from 表名 limit 从第几条开始查询,查询几条
 select * from employee limit 2,2;
 /*----------分页查询end----------*/
+
+
