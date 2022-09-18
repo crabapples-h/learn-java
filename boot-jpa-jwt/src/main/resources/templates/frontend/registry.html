@@ -1,0 +1,109 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>用户注册</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" data-th-href="@{/X-admin/css/login.css}">
+	<header data-th-include="/components/page :: meta"></header>
+	<header data-th-replace="/components/page :: javascript"></header>
+	<header data-th-replace="/components/page :: style"></header>
+</head>
+<body class="login-bg">
+<div class="login layui-anim layui-anim-up">
+	<div class="message">用户注册</div>
+	<div id="darkbannerwrap"></div>
+	<form method="post" class="layui-form" id="registryForm">
+		<input name="username" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="用户名" type="text" v-model="form.username">
+		<hr class="hr15">
+		<input name="password" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="密码" type="password" v-model="form.password" @change="ckeckPwd">
+		<hr class="hr15">
+		<input name="rePassword" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="重复密码" type="password" v-model="form.rePassword" @change="ckeckPwd">
+		<p v-if="!check" style="color:red">两次密码不一致</p>
+		<hr class="hr15">
+		<input name="name" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="姓名" type="text" v-model="form.name">
+		<hr class="hr15">
+		<input name="phone" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="手机号" type="text" v-model="form.phone">
+		<hr class="hr15">
+		<input name="mail" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="邮箱" type="text" v-model="form.mail">
+		<hr class="hr15">
+		<input name="code" autocomplete="off" lay-verify="required" class="layui-input"
+		       placeholder="验证码" type="text" v-model="form.code">
+		<div class="captcha" @click="refreshCode">
+			<img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" style="vertical-align: middle;">
+			<a href="javascript:" style="margin-left: 1em; color: #3c8dbc;">点击刷新</a>
+		</div>
+		<hr class="hr15">
+		<input lay-submit lay-filter="login" style="width:100%;" type="button" value="立即注册">
+		<hr class="hr15">
+	</form>
+</div>
+
+<div data-th-replace="/base/lay-ui :: javascript"></div>
+<script>
+
+    let vue = new Vue({
+        el: '#registryForm',
+        data() {
+            return {
+                src: '/randomCode',
+                form: {
+                    username: '',
+                    password: '',
+                    rePassword: '',
+                    name: '',
+                    phone: '',
+                    mail: '',
+                    code: '',
+                },
+                check: true,
+            }
+        },
+        mounted() {
+            layui.use('form', function () {
+                let form = layui.form;
+                //layUi监听提交
+                form.on('submit(login)', function (data) {
+                    let loginForm = $('#registryForm').serializeObject()
+                    vue.registry(loginForm)
+                    return false;
+                });
+            });
+        },
+        methods: {
+            refreshCode() {
+                this.src = "/randomCode?t=" + new Date().getTime();
+            },
+            registry(data) {
+                console.log(data)
+                console.log(this.form)
+                axios.post('/manage/registryCheck', data).then(response => {
+                    const result = response.data
+                    console.log('通过api获取到的数据:', result)
+                    if (result.status !== 200) {
+                        layer.msg(result.message)
+                        return
+                    }
+                    layer.msg(result.message)
+                    setTimeout(() => {
+                        window.location.href = '/index'
+                    }, 3000)
+                }).catch(exception => {
+                    layer.msg('系统错误')
+                    console.error('系统错误', exception)
+                })
+            },
+            ckeckPwd() {
+                this.check = this.form.password === this.form.rePassword
+            },
+        }
+    })
+</script>
+</body>
+</html>

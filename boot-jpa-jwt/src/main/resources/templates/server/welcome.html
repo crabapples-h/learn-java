@@ -1,0 +1,28 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>X-admin</title>
+	<div data-th-replace="/components/base :: javascript"></div>
+	<div data-th-replace="/components/vue :: javascript"></div>
+	<div data-th-replace="/components/ui :: antd"></div>
+</head>
+<body>
+<div id="app">
+	<div style="display: flex;justify-content: center;align-items: center">
+		<p>欢迎使用</p>
+	</div>
+</div>
+<script>
+    let vue = new Vue({
+        el: '#app',
+        data() {
+            return {}
+        },
+        mounted() {
+        },
+        methods: {}
+    })
+</script>
+</body>
+</html>

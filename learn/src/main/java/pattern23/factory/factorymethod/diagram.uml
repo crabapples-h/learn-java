@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="212.0" y="107.0">pattern23.factory.factorymethod.Flower</node>
+    <node x="347.0" y="107.0">pattern23.factory.factorymethod.RoseFactory</node>
+    <node x="178.5" y="0.0">pattern23.factory.factorymethod.FlowerFactory</node>
+    <node x="0.0" y="359.0">pattern23.factory.factorymethod.Client</node>
+    <node x="0.0" y="107.0">pattern23.factory.factorymethod.CrabappleFactory</node>
+    <node x="101.875" y="214.0">pattern23.factory.factorymethod.CrabappleFactory.Crabapple</node>
+    <node x="299.125" y="214.0">pattern23.factory.factorymethod.RoseFactory.Rose</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="pattern23.factory.factorymethod.RoseFactory" target="pattern23.factory.factorymethod.FlowerFactory">
+      <point x="0.0" y="-28.5" />
+      <point x="433.0" y="82.0" />
+      <point x="307.5" y="82.0" />
+      <point x="43.0" y="28.5" />
+    </edge>
+    <edge source="pattern23.factory.factorymethod.CrabappleFactory" target="pattern23.factory.factorymethod.FlowerFactory">
+      <point x="0.0" y="-28.5" />
+      <point x="96.0" y="82.0" />
+      <point x="221.5" y="82.0" />
+      <point x="-43.0" y="28.5" />
+    </edge>
+    <edge source="pattern23.factory.factorymethod.RoseFactory.Rose" target="pattern23.factory.factorymethod.Flower">
+      <point x="-33.25" y="-50.0" />
+      <point x="332.375" y="189.0" />
+      <point x="298.25" y="189.0" />
+      <point x="28.75" y="28.5" />
+    </edge>
+    <edge source="pattern23.factory.factorymethod.RoseFactory.Rose" target="pattern23.factory.factorymethod.RoseFactory">
+      <point x="33.25" y="-50.0" />
+      <point x="398.875" y="189.0" />
+      <point x="433.0" y="189.0" />
+      <point x="0.0" y="28.5" />
+    </edge>
+    <edge source="pattern23.factory.factorymethod.CrabappleFactory.Crabapple" target="pattern23.factory.factorymethod.Flower">
+      <point x="33.25" y="-50.0" />
+      <point x="201.625" y="189.0" />
+      <point x="240.75" y="189.0" />
+      <point x="-28.75" y="28.5" />
+    </edge>
+    <edge source="pattern23.factory.factorymethod.CrabappleFactory.Crabapple" target="pattern23.factory.factorymethod.CrabappleFactory">
+      <point x="-33.25" y="-50.0" />
+      <point x="135.125" y="189.0" />
+      <point x="96.0" y="189.0" />
+      <point x="0.0" y="28.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="259.5" y="208.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

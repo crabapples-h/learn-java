@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>居民档案</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../../css/iconfont.css" />
+		<script src="http://api.map.baidu.com/api?type=webgl&v=3.0&ak=Dj4Wa7GUUemmwHG8YEThmeco"></script>
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<script src="../../js/util.js"></script>
+		<script src="../../js/getUrlParam.js"></script>
+		<script src="../../js/mui.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.min.css" rel="stylesheet"   />
+		<script src="../../js/mui.picker.min.js"></script>
+		
+		<script src="../../js/vconsole.min.js"></script>
+		<script src="../../js/axios.min.js"></script>
+		<script src="../../js/moment-with-locales.js"></script>
+		
+		<script src="../../js/vue@2.js"></script>
+		<script src="../../js/vue-router.js"></script>
+		<script src="../../js/httpVueLoader.js"></script>
+		
+		<script src="../../js/jquery-2.1.1.js"></script>
+		<script src="../../js/react.development.js"></script>
+		<script src="../../js/react-dom.development.js"></script>
+		<script src="../../js/babel.min.js"></script>
+		
+		<script src="../../plugs/vant2/vant.min.js"></script>
+		<link href="../../plugs/vant2/index.css" rel="stylesheet" />
+		
+		<script src="../../plugs/viewer/viewer.min.js"></script>
+		<link href="../../plugs/viewer/viewer.min.css" rel="stylesheet" />
+		
+		<script src="./options.json"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			.pl-header {
+				display: flex;
+				height: 70px;
+				background: #333;
+				color: #fff;
+				align-items: center;
+				position: fixed;
+				width: 100%;
+				z-index: 100;
+				padding-top: 15px;
+				top: 0;
+				left: 0;
+			}
+
+			.pl-header i {
+				flex: 0 0 40px;
+				text-align: center;
+				font-size: 20px;
+			}
+
+			.pl-header span {
+				flex: 1;
+				font-size: 14px;
+			}
+
+			.dtpro-mains {
+				position: relative;
+				top: 70px;
+			}
+
+			.dtpro-mains .dtpro-mains-top {
+				background: #333;
+				padding: 10px 20px;
+			}
+
+			.dtpro-mains .dtpro-mains-top h2 {
+				color: #fff;
+				margin: 0;
+				font-size: 18px;
+				border-left: 4px #6699cc solid;
+				padding: 5px 10px;
+				line-height: 20px;
+			}
+
+			.dtpro-mains .dtpro-mains-main {
+				padding: 5px 10px;
+				background: #fff;
+			}
+
+			.option ul li {
+				line-height: 3.75rem;
+			}
+
+			.loading {
+				display: block;
+				position: fixed;
+				top: 50%;
+				left: 46%;
+			}
+		</style>
+		<script type="text/javascript">
+			var vconsole = !isProd ? new window.VConsole() : null
+			let years = []
+			let date = new moment('1900-01-01')
+			while (date.add(1, 'y').isBefore(new moment())) {
+				years.push(date.format('YYYY'))
+			}
+			years.sort((a, b) => b - a)
+			options.years = years
+		</script>
+	</head>
+
+	<body>
+		<div class="option" style="margin-top: 6rem;" id="app">
+			<!-- 返回按钮和栏目名称 -->
+			<div class="pl-header">
+				<i class="iconfont iconzuo" @click="back"></i>
+				<span id="infortype" style="font-size: 1.25rem;">居民档案</span>
+				<!-- <i class="iconfont icontianjia jtcytjE"></i> -->
+			</div>
+			<keep-alive>
+				<router-view></router-view>
+			</keep-alive>
+		</div>
+		
+		<script src="main.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>

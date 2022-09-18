@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+    <modules>
+        <module>base-project</module>
+        <module>boot-jpa-notshiro</module>
+        <module>boot-jpa-security</module>
+        <module>boot-jpa-jwt</module>
+        <module>cloud-jpa-security</module>
+        <module>learn</module>
+        <module>frontend-vue2</module>
+        <module>frontend-vue3</module>
+        <module>frontend-react</module>
+        <module>frontend-mpvue</module>
+        <module>learn-document</module>
+        <module>c51</module>
+        <module>learn-rabbitmq</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>cn.crabapples</groupId>
+    <artifactId>learn-java</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <properties>
+        <!--基础工具-->
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <crabapples-base-project.version>1.0.3</crabapples-base-project.version>
+        <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-lang.version>2.4</commons-lang.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <hutool-all.version>5.5.7</hutool-all.version>
+        <rendersnake.version>1.8</rendersnake.version>
+        <jdom.version>2.0.2</jdom.version>
+        <quartz.version>2.3.0</quartz.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <lombok.version>1.18.12</lombok.version>
+        <!--日志-->
+        <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
+        <slf4j-api.version>1.7.21</slf4j-api.version>
+        <!--安全-->
+        <jjwt.version>0.9.0</jjwt.version>
+        <java-jwt.version>3.2.0</java-jwt.version>
+        <shiro.version>1.4.0</shiro.version>
+        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
+        <googleauth.version>1.2.0</googleauth.version>
+        <!--spring-->
+        <spring-boot-starter-security.version>2.1.6.RELEASE</spring-boot-starter-security.version>
+        <spring-cloud-starter-alibaba-nacos-config.version>2.2.0.RELEASE</spring-cloud-starter-alibaba-nacos-config.version>
+        <spring-cloud-starter-alibaba-nacos-discovery.version>2.2.0.RELEASE</spring-cloud-starter-alibaba-nacos-discovery.version>
+        <nacos-config-spring-boot-starter.version>0.2.3</nacos-config-spring-boot-starter.version>
+        <nacos-client.version>1.0.1</nacos-client.version>
+        <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
+        <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
+        <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
+        <spring-websocket.version>5.1.6.RELEASE</spring-websocket.version>
+        <!--es-->
+        <elasticsearch.version>7.5.0</elasticsearch.version>
+        <elasticsearch-transport.version>7.5.0</elasticsearch-transport.version>
+        <elasticsearch-rest-high-level-client.version>7.5.0</elasticsearch-rest-high-level-client.version>
+        <!--数据库-->
+        <druid.version>1.1.20</druid.version>
+        <embedded-redis.version>0.6</embedded-redis.version>
+        <amqp-client.version>5.7.3</amqp-client.version>
+        <mysqlConnector.version>5.1.47</mysqlConnector.version>
+        <!--网络-->
+        <okhttp.version>4.7.2</okhttp.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
+        <ganymed-ssh2.version>262</ganymed-ssh2.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
+        <ganymed-ssh2.version>262</ganymed-ssh2.version>
+        <!--二维码-->
+        <zxing-core.version>3.3.0</zxing-core.version>
+        <zxing-javase.version>3.3.0</zxing-javase.version>
+        <!--        <springThymeleaf.version>2.1.3.RELEASE</springThymeleaf.version>-->
+    </properties>
+
+<!--    <dependencies>-->
+<!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <groupId>cn.crabapples</groupId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <artifactId>base-project</artifactId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <version>${crabapples-base-project.version}</version>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <scope>compile</scope>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-resources-plugin</artifactId>-->
+<!--            <version>${maven-resources-plugin.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid</artifactId>-->
+<!--            <version>${druid.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; redis依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash;springboot热部署工具(使用@Cacheable时会报cannot case exception)&ndash;&gt;-->
+<!--        &lt;!&ndash;        <dependency>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <artifactId>spring-boot-devtools</artifactId>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <optional>true</optional>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </dependency>&ndash;&gt;-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-websocket</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; SpringAop依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-aspects</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-aop</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; 属性配置依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; swagger依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger2</artifactId>-->
+<!--            <version>${springfox-swagger2.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger-ui</artifactId>-->
+<!--            <version>${springfox-swagger-ui.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>commons-codec</groupId>-->
+<!--            <artifactId>commons-codec</artifactId>-->
+<!--            <version>${commons-codec.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; springbootJpa依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; springbootWeb依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; mysql &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            &lt;!&ndash;    <version>5.1.47</version>&ndash;&gt;-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; springboot单元测试 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; junit单元测试依赖 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>junit</groupId>-->
+<!--            <artifactId>junit</artifactId>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; fastJson &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>fastjson</artifactId>-->
+<!--            <version>${fastjson.version}</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; lombok工具 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>${lombok.version}</version>-->
+<!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>commons-io</groupId>-->
+<!--            <artifactId>commons-io</artifactId>-->
+<!--            <version>${commons-io.version}</version>-->
+<!--            <type>jar</type>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>commons-lang</groupId>-->
+<!--            <artifactId>commons-lang</artifactId>-->
+<!--            <version>${commons-lang.version}</version>-->
+<!--            <type>jar</type>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; google二维码相关 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.zxing</groupId>-->
+<!--            <artifactId>core</artifactId>-->
+<!--            <version>${zxing-core.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.google.zxing</groupId>-->
+<!--            <artifactId>javase</artifactId>-->
+<!--            <version>${zxing-javase.version}</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <artifactId>spring-boot-maven-plugin</artifactId>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </plugin>&ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>${java.version}</source>-->
+<!--                    <target>${java.version}</target>-->
+<!--                    <skip>true</skip>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>${maven-resources-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <skipTests>true</skipTests>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <groupId>org.apache.maven.plugins</groupId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <artifactId>maven-assembly-plugin</artifactId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <executions>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <execution>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <id>make-assembly</id>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        &lt;!&ndash; 绑定到package生命周期 &ndash;&gt;&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <phase>package</phase>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <goals>&ndash;&gt;-->
+<!--            &lt;!&ndash;                            &lt;!&ndash; 只运行一次 &ndash;&gt;&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <goal>single</goal>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        </goals>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </execution>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </executions>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <descriptorRefs>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <descriptorRef>jar-with-dependencies</descriptorRef>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </descriptorRefs>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <archive>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <manifest>&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <addClasspath>true</addClasspath>&ndash;&gt;-->
+<!--            &lt;!&ndash;                            &lt;!&ndash; main function Class&ndash;&gt;&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <mainClass>cn.crabapples.Application</mainClass>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        </manifest>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </archive>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </configuration>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </plugin>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <groupId>com.spotify</groupId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <artifactId>dockerfile-maven-plugin</artifactId>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <version>1.4.10</version>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <executions>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <execution>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <id>build-image</id>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <phase>package</phase>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <goals>&ndash;&gt;-->
+<!--            &lt;!&ndash;                            <goal>build</goal>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        </goals>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </execution>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </executions>&ndash;&gt;-->
+<!--            &lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <repository>crabapples/${project.artifactId}</repository>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    &lt;!&ndash;                    <finalName>${project.artifactId}</finalName>&ndash;&gt;&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <dockerfile>${project.basedir}/DockerFile</dockerfile>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <tag>${project.version}</tag>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    <buildArgs>&ndash;&gt;-->
+<!--            &lt;!&ndash;                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>&ndash;&gt;-->
+<!--            &lt;!&ndash;                    </buildArgs>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </configuration>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </plugin>&ndash;&gt;-->
+<!--        </plugins>-->
+
+<!--        <resources>-->
+<!--            <resource>-->
+<!--                <directory>src/main/webapp</directory>-->
+<!--            </resource>-->
+<!--            <resource>-->
+<!--                <directory>src/main/resources</directory>-->
+<!--            </resource>-->
+<!--            <resource>-->
+<!--                <directory>src/main/java</directory>-->
+<!--                <includes>-->
+<!--                    <include>**/*.xml</include>-->
+<!--                </includes>-->
+<!--            </resource>-->
+<!--        </resources>-->
+<!--    </build>-->
+</project>

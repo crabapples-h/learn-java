@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>用户登陆</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" data-th-href="@{/X-admin/css/login.css}">
+	<header data-th-include="/components/page :: meta"></header>
+	<header data-th-replace="/components/page :: javascript"></header>
+	<header data-th-replace="/components/page :: style"></header>
+</head>
+<body class="login-bg">
+<div class="login layui-anim layui-anim-up">
+	<div class="message">用户登录</div>
+	<div id="darkbannerwrap"></div>
+	<form method="post" class="layui-form" id="loginForm">
+		<!-- 在form表单中input标签的name属性表示了要提交的数据的名字 -->
+		<!-- autocomplete表示告诉浏览器是否开启自动填充数据的功能 -->
+		<!-- lay-verify是 layui 的一个自定义属性，用来对输入框中的数据进行一些校验（required）表示这是一个必填的选项 -->
+		<!-- class是定义一个类(可以简单理解为他的名字) -->
+		<!-- placeholder是定义这个输入框在没有输入数据的时候的提示语 -->
+		<!-- type是表示这个输入框里面的数据是以何种形式展示(text : 普通文本，password : 密码，radio : 单选框，checkbox : 复选框，button : 按钮) -->
+		<input name="username" autocomplete="off" lay-verify="required" class="layui-input" placeholder="用户名" type="text">
+		<hr class="hr15">
+		<input name="password" autocomplete="off" lay-verify="required" class="layui-input" placeholder="密码" type="password">
+		<hr class="hr15">
+		<input lay-submit lay-filter="login" style="width:100%;" type="button" value="登录">
+		<hr class="hr15">
+		<a href="/registry"><input lay-submit style="width:100%;" type="button" value="注册"></a>
+		<hr class="hr20">
+	</form>
+</div>
+
+<div data-th-replace="/base/lay-ui :: javascript"></div>
+<script>
+    let vue = new Vue({
+        el: '#loginForm',
+        mounted() {
+            layui.use('form', function () {
+                let form = layui.form;
+                //layUi监听提交
+                form.on('submit(login)', function (data) {
+                    //转换之前的格式  username=123&password=123
+                    //转换之后的格式  {username: 123,password:123}
+                    let loginForm = $('#loginForm').serializeObject()
+                    // 这里调用了vue的login函数，并且把转换格式之后的用户名和密码当作参数参给login函数
+                    // ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓
+                    vue.login(loginForm)
+                    return false;
+                });
+            });
+        },
+        methods: {
+            login(data) {
+								// 用一个名字叫做data的变量来接收调用方(↑ ↑ ↑)传入的参数
+                console.log(data)
+				            // 使用axios这个工具向'/manage/loginCheck'这个地址发送了一个post请求，并且把data中的数据(用户名和密码)一起提交了
+                axios.post('/manage/loginCheck', data).then(response => {
+                    const result = response.data
+                    console.log('通过api获取到的数据:', result)
+                    if (result.status !== 200) {
+                        layer.msg(result.message)
+                        return
+                    }
+                    layer.msg(result.message)
+                    window.location.href = '/index'
+                }).catch(exception => {
+                    layer.msg('系统错误')
+                    console.error('系统错误', exception)
+                })
+            }
+
+        }
+    })
+</script>
+</body>
+</html>

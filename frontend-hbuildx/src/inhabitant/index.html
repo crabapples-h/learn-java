@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<!--新版本 管理员业务工作导航页面-->
+	<head>
+		<meta charset="utf-8">
+		<title>居民</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<!-- <link rel="stylesheet" type="text/css" href="../css/adminCss.css"/> -->
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<script src="../js/mui.js"></script>
+		<script src="../js/util.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0px;
+				padding: 0px
+			}
+
+			ul li {
+				list-style: none;
+
+			}
+
+			ul {
+				list-style: none;
+			}
+
+			ul .li-height {
+				line-height: 3rem;
+			}
+
+			.workItemBox {
+				height: 6.25rem;
+				width: 100%;
+				background-color: #ADD8E6;
+				border-radius: 0.3125rem;
+				margin: 0.625rem 0;
+				text-align: center;
+				line-height: 6.25rem;
+			}
+
+			.workItemBox div {
+				width: 100%;
+				height: 6.25rem;
+				background-color: #242424;
+				opacity: 0.6;
+				border-radius: 0.3125rem;
+			}
+
+			.workItemBox .workItemName {
+				font-size: 2rem;
+				font-weight: 500;
+				color: #FFFFFF;
+				opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="" id="app">
+			<div class="userInfo" style="background-color: #FFFFFF; font-family: 'Microsoft YaHei';">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media"
+						style="background-color: #576B95;background-image: linear-gradient(45deg,#0062CC, #008888);">
+						<div style="margin-top: 2rem;">
+							
+							<img class="mui-media-object mui-pull-left" src="../img/tx.png" style=" ">
+							<div class="mui-media-body">
+								<span class="name" style="line-height: 3rem; font-size: 1.5rem; color: #FFFFFF; ">{{user.name}}</span>
+								&nbsp;&nbsp;&nbsp;
+								<!-- <span style="color: #0062CC">()</span> -->
+								<p style="line-height: 3rem; font-size: 1rem; ">
+									<span class="" style="color: #B6B6B6">住址：{{user.jzd}}</span>
+								</p>
+								<p class='mui-ellipsis'>
+									<span style="font-size: 0.75rem;color: #FFFFFF"></span>
+									<span style="font-size: 0.75rem;color: #07C160">
+									<!-- <span>&nbsp;&nbsp;●&nbsp;&nbsp;</span> -->
+									</span>
+								</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-content">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell li-height">
+						<a class="mui-navigate-right" href='family/index.html'>
+							<span class="mui-icon mui-icon-home" style="color: #EE0A24;">&nbsp;&nbsp; </span>
+							家庭档案</a>
+					</li>
+					<li class="mui-table-view-cell li-height">
+						<a class="mui-navigate-right" href="adviceList.html">
+							<span class="mui-icon mui-icon-chat" style="color: #008000;">&nbsp;&nbsp;</span>
+							意见建议</a>
+					</li>
+					<li class="mui-table-view-cell li-height">
+						<a class="mui-navigate-right" href="settings.html">
+							<span class="mui-icon mui-icon-gear" style="color: #0062CC;">&nbsp;&nbsp;</span>
+							设置</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../js/vconsole.min.js"></script>
+	<script src="../js/axios.min.js"></script>
+	<script src="../plugs/vant2/vue.min.js"></script>
+	<script type="text/javascript">
+		var vConsole = new window.VConsole();
+		new Vue({
+			el: '#app',
+			data() {
+				return {
+					user: {}
+				}
+			},
+			mounted() {
+				this.user = JSON.parse(localStorage.getItem("pp"));
+			},
+			methods: {}
+		})
+	</script>
+
+</html>

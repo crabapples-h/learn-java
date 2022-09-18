@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>我的建议和意见</title>
+		<meta name="viewport"
+			content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/iconfont.css" />
+		<script src="../js/jquery-2.1.1.js"></script>
+		<script src="../js/mui.js"></script>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script src="../js/util.js"></script>
+		<script src="../js/getUrlParam.js"></script>
+
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+
+			.pl-header {
+				display: flex;
+				height: 70px;
+				background: #333;
+				color: #fff;
+				align-items: center;
+				position: fixed;
+				width: 100%;
+				z-index: 100;
+				padding-top: 15px;
+				top: 0;
+				left: 0;
+			}
+
+			.pl-header i {
+				flex: 0 0 40px;
+				text-align: center;
+				font-size: 20px;
+			}
+
+			.pl-header span {
+				flex: 1;
+				font-size: 14px;
+			}
+
+			.dtpro-mains {
+				position: relative;
+				top: 70px;
+			}
+
+			.dtpro-mains .dtpro-mains-top {
+				background: #333;
+				padding: 10px 20px;
+			}
+
+			.dtpro-mains .dtpro-mains-top h2 {
+				color: #fff;
+				margin: 0;
+				font-size: 18px;
+				border-left: 4px #6699cc solid;
+				padding: 5px 10px;
+				line-height: 20px;
+			}
+
+			.dtpro-mains .dtpro-mains-main {
+				padding: 5px 10px;
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- 返回按钮和栏目名称 -->
+		<div class="pl-header">
+			<i class="iconfont iconzuo" onclick="window.history.back(); "></i>
+			<span id="infortype" style="font-size: 1.25rem;" onclick="window.history.back(); ">我的意见和建议</span>
+			<a href="advice.html" style="color: #FFFFFF;float: right; margin-right: 1rem;"><span
+					class="mui-icon mui-icon-plusempty" style="  color: #FFFFFF;font-size: 1rem;"></span><span
+					style="  color: #FFFFFF;font-size: 1rem;">&nbsp;&nbsp;提意见</span></a>
+		</div>
+
+
+		<div class="advice-list" style="margin-top: 6rem;" id="app">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-collapse" v-for="item in dataList">
+					<div style="font-size: 0.75rem; line-height: 2rem;"><span style="color: #0062CC;">我的意见</span>·<span
+							style="color: #AAAAAA">{{item.addTime.substring(0,10)}}</span>：</div>
+					<a class="mui-navigate-right" href="#"
+						style="overflow: unset; text-overflow: unset; white-space: unset;">{{item.content}}</a>
+					<div class="mui-collapse-content">
+						<p style="text-align: right;"><span style="color: #0062CC;">{{item.target}}</span>·<span
+								style="color: #AAAAAA">{{item.handleTime}}</span>：</p>
+						<p>{{item.replyContent}}</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<script src="../js/mui.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script src="../js/vconsole.min.js"></script>
+		<script src="../js/axios.min.js"></script>
+		<script src="../plugs/vant2/vue.min.js"></script>
+		<script type="text/javascript">
+			new Vue({
+				el: '#app',
+				data() {
+					return {
+						dataList:[],
+					}
+				},
+				mounted() {
+					const user = JSON.parse(localStorage.getItem("pp"));
+					const url = UTIL.url(`villagerOpinion/getByIdCard.do?idCard=${user.sfz}`)
+					axios.get(url).then(response => {
+						this.dataList = response.data
+					})
+				},
+				methods: {}
+			})
+		</script>
+	</body>
+
+</html>

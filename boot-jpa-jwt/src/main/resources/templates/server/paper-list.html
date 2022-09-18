@@ -1,0 +1,252 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div data-th-replace="/components/base :: javascript"></div>
+	<div data-th-replace="/components/vue :: javascript"></div>
+	<div data-th-replace="/components/ui :: antd"></div>
+	<div data-th-replace="/components/base :: quill"></div>
+	<style>
+      .drawer-bottom-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          border-top: 1px solid #e9e9e9;
+          padding: 10px 16px;
+          background: #fff;
+          text-align: right;
+          z-index: 1;
+      }
+	</style>
+</head>
+<body>
+<div id="app">
+	<div>
+		<a-button type="default" @click="addPaper"> 添加文章</a-button>
+
+		<a-divider></a-divider>
+		<a-drawer width="50%" :visible="show.paper" @close="closePaperForm">
+			<a-form-model :model="form.paper" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+				<a-form-model-item label="名称" prop="title">
+					<a-input v-model="form.paper.title" placeholder="请输入名称"></a-input>
+				</a-form-model-item>
+				<a-form-model-item label="分类" prop="typeId">
+					<a-select default-value="lucy" style="width: 100%" v-model="form.paper.typeId">
+						<a-select-option :value="item.id" v-for="item in options.paperTypes"> {{item.name}}</a-select-option>
+					</a-select>
+				</a-form-model-item>
+				<div v-if="editor.create">编辑器初始化中..</div>
+				<div id="editor" style="height: 40vh"></div>
+			</a-form-model>
+			<div class="drawer-bottom-button">
+				<a-button :style="{ marginRight: '8px' }" @click="closePaperForm">关闭</a-button>
+				<a-button type="primary" @click="savePaperForm">保存</a-button>
+			</div>
+		</a-drawer>
+		<a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
+				<span slot="type" slot-scope="text, record">
+          {{record.type_name}}
+				</span>
+			<span slot="content" slot-scope="text">
+          <a-tooltip placement="topLeft">
+            <template slot="title">
+              <span>{{ text }}</span>
+            </template>
+            <span class="step-content">{{ text }}</span>
+          </a-tooltip>
+        </span>
+			<span slot="action" slot-scope="text, record">
+          <a-button type="primary" size="small" @click="editPaper(record)">编辑</a-button>
+          <a-button type="danger" size="small" @click="removePaper(record)">删除</a-button>
+			</span>
+		</a-table>
+	</div>
+</div>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                rules: {
+                    title: [
+                        {required: true, message: '请输入名称', trigger: 'blur'},
+                    ],
+                    typeId: [
+                        {required: true, message: '请选择分类', trigger: 'blur'},
+                    ],
+                },
+                columns: [
+                    {
+                        dataIndex: 'id',
+                        key: 'id',
+                        title: '唯一id',
+                    },
+                    {
+                        dataIndex: 'title',
+                        title: '标题',
+                    },
+                    {
+                        dataIndex: 'type',
+                        title: '分类',
+                        scopedSlots: {customRender: 'type'},
+                    },
+                    {
+                        dataIndex: 'content',
+                        title: '内容',
+                        scopedSlots: {customRender: 'content'},
+                    },
+                    {
+                        title: '操作',
+                        scopedSlots: {customRender: 'action'},
+                    },
+                ],
+                dataSource: [],
+                labelCol: {span: 5},
+                wrapperCol: {span: 16},
+                form: {
+                    type: 0,
+                    paper: {
+                        id: '',
+                        name: '',
+                        content: '',
+                        typeId: '',
+                    },
+                },
+                show: {
+                    paper: false,
+                },
+                options: {
+                    paperTypes: []
+                },
+                editor: {
+                    instance: null,
+                    create: true,
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'], //加粗，斜体，下划线，删除线
+                        ['blockquote', 'code-block'],  //引用，代码块
+                        [{'list': 'ordered'}, {'list': 'bullet'}],  //列表
+                        [{'color': []}, {'background': []}],  // 字体颜色，字体背景颜色
+                        [{'align': []}], //对齐方式
+                        ['clean'], //清除字体样式
+                        ['image'] //上传图片、上传视频
+                    ]
+                },
+                sysUser: sessionStorage.getItem("sysUser")
+            };
+        },
+        mounted() {
+            this.getList()
+            this.getPaperTypeList()
+        },
+        methods: {
+            getPaperTypeList() {
+                axios.get('/api/paperType/list').then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.options.paperTypes = result.data;
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            createEditor(content) {
+                setTimeout(() => {
+                    if (this.editor.create) {
+                        this.editor.instance = new window.Quill('#editor', {
+                            theme: 'snow',
+                            modules: {
+                                toolbar: this.editor.toolbar
+                            }
+                        })
+                        this.editor.create = false
+                    }
+                    this.editor.instance.root.innerHTML = content
+                }, 1000)
+            },
+            destroyEditor() {
+                this.editor.instance.root.innerHTML = ''
+            },
+            refreshData() {
+                this.getList()
+            },
+            getList() {
+                axios.get('/api/paper/list').then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.dataSource = result.data;
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            removePaper(e) {
+                const _this = this;
+                this.$confirm({
+                    title: '确认删除?',
+                    cancelText: '取消',
+                    okText: '确定',
+                    onOk() {
+                        axios.delete(`/api/paper/delete/${e.id}`).then(result => {
+                            console.log('通过api获取到的数据:', result);
+                            if (result.status !== 200) {
+                                _this.$message.error(result.message);
+                                return
+                            }
+                            _this.refreshData()
+                            _this.$message.success(result.message)
+                        }).catch(function (error) {
+                            console.log('请求出现错误:', error);
+                        });
+                    },
+                });
+            },
+            addPaper() {
+                this.form.type = 0
+                this.show.paper = true
+                this.createEditor()
+            },
+            editPaper(e) {
+                console.log(e)
+                this.form.type = 1
+                this.show.paper = true
+                this.createEditor(e.content)
+                this.form.paper.id = e.id
+                this.form.paper.title = e.title
+                this.form.paper.typeId = e.type_id
+            },
+            savePaperForm() {
+                this.form.paper.content = this.editor.txt.html()
+                let url = this.form.type === 0 ? '/api/paper/add' : '/api/paper/update'
+                axios.post(url, this.form.paper).then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    this.closePaperForm()
+                    this.refreshData()
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            closePaperForm() {
+                this.form.paper = {
+                    id: '',
+                    name: '',
+                }
+                this.show.paper = false
+            },
+        }
+    })
+</script>
+</body>
+</html>
