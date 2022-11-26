@@ -1,0 +1,34 @@
+crabapples.AES_KEY: crabapples
+crabapples.REDIS_PREFIX: crabapples
+crabapples.TOKEN_CACHE_TIME: 30
+crabapples.SALT: crabapples
+dataBaseName: learn
+dataBaseDriveV8: com.mysql.cj.jdbc.Driver
+dataBaseDriveV5: com.mysql.jdbc.Driver
+dataBaseDrive: ${dataBaseDriveV8}
+dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+
+###
+server:
+  port: 9093
+
+  application.name: learn
+  servlet.multipart.max-file-size: 100MB
+# nacos配置
+nacos.config.server-addr: 192.168.3.20:8848
+# 日志配置
+logging.file.name: d:/logs/springboot-shiro-jpa
+# 邮件配置
+mail:
+  host: smtp.qq.com
+  username: xxxxx@qq.com
+  password: xxxxx
+  source: xxxxx@qq.com
+  port: 465
+  isAuth: true
+  isDebug: true
+spring:
+  profiles:
+    active: dev
+mybatis:
+  mapper-locations: mapper/*.xml

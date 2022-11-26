@@ -63,7 +63,7 @@ public abstract class BaseEntity implements Serializable, Cloneable {
      * 删除标记 (0:正常 1:删除)
      */
     @Column(columnDefinition = "bit(1) default 0 not null comment '删除标记'")
-    private int delFlag;
+    private Integer delFlag;
 
     /**
      * 创建人

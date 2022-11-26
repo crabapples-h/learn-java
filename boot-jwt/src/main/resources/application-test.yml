@@ -1,0 +1,91 @@
+isDebug: true
+isCrypt: true
+dadaBaseUrl: localhost:3306
+#上传文件配置
+virtualPath: /file/
+uploadPath: /home/mrhe/uploadPath/
+#日志配置
+logging.level:
+  root: info
+  druid.sql: debug
+
+spring:
+  #----- mongodb -----
+  data.mongodb.database: learn
+  data.mongodb.host: 127.0.0.1
+  #----- rabbitmq -----
+  rabbitmq.host: 192.168.56.101
+  rabbitmq.port: 35672
+  rabbitmq.username: admin
+  rabbitmq.password: admin
+  rabbitmq.virtual-host: /learn
+  #rabbitmq.listener.direct.acknowledge-mode: manual
+  #----- redis -----
+  redis.host: localhost
+  redis.port: 6379
+  redis.database: 0
+  redis.jedis.pool.max-active: 10
+  cache.redis.time-to-live: 60000
+  #----- jpa配置 -----
+  jpa.show-sql: true
+  jpa.hibernate.ddl-auto: update
+  jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
+  #----- 数据源基础配置 -----
+  datasource.druid.driverClassName: ${dataBaseDrive}
+  datasource.druid.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.username: root
+  datasource.druid.password:
+  #----- 多数据源配置(根据包名选择要使用的数据源) -----
+  datasource.druid.first.driverClassName: ${dataBaseDrive}
+  datasource.druid.first.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.first.username: root
+  datasource.druid.first.password:
+  datasource.druid.second.driverClassName: ${dataBaseDrive}
+  datasource.druid.second.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.second.username: root
+  datasource.druid.second.password:
+  #----- database more config -----
+  # 慢sql监控配置
+  datasource.druid.connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  # 过滤器：监控统计用的filter:stat，日志用的filter:log4j，防御sql注入的filter:wall
+  datasource.druid.filters: stat,wall,slf4j
+  datasource.druid.use-global-data-source-stat: true
+  datasource.druid.reset-stat-enable: false
+  # 连接池初始化大小，最大连接数，最小连接数
+  datasource.druid.initial-size: 5
+  datasource.druid.max-active: 20
+  datasource.druid.min-idle: 5
+  # 开启连接池保活。当可用连接数小于最小连接数时，会自动创建连接
+  datasource.druid.keep-alive: true
+  # 连接超时时间，单位毫秒
+  datasource.druid.max-wait: 60000
+  # 连接最少存活时间，单位毫秒
+  datasource.druid.min-evictable-idle-time-millis: 30000
+  # 当应用程序获取连接时，是否检测连接状态
+  datasource.druid.test-on-borrow: false
+  # 当应用程序归还连接时，是否检测连接状态
+  datasource.druid.test-on-return: false
+  # 当应用程序获取连接时，如果test-on-borrow设置为true
+  # 连接池会检测该连接是否处于空状态，如果处于空闲状态则检测改连接是否可用
+  datasource.druid.test-while-idle: true
+  # 保持连接存活的时间间隔，单位：毫秒
+  datasource.druid.time-between-eviction-runs-millis: 60000
+  # 保持连接存活使用的测试sql语句
+  datasource.druid.validation-query: select 'x'
+  #----- druid web filter config -----
+  datasource.druid.web-stat-filter.enabled: true
+  datasource.druid.web-stat-filter.url-pattern: /*
+  datasource.druid.web-stat-filter.exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+  datasource.druid.web-stat-filter.session-stat-enable: true
+  datasource.druid.web-stat-filter.session-stat-max-count: 1000
+  #----- 网页监控配置 -----
+  datasource.druid.stat-view-servlet.enabled: true
+  datasource.druid.stat-view-servlet.login-username: admin
+  datasource.druid.stat-view-servlet.login-password: admin
+  datasource.druid.stat-view-servlet.url-pattern: /druid/*
+  # 是否允许重置数据
+  datasource.druid.stat-view-servlet.reset-enable: false
+  # 白名单
+  datasource.druid.stat-view-servlet.allow: 127.0.0.1
+  # 黑名单
+  datasource.druid.stat-view-servlet.deny:
