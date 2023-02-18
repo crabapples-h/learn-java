@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class SysMenus extends BaseEntity {
+public class SysMenus extends BaseEntity_Jpa {
     @Column(columnDefinition = "tinyint default -1 comment '排序'")
     private Integer sort;
 
@@ -41,7 +41,7 @@ public class SysMenus extends BaseEntity {
     private Integer menusType;
 
     @Column(columnDefinition = "tinyint default 0 comment '是否为跟目录 0:是 1:否'")
-    private int isRoot;
+    private Integer isRoot;
 
     @Column(columnDefinition = "varchar(64) default null comment '浏览器访问路径'")
     private String path;
@@ -57,7 +57,7 @@ public class SysMenus extends BaseEntity {
 
     @Transient
     @JSONField(serialize = false)
-    private boolean showFlag;
+    private Boolean showFlag;
 
     @Override
     public String toString() {

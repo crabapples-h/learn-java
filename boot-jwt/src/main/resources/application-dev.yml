@@ -8,6 +8,8 @@ uploadPath: /home/mrhe/uploadPath/
 logging.level:
   root: info
   druid.sql: debug
+  org.hibernate.SQL: debug
+  org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 spring:
   #----- mongodb -----
@@ -27,7 +29,8 @@ spring:
   redis.jedis.pool.max-active: 10
   cache.redis.time-to-live: 60000
   #----- jpa配置 -----
-  jpa.show-sql: false
+  jpa.show-sql: true
+  properties.hibernate.format_sql: true
   jpa.hibernate.ddl-auto: update
   jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
   #----- 数据源基础配置 -----

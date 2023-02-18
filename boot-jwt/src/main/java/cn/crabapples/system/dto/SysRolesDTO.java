@@ -1,6 +1,5 @@
 package cn.crabapples.system.dto;
 
-import cn.crabapples.common.base.BaseDTO;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +15,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SysRolesDTO extends BaseDTO {
+public class SysRolesDTO{
+    private String id;
     private String name;
 
     @Override

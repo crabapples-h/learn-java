@@ -1,11 +1,10 @@
 package cn.crabapples.system.dao.jpa;
 
-import cn.crabapples.common.BaseRepository;
+import cn.crabapples.common.base.BaseRepository;
 import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRoles;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,11 +19,13 @@ import java.util.List;
  * pc-name root
  */
 @Repository
-public interface MenusRepository extends JpaRepository<SysMenus, String>,BaseRepository<SysMenus,String> {
+public interface MenusRepository extends BaseRepository<SysMenus, String> {
 
     long countByDelFlagAndIsRoot(int delFlag, int isRoot);
 
     Page<SysMenus> findByDelFlagAndIsRoot(Pageable pageable, int delFlag, int isRoot);
+
+//    List<SysMenus> findRoot(Specification<SysMenus> specification);
 
     List<SysMenus> findByDelFlagAndIsRoot(int delFlag, int isRoot);
 

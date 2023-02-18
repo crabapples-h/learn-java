@@ -1,6 +1,5 @@
 package cn.crabapples.system.dto;
 
-import cn.crabapples.common.base.BaseDTO;
 import cn.crabapples.system.entity.SysRoles;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -19,7 +18,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class SysUserDTO extends BaseDTO {
+public class SysUserDTO {
+    private String id;
     private String username;
     private String name;
     private int age;

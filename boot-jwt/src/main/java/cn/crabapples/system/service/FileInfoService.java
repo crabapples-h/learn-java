@@ -1,6 +1,6 @@
 package cn.crabapples.system.service;
 
-import cn.crabapples.common.FileUtils;
+import cn.crabapples.common.utils.file.FileUtils;
 import cn.crabapples.system.entity.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;

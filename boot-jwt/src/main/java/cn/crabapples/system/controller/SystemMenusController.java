@@ -40,9 +40,9 @@ public class SystemMenusController extends BaseController {
      * 获取[当前用户]菜单列表
      */
     @GetMapping("/user")
-    public ResponseDTO getUserMenus(HttpServletRequest request) {
+    public ResponseDTO getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单列表");
-        List<SysMenus> menus = menusService.getUserMenus(request);
+        List<SysMenus> menus = menusService.getUserMenus();
         log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
@@ -51,9 +51,9 @@ public class SystemMenusController extends BaseController {
      * 获取[所有]菜单列表
      */
     @GetMapping("/list")
-    public ResponseDTO getMenusList(HttpServletRequest request) {
+    public ResponseDTO getMenusList() {
         log.info("收到请求->获取[所有]菜单列表");
-        List<SysMenus> list = menusService.getMenusList(request);
+        List<SysMenus> list = menusService.getMenusList();
         log.info("返回结果->获取[所有]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -62,9 +62,9 @@ public class SystemMenusController extends BaseController {
      * 获取[分页]菜单列表
      */
     @GetMapping("/page")
-    public ResponseDTO getMenusPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getMenusPage( PageDTO page) {
         log.info("收到请求->获取[分页]菜单列表");
-        List<SysMenus> list = menusService.getMenusPage(request, page);
+        List<SysMenus> list = menusService.getMenusPage( page);
         log.info("返回结果->获取[分页]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }
@@ -73,7 +73,7 @@ public class SystemMenusController extends BaseController {
      * 保存菜单
      */
     @PostMapping("/save")
-    public ResponseDTO saveMenus(HttpServletRequest request, @RequestBody MenusForm form) {
+    public ResponseDTO saveMenus(@RequestBody MenusForm form) {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
         menusService.saveMenus(form);
@@ -85,7 +85,7 @@ public class SystemMenusController extends BaseController {
      * 删除菜单-逻辑
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO removeMenus(HttpServletRequest request, @PathVariable String id) {
+    public ResponseDTO removeMenus( @PathVariable String id) {
         log.info("收到请求->[逻辑]删除菜单:[{}]", id);
         menusService.removeMenus(id);
         log.info("返回结果->[逻辑]删除菜单成功");
@@ -96,7 +96,7 @@ public class SystemMenusController extends BaseController {
      * 删除菜单-物理(待测试)
      */
     @PostMapping("/remove/really/{id}")
-    public ResponseDTO removeReallyMenus(HttpServletRequest request, @PathVariable String id) {
+    public ResponseDTO removeReallyMenus( @PathVariable String id) {
         log.info("收到请求->[物理]删除菜单:[{}]", id);
         menusService.removeReallyMenus(id);
         log.info("返回结果->[物理]删除菜单成功");

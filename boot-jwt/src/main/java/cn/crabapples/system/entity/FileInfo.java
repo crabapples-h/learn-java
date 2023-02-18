@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @Setter
 @Getter
 @Entity
-public class FileInfo extends BaseEntity {
+public class FileInfo extends BaseEntity_Jpa {
     @Column(columnDefinition = "varchar(256) default null comment '原文件名'")
     private String oldName;
     @Column(columnDefinition = "varchar(256) default null comment '文件虚拟访问路径'")

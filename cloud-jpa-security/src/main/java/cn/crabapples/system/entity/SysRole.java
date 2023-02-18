@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class SysRole extends BaseEntity {
+public class SysRole extends BaseEntity_Jpa {
     @Column(columnDefinition = "varchar(64) ")
     private String name;
 

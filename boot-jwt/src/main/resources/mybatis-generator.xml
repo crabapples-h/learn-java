@@ -76,7 +76,7 @@
             <!--是否是不可变的，如果为true，则不会生成setter方法，这个属性可以被<table>里的配置覆盖-->
             <!--            <property name="immutable" value="false"/>-->
             <!--需要继承的类-->
-            <property name="rootClass" value="cn.crabapples.common.base.BaseEntity"/>
+            <property name="rootClass" value="cn.crabapples.common.base.BaseEntity_Jpa"/>
             <!--是否修剪字符串，当数据库类型为char而不是varchar时，可自动修剪字符串-->
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>

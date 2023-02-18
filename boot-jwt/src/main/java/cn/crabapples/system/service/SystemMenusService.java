@@ -53,11 +53,11 @@ public interface SystemMenusService extends BaseService {
         }).collect(Collectors.toList());
     }
 
-    List<SysMenus> getUserMenus(HttpServletRequest request);
+    List<SysMenus> getUserMenus();
 
-    List<SysMenus> getMenusList(HttpServletRequest request);
+    List<SysMenus> getMenusList();
 
-    List<SysMenus> getMenusPage(HttpServletRequest request, PageDTO page);
+    List<SysMenus> getMenusPage( PageDTO page);
 
     void saveMenus(MenusForm form);
 

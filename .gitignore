@@ -2,6 +2,12 @@ HELP.md
 */target/
 !.mvn/wrapper/maven-wrapper.jar
 
+
+### node js ###
+*/dist_electron/
+*/dist/
+*/node_modules/
+
 ### STS ###
 .apt_generated
 .classpath

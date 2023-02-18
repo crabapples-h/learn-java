@@ -22,10 +22,10 @@ import java.util.Collection;
 @NoArgsConstructor
 public class ResponseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
-    private int status;
+    private Integer status;
     private String message;
     private Object data;
-    private long time;
+    private Long time;
     private PageDTO page;
 
     private ResponseDTO(ResponseCode status, String message, Object data, PageDTO page) {

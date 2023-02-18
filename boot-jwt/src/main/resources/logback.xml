@@ -98,6 +98,18 @@
             <pattern>%d{HH:mm:ss.SSS} [%boldCyan(%thread)] %boldCyan(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
         </encoder>
     </appender>
+    <appender name="trace" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%boldCyan(%thread)] %boldCyan(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
 
     <!--logger 可以指定某一个包或者某一个类的日志级别和输出位置-->
 <!--        <logger name="org.mybatis" level="debug" addtivity="true">-->

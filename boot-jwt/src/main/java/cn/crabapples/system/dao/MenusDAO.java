@@ -1,14 +1,12 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.BaseDAO;
+import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.jpa.MenusRepository;
 import cn.crabapples.system.entity.SysMenus;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +22,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends BaseDAO<SysMenus,String> {
+public class MenusDAO extends BaseDAO<SysMenus, String> {
     private final MenusRepository repository;
 
     public MenusDAO(MenusRepository repository) {
@@ -51,7 +49,19 @@ public class MenusDAO extends BaseDAO<SysMenus,String> {
     }
 
     public List<SysMenus> findRoot() {
-        return repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
+        SysMenus sysMenusExample = new SysMenus();
+        sysMenusExample.setIsRoot(DIC.IS_ROOT);
+        sysMenusExample.setDelFlag(DIC.NOT_DEL);
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                //对 isRoot 字段精确匹配
+                .withMatcher("isRoot", ExampleMatcher.GenericPropertyMatchers.exact())
+                //对 delFlag 字段精确匹配
+                .withMatcher("delFlag", ExampleMatcher.GenericPropertyMatchers.exact());
+        Example<SysMenus> example = Example.of(sysMenusExample, matcher);
+//        repository.findAll(of);
+//        repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
+//        return repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
+        return repository.findAll(example);
     }
 
     public List<SysMenus> findByParentId(String id) {

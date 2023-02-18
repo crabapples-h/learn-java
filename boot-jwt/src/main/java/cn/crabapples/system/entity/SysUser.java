@@ -1,8 +1,7 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -26,15 +25,15 @@ import java.util.List;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseEntity_Jpa {
 
-    @Column(columnDefinition = "varchar(32) comment '用户名'", unique = true)
+    @Column(columnDefinition = "varchar(32)  not null comment '用户名'", unique = true)
     private String username;
 
-    @Column(columnDefinition = "varchar(64) comment '密码'")
+    @Column(columnDefinition = "varchar(64) not null comment '密码'")
     private String password;
 
-    @Column(columnDefinition = "varchar(32) comment '姓名'")
+    @Column(columnDefinition = "varchar(32)  not null comment '姓名'")
     private String name;
 
     @Column(columnDefinition = "varchar(32) comment '邮箱'")

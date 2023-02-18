@@ -3,7 +3,7 @@ package cn.crabapples.system.controller;
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.common.config.jwt.JwtIgnore;
+import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemService;
@@ -60,7 +60,7 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping("/logout")
     @ApiOperation(value = "注销登录", notes = "注销登录接口")
-    public ResponseDTO logout(HttpServletRequest request) {
+    public ResponseDTO logout() {
         return ResponseDTO.returnSuccess("注销成功");
     }
 

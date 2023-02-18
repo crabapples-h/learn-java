@@ -3,7 +3,6 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.MenusDAO;
-import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
@@ -11,19 +10,16 @@ import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemService;
-import cn.crabapples.system.service.SystemUserService;
 import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,12 +37,14 @@ import java.util.stream.Collectors;
 @Slf4j
 //@CacheConfig(cacheNames = "user:")
 public class SystemMenusServiceImpl implements SystemMenusService {
+    private final HttpServletRequest request;
     private final SystemService systemService;
     private final SystemRolesService rolesService;
     private final MenusDAO menusDAO;
 
-    public SystemMenusServiceImpl(SystemService systemService,
+    public SystemMenusServiceImpl(HttpServletRequest request, SystemService systemService,
                                   SystemRolesService rolesService, MenusDAO menusDAO) {
+        this.request = request;
         this.systemService = systemService;
         this.rolesService = rolesService;
         this.menusDAO = menusDAO;
@@ -62,9 +60,9 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public List<SysMenus> getUserMenus(HttpServletRequest request) {
+    public List<SysMenus> getUserMenus() {
         log.info("获取用户拥有的所有菜单");
-        List<String> menusList = getUserMenusIds(request);
+        List<String> menusList = getUserMenusIds();
         List<SysMenus> allMenus = menusDAO.findRoot();
         List<SysMenus> list = filterRootMenusTree(menusList, allMenus);
         log.info("用户拥有的所有菜单[{}]", list);
@@ -75,7 +73,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     /**
      * 获取当前用户所拥有的角色的所有菜单ID并去重
      */
-    private List<String> getUserMenusIds(HttpServletRequest request) {
+    private List<String> getUserMenusIds() {
         SysUser user = systemService.getUserInfo(request);
 //        String roleIds = user.getRolesList();  if (StringUtils.isEmpty(roleIds)) {
 ////            return Collections.EMPTY_LIST;
@@ -130,7 +128,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 获取菜单列表(分页)
      */
     @Override
-    public List<SysMenus> getMenusPage(HttpServletRequest request, PageDTO page) {
+    public List<SysMenus> getMenusPage(PageDTO page) {
         Page<SysMenus> menusPage = menusDAO.findRoot(page);
         Pageable pageable = menusPage.getPageable();
         page.setDataCount(menusDAO.count());
@@ -144,7 +142,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 获取菜单列表(全部)
      */
     @Override
-    public List<SysMenus> getMenusList(HttpServletRequest request) {
+    public List<SysMenus> getMenusList() {
         List<SysMenus> sysMenus = menusDAO.findRoot();
         sysMenus = filterMenusByDelFlag(sysMenus);
         return sysMenus;

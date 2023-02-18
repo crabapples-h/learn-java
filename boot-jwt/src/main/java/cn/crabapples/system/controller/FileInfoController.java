@@ -2,7 +2,7 @@ package cn.crabapples.system.controller;
 
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.common.config.jwt.JwtIgnore;
+import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.system.entity.FileInfo;
 import cn.crabapples.system.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;

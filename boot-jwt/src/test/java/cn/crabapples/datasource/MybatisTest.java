@@ -1,6 +1,6 @@
 package cn.crabapples.datasource;
 
-import cn.crabapples.test.dao.mybatis.SysUserMapper;
+import cn.crabapples.test.dao.mybatis.UserMapperTest;
 import cn.crabapples.test.entity.SysUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -27,11 +27,11 @@ import java.util.List;
 @Slf4j
 public class MybatisTest {
     @Autowired
-    SysUserMapper sysUserMapper;
+    UserMapperTest userMapperTest;
 
     @Test
     public void mybatisTest() {
-        final List<SysUser> sysUsers = sysUserMapper.selectByExample(null);
+        final List<SysUser> sysUsers = userMapperTest.selectByExample(null);
         System.err.println(sysUsers);
     }
 

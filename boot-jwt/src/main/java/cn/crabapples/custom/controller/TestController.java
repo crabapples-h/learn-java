@@ -1,6 +1,6 @@
 package cn.crabapples.custom.controller;
 
-import cn.crabapples.common.config.rabbitmq.RabbitRpcConfigure;
+import cn.crabapples.common.rabbitmq.RabbitRpcConfigure;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;

@@ -1,6 +1,6 @@
 package cn.crabapples.system.dao.jpa;
 
-import cn.crabapples.common.BaseRepository;
+import cn.crabapples.common.base.BaseRepository;
 import cn.crabapples.system.entity.SysUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

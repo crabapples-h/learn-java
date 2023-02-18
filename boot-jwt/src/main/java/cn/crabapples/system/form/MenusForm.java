@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class MenusForm extends BaseForm<SysMenus> {
+    private String id;
     private Integer sort;
 
     private String icon;

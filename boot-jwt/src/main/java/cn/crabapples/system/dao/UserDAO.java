@@ -1,6 +1,6 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.BaseDAO;
+import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.jpa.UserRepository;

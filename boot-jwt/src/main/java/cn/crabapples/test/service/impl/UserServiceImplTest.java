@@ -1,9 +1,7 @@
 package cn.crabapples.test.service.impl;
 
-import cn.crabapples.common.BaseRepository;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.dao.UserDAOTest;
-import cn.crabapples.test.dao.jpa.UserRepositoryTest;
 import cn.crabapples.test.service.UserServiceTest;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;

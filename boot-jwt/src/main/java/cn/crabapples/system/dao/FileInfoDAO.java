@@ -1,6 +1,6 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.BaseDAO;
+import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.FileInfoRepository;
 import cn.crabapples.system.entity.FileInfo;
 import org.springframework.stereotype.Component;

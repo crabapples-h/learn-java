@@ -1,7 +1,7 @@
 package cn.crabapples.system.entity;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
@@ -30,7 +30,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseEntity_Jpa {
     public SysUser() {}
     public SysUser(String name, Integer age) {
         this.name = name;

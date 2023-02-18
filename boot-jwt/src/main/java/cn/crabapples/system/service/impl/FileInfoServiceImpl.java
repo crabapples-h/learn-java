@@ -1,6 +1,6 @@
 package cn.crabapples.system.service.impl;
 
-import cn.crabapples.common.FileUtils;
+import cn.crabapples.common.utils.file.FileUtils;
 import cn.crabapples.system.dao.FileInfoDAO;
 import cn.crabapples.system.entity.FileInfo;
 import cn.crabapples.system.service.FileInfoService;
