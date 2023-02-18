@@ -8,6 +8,7 @@ import cn.crabapples.common.config.jwt.JwtIgnore;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.form.DemoPostForm1;
 import cn.crabapples.test.form.DemoPostForm2;
+import cn.crabapples.test.service.ServiceTest;
 import cn.crabapples.test.service.UserServiceTest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,6 +21,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -39,18 +41,28 @@ import java.util.List;
 public class ControllerTest extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerTest.class);
-    private UserServiceTest userServiceTest;
+    private final UserServiceTest userServiceTest;
     private final RabbitTemplate rabbitTemplate;
+    private final ServiceTest serviceTest;
     private final ApplicationConfigure applicationConfigure;
 
     public ControllerTest(UserServiceTest userServiceTest,
                           RabbitTemplate rabbitTemplate,
-                          ApplicationConfigure applicationConfigure) {
+                          ServiceTest serviceTest, ApplicationConfigure applicationConfigure) {
         this.userServiceTest = userServiceTest;
         this.rabbitTemplate = rabbitTemplate;
+        this.serviceTest = serviceTest;
         this.applicationConfigure = applicationConfigure;
     }
 
+    @GetMapping("/mac/test")
+    @JwtIgnore
+    public ResponseDTO macTest(HttpServletRequest request) {
+        serviceTest.getIpAddress(request);
+        System.err.println(applicationConfigure);
+        List<SysUser> userList = userServiceTest.findByHQL("alice");
+        return ResponseDTO.returnSuccess("切换数据源1", userList);
+    }
     @GetMapping("/datasource/test1")
     @JwtIgnore
     public ResponseDTO dataSourceTest1() {

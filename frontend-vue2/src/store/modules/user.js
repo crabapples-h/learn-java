@@ -3,7 +3,7 @@
  *
  * @author Mr.He
  * 2021/8/11 1:15
- * e-mail hequan3@asiainfo.com
+ * e-mail crabapples.cn@gmail.com
  */
 import storage from "@/store/storage";
 import commonApi from "@/api/CommonApi";

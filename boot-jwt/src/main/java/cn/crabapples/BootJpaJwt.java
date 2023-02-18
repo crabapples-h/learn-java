@@ -1,22 +1,17 @@
 package cn.crabapples;
 
-import cn.crabapples.common.config.datasource.dynamicaop.DynamicDataSourceRegister;
 import cn.crabapples.common.config.datasource.packagename.DataSourceConfigure;
 import cn.crabapples.common.config.datasource.packagename.DataSourcePrimaryConfigure;
 import cn.crabapples.common.config.datasource.packagename.DataSourceSecondConfigure;
-import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.*;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
@@ -44,15 +39,20 @@ import org.springframework.web.client.RestTemplate;
 @EnableJpaAuditing
 @SpringBootConfiguration
 @EnableAutoConfiguration
+
+//--------start-------
+// 多数据源配置，提供两种方式，通常情况下使用单数据源即可
 // 动态数据源，使用@DataSourceChange(name="xxx")切换
-@Import({DynamicDataSourceRegister.class})
-//排除多数据源配置，根据包名选择数据源(仅适用于jpa)
+//@Import({DynamicDataSourceRegister.class})
+// 排除多数据源配置，根据包名选择数据源(仅适用于jpa)
 @ComponentScan(basePackages = {"cn.crabapples"}, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
                 classes = {DataSourceConfigure.class,
                         DataSourcePrimaryConfigure.class,
                         DataSourceSecondConfigure.class}),
 })
+
+//--------end-------
 //mybatis扫描路径(如果使用注解的方式可不用配置)
 //@MapperScans({
 //        @MapperScan("cn.crabapples.custom.dao"),
@@ -65,11 +65,11 @@ import org.springframework.web.client.RestTemplate;
 //        @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = true),
 //        @PropertySource(value = "common.properties", ignoreResourceNotFound = true)
 //})
-public class BootJpaJwt {
-    private static final Logger logger = LoggerFactory.getLogger(BootJpaJwt.class);
+public class Application {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(BootJpaJwt.class, args);
+        SpringApplication.run(Application.class, args);
         logger.info(">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>");
     }
 

@@ -14,6 +14,7 @@ import Welcome from "@/views/manage/Welcome";
 import Login from "@/views/base/Login";
 import Error404 from "@/views/base/Error-404";
 import Error401 from "@/views/base/Error-401";
+import Loading from "@/views/base/Loading";
 import NProgress from "nprogress";
 import 'nprogress/nprogress.css'
 import storage from "@/store/storage";
@@ -34,6 +35,12 @@ const staticRouter = [
         path: '/login',
         meta: {title: '登陆', icon: 'clipboard'},
         component: Login,
+        hidden: true
+    },
+    {
+        path: '/loading',
+        meta: {title: '加载中', icon: 'clipboard'},
+        component: Loading,
         hidden: true
     },
     {
@@ -122,11 +129,13 @@ function tree2list(data) {
     return array
 }
 
-const whiteList = ['/login', '/404', '/401'] // 白名单
+const whiteList = ['/login', '/404', '/401', '/loading'] // 白名单
 let initFinish = false
+//修改页面标题
 function changePageTitle(e){
     window.document.title = e.meta.title
 }
+//修改页面icon
 function changePageIcon(e){
     let link = document.querySelector("link[rel*='icon']")
     link.href = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
@@ -134,7 +143,7 @@ function changePageIcon(e){
 }
 router.beforeEach((to, from, next) => {
     changePageTitle(to)
-    // changePageIcon(to)
+    changePageIcon(to)
     NProgress.start()
     const path = to.path
     const token = store.getters.TOKEN

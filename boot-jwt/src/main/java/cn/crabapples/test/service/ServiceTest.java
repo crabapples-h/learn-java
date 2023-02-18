@@ -1,5 +1,7 @@
 package cn.crabapples.test.service;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * TODO
  *
@@ -10,4 +12,5 @@ package cn.crabapples.test.service;
  * pc-name 29404
  */
 public interface ServiceTest {
+    String getIpAddress(HttpServletRequest request);
 }

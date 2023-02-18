@@ -38,7 +38,7 @@ public interface SystemUserService extends BaseService {
 
     SysUser addUser(UserForm form);
 
-    SysUser delUser(String id);
+    void delUser(String id);
 
     SysUser editUser(UserForm form);
 

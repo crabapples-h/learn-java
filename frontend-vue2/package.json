@@ -10,6 +10,7 @@
     "ant-design-vue": "^1.6.4",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "getmac": "^5.20.0",
     "jsencrypt": "^3.1.0",
     "jsrsasign": "^10.1.13",
     "nprogress": "^0.2.0",

@@ -110,8 +110,10 @@ public class SystemServiceImpl implements SystemService {
      */
     private List<String> getUserMenusIds(HttpServletRequest request) {
         SysUser user = getUserInfo(request);
-        String rolesIds = user.getRolesList();
-        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
+//        String rolesIds = user.getRolesList();
+//        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
+        List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
+
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
             String ids = e.getMenusIds();

@@ -1,6 +1,9 @@
 package cn.crabapples.test.service;
 
+import cn.crabapples.common.BaseRepository;
 import cn.crabapples.system.entity.SysUser;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -23,4 +26,10 @@ public interface UserServiceTest {
      * 测试方法-使用sql查询
      */
     List<SysUser> findBySQL(String name);
+
+    List<SysUser> findAll();
+
+    List<SysUser> findAll(Example<SysUser> example);
+
+    List<SysUser> findAll(Specification<SysUser> specification);
 }

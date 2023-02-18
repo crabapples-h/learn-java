@@ -244,6 +244,7 @@ export default {
         if (result.data !== null) {
           this.rolesOptions = result.data;
         }
+        console.log('1111--->', this.rolesOptions)
       }).catch(function (error) {
         console.error('出现错误:', error);
       });
@@ -318,9 +319,6 @@ export default {
     editUser(e) {
       this.form.type = 1
       this.form.userInfo = e
-      this.form.userInfo.rolesList = e.rolesList.map(r => {
-        return r.id
-      })
       console.log(this.form.userInfo.rolesList)
       this.getRolesList()
       this.show.userInfo = true

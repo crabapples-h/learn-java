@@ -20,7 +20,7 @@ import java.util.List;
  * pc-name 29404
  */
 @Repository
-public interface UserRepositoryTest extends JpaRepository<SysUser, String> {
+public interface UserRepositoryTest extends BaseRepository<SysUser, String> {
     /**
      * 测试方法-使用hql查询
      *

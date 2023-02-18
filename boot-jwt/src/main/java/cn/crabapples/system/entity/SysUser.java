@@ -6,6 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class SysUser extends BaseEntity {
 
     @Column(columnDefinition = "varchar(32) comment '用户名'", unique = true)
@@ -34,6 +36,9 @@ public class SysUser extends BaseEntity {
 
     @Column(columnDefinition = "varchar(32) comment '姓名'")
     private String name;
+
+    @Column(columnDefinition = "varchar(32) comment '邮箱'")
+    private String mail;
 
     @Column(columnDefinition = "varchar(15) comment '电话'")
     private String phone;
@@ -48,16 +53,12 @@ public class SysUser extends BaseEntity {
     @Column(columnDefinition = "varchar(32) comment '最后操作用户'")
     private String lastModifiedBy;
 
-    @Transient
-//    @ManyToMany(fetch = FetchType.EAGER)
-    @JSONField(serialize = false)
-    private List<SysRoles> roles;
-
-    @Column(columnDefinition = "longtext comment '角色列表'")
-    private String rolesList = "";
+    @ElementCollection
+    @Column
+    private List<String> rolesList;
 
     @Column(columnDefinition = "tinyint default 0 not null comment '用户状态标记 0:正常 1:禁用'")
-    private int status;
+    private Integer status;
 
     @Override
     public String toString() {

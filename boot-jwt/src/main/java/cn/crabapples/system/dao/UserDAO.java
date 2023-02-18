@@ -1,20 +1,18 @@
 package cn.crabapples.system.dao;
 
+import cn.crabapples.common.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.UserRepository;
 import cn.crabapples.system.entity.SysUser;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserDAO extends BaseDAO {
+public class UserDAO extends BaseDAO<SysUser, String> {
     private final UserRepository repository;
 
     public UserDAO(UserRepository repository) {
@@ -60,6 +58,7 @@ public class UserDAO extends BaseDAO {
     public List<SysUser> findByName(String name) {
         return repository.findByDelFlagAndNameContaining(DIC.NOT_DEL, name);
     }
+
 
     public SysUser save(SysUser user) {
         return repository.save(user);

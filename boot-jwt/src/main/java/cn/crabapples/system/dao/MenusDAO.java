@@ -1,9 +1,9 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.MenusRepository;
 import cn.crabapples.system.entity.SysMenus;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends BaseDAO {
+public class MenusDAO extends BaseDAO<SysMenus,String> {
     private final MenusRepository repository;
 
     public MenusDAO(MenusRepository repository) {

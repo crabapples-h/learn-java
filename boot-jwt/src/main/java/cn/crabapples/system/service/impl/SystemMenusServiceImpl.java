@@ -77,12 +77,13 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     private List<String> getUserMenusIds(HttpServletRequest request) {
         SysUser user = systemService.getUserInfo(request);
-        String roleIds = user.getRolesList();
-        if (StringUtils.isEmpty(roleIds)) {
-            return Collections.EMPTY_LIST;
-        }
+//        String roleIds = user.getRolesList();  if (StringUtils.isEmpty(roleIds)) {
+////            return Collections.EMPTY_LIST;
+////        }
+//
 //        List<SysRoles> roles = rolesService.getRolesList(request);
-        List<SysRoles> roles = rolesService.getByIds(roleIds.split(","));
+//        List<SysRoles> roles = rolesService.getByIds(roleIds.split(","));
+        List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
         List<String> menusIds = new ArrayList<>();
         roles.forEach(e -> {
             String ids = e.getMenusIds();

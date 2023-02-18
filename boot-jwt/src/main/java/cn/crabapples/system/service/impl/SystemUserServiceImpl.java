@@ -47,7 +47,6 @@ public class SystemUserServiceImpl implements SystemUserService {
         this.rolesDAO = rolesDAO;
     }
 
-
     @Override
     public SysUser findById(String id) {
         return userDAO.findById(id);
@@ -111,7 +110,9 @@ public class SystemUserServiceImpl implements SystemUserService {
             password = form.getPassword();
         }
         entity.setPassword(password);
-        entity.setRolesList(String.join(",", form.getRolesList()));
+        entity.setDelFlag(DIC.NOT_DEL);
+        entity.setStatus(DIC.USER_LOCK);
+//        entity.setRolesList( form.getRolesList()));
         return userDAO.save(entity);
     }
 
@@ -119,10 +120,9 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 删除用户
      */
     @Override
-    public SysUser delUser(String id) {
-        SysUser user = userDAO.findById(id);
-        user.setDelFlag(DIC.IS_DEL);
-        return userDAO.save(user);
+    @Transactional
+    public void delUser(String id) {
+        userDAO.delUser(id);
     }
 
     /**
@@ -139,7 +139,7 @@ public class SystemUserServiceImpl implements SystemUserService {
             }
         }
         entity.setPassword(password);
-        entity.setRolesList(String.join(",", form.getRolesList()));
+//        entity.setRolesList(String.join(",", form.getRolesList()));
         return userDAO.save(entity);
     }
 

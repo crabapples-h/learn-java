@@ -27,7 +27,7 @@ spring:
   redis.jedis.pool.max-active: 10
   cache.redis.time-to-live: 60000
   #----- jpa配置 -----
-  jpa.show-sql: true
+  jpa.show-sql: false
   jpa.hibernate.ddl-auto: update
   jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
   #----- 数据源基础配置 -----

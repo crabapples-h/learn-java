@@ -1,8 +1,8 @@
 package cn.crabapples.system.dao;
 
+import cn.crabapples.common.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.jpa.RolesRepository;
 import cn.crabapples.system.entity.SysRoles;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class RolesDAO extends BaseDAO {
+public class RolesDAO extends BaseDAO<SysRoles,String> {
     private final RolesRepository repository;
 
     public RolesDAO(RolesRepository repository) {

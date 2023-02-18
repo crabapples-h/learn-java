@@ -1,7 +1,6 @@
 <template>
   <div class="loading">
     <a-spin :tip="loadingText" size="large"/>
-
   </div>
 </template>
 
@@ -15,12 +14,12 @@ export default {
     }
   },
   mounted() {
-    this.$router.replace('/manage/index')
-
+    this.$router.replace('/loading')
     setTimeout(() => {
+      //调用commit会执行store中mutations里定义的方法
       this.$store.commit('INIT_ROUTER', null)
       this.$router.replace('/manage/index')
-    }, 3000)
+    }, 1000)
   }
 }
 </script>

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,8 @@ import java.util.Optional;
  * qq 294046317
  * pc-name mrhe
  */
-public interface BaseRepository<T, ID>  {
+@NoRepositoryBean
+public interface BaseRepository<T, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
     default long count(int delFlag) {
         return countByDelFlag(delFlag);
     }

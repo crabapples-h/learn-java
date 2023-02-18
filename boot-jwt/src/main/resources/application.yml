@@ -11,9 +11,7 @@ dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shang
 ###
 server:
   port: 9093
-
   application.name: learn
-  servlet.multipart.max-file-size: 100MB
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
@@ -30,5 +28,8 @@ mail:
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
 mybatis:
   mapper-locations: mapper/*.xml

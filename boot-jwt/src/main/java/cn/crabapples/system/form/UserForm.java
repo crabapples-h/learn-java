@@ -67,6 +67,10 @@ public class UserForm extends BaseForm<SysUser> {
     @NotBlank(message = "姓名不能为空", groups = {Groups.IsNotNull.class, Groups.IsAdd.class, Groups.IsEdit.class})
     private String name;
 
+    @Length(max = 32)
+    @NotBlank(message = "邮箱不能为空", groups = {Groups.IsNotNull.class, Groups.IsAdd.class, Groups.IsEdit.class})
+    private String mail;
+
     @NotBlank(message = "电话不能为空", groups = {Groups.IsNotNull.class, Groups.IsAdd.class, Groups.IsEdit.class})
     private String phone;
 
@@ -80,8 +84,8 @@ public class UserForm extends BaseForm<SysUser> {
     public SysUser toEntity() {
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(this, entity);
-        if (null != rolesList)
-            entity.setRolesList(String.join(",", rolesList));
+//        if (null != rolesList)
+//            entity.setRolesList(String.join(",", rolesList));
         return entity;
     }
 
