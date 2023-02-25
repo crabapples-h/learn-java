@@ -16,7 +16,7 @@ public class Client01 {
         Singleton02 singleton02 = Singleton02.getInstance();
         Singleton03 singleton03 = Singleton03.getInstance();
         Singleton04 singleton04 = Singleton04.getInstance();
-        Singleton05 singleton05 = Singleton05.INSTANCE;
+        Singleton05 singleton05 = Singleton05.getInstance();
         singleton01.doSomething();
         singleton02.doSomething();
         singleton03.doSomething();

@@ -42,12 +42,12 @@ select * from user_family,user_base where user_base.fid = user_family.id;
 select * from user_family inner join user_base on user_base.fid = user_family.id;
 -- 外连接 查询某一张表的全部和两张表的交集部分(左外连接和右外连接可以相互转换)
 -- 左外连接 select [字段] from [表一] left join [表二] on [连接条件]
-select * from user_base left join user_family on user_family.id = user_base.id;
+select * from user_base left join user_family on user_family.id = user_base.fid;
 -- 右外连接 select [字段] from [表一] right join [表二] on [连接条件]
 select * from user_base right join user_family on user_base.fid = user_family.id;
 -- 自连接 select [字段] from [表名] [别名] join [表名] [别名] on [连接条件] (自连接可以是内连接也可以是外连接)
 -- 内连接
-select a.name emp_name, b.name manage_name from user_base as a  join user_base as b on a.pid = b.id;
+select a.name emp_name, b.name manage_name from user_base as a join user_base as b on a.pid = b.id;
 -- 内连接
 select a.name emp_name, b.name manage_name from user_base as a left join user_base as b on a.pid = b.id;
 /*----------连接查询end----------*/
@@ -66,12 +66,16 @@ select * from user_family where family_name like '_家' ;
 /*----------联合查询end----------*/
 
 /*----------子查询start----------*/
+-- select [字段列表] from ([select [字段列表] from [表名]]) [子查询别名]
 select * from user_info,
     (select a.*,b.family_name from user_base a,
         (select * from user_family where family_name like '李_')b where a.fid = b.id
     ) a where user_info.uid = a.id;
--- select [字段列表] from ([select [字段列表] from [表名]]) [子查询别名]
 -- 标量子查询 (子查询结果返回一个值)
+-- 行子查询 (子查询结果只返回一个行)
+-- 表子查询 (子查询结果返回多行多列)
+
+
 select * from user_base a,(
     select id from user_family where family_name like '李_'
     ) b where a.fid = b.id;
@@ -116,21 +120,4 @@ select base.id,base.name,info.age,info.address from user_base as base right join
     select id from user_family where family_name ='李家');
 
 
--- 行子查询 (子查询结果只返回一个行)
--- 表子查询 (子查询结果返回多行多列)
--- select [字段列表] from [表名] union all select [字段列表] from [表名];
-select * from user_family where family_name like '张_'
-union all
-select * from user_family where family_name like '_家' ;
--- 联合查询 union  将两个查询的结果集去重后合并在一起
--- select [字段列表] from [表名] union all select [字段列表] from [表名];
-select * from user_family where family_name like '张_'
-union
-select * from user_family where family_name like '_家' ;
-/*----------联合查询end----------*/
-
-
-select max(a.age) from  (select age from user_info, ( #列子查询
-    select base.id from user_base base where base.fid in ( #表子查询
-        select id from user_family where family_name ='李家') #标量子查询
-) base where base.id = user_info.uid) a
+/*----------子查询end----------*/

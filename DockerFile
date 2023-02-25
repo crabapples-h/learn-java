@@ -2,7 +2,7 @@ FROM crabapples/jdk11:1.2
 ENV LANG C.UTF-8
 ENV JAVA_HOME=/opt/jdk PATH=/opt/jdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 VOLUME /params /var/logs
-COPY target/${JAR_FILE} /opt/app.jar
+COPY adapter/${JAR_FILE} /opt/app.jar
 ENTRYPOINT ["java","-jar","/opt/app.jar"]
 
 # FROM 指定基础镜像

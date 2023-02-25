@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO 单例模式-懒汉式
+ * TODO 单例模式-饿汉式
  *
  * @author Mr.He
  * 12/19/19
@@ -16,11 +16,12 @@ import org.slf4j.LoggerFactory;
  */
 public class Singleton01 {
     Logger logger = LoggerFactory.getLogger(this.getClass());
+    // 类在加载时就初始化(jvm的初始化，即给对象赋初始值)对象
     private static final Singleton01 instance = new Singleton01();
 
-    private Singleton01() {
-    }
+    private Singleton01() {}
 
+    // 在调用getInstance()时真正触发初始化(即创建对象)
     public static Singleton01 getInstance() {
         return instance;
     }

@@ -1,6 +1,6 @@
 HELP.md
-*/target/
-target/
+*/adapter/
+adapter/
 !.mvn/wrapper/maven-wrapper.jar
 .svn/
 ### STS ###

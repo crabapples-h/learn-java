@@ -19,8 +19,8 @@ public class Client {
 
     public static void main(String[] args) throws Exception {
         test1();
-        test2();
-        test3();
+//        test2();
+//        test3();
     }
 
     /**
@@ -33,6 +33,8 @@ public class Client {
         color.setColor("pink");
         logger.info("source:[{}]", source);
         logger.info("target:[{}]", target);
+        System.out.println(source.hashCode());
+        System.out.println(target.hashCode());
     }
 
     /**
@@ -45,6 +47,8 @@ public class Client {
         color.setColor("pink");
         logger.info("source:[{}]", source);
         logger.info("target:[{}]", target);
+        System.out.println(source.hashCode());
+        System.out.println(target.hashCode());
     }
 
     /**
@@ -63,6 +67,8 @@ public class Client {
         color.setColor("pink");
         logger.info("source:[{}]", source);
         logger.info("target:[{}]", target);
+        System.out.println(source.hashCode());
+        System.out.println(target.hashCode());
 
     }
 }

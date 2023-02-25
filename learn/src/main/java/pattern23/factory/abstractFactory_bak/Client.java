@@ -1,4 +1,4 @@
-package pattern23.factory.abstractFactory;
+package pattern23.factory.abstractFactory_bak;
 
 /**
  * TODO 工厂模式-抽象工厂

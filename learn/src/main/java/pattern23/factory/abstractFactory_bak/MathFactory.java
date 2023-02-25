@@ -1,4 +1,4 @@
-package pattern23.factory.abstractFactory;
+package pattern23.factory.abstractFactory_bak;
 
 /**
  * TODO 工厂模式-抽象工厂
@@ -9,12 +9,12 @@ package pattern23.factory.abstractFactory;
  * qq 294046317
  * pc-name root
  */
-public class ChineseFactory {
+public class MathFactory {
     static Book buyBook() {
-        return BookFactory.buyChineseBook();
+        return BookFactory.buyMathBook();
     }
 
     static Pen buyPen() {
-        return PenFactory.buyChinesePen();
+        return PenFactory.buyMathPen();
     }
 }

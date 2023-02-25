@@ -1,6 +1,6 @@
-package pattern23.factory.abstractFactory;
+package pattern23.factory.abstractFactory_bak;
 
-import pattern23.factory.abstractFactory.Pen.*;
+import pattern23.factory.abstractFactory_bak.Pen.*;
 
 /**
  * TODO 工厂模式-抽象工厂

@@ -15,7 +15,7 @@ select rpad('hello,world', 20, '哈');
 select trim('   hello,world       ');
 -- 截取字符串 substring('str',start,length) 在str中从start开始截取长度为length的部分 * start从1开始
 select substring('hello,world', 1, 5);
--- 字符串替换 replace('str','source','target') 将字符串str中所有的source替换为target
+-- 字符串替换 replace('str','source','adapter') 将字符串str中所有的source替换为target
 select replace('hello,world', 'o', '哈');
 /*----------字符串函数end----------*/
 

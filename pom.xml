@@ -5,7 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>base-project</module>
         <module>boot-jpa-security</module>
         <module>boot-jwt</module>
         <module>cloud-jpa-security</module>

@@ -1,8 +1,9 @@
-package pattern23.builder;
+package pattern23.builder.director;
 
 import pattern23.factory.simplefactory.Apple;
 import pattern23.factory.simplefactory.FoodFactory.Orange;
 import pattern23.factory.simplefactory.FoodFactory.Peach;
+
 /**
  * TODO 建造者模式-建造器
  *
@@ -13,9 +14,12 @@ import pattern23.factory.simplefactory.FoodFactory.Peach;
  * pc-name crabapples
  */
 public interface FoodBuilder {
-    Apple builderApple();
 
-    Orange builderOrange();
+    void builderApple(Apple apple);
 
-    Peach builderPeach();
+    void builderOrange(Orange orange);
+
+    void builderPeach(Peach peach);
+
+    Food build();
 }

@@ -1,4 +1,4 @@
-package pattern23.builder;
+package pattern23.builder.director;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,37 +16,18 @@ import pattern23.factory.simplefactory.FoodFactory.*;
  */
 public class SweetFood implements Food {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Apple apple;
+    private final Orange orange;
+    private final Peach peach;
 
-    private Apple apple;
-    private Orange orange;
-    private Peach peach;
-
-    public Apple getApple() {
-        return apple;
-    }
-
-    public void setApple(Apple apple) {
+    public SweetFood(Apple apple, Orange orange, Peach peach) {
         this.apple = apple;
-    }
-
-    public Orange getOrange() {
-        return orange;
-    }
-
-    public void setOrange(Orange orange) {
         this.orange = orange;
-    }
-
-    public Peach getPeach() {
-        return peach;
-    }
-
-    public void setPeach(Peach peach) {
         this.peach = peach;
     }
 
     @Override
     public void eat() {
-        logger.info("eat:[sweetFood]");
+        logger.info("eat:[{}][{}][{}]", apple, orange, peach);
     }
 }
