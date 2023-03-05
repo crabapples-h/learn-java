@@ -2,6 +2,12 @@
 
 # 这是一个用于记录学习的项目
 * 20230225
+    * 增加策略模式演示 `pattern23.strategy.*`
+    * 增加模板方法模式演示 `pattern23.template.*`
+    * 增加观察者模式演示 `pattern23.observer.*`
+* 20230225
+    * 增加装饰器模式演示 `pattern23.decorator.*`
+* 20230225
     * 修复建造者模式代码错误
     * 增加享元模式演示 `pattern23.flyweight.*`
     * 增加外观模式演示 `pattern23.facade.*`

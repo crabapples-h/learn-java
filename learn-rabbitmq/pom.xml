@@ -13,7 +13,7 @@
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.adapter>8</maven.compiler.adapter>
+        <maven.compiler.listener>8</maven.compiler.listener>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>

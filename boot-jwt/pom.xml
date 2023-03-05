@@ -161,7 +161,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>1.8</source>
-                    <adapter>1.8</adapter>
+                    <listener>1.8</listener>
                 </configuration>
             </plugin>
         </plugins>
