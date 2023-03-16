@@ -43,7 +43,8 @@ module.exports = {
     // },
     // parallel: require("os").cpus().length > 1,
     // PWA 插件相关配置 // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-    // pwa: {}, // configure webpack-dev-server behavior
+    // pwa: {},
+    // configure webpack-dev-server behavior
     chainWebpack: (config) => {
         config.resolve.alias
             .set('@', resolve('src'))
@@ -63,8 +64,8 @@ module.exports = {
                 javascriptEnabled: true,
                 modifyVars: {
                     /* less 变量覆盖，用于自定义 ant design 主题 */
-                    'primary-color': '#00cc99',
-                    'link-color': '#00cc99',
+                    'primary-color': '#2daef6',
+                    'link-color': '#2daef6',
                     'border-radius-base': '4px',
                 },
             }

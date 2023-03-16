@@ -20,7 +20,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 public abstract class BaseDAO {
-    protected final static Sort DES_CREATE_TIME = Sort.by("createTime").descending();
+    protected final static Sort DESC_CREATE_TIME = Sort.by("createTime").descending();
     protected final static Sort ASC_CREATE_TIME = Sort.by("createTime").ascending();
     protected final static Sort ASC_SORT = Sort.by("sort").ascending();
 

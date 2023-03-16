@@ -1,32 +1,27 @@
 <template>
-  <div>
-    welcome
-  </div>
+  <div> hello</div>
 </template>
 
 <script>
-
 export default {
   name: "welcome",
-  components: {
-    data() {
-      return {
-        title: '管理',
-        userInfo: {
-          name: ''
-        },
-        menus: [],
-      };
-    },
-    activated() {
-    },
-    mounted() {
-    },
-    methods: {}
-  }
+  components: {},
+  data() {
+    return {
+      userInfo: {},
+      menus: [],
+    };
+  },
+  activated() {
+    this.userInfo = this.$store.getters.USER_INFO
+    console.log(this.userInfo)
+  },
+  mounted() {
+  },
+  methods: {}
 }
 </script>
 
 <style scoped lang="less">
-@import "~@public/color.less";
+//@import "~@public/color.less";
 </style>

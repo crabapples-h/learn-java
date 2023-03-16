@@ -16,10 +16,10 @@ import java.util.concurrent.TimeoutException;
  * pc-name 29404
  */
 public class RabbitmqDemoConfigure {
-    private static final String HOST = "127.0.0.1";
+    private static final String HOST = "192.168.56.101";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
-    private static final String VIRTUAL_HOST = "crabapples";
+    private static final String VIRTUAL_HOST = "wechat-login";
     private static final int PORT = 35672;
 
     /**

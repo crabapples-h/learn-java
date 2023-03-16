@@ -19,9 +19,9 @@ import java.io.InputStreamReader;
  */
 public class LinuxSessionDemo {
     public static void main(String[] args) throws IOException {
-        Connection connection = new Connection("192.168.89.131",22);
+        Connection connection = new Connection("192.168.56.101",22);
         connection.connect();
-        connection.authenticateWithPassword("root","root");
+        connection.authenticateWithPassword("root","0705");
         Session session = connection.openSession();
         session.execCommand("ls");
         InputStream inputStream1 = session.getStdout();

@@ -33,7 +33,7 @@
         <a-form-model-item label="名称" prop="name">
           <a-input v-model="form.menus.name"/>
         </a-form-model-item>
-        <a-form-model-item label="图标" prop="icon" v-if="form.menus.menusType === 1">
+        <a-form-model-item label="图标" prop="icon" v-if="form.menus.menusType === 1||form.menus.menusType === 3">
           <a-input v-model="form.menus.icon"/>
         </a-form-model-item>
         <a-form-model-item label="排序" prop="sort" v-if="form.menus.menusType === 1">
@@ -60,6 +60,9 @@
         </a-form-model-item>
         <a-form-model-item label="授权标识" prop="permission" v-if="form.menus.menusType === 2">
           <a-input v-model="form.menus.permission"/>
+        </a-form-model-item>
+        <a-form-model-item label="超链接地址" prop="link" v-if="form.menus.menusType === 3">
+          <a-input v-model="form.menus.link"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -161,6 +164,7 @@ export default {
           path: '',
           filePath: '',
           permission: '',
+          link: '',
         },
       },
       show: {
@@ -200,6 +204,7 @@ export default {
         path: '',
         filePath: '',
         permission: '',
+        link: '',
       }
     },
     refreshData() {
@@ -224,6 +229,7 @@ export default {
                 sort: e.sort,
                 menusType: e.menusType,
                 path: e.path,
+                link: e.link,
                 filePath: e.filePath,
                 permission: e.permission,
               }

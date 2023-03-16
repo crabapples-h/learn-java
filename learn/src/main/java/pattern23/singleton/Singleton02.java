@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO 单例模式-饿汉式
+ * TODO 单例模式-懒汉式
  *
  * @author Mr.He
  * 12/19/19
@@ -16,11 +16,18 @@ import org.slf4j.LoggerFactory;
  */
 public class Singleton02 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    // 类在加载时不创建对象
     private static Singleton02 instance;
 
     private Singleton02() {
     }
 
+    /*
+     * 在调用getInstance()时检查对象是否为null
+     * 如果为null就创建对象
+     * 如果不为null就直接返回对象
+     * 使用synchronized关键字可以避免并发情况下重复创建对象，但会造成并发情况下线程阻塞
+     */
     public synchronized static Singleton02 getInstance() {
         if (instance == null) {
             instance = new Singleton02();

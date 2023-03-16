@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,6 +29,7 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
 public abstract class BaseEntity implements Serializable, Cloneable {
     /**
      * Id uuid主键
@@ -61,6 +64,13 @@ public abstract class BaseEntity implements Serializable, Cloneable {
      */
     @Column(columnDefinition = "bit(1) default 0 not null comment '删除标记'")
     private int delFlag;
+
+    /**
+     * 创建人
+     */
+    @Column(columnDefinition = "varchar(64) default  null comment '创建人'")
+    @CreatedBy
+    private String createBy;
 
     @Override
     public String toString() {

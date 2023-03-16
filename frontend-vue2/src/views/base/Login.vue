@@ -30,12 +30,13 @@ export default {
         username: _this.username,
         password: _this.password
       };
+      // 调用actions中的LOGIN方法进行登录操作
       this.$store.dispatch('LOGIN', data).then(result=>{
-        console.log(result)
         this.$store.dispatch('USER_INFO')
         this.$store.dispatch('MENUS')
         this.$store.dispatch('PERMISSIONS')
         this.$store.dispatch('ROUTERS')
+        // this.$store.commit('INIT_ROUTER',null)
       })
 
     },

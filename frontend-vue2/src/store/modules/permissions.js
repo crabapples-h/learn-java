@@ -39,28 +39,32 @@ const permissions = {
                 if (data !== null) {
                     let formatMenus = function (data) {
                         return data.map(e => {
-                            if (e.menusType !== 1) {
-                                return null
+                            if (e.menusType !== 2) {
+                                let icon = e.icon.substring(e.icon.indexOf("\"") + 1, e.icon.lastIndexOf("\""))
+                                let menus = {
+                                    id: e.id,
+                                    key: e.id,
+                                    name: e.name,
+                                    icon: icon,
+                                    path: e.path,
+                                    sort: e.sort,
+                                    link: e.link,
+                                    menusType: e.menusType,
+                                    filePath: e.filePath,
+                                    permission: e.permission,
+                                    hidden: false
+                                }
+                                if (e.children && e.children.length > 0) {
+                                    let children = formatMenus(e.children).filter(e => {
+                                        return !!e
+                                    })
+                                    if (children && children.length)
+                                        menus.children = children
+                                }
+                                return menus
                             }
-                            let icon = e.icon.substring(e.icon.indexOf("\"") + 1, e.icon.lastIndexOf("\""))
-                            let menus = {
-                                id: e.id,
-                                key: e.id,
-                                name: e.name,
-                                icon: icon,
-                                path: e.path,
-                                sort: e.sort,
-                                filePath: e.filePath,
-                                permission: e.permission,
-                            }
-                            if (e.children && e.children.length > 0) {
-                                let children = formatMenus(e.children).filter(e => {
-                                    return !!e
-                                })
-                                if (children && children.length)
-                                    menus.children = children
-                            }
-                            return menus
+                            return null
+
                         }).sort((a, b) => {
                             if (a && b && a.sort && b.sort)
                                 return a.sort - b.sort

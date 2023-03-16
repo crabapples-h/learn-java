@@ -80,7 +80,7 @@ public class BioDemo5Client {
             OutputStream outputStream = socket.getOutputStream();
             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
             dataOutputStream.writeUTF("喜欢你");
-            FileInputStream fileInputStream = new FileInputStream("/Users/mrhe/Desktop/img.png");
+            FileInputStream fileInputStream = new FileInputStream("/Users/mrhe/Desktop/image_03.png");
             byte[] data = new byte[1024];
             for (int i = 0; i != -1; i = fileInputStream.read(data)) {
                 dataOutputStream.write(data, 0, i);

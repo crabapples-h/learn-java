@@ -23,6 +23,9 @@
         <a-form-model-item label="电话" prop="phone">
           <a-input v-model="form.userInfo.phone" placeholder="请输入电话号码"/>
         </a-form-model-item>
+        <a-form-model-item label="密码" prop="password">
+          <a-input v-model="form.userInfo.password" placeholder="请输入密码"/>
+        </a-form-model-item>
         <span v-if="form.userInfo.role === 0">
           <a-form-model-item label="权限" prop="role">
             <a-radio-group v-model="form.userInfo.role" default-value="2">
@@ -124,7 +127,7 @@ export default {
         role: [
           {required: true, message: '请选择角色', trigger: 'change'},
         ],
-        tags: [],
+        password:[],
         newPassword: [
           {required: true, message: '请输入密码', trigger: 'change'},
           {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},

@@ -1,4 +1,4 @@
-//
+package demo.data;//
 //import org.apache.http.HttpHost;
 //import org.elasticsearch.action.index.IndexResponse;
 //import org.elasticsearch.action.search.SearchRequest;

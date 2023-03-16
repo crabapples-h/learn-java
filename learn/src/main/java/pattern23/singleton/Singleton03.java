@@ -14,23 +14,39 @@ import org.slf4j.LoggerFactory;
  */
 public class Singleton03 {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static Singleton03 instance;
+    // 使用volatile关键字可以防止指令重排
+    private volatile static Singleton03 instance;
 
     private Singleton03() {
     }
 
     public static Singleton03 getInstance() {
         if (instance == null) {
-            Singleton03 singleton03;
             synchronized (Singleton03.class) {
-                singleton03 = instance;
-                if (singleton03 == null) {
+                if (instance == null) {
                     synchronized (Singleton03.class) {
-                        if (singleton03 == null) {
-                            singleton03 = new Singleton03();
+                        if (instance == null) {
+                            instance = new Singleton03();
+                            /*
+                             * 字节码层：
+                             * JIT,CPU等会对字节码进行优化(如指令重排等)
+                             * ----优化前----
+                             * 1.分配空间(开辟内存空间，开辟内存空间后即已产生内存地址)
+                             * 2.初始化(创建单例对象)
+                             * 3.引用赋值(将内存地址指向变量)
+                             * ----优化前----
+                             * 1.分配空间(开辟内存空间，开辟内存空间后即已产生内存地址)
+                             * 2.引用赋值(将内存地址指向变量)
+                             * 3.初始化(创建单例对象)
+                             * ----
+                             * 如果有两个线程同时获取单例对象
+                             * 当线程T1已经完成 [赋值] 但尚未 [初始化]
+                             * 线程T2获取单例对象时，判断 instance == null 结果为 false
+                             * 此时单例对象仅仅只完成 [赋值] 并未 [初始化]，此时就会导致空指针异常
+                             * 使用 volatile 关键字，可以保证该关键字修饰的对象相关的代码不会被指令重排
+                             */
                         }
                     }
-                    instance = singleton03;
                 }
             }
         }

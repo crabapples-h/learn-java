@@ -16,5 +16,10 @@ const getters = {
         return [...state.permissions.menus]
     },
     ROUTERS: state => state.user.routers,
+
+    PERMISSIONS(state) {
+        console.log('getter--->', state)
+        return {}
+    },
 }
 export default getters

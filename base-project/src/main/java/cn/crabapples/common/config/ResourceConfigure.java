@@ -2,15 +2,14 @@ package cn.crabapples.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ResourceConfigure implements WebMvcConfigurer {
     //文件存储路径
-    @Value("${filePath}")
-    private String filePath;
+    @Value("${uploadPath}")
+    private String uploadPath;
     //文件访问路径
     @Value("${virtualPath}")
     private String virtualPath;
@@ -20,7 +19,7 @@ public class ResourceConfigure implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(virtualPath + "/**").addResourceLocations("file:" + filePath + "/");
+        registry.addResourceHandler(virtualPath + "/**").addResourceLocations("file:" + uploadPath + "/");
         WebMvcConfigurer.super.addResourceHandlers(registry);
     }
 }

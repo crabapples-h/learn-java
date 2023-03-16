@@ -2,7 +2,7 @@ package pattern23.prototype;
 
 import lombok.*;
 
-import java.io.Serializable;
+import java.io.*;
 
 /**
  * TODO 原型模式-浅克隆
@@ -26,16 +26,32 @@ public class Flower implements Cloneable, Serializable {
      * 浅克隆
      */
     @Override
-    protected Flower clone() throws CloneNotSupportedException {
+    public Flower clone() throws CloneNotSupportedException {
         return (Flower) super.clone();
     }
 
     /**
      * 深克隆
      */
-    protected Flower deepClone() throws CloneNotSupportedException {
+    public Flower deepClone() throws CloneNotSupportedException {
         Flower flower = (Flower) super.clone();
         flower.color = this.color.clone();
         return flower;
+    }
+
+    /**
+     * 序列化方式实现深拷贝
+     * CPU密集型操作，会对性能有较大影响，不建议使用
+     */
+    public Flower serializableClone() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(this);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream(byteArray));
+        Flower obj = (Flower) objectInputStream.readObject();
+        objectOutputStream.close();
+        objectInputStream.close();
+        return obj;
     }
 }

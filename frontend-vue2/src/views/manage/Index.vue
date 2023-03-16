@@ -5,9 +5,8 @@
       <a-layout>
         <c-page-menus :menus="$store.getters.MENUS" @clickMenu="clickMenu"/>
         <a-layout-content class="content">
-          {{$store.getters.ROUTERS}}
           <keep-alive>
-            <router-view ></router-view>
+            <router-view></router-view>
           </keep-alive>
         </a-layout-content>
       </a-layout>
@@ -32,19 +31,24 @@ export default {
   data() {
     return {
       title: '管理',
-      userInfo: {
-        name: ''
-      },
+      userInfo: {},
     };
   },
   activated() {
   },
   mounted() {
     this.$message.info('首页')
+    this.userInfo = this.$store.getters.USER_INFO
+    console.log(this.userInfo)
   },
   methods: {
     clickMenu(e) {
-      this.$router.push(e.path)
+      if(e.menusType===3){
+        window.open(e.link)
+      }else{
+        this.$router.push(e.path)
+
+      }
     },
   }
 }

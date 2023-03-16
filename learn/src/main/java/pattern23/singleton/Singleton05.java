@@ -18,6 +18,10 @@ public enum Singleton05 {
     INSTANCE;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public static Singleton05 getInstance() {
+        return INSTANCE;
+    }
+
     public void doSomething() {
         logger.info("hello,[{}]", INSTANCE);
     }

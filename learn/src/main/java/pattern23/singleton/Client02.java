@@ -20,12 +20,12 @@ public class Client02 {
     static Logger logger = LoggerFactory.getLogger(Client02.class);
 
     public static void main(String[] args) throws Exception {
-//        Singleton06 singleton06_1 = Singleton06.getInstance();
-//        Singleton06 singleton06_2 = Singleton06.getInstance();
-//        logger.info("Hello:{}", singleton06_1);
-//        logger.info("Hello:{}", singleton06_2);
-//        reflectDemo();
-        deserializationDemo();
+        Singleton06 singleton06_1 = Singleton06.getInstance();
+        Singleton06 singleton06_2 = Singleton06.getInstance();
+        logger.info("Hello:{}", singleton06_1);
+        logger.info("Hello:{}", singleton06_2);
+        reflectDemo();
+//        deserializationDemo();
 //        new Thread(() -> {
 //            try {
 //                reflectDemo();

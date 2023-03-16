@@ -7,27 +7,33 @@
 </template>
 <script>
 import storage from '@/store/storage'
+import Loading from "./views/base/Loading";
 
 export default {
   name: 'App',
-  components: {},
   data() {
     return {}
   },
   created() {
-    this.initToken()
+    this.initMenus()
   },
   mounted() {
+    window.addEventListener('beforeunload', () => {
+      alert(1)
+    })
   },
   methods: {
-    initToken() {
+    beforeunload(e) {
+      alert(1)
+      console.log(e)
+    },
+    initMenus() {
       const token = storage.getToken()
       if (token) {
         this.$store.dispatch('INIT_TOKEN', token)
         this.$store.dispatch('MENUS')
         this.$store.dispatch('PERMISSIONS')
         this.$store.dispatch('USER_INFO')
-        this.$router.push('/manage/index')
       } else {
         console.log('token不存在:', token)
       }

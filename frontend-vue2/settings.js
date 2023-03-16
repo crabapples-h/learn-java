@@ -14,8 +14,25 @@ const settings = {
         '9H4y/BtWJvNJ2LzUykJLbfaXyqw8MLpNUyor3um0FKtuFdCrb0DKH6yzEM+z8W7n\n' +
         'ZwIDAQAB\n' +
         '-----END PUBLIC KEY-----\n',
-    isEny: 1, //密码RSA加密
+    isEny: 1, //密码RSA加密,暂未实现
     customBaseUrl: false, //自定义baseUrl
 };
+
+//重写方法后栈溢出，需要修复
+export function log(...e) {
+    if (settings.isDebug) {
+        console.log(...e)
+    }
+}
+export function error(...e) {
+    if (settings.isDebug) {
+        console.error(...e)
+    }
+}
+export function warn(...e) {
+    if (settings.isDebug) {
+        console.warn(...e)
+    }
+}
 
 export default {settings}
