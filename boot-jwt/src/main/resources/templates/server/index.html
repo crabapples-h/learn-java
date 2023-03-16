@@ -1,0 +1,37 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div data-th-include="/components/base :: meta"></div>
+	<title>后台管理</title>
+	<div data-th-replace="/components/base :: css"></div>
+	<div data-th-replace="/components/base :: quill"></div>
+	<div data-th-replace="/components/base :: wangEditor"></div>
+	<div data-th-replace="/components/base :: javascript"></div>
+	<div data-th-replace="/components/vue :: javascript"></div>
+	<!--	<div data-th-replace="/components/ui :: element"></div>-->
+	<!--	<style data-th-replace="/components/server/navigation :: el-style"></style>-->
+	<div data-th-replace="/components/ui :: antd"></div>
+	<style data-th-replace="/components/server/navigation :: a-style"></style>
+</head>
+<body>
+
+<div id="app">
+	<a-layout style=" border: 1px solid #eee">
+		<div data-th-replace="/components/server/navigation :: a-header"></div>
+		<a-layout>
+			<div data-th-replace="/components/server/navigation :: a-menus"></div>
+			<a-layout-content class="content">
+				<div data-th-replace="/components/server/navigation :: a-password"></div>
+				<div data-th-replace="/components/server/navigation :: a-person-settings"></div>
+				<iframe :src="pageUrl" style="width: 100%;height: 98%;border: none"></iframe>
+			</a-layout-content>
+		</a-layout>
+		<div data-th-replace="/components/server/navigation :: a-footer"></div>
+	</a-layout>
+</div>
+
+
+<script src="./main.js"></script>
+</body>
+</html>

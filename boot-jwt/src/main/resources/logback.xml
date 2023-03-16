@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!--    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>-->
+    <!--    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
+    <property name="LOG_DIR" value="log/"/>
+    <property name="APP_NAME" value="application"/>
+    <!--
+        日志输出格式：%d表示日期时间，%thread表示线程名，%-5level：级别从左显示5个字符宽度
+        %logger{50} 表示logger名字最长50个字符，否则按照句点分割。 %msg：日志消息，%n是换行符
+     -->
+
+    <!--使用过滤器将error级别的日志单独记录一个文件-->
+    <appender name="error_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤器，只记录ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--
+                DENY：表示不用看后面的过滤器了，这里就给拒绝了，不作记录。
+                NEUTRAL：表示需不需要记录，还需要看后面的过滤器。若所有过滤器返回的全部都是NEUTRAL，那么需要记录日志。
+                ACCEPT：表示不用看后面的过滤器了，这里就给直接同意了，需要记录。
+            -->
+            <!-- 设置过滤级别 -->
+            <level>ERROR</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}%d{yyyy-MM-dd}-error.log</FileNamePattern>
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <FileNamePattern>${LOG_DIR}%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- keep N days' worth of history -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+
+    <appender name="error" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 过滤器，只记录ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 设置过滤级别 -->
+            <level>ERROR</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%red(%thread)] %red(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <appender name="warn" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%yellow(%thread)] %yellow(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <appender name="info" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 设置过滤级别 -->
+            <level>INFO</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%blue(%thread)] %blue(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <appender name="debug" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%boldCyan(%thread)] %boldCyan(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <appender name="trace" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <!-- 用于配置符合过滤条件的操作 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 用于配置不符合过滤条件的操作 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%boldCyan(%thread)] %boldCyan(%-5level) line:%magenta(%line) class:%cyan(%logger{50}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <!--logger 可以指定某一个包或者某一个类的日志级别和输出位置-->
+<!--        <logger name="org.mybatis" level="debug" addtivity="true">-->
+<!--            <appender-ref ref="debug"/>-->
+<!--        </logger>-->
+
+    <!--默认需要输出的级别-->
+    <root level="DEBUG">
+        <!--需要输出到的位置-->
+        <appender-ref ref="file"/>
+        <appender-ref ref="error_file"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="warn"/>
+        <appender-ref ref="info"/>
+<!--        <appender-ref ref="debug"/>-->
+    </root>
+</configuration>

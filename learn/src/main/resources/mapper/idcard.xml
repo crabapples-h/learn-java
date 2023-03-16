@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="demo.mybatis.MyBatisMapper">
+    <resultMap id="idcard" type="demo.mybatis.Idcard">
+        <result property="id" javaType="Integer" jdbcType="INTEGER" column="id"/>
+        <result property="zip" javaType="String" jdbcType="VARCHAR" column="Zip"/>
+        <result property="address" javaType="String" jdbcType="VARCHAR" column="Address"/>
+        <result property="ctfId" javaType="String" jdbcType="VARCHAR" column="CtfId"/>
+        <result property="ctfTp" javaType="String" jdbcType="VARCHAR" column="CtfTp"/>
+    </resultMap>
+    <select id="selectOneMap" resultType="Map">
+        select *
+        from id_card_simple limit 1
+    </select>
+    <select id="selectOne" resultMap="idcard">
+        select *
+        from id_card_simple limit 1
+    </select>
+
+    <select id="selectAll" resultMap="idcard" parameterType="INTEGER">
+        select *
+        from id_card_simple limit ${start},${end}
+    </select>
+
+    <select id="count" resultType="LONG">
+        select count(id)
+        from id_card_simple
+    </select>
+
+    <insert id="insert" parameterType="demo.mybatis.Idcard">
+        insert into idcard_2000w_dist (id, Address, Birthday, CtfId, CtfTp, EMail, Gender,
+        Mobile, Name, Version,Nation,Company)
+        values
+        <foreach collection="list" separator="," item="item">
+            (${item.id}, #{item.address}, #{item.birthday}, #{item.ctfId}, #{item.ctfTp},
+            #{item.email}, #{item.gender}, #{item.mobile}, #{item.name}, #{item.version},
+            #{item.nation} ,#{item.company})
+        </foreach>
+    </insert>
+
+</mapper>

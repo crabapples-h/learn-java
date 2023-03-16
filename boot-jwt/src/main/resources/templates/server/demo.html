@@ -1,0 +1,207 @@
+<!doctype html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<div data-th-replace="/components/base :: javascript"></div>
+	<div data-th-replace="/components/vue :: javascript"></div>
+	<div data-th-replace="/components/ui :: antd"></div>
+	<div data-th-replace="/components/base :: quill"></div>
+	<style>
+      .drawer-bottom-button {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          border-top: 1px solid #e9e9e9;
+          padding: 10px 16px;
+          background: #fff;
+          text-align: right;
+          z-index: 1;
+      }
+	</style>
+</head>
+<body>
+<div id="app">
+	<div>
+		<a-button type="default" @click="addPaper" v-if="false"> 添加文章</a-button>
+		<a-divider></a-divider>
+		<a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="false">
+			<span slot="type" slot-scope="text, record">
+          {{record.type_name}}
+				</span>
+			<span slot="id" slot-scope="text, record">
+          {{text.substring(0,8)}}
+				</span>
+			<span slot="content" slot-scope="text">
+          <a-tooltip placement="topLeft">
+            <template slot="title">
+              <span>{{ text }}</span>
+            </template>
+            <span class="step-content">{{ text }}</span>
+          </a-tooltip>
+        </span>
+			<span slot="action" slot-scope="text, record">
+          <a-button type="primary" size="small" @click="showOrderInfo(record)">详情</a-button>
+          <a-button type="danger" size="small" @click="removeOrder(record)">删除</a-button>
+			</span>
+		</a-table>
+		<a-modal :visible="show.orderInfo" :footer="null" @cancel="closeOrderInfo">
+			<p>
+				<span>下单人:{{orderInfo.user.username}}</span>
+				<span>下单时间:{{orderInfo.createTime}}</span>
+			</p>
+			<p>商品列表:</p>
+			<hr>
+			<span v-for="(item,index) in orderInfo.goodsList">
+				<p>名称：{{item.name}}</p>
+				<p>价格：{{item.price}}</p>
+				<img :src="orderInfo.fileList[index]" alt="" style="width: 100%"/>
+				<hr>
+			</span>
+		</a-modal>
+	</div>
+</div>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                rules: {
+                    title: [
+                        {required: true, message: '请输入名称', trigger: 'change'},
+                    ],
+                    typeId: [
+                        {required: true, message: '请选择分类', trigger: 'change'},
+                    ],
+                },
+                columns: [
+                    {
+                        dataIndex: 'id',
+                        key: 'id',
+                        title: '订单ID',
+                        scopedSlots: {customRender: 'id'},
+                    },
+                    {
+                        dataIndex: 'createTime',
+                        title: '下单时间',
+                    },
+                    {
+                        title: '操作',
+                        scopedSlots: {customRender: 'action'},
+                    },
+                ],
+                dataSource: [],
+                labelCol: {span: 5},
+                wrapperCol: {span: 16},
+                form: {
+                    type: 0,
+                    paper: {
+                        id: '',
+                        name: '',
+                        content: '',
+                        typeId: '',
+                    },
+                },
+                show: {
+                    orderInfo: false,
+                },
+                orderInfo: {user: {}, goodsList: [], fileList: []},
+                sysUser: sessionStorage.getItem("sysUser")
+            };
+        },
+        mounted() {
+            this.getList()
+        },
+        methods: {
+            getFileById(id) {
+                axios.get(`/api/getFileById/${id}`).then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.orderInfo.fileList.push(result.data.virtualPath)
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            closeOrderInfo() {
+                this.show.orderInfo = false
+            },
+            showOrderInfo(record) {
+                this.show.orderInfo = true
+                this.orderInfo.createTime = record.createTime
+                axios.get(`/api/user/get/id/${record.userId}`).then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.orderInfo.user = result.data;
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+                axios.get(`/api/goods/ids/${record.goodsIds}`).then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.orderInfo.goodsList = result.data;
+                        result.data.forEach((e, index) => {
+                            this.getFileById(e.fileInfoId)
+                        })
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            refreshData() {
+                this.getList()
+            },
+            getList() {
+                axios.get('/api/order/getAll').then(response => {
+                    const result = response.data
+                    if (result.status !== 200) {
+                        this.$message.error(result.message);
+                        return;
+                    }
+                    if (result.data !== null) {
+                        this.dataSource = result.data;
+                    }
+                }).catch(function (error) {
+                    console.error('出现错误:', error);
+                });
+            },
+            removeOrder(e) {
+                const _this = this;
+                this.$confirm({
+                    title: '确认删除?',
+                    cancelText: '取消',
+                    okText: '确定',
+                    onOk() {
+                        axios.delete(`/api/order/delete/${e.id}`).then(result => {
+                            console.log('通过api获取到的数据:', result);
+                            if (result.status !== 200) {
+                                _this.$message.error(result.message);
+                                return
+                            }
+                            _this.refreshData()
+                            _this.$message.success(result.message)
+                        }).catch(function (error) {
+                            console.log('请求出现错误:', error);
+                        });
+                    },
+                });
+            },
+
+        }
+    })
+</script>
+</body>
+</html>
