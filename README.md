@@ -1,6 +1,27 @@
 # 20190704
 
 # 这是一个用于记录学习的项目
+* 20230316
+  * 恢复被误删的commit记录
+* 20230225
+  * 增加策略模式演示 `pattern23.strategy.*`
+  * 增加模板方法模式演示 `pattern23.template.*`
+  * 增加观察者模式演示 `pattern23.observer.*`
+* 20230225
+  * 增加装饰器模式演示 `pattern23.decorator.*`
+* 20230225
+  * 修复建造者模式代码错误
+  * 增加享元模式演示 `pattern23.flyweight.*`
+  * 增加外观模式演示 `pattern23.facade.*`
+  * 增加适配器模式演示 `pattern23.adapter_obj.*`
+  * 增加切面日志工具AOPLog
+* 20230219
+  * 加入 jpa example查询演示
+* 20230120
+  * 加入 rabbitMq 演示
+* 20221125
+  * 整合模块，在dao中加入jpa和mybatis相关功能
+  * 移除C51演示文件
 * 20220516
   * 加入C51演示文件
 * 20220506
