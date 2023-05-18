@@ -23,7 +23,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class RolesDAO extends BaseDAO<SysRoles,String> {
+public class RolesDAO extends BaseDAO<SysRoles, String> {
     private final RolesRepository repository;
 
     public RolesDAO(RolesRepository repository) {
@@ -31,14 +31,13 @@ public class RolesDAO extends BaseDAO<SysRoles,String> {
     }
 
     public long count() {
-        return repository.count(DIC.NOT_DEL);
+        return repository.count();
     }
 
     public SysRoles findById(String id) {
-        Optional<SysRoles> optional = repository.findByDelFlagAndId(DIC.NOT_DEL, id);
+        Optional<SysRoles> optional = repository.findById(id);
         return checkOptional(optional);
     }
-
 
     public SysRoles save(SysRoles entity) {
         return repository.save(entity);
@@ -54,11 +53,11 @@ public class RolesDAO extends BaseDAO<SysRoles,String> {
     }
 
     public List<SysRoles> findByIds(List<String> ids) {
-        return repository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
+        return repository.findByIds(ids);
     }
 
     public List<SysRoles> findByIds(String[] ids) {
-        return repository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
+        return repository.findByIds(ids);
     }
 
 
