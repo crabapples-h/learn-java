@@ -1,9 +1,7 @@
 package demo.mybatis;
 
 
-import com.mchange.v1.util.CollectionUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,8 +10,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 public class MyBatis {
