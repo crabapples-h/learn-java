@@ -27,9 +27,6 @@ const user = {
             state.info = payload
             storage.setUserInfo(payload)
         },
-        INIT_ROUTER: (state, payload) => {
-            initRouter()
-        },
     },
     // dispatch调用actions方法，非实时更新，可以包含异步操作
     actions: {

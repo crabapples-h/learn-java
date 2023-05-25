@@ -4,7 +4,8 @@ import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.dto.SysRolesDTO;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
 import io.swagger.annotations.Api;
@@ -39,13 +40,12 @@ public class SystemRolesController extends BaseController {
     /**
      * 获取[当前用户]角色列表
      */
-    @GetMapping("/user")
-    public ResponseDTO getUserRoles(HttpServletRequest request) {
+    @GetMapping("/list/user")
+    public ResponseDTO getByUser() {
         log.info("收到请求->获取[当前用户]角色列表");
-        throw new ApplicationException("暂未实现");
-//        List<SysRolesDTO> list = rolesService.getUserRoles(request);
-//        log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
-//        return ResponseDTO.returnSuccess(list);
+        List<SysRole> list = rolesService.getByUser();
+        log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
     }
 
     /**
@@ -54,7 +54,7 @@ public class SystemRolesController extends BaseController {
     @GetMapping("/list")
     public ResponseDTO getRolesList(HttpServletRequest request) throws IOException {
         log.info("收到请求->获取[所有]角色列表");
-        List<SysRoles> list = rolesService.getRolesList(request);
+        List<SysRole> list = rolesService.getRolesList(request);
         log.info("返回结果->获取[所有]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -65,7 +65,7 @@ public class SystemRolesController extends BaseController {
     @GetMapping("/page")
     public ResponseDTO getRolesPage(HttpServletRequest request, PageDTO page) {
         log.info("收到请求->获取[分页]角色列表");
-        List<SysRoles> list = rolesService.getRolesPage(request, page);
+        List<SysRole> list = rolesService.getRolesPage(request, page);
         log.info("返回结果->获取[分页]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list, page);
     }

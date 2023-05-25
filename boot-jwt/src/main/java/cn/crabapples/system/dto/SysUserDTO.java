@@ -1,6 +1,6 @@
 package cn.crabapples.system.dto;
 
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +26,7 @@ public class SysUserDTO {
     private String mail;
     private String phone;
     private int status;
-    private List<SysRoles> rolesList;
+    private List<SysRole> rolesList;
 
     @Override
     public String toString() {

@@ -2,7 +2,7 @@ package cn.crabapples.system.service;
 
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,27 +18,25 @@ import java.util.List;
  * qq 294046317
  * pc-name mrhe
  */
-public interface SystemRolesService extends BaseService {
+public interface SystemRolesService extends BaseService<SysRole> {
 
-//    List<SysRolesDTO> getUserRoles(HttpServletRequest request);
+    List<SysRole> getRolesList(HttpServletRequest request);
 
-    List<SysRoles> getRolesList(HttpServletRequest request);
+    List<SysRole> getByIds(List<String> ids);
 
-    List<SysRoles> getByIds(List<String> ids);
+    List<SysRole> getByIds(String[] ids);
 
-    List<SysRoles> getByIds(String[] ids);
+    SysRole getById(String id);
 
-    SysRoles getById(String id);
+    List<SysRole> getRolesPage(HttpServletRequest request, PageDTO page);
 
-    List<SysRoles> getRolesPage(HttpServletRequest request, PageDTO page);
+    SysRole saveRoles(RolesForm form);
 
-    SysRoles saveRoles(RolesForm form);
+    SysRole saveRoles(SysRole entity);
 
-    SysRoles saveRoles(SysRoles e);
+    SysRole removeRoles(String id);
 
+    List<SysRole> findByMenusId(String id);
 
-    SysRoles removeRoles(String id);
-
-    List<SysRoles> findByMenusId(String id);
-
+    List<SysRole> getByUser();
 }

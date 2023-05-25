@@ -78,7 +78,11 @@ public class UserForm extends BaseForm<SysUser> {
     @NotNull(message = "年龄不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private Integer age;
 
+    private Integer delFlag;
+
     private List<String> rolesList;
+
+
 
     @Override
     public SysUser toEntity() {

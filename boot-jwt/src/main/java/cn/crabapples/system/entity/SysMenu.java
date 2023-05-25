@@ -1,16 +1,12 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
+import cn.crabapples.common.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import java.util.List;
+import javax.persistence.*;
 
 /**
  * TODO 系统菜单
@@ -24,7 +20,9 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class SysMenus extends BaseEntity_Jpa {
+@DynamicUpdate
+@DynamicInsert
+public class SysMenu extends BaseEntity {
     @Column(columnDefinition = "tinyint default -1 comment '排序'")
     private Integer sort;
 
@@ -34,33 +32,23 @@ public class SysMenus extends BaseEntity_Jpa {
     @Column(columnDefinition = "varchar(64) comment '菜单名'")
     private String name;
 
-    @Column(columnDefinition = "varchar(64) comment '超链接地址'")
-    private String link;
-
     @Column(columnDefinition = "tinyint default 0 comment '菜单类型 1:目录 2:菜单 3:超链接 4:按钮'")
     private Integer menusType;
 
-    @Column(columnDefinition = "tinyint default 0 comment '是否为跟目录 0:是 1:否'")
-    private Integer isRoot;
-
     @Column(columnDefinition = "varchar(64) default null comment '浏览器访问路径'")
-    private String path;
+    private String url;
 
     @Column(columnDefinition = "varchar(64) default null comment '文件存放路径'")
-    private String filePath;
+    private String componentPath;
 
     @Column(columnDefinition = "varchar(64) default null comment '授权标识'")
     private String permission;
 
-    @OneToMany
-    private List<SysMenus> children;
+    @ManyToOne
+    @JoinColumn
+    private SysMenu parent;
 
-    @Transient
-    @JSONField(serialize = false)
-    private Boolean showFlag;
+    @Column(columnDefinition = "tinyint default 0 comment '是否隐藏'")
+    private Boolean hidden;
 
-    @Override
-    public String toString() {
-        return JSONObject.toJSONString(this);
-    }
 }

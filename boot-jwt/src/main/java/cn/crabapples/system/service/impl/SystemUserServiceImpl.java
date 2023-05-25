@@ -2,28 +2,22 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.utils.AssertUtils;
-import cn.crabapples.system.dao.RolesDAO;
+import cn.crabapples.system.dao.RoleDAO;
 import cn.crabapples.system.dao.UserDAO;
-import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TODO 用户相关服务实现类[用户]
@@ -40,11 +34,11 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Value("${isCrypt}")
     private boolean isCrypt;
     private final UserDAO userDAO;
-    private final RolesDAO rolesDAO;
+    private final RoleDAO roleDAO;
 
-    public SystemUserServiceImpl(UserDAO userDAO, RolesDAO rolesDAO) {
+    public SystemUserServiceImpl(UserDAO userDAO, RoleDAO roleDAO) {
         this.userDAO = userDAO;
-        this.rolesDAO = rolesDAO;
+        this.roleDAO = roleDAO;
     }
 
     @Override
@@ -53,46 +47,33 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
-    public List<SysUser> findById(List<String> ids) {
-        return userDAO.findById(ids);
+    public List<SysUser> findByIds(List<String> ids) {
+        return userDAO.findByIds(ids);
     }
-
+    /**
+     * 获取用户列表[全部]
+     */
     @Override
-    public List<SysUser> findByName(String name) {
-        return userDAO.findByName(name);
+    public SysUser findOne(UserForm form) {
+        return userDAO.findOne(form);
     }
-
-    @Override
-    public SysUser findByUsername(String username) {
-        return userDAO.findByUsername(username);
-    }
-
     /**
      * 获取用户列表[全部]
      */
     @Override
     public List<SysUser> findAll() {
-        return userDAO.findAll(DIC.NOT_DEL);
+        return userDAO.getList(null);
     }
 
-    /**
-     * 获取用户列表[分页]
-     */
     @Override
-    public Page<SysUser> findAll(PageDTO page) {
-        return userDAO.findAll(page, DIC.NOT_DEL);
+    public List<SysUser> getList(UserForm form) {
+        return userDAO.getList(form);
     }
 
-    /**
-     * 获取用户列表[分页](返回脱敏后的用户列表)
-     */
     @Override
-    public List<SysUserDTO> findAll(HttpServletRequest request, PageDTO page) {
-        Page<SysUser> userPage = userDAO.findAll(page, DIC.NOT_DEL);
-        Pageable pageable = userPage.getPageable();
-        page.setDataCount(userDAO.count());
-        page.setPageIndex(pageable.getPageNumber());
-        return userDAO.findAll(page, DIC.NOT_DEL).stream().map(e -> e.toDTO(new SysUserDTO())).collect(Collectors.toList());
+    public Page<SysUser> getPage(UserForm form) {
+        PageRequest page = getJpaPage(form);
+       return userDAO.getList(form, page);
     }
 
 
@@ -100,9 +81,8 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 添加用户
      */
     @Override
-    public SysUser addUser(UserForm form) {
-        SysUser entity = new SysUser();
-        BeanUtils.copyProperties(form, entity);
+    public void save(UserForm form) {
+        SysUser entity = form.toEntity();
         String password;
         if (isCrypt) {
             password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -111,10 +91,9 @@ public class SystemUserServiceImpl implements SystemUserService {
         }
         entity.setPassword(password);
         entity.setDelFlag(DIC.NOT_DEL);
-        entity.setStatus(DIC.USER_LOCK);
-//        entity.setRolesList( form.getRolesList()));
-        return userDAO.save(entity);
+        userDAO.save(entity);
     }
+
 
     /**
      * 删除用户
@@ -125,23 +104,6 @@ public class SystemUserServiceImpl implements SystemUserService {
         userDAO.delUser(id);
     }
 
-    /**
-     * 编辑用户
-     */
-    @Override
-    public SysUser editUser(UserForm form) {
-        SysUser entity = userDAO.findById(form.getId());
-        BeanUtils.copyProperties(form, entity);
-        String password = form.getPassword();
-        if (!StringUtils.isEmpty(password)) {
-            if (isCrypt) {
-                password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
-            }
-        }
-        entity.setPassword(password);
-//        entity.setRolesList(String.join(",", form.getRolesList()));
-        return userDAO.save(entity);
-    }
 
     /**
      * 锁定用户
@@ -190,14 +152,6 @@ public class SystemUserServiceImpl implements SystemUserService {
         user.setPassword(newPassword);
         userDAO.save(user);
     }
-
-//    /**
-//     * 添加或编辑用户时将填充用户拥有的角色信息
-//     */
-//    private void setRolesList(List<String> ids, SysUser entity) {
-//        List<SysRoles> roles = rolesDAO.findByIds(ids);
-//        entity.setRolesList(roles);
-//    }
 
     /**
      * 修改或重置密码时检测

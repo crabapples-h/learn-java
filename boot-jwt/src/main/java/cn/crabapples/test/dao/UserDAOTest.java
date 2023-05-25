@@ -1,7 +1,6 @@
 package cn.crabapples.test.dao;
 
 import cn.crabapples.common.base.BaseDAO;
-import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.test.dao.jpa.UserRepositoryTest;
 import cn.crabapples.test.dao.mybatis.UserMapperTest;
@@ -21,7 +20,7 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class UserDAOTest extends BaseDAO<SysUser, String> {
+public class UserDAOTest extends BaseDAO {
     private final UserRepositoryTest repository;
     private final UserMapperTest mapper;
 
@@ -39,15 +38,15 @@ public class UserDAOTest extends BaseDAO<SysUser, String> {
     }
 
     public List<SysUser> findAll() {
-        return super.findAll(repository);
+        return repository.findAll();
     }
 
     public List<SysUser> findAll(Example<SysUser> example) {
-        return super.findAll(repository, example);
+        return repository.findAll(example);
     }
 
     public List<SysUser> findAll(Specification<SysUser> specification) {
-        return super.findAll(repository, specification);
+        return repository.findAll(specification);
     }
 
     public List<SysUser> findAllForExample() {

@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <a-layout>
-      <c-page-header :title="title"/>
-      <a-layout>
-        <c-page-menus :menus="$store.getters.MENUS" @clickMenu="clickMenu"/>
-        <a-layout-content class="content">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </a-layout-content>
-      </a-layout>
-      <c-page-footer/>
-    </a-layout>
-  </div>
+    <div>
+        <a-layout>
+            <c-page-header :title="title"/>
+            <a-layout>
+                <c-page-menus :menus="$store.getters.MENUS" @clickMenu="clickMenu"/>
+                <a-layout-content class="content">
+                    <keep-alive>
+                        <router-view></router-view>
+                    </keep-alive>
+                </a-layout-content>
+            </a-layout>
+            <c-page-footer/>
+        </a-layout>
+    </div>
 </template>
 
 <script>
@@ -20,37 +20,37 @@ import CPageHeader from "@/views/common/C-PageHeader";
 import CPageMenus from "@/views/common/C-PageMenus";
 import CPageFooter from "@/views/common/C-PageFooter";
 import permissions from "@/store/modules/permissions";
+import {initRouter} from "@/router/index";
 
 export default {
-  name: "Index",
-  components: {
-    CPageHeader,
-    CPageMenus,
-    CPageFooter,
-  },
-  data() {
-    return {
-      title: '管理',
-      userInfo: {},
-    };
-  },
-  activated() {
-  },
-  mounted() {
-    this.$message.info('首页')
-    this.userInfo = this.$store.getters.USER_INFO
-    console.log(this.userInfo)
-  },
-  methods: {
-    clickMenu(e) {
-      if(e.menusType===3){
-        window.open(e.link)
-      }else{
-        this.$router.push(e.path)
-
-      }
+    name: "Index",
+    components: {
+        CPageHeader,
+        CPageMenus,
+        CPageFooter,
     },
-  }
+    data() {
+        return {
+            title: '管理',
+            userInfo: {},
+        };
+    },
+    activated() {
+    },
+    mounted() {
+        this.$message.info('首页')
+        initRouter()
+    },
+    methods: {
+        clickMenu(e) {
+            if (e.menusType === 3) {
+                window.open(e.link)
+            } else {
+                this.$router.push(e.path)
+
+            }
+        },
+    }
 }
 </script>
 

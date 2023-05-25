@@ -3,14 +3,17 @@ package cn.crabapples.system.dao;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.jpa.MenusRepository;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.form.MenusForm;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.criteria.Predicate;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * TODO 系统菜单DAO
@@ -22,61 +25,71 @@ import java.util.Optional;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends BaseDAO<SysMenus, String> {
+public class MenusDAO extends BaseDAO {
     private final MenusRepository repository;
 
     public MenusDAO(MenusRepository repository) {
         this.repository = repository;
     }
 
-    public long count() {
-        return repository.countByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
+    public long count(MenusForm form) {
+        Specification<SysMenu> specification = createQueryParam(form);
+        return repository.count(specification);
     }
 
-    public SysMenus findById(String id) {
-        Optional<SysMenus> optional = repository.findByDelFlagAndId(DIC.NOT_DEL, id);
-        return checkOptional(optional);
+    public List<SysMenu> queryList(MenusForm form) {
+        Specification<SysMenu> specification = createQueryParam(form);
+        return repository.findAll(specification);
+    }
+
+    public Page<SysMenu> queryList(MenusForm form, Pageable page) {
+        Specification<SysMenu> specification = createQueryParam(form);
+        return repository.findAll(specification,page);
     }
 
 
-    public SysMenus save(SysMenus entity) {
+    private Specification<SysMenu> createQueryParam(MenusForm form) {
+        return (root, query, builder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (Objects.nonNull(form)) {
+                if (!StringUtils.isEmpty(form.getName())) {
+                    String value = MessageFormat.format("%{0}%", form.getName());
+                    predicateList.add(builder.like(root.get("name"), value));
+                }
+                if (Objects.nonNull(form.getMenusType())) {
+                    String value = MessageFormat.format("{0}", form.getMenusType());
+                    predicateList.add(builder.equal(root.get("menusType"), value));
+                }
+//                if (Objects.nonNull(form.getIsRoot())) {
+//                    String value = MessageFormat.format("{0}", form.getIsRoot());
+//                    predicateList.add(builder.equal(root.get("isRoot"), value));
+//                }
+                if (Objects.nonNull(form.getDelFlag())) {
+                    String value = MessageFormat.format("{0}", form.getDelFlag());
+                    predicateList.add(builder.equal(root.get("delFlag"), value));
+                }
+            }
+            Predicate[] predicatesArray = predicateList.toArray(new Predicate[0]);
+            return query.where(predicatesArray).getRestriction();
+        };
+    }
+
+    public SysMenu findById(String id) {
+        Optional<SysMenu> optional = repository.findByDelFlagAndId(DIC.NOT_DEL, id);
+        return optional.orElseThrow(() -> new ApplicationException("找不到对应数据"));
+    }
+
+
+
+    public SysMenu save(SysMenu entity) {
         return repository.save(entity);
     }
 
-    public Page<SysMenus> findRoot(PageDTO page) {
-        Pageable pageable = PageRequest.of(page.getPageIndex(), page.getPageSize(), ASC_SORT);
-        return repository.findByDelFlagAndIsRoot(pageable, DIC.NOT_DEL, DIC.IS_ROOT);
-    }
-
-    public List<SysMenus> findRoot() {
-        SysMenus sysMenusExample = new SysMenus();
-        sysMenusExample.setIsRoot(DIC.IS_ROOT);
-        sysMenusExample.setDelFlag(DIC.NOT_DEL);
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                //对 isRoot 字段精确匹配
-                .withMatcher("isRoot", ExampleMatcher.GenericPropertyMatchers.exact())
-                //对 delFlag 字段精确匹配
-                .withMatcher("delFlag", ExampleMatcher.GenericPropertyMatchers.exact());
-        Example<SysMenus> example = Example.of(sysMenusExample, matcher);
-//        repository.findAll(of);
-//        repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
-//        return repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
-        return repository.findAll(example);
-    }
-
-    public List<SysMenus> findByParentId(String id) {
-        throw new ApplicationException("暂未实现");
-    }
-
-    public List<SysMenus> findByIds(List<String> ids) {
+    public List<SysMenu> findByIds(List<String> ids) {
         return repository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
     }
 
-    public List<SysMenus> findRootsByIds(List<String> ids) {
-        return repository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.IS_ROOT, ids);
-    }
-
-    public List<SysMenus> findButtonsByIds(List<String> ids) {
+    public List<SysMenu> findButtonsByIds(List<String> ids) {
         return repository.findByDelFlagAndIdInAndMenusType(DIC.NOT_DEL, ids, DIC.MENUS_TYPE_BUTTON);
     }
 

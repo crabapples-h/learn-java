@@ -3,25 +3,23 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.utils.AssertUtils;
-import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
-import cn.crabapples.system.dao.MenusDAO;
-import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.form.UserForm;
+import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
 import com.alibaba.fastjson.JSONArray;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,15 +45,15 @@ public class SystemServiceImpl implements SystemService {
     private boolean isCrypt;
     private final SystemUserService userService;
     private final SystemRolesService rolesService;
-    private final MenusDAO menusDAO;
-    private final JwtConfigure jwtConfigure;
+    private final SystemMenusService menusService;
+    private final JwtTokenUtils jwtTokenUtils;
 
-    public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService, MenusDAO menusDAO,
-                             JwtConfigure jwtConfigure) {
+    public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
+                             SystemMenusService menusService, JwtTokenUtils jwtTokenUtils) {
         this.userService = userService;
         this.rolesService = rolesService;
-        this.menusDAO = menusDAO;
-        this.jwtConfigure = jwtConfigure;
+        this.menusService = menusService;
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
     /**
@@ -80,71 +78,67 @@ public class SystemServiceImpl implements SystemService {
             password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
         }
         log.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-        SysUser sysUser = userService.findByUsername(username);
+
+        SysUser sysUser = userService.findOne(form);
         AssertUtils.notNull(sysUser, "用户名不存在");
         if (sysUser.getStatus() == DIC.USER_LOCK) {
             throw new ApplicationException("账户已被锁定，请联系管理员");
         }
-        if (sysUser.getPassword().equals(password)) {
-            return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getUsername(), jwtConfigure);
-        }
-        throw new ApplicationException("密码错误");
+        return jwtTokenUtils.login(username, password, sysUser);
     }
-
 
     /**
      * 获取用户拥有的权限
      */
     @Override
-    public List<String> getUserPermissions(HttpServletRequest request) {
-        log.info("获取用户拥有的所有权限");
-        List<String> menusList = getUserMenusIds(request);
-        List<SysMenus> buttons = menusDAO.findButtonsByIds(menusList);
-        return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
+    public List<String> getUserPermissions() {
+        throw new ApplicationException("暂未实现");
+//        log.info("获取用户拥有的所有权限");
+//        List<String> menusList = rolesService.getRolesByUser();
+//        MenusForm form = new MenusForm();
+//        form.setMenusType(DIC.MENUS_TYPE_BUTTON);
+//        List<SysMenu> buttons = menusService.getList(form);
+//        return buttons.stream().map(SysMenu::getPermission).collect(Collectors.toList());
     }
 
-    /**
-     * 获取当前用户所拥有的角色的所有菜单并去重
-     */
-    private List<String> getUserMenusIds(HttpServletRequest request) {
-        SysUser user = getUserInfo(request);
-//        String rolesIds = user.getRolesList();
-//        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
-        List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
+//    /**
+//     * 获取当前用户所拥有的角色的所有菜单并去重
+//     */
+//    private List<String> getUserMenusIds() {
+//        SysUser user = getUserInfo();
+////        String rolesIds = user.getRolesList();
+////        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
+//        List<SysRole> roles = rolesService.getByIds(user.getRolesList());
+//
+//        List<String> menusId = new ArrayList<>();
+//        roles.forEach(e -> {
+//            String ids = e.getMenusIds();
+//            if (!StringUtils.isBlank(ids)) {
+//                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
+//                menusId.addAll(idList);
+//            }
+//        });
+//        return menusId.stream().distinct().collect(Collectors.toList());
+//    }
 
-        List<String> menusId = new ArrayList<>();
-        roles.forEach(e -> {
-            String ids = e.getMenusIds();
-            if (!StringUtils.isBlank(ids)) {
-                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
-                menusId.addAll(idList);
-            }
-        });
-        return menusId.stream().distinct().collect(Collectors.toList());
+    @Override
+    public List<SysMenu> getUserMenus() {
+        return menusService.getByUser();
     }
-
 
     /**
      * 获取当前登录用户的信息
      */
     @Override
-    public SysUser getUserInfo(HttpServletRequest request) {
-        String userId = "001";
-        if (!isDebug) {
-            String token = request.getHeader(jwtConfigure.getAuthKey());
-            if (StringUtils.isEmpty(token)) {
-                throw new ApplicationException("token为空");
-            }
-            Claims claims = JwtTokenUtils.parseJWT(token, jwtConfigure.getBase64Secret());
-            userId = String.valueOf(claims.get("userId"));
-        }
-//        Object user = cacheUtils.get(userId);
-        return userService.findById(userId);
+    public SysUser getUserInfo() {
+        return jwtTokenUtils.getUserinfo();
     }
 
     @Override
     public boolean checkUsername(String username) {
-        SysUser user = userService.findByUsername(username);
+        UserForm form = new UserForm();
+        form.setUsername(username);
+        SysUser user = userService.findOne(form);
         AssertUtils.isNull(user, "用户名已被使用");
         return true;
     }

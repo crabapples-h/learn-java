@@ -20,27 +20,19 @@ import java.util.List;
  * qq 294046317
  * pc-name mrhe
  */
-public interface SystemUserService extends BaseService {
+public interface SystemUserService extends BaseService<SysUser> {
 
     SysUser findById(String id);
 
-    List<SysUser> findById(List<String> ids);
 
-    List<SysUser> findByName(String name);
-
-    SysUser findByUsername(String username);
+    List<SysUser> findByIds(List<String> ids);
 
     List<SysUser> findAll();
 
-    Page<SysUser> findAll(PageDTO page);
-
-    List<SysUserDTO> findAll(HttpServletRequest request, PageDTO page);
-
-    SysUser addUser(UserForm form);
+//    Page<SysUser> findAll(PageDTO page);
 
     void delUser(String id);
 
-    SysUser editUser(UserForm form);
 
     void lockUser(String id);
 
@@ -50,4 +42,11 @@ public interface SystemUserService extends BaseService {
 
     void resetPassword(UserForm.ResetPassword form);
 
+    List<SysUser> getList(UserForm form);
+
+    Page<SysUser> getPage(UserForm form);
+
+    void save(UserForm form);
+
+    SysUser findOne(UserForm form);
 }

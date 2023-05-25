@@ -4,9 +4,11 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.system.entity.SysDict;
 import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.form.DictForm;
 import cn.crabapples.system.form.UserForm;
-import cn.crabapples.system.service.SystemService;
+import cn.crabapples.system.service.SystemDictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,62 +33,38 @@ import java.util.List;
 @RequestMapping("/api/system/dict")
 public class SystemDictController extends BaseController {
 
-    private final SystemService sysService;
+    private final SystemDictService dictService;
 
-    public SystemDictController(SystemService sysService) {
-        this.sysService = sysService;
+    public SystemDictController(SystemDictService dictService) {
+        this.dictService = dictService;
     }
 
-    /**
-     * 发起登录请求
-     *
-     * @param form 用户名和密码
-     * @return 登录成功返回token
-     */
     @JwtIgnore
-    @PostMapping("/login")
-    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-    public ResponseDTO login(@RequestBody UserForm form) {
-        log.info("收到请求->用户登陆验证:[{}]", form);
-        super.validator(form, Groups.IsLogin.class);
-        String token = sysService.login(form);
-        log.info("返回结果->登录成功->token:[{}]", token);
-        return ResponseDTO.returnSuccess("登录成功", token);
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ApiOperation(value = "获取字典列表", notes = "获取字典列表接口")
+    public ResponseDTO queryList(@RequestBody(required = false) DictForm form) {
+        Iterable<SysDict> list = dictService.queryList(form);
+        return ResponseDTO.returnSuccess("操作成功", list);
     }
 
-    /**
-     * 注销登录
-     */
-    @JwtIgnore
-    @PostMapping("/logout")
-    @ApiOperation(value = "注销登录", notes = "注销登录接口")
-    public ResponseDTO logout() {
-        return ResponseDTO.returnSuccess("注销成功");
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ApiOperation(value = "保存字典", notes = "保存字典接口")
+    public ResponseDTO save(DictForm form) {
+        dictService.save(form);
+        return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions(HttpServletRequest request) {
-        log.info("收到请求->获取所有权限列表");
-        List<String> list = sysService.getUserPermissions(request);
-        log.info("返回结果->获取权限列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除字典", notes = "删除字典接口")
+    public ResponseDTO deleteById(@PathVariable String id) {
+        dictService.deleteById(id);
+        return ResponseDTO.returnSuccess("操作成功");
     }
 
-    @GetMapping("/userInfo")
-    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo(HttpServletRequest request) {
-        log.info("收到请求->获取当前用户信息");
-        SysUser entity = sysService.getUserInfo(request);
-        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
-    }
-
-    @GetMapping("/checkUsername/{username}")
-    @ApiOperation(value = "检测用户名是否被使用", notes = "检测用户名是否被使用接口")
-    public ResponseDTO checkUsername(@PathVariable String username) {
-        log.info("收到请求->检测用户名是否被使用:[{}]", username);
-        boolean exist = sysService.checkUsername(username);
-        log.info("返回结果->检测用户名是否被使用:[{}]", exist);
-        return ResponseDTO.returnSuccess("用户名未被使用", exist);
+    @RequestMapping(value = "/info/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "获取字典详情", notes = "获取字典接口")
+    public ResponseDTO getById(@PathVariable String id) {
+        SysDict entity = dictService.getById(id);
+        return ResponseDTO.returnSuccess("操作成功",entity);
     }
 }

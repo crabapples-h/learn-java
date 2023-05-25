@@ -7,6 +7,7 @@ import org.springframework.data.domain.AuditorAware;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+
 /**
  * TODO 实现jpa审计功能
  *
@@ -19,16 +20,14 @@ import java.util.Optional;
 @Configuration
 public class JpaAuditorAware implements AuditorAware<String> {
     private final SystemService systemService;
-    private final HttpServletRequest request;
 
-    public JpaAuditorAware(SystemService systemService, HttpServletRequest request) {
+    public JpaAuditorAware(SystemService systemService) {
         this.systemService = systemService;
-        this.request = request;
     }
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        SysUser userInfo = systemService.getUserInfo(request);
+        SysUser userInfo = systemService.getUserInfo();
         return Optional.ofNullable(userInfo.getUsername());
     }
 }

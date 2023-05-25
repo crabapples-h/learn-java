@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @DynamicUpdate
-public abstract class BaseEntity_Jpa implements Serializable, Cloneable {
+public abstract class BaseEntity implements Serializable, Cloneable {
     /**
      * Id uuid主键
      * GeneratedValue 自增长

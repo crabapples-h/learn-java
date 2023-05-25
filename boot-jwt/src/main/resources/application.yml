@@ -2,7 +2,7 @@ crabapples.AES_KEY: crabapples
 crabapples.REDIS_PREFIX: crabapples
 crabapples.TOKEN_CACHE_TIME: 30
 crabapples.SALT: crabapples
-dataBaseName: learn
+dataBaseName: learn_jpa
 dataBaseDriveV8: com.mysql.cj.jdbc.Driver
 dataBaseDriveV5: com.mysql.jdbc.Driver
 dataBaseDrive: ${dataBaseDriveV8}
@@ -15,7 +15,7 @@ server:
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
-logging.file.name: d:/logs/springboot-shiro-jpa
+logging.file.name: d:/logs/springboot-jpa
 # 邮件配置
 mail:
   host: smtp.qq.com

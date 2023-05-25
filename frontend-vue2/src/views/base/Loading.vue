@@ -18,7 +18,7 @@ export default {
     this.$router.replace('/manage/index')
 
     setTimeout(() => {
-      this.$store.commit('INIT_ROUTER', null)
+      // this.$store.commit('INIT_ROUTER', null)
       this.$router.replace('/manage/index')
     }, 3000)
   }

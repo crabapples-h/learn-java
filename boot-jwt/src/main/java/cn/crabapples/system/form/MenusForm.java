@@ -2,7 +2,7 @@ package cn.crabapples.system.form;
 
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseForm;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,13 +22,13 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class MenusForm extends BaseForm<SysMenus> {
+public class MenusForm extends BaseForm<SysMenu> {
+
     private String id;
+
     private Integer sort;
 
     private String icon;
-
-    private String parentId;
 
     @NotBlank(message = "菜单名称不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private String name;
@@ -41,13 +41,11 @@ public class MenusForm extends BaseForm<SysMenus> {
     @NotNull(message = "菜单类型不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private Integer menusType;
 
-    private Integer level;
+    private String componentPath;
 
-    private String path;
+    private String pid;
 
-    private String filePath;
-
-    private String permission;
+    private Integer delFlag;
 
     @Override
     public String toString() {
@@ -55,8 +53,8 @@ public class MenusForm extends BaseForm<SysMenus> {
     }
 
     @Override
-    public SysMenus toEntity() {
-        SysMenus entity = new SysMenus();
+    public SysMenu toEntity() {
+        SysMenu entity = new SysMenu();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

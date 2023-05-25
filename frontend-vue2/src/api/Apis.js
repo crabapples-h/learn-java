@@ -3,7 +3,7 @@ const SysApis = {
     login: '/api/system/login',
     logout: '/api/system/logout',
     userInfo: '/api/system/userInfo',
-    menus: '/api/system/menus/user',
+    menus: '/api/system/menus/list/user',
     permissions: '/api/system/permissions',
     checkUsername: '/api/system/checkUsername',
     //user

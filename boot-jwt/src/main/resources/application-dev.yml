@@ -11,11 +11,11 @@ logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type.descriptor.sql.BasicBinder: trace
 
-spring:
-  #----- mongodb -----
-  data.mongodb.database: learn
-  data.mongodb.host: 127.0.0.1
+#----- mongodb -----
+spring.data.mongodb.database: learn
+spring.data.mongodb.host: 127.0.0.1
   #----- rabbitmq -----
+spring:
   rabbitmq.host: 192.168.56.101
   rabbitmq.port: 35672
   rabbitmq.username: admin
@@ -38,12 +38,13 @@ spring:
   datasource.druid.driverClassName: ${dataBaseDrive}
   datasource.druid.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
   datasource.druid.username: root
-  datasource.druid.password:
+  datasource.druid.password: root
+
   #----- 多数据源配置(根据包名选择要使用的数据源) -----
   datasource.druid.first.driverClassName: ${dataBaseDrive}
   datasource.druid.first.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
   datasource.druid.first.username: root
-  datasource.druid.first.password:
+  datasource.druid.first.password: root
   datasource.druid.second.driverClassName: ${dataBaseDrive}
   datasource.druid.second.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
   datasource.druid.second.username: root

@@ -1,12 +1,11 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.form.MenusForm;
+import org.springframework.data.domain.Page;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  * qq 294046317
  * pc-name mrhe
  */
-public interface SystemMenusService extends BaseService {
+public interface SystemMenusService extends BaseService<SysMenu> {
 
     /**
      * 生成菜单树(思路为:从所有菜单中逐级递归过滤出角色没有权限的菜单，保留角色拥有的菜单)
@@ -31,37 +30,37 @@ public interface SystemMenusService extends BaseService {
      * @param allMenus 所有根菜单
      * @return 角色拥有的菜单树
      */
-    default List<SysMenus> filterRootMenusTree(List<String> menusIds, List<SysMenus> allMenus) {
-        return allMenus.stream().filter(e -> {
-            /*
-             * 判断当前菜单是否被标记删除
-             */
-            if (DIC.IS_DEL == e.getDelFlag()) {
-                return false;
-            }
-            List<SysMenus> children = filterRootMenusTree(menusIds, e.getChildren());
-            e.setChildren(children);
-            /*
-             * 判断用户拥有的菜单中是否包含当前菜单
-             */
-            boolean exist = menusIds.contains(e.getId());
-            /*
-             * 判断用户拥有的菜单中是否包含当前菜单的子菜单
-             */
-            boolean sizeZero = children.size() > 0;
-            return exist || sizeZero;
-        }).collect(Collectors.toList());
-    }
+//    default List<SysMenu> filterRootMenusTree(List<String> menusIds, List<SysMenu> allMenus) {
+//        return allMenus.stream().filter(e -> {
+//            /*
+//             * 判断当前菜单是否被标记删除
+//             */
+//            if (DIC.IS_DEL == e.getDelFlag()) {
+//                return false;
+//            }
+//            List<SysMenu> children = filterRootMenusTree(menusIds, e.getChildren());
+//            e.setChildren(children);
+//            /*
+//             * 判断用户拥有的菜单中是否包含当前菜单
+//             */
+//            boolean exist = menusIds.contains(e.getId());
+//            /*
+//             * 判断用户拥有的菜单中是否包含当前菜单的子菜单
+//             */
+//            boolean sizeZero = children.size() > 0;
+//            return exist || sizeZero;
+//        }).collect(Collectors.toList());
+//    }
 
-    List<SysMenus> getUserMenus();
+    List<SysMenu> getByUser();
 
-    List<SysMenus> getMenusList();
+    List<SysMenu> getList(MenusForm form);
 
-    List<SysMenus> getMenusPage( PageDTO page);
+    Page<SysMenu> getPage(MenusForm form);
 
-    void saveMenus(MenusForm form);
+    void save(MenusForm form);
 
-    void removeMenus(String id);
+    void delete(String id);
 
-    void removeReallyMenus(String id);
+    void deleteReally(String id);
 }

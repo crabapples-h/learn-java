@@ -4,6 +4,7 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemService;
@@ -12,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -55,6 +55,17 @@ public class SystemController extends BaseController {
     }
 
     /**
+     * 获取[当前用户]菜单列表
+     */
+    @GetMapping("/user")
+    public ResponseDTO getUserMenus() {
+        log.info("收到请求->获取[当前用户]菜单列表");
+        List<SysMenu> menus = sysService.getUserMenus();
+        log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
+        return ResponseDTO.returnSuccess(menus);
+    }
+
+    /**
      * 注销登录
      */
     @JwtIgnore
@@ -65,18 +76,18 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions(HttpServletRequest request) {
+    public ResponseDTO getUserPermissions( ) {
         log.info("收到请求->获取所有权限列表");
-        List<String> list = sysService.getUserPermissions(request);
+        List<String> list = sysService.getUserPermissions();
         log.info("返回结果->获取权限列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
     @GetMapping("/userInfo")
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo(HttpServletRequest request) {
+    public ResponseDTO getUserInfo( ) {
         log.info("收到请求->获取当前用户信息");
-        SysUser entity = sysService.getUserInfo(request);
+        SysUser entity = sysService.getUserInfo();
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
     }

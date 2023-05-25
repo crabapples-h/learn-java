@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-public class SysDictItem extends BaseEntity_Jpa {
+public class SysDictItem extends BaseEntity {
     @Column(columnDefinition = "varchar(64) not null comment '名称'")
     private String name;
     @Column(columnDefinition = "varchar(64) not null comment '值'")

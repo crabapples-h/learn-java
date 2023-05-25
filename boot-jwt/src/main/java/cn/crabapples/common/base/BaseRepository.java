@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * pc-name mrhe
  */
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseEntity_Jpa, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+public interface BaseRepository<T extends BaseEntity, ID> extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
     /**
      * 重写jpa的count方法
      */

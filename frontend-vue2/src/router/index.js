@@ -19,6 +19,8 @@ import 'nprogress/nprogress.css'
 import storage from "@/store/storage";
 import store from "@/store";
 import settings, {log, error, warn} from "../../settings";
+import axios from "axios";
+import CommonApi from "@/api/CommonApi";
 
 Vue.use(VueRouter)
 
@@ -105,10 +107,10 @@ function tree2list(data) {
     }
     let array = []
     data.forEach(e => {
-        if (e && e.path) {
+        if (e && e.url) {
             array.push({
-                path: e.path,
-                component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
+                path: e.url,
+                component: resolve => require([`@/views/${e.componentPath}.vue`], resolve),
                 name: e.name,
                 meta: {title: e.name, icon: 'clipboard'},
                 hidden: e.hidden
@@ -123,23 +125,23 @@ function tree2list(data) {
 }
 
 const whiteList = ['/login', '/404', '/401'] // 白名单
-let initFinish = false
-function changePageTitle(e){
+
+function changePageTitle(e) {
     window.document.title = e.meta.title
 }
-function changePageIcon(e){
+
+function changePageIcon(e) {
     let link = document.querySelector("link[rel*='icon']")
     link.href = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
     document.getElementsByTagName('head')[0].appendChild(link)
 }
+
 router.beforeEach((to, from, next) => {
     changePageTitle(to)
     // changePageIcon(to)
     NProgress.start()
     const path = to.path
-    const token = store.getters.TOKEN
-    log('路由地址----->path:', path)
-    log('token:', token)
+    const token = localStorage.getItem("TOKEN")
     if (whiteList.includes(path)) {
         log('访问地址在白名单中：', path)
         NProgress.done()
@@ -155,12 +157,12 @@ router.afterEach(() => {
 })
 
 function initRouter() {
-    customRouter.children = tree2list(storage.getUserMenus())
-    customRouter.children.push(...errorRouter)
-    router.addRoute(customRouter)
-    log(customRouter)
-    initFinish = true
-    log('初始化动态路由表完成')
+    CommonApi.getUserMenus().then(result => {
+        customRouter.children = tree2list(result.data)
+        customRouter.children.push(...errorRouter)
+        router.addRoute(customRouter)
+        console.log('初始化动态路由表完成',customRouter)
+    })
 }
 
 router.onReady(() => {

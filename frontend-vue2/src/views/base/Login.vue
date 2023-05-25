@@ -1,46 +1,53 @@
 <template>
-  <div class="loginApi-bg">
-    <div class="loginApi-div">
-      <div class="title">用户登录</div>
-      <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username" class="input-text"></a-input>
-      <a-input autocomplete="off" placeholder="密码" type="password" v-model="password" class="input-text"></a-input>
-      <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
+    <div class="loginApi-bg">
+        <div class="loginApi-div">
+            <div class="title">用户登录</div>
+            <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username"
+                     class="input-text"></a-input>
+            <a-input autocomplete="off" placeholder="密码" type="password" v-model="password"
+                     class="input-text"></a-input>
+            <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 
-export default {
-  name: 'Login',
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  activated() {
-  },
-  mounted() {
-  },
-  methods: {
-    submit() {
-      const _this = this
-      let data = {
-        username: _this.username,
-        password: _this.password
-      };
-      // 调用actions中的LOGIN方法进行登录操作
-      this.$store.dispatch('LOGIN', data).then(result=>{
-        this.$store.dispatch('USER_INFO')
-        this.$store.dispatch('MENUS')
-        this.$store.dispatch('PERMISSIONS')
-        this.$store.dispatch('ROUTERS')
-        // this.$store.commit('INIT_ROUTER',null)
-      })
+import commonApi from "@/api/CommonApi";
+import notification from "ant-design-vue/lib/notification";
 
+export default {
+    name: 'Login',
+    data() {
+        return {
+            username: '',
+            password: '',
+        }
     },
-  }
+    activated() {
+    },
+    mounted() {
+    },
+    methods: {
+        submit() {
+            const _this = this
+            let data = {
+                username: _this.username,
+                password: _this.password
+            };
+            // 调用actions中的LOGIN方法进行登录操作
+            commonApi.login(data).then(({status, data, message}) => {
+                if (status !== 200) {
+                    _this.$message.info(message);
+                    return
+                }
+                localStorage.setItem("TOKEN", data)
+                _this.$router.push('/manage/index')
+            }).catch(function (error) {
+                console.error('出现错误:', error);
+            })
+        },
+    }
 }
 </script>
 <style lang="less" scoped>

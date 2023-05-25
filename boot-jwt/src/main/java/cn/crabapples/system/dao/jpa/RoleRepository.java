@@ -1,11 +1,9 @@
 package cn.crabapples.system.dao.jpa;
 
 import cn.crabapples.common.base.BaseRepository;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 /**
@@ -18,9 +16,9 @@ import java.util.List;
  * pc-name 29404
  */
 @Repository
-public interface RolesRepository extends JpaRepository<SysRoles, String> ,BaseRepository<SysRoles,String>{
+public interface RoleRepository extends JpaRepository<SysRole, String> ,BaseRepository<SysRole,String>{
 
-    List<SysRoles> findByDelFlagAndMenusIdsContains(int delFlag, String menusId);
+//    List<SysRole> findByDelFlagAndMenusIdsContains(int delFlag, String menusId);
 
 
 }

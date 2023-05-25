@@ -1,7 +1,7 @@
 package cn.crabapples.system.form;
 
 import cn.crabapples.common.base.BaseForm;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class RolesForm extends BaseForm<SysRoles> {
+public class RolesForm extends BaseForm<SysRole> {
     private String name;
 
     private List<String> menusList;
@@ -32,8 +32,8 @@ public class RolesForm extends BaseForm<SysRoles> {
     }
 
     @Override
-    public SysRoles toEntity() {
-        SysRoles entity = new SysRoles();
+    public SysRole toEntity() {
+        SysRole entity = new SysRole();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

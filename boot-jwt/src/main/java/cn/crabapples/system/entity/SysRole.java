@@ -1,6 +1,6 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,20 +20,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class SysRoles extends BaseEntity_Jpa {
+public class SysRole extends BaseEntity {
     @Column(columnDefinition = "varchar(64) ")
     private String name;
 
-    //角色拥有的菜单id列表
-    @Column(columnDefinition = "longtext comment '菜单Id'")
-    private String menusIds;
-
-    //角色拥有的权限列表
-    @Column(columnDefinition = "longtext comment '权限列表'")
-    private String permissionList;
-
-    @Transient
-    private List<SysMenus> sysMenus;
+    @ManyToMany
+    @JoinColumn
+    private List<SysMenu> menuList;
 
     @Override
     public String toString() {

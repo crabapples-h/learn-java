@@ -11,6 +11,7 @@ import cn.crabapples.system.service.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,42 +37,53 @@ public class SystemUserController extends BaseController {
     public SystemUserController(SystemUserService userService) {
         this.userService = userService;
     }
+    /**
+     * 获取[分页]用户列表
+     */
+    @GetMapping("/list")
+    @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
+    public ResponseDTO getList(UserForm form) {
+        log.info("收到请求->获取[分页]用户列表");
+        List<SysUser> list = userService.getList(form);
+        log.info("返回结果->获取[分页]用户列表->完成:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
 
     /**
      * 获取[分页]用户列表
      */
     @GetMapping("/page")
     @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
-    public ResponseDTO getUserPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getPage(UserForm form) {
         log.info("收到请求->获取[分页]用户列表");
-        List<SysUserDTO> list = userService.findAll(request, page);
-        log.info("返回结果->获取[分页]用户列表->完成:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
+        Page<SysUser> page = userService.getPage(form);
+        log.info("返回结果->获取[分页]用户列表->完成:[{}]", page);
+        return ResponseDTO.returnSuccess(page);
     }
 
-    @PostMapping("/add")
-    @ApiOperation(value = "添加用户", notes = "添加用户接口")
-    public ResponseDTO addUser(@RequestBody UserForm form) {
-        log.info("收到请求->添加用户:[{}]", form);
+    @PostMapping("/save")
+    @ApiOperation(value = "保存用户", notes = "保存用户接口")
+    public ResponseDTO save(@RequestBody UserForm form) {
+        log.info("收到请求->保存用户:[{}]", form);
         super.validator(form, Groups.IsAdd.class);
-        SysUser entity = userService.addUser(form);
-        log.info("返回结果->添加用户->完成:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
+         userService.save(form);
+        log.info("返回结果->添加用户->完成");
+        return ResponseDTO.returnSuccess();
     }
 
-    @PostMapping("/edit")
-    @ApiOperation(value = "编辑用户", notes = "编辑用户接口")
-    public ResponseDTO editUser(@RequestBody UserForm form) {
-        log.info("收到请求->编辑用户:[{}]", form);
-        super.validator(form, Groups.IsEdit.class);
-        SysUser entity = userService.editUser(form);
-        log.info("返回结果->用户编辑完成:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
-    }
+//    @PostMapping("/edit")
+//    @ApiOperation(value = "编辑用户", notes = "编辑用户接口")
+//    public ResponseDTO editUser(@RequestBody UserForm form) {
+//        log.info("收到请求->编辑用户:[{}]", form);
+//        super.validator(form, Groups.IsEdit.class);
+//        userService.editUser(form);
+//        log.info("返回结果->用户编辑完成");
+//        return ResponseDTO.returnSuccess();
+//    }
 
-    @PostMapping("/del/{id}")
+    @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除用户", notes = "删除用户接口")
-    public ResponseDTO delUser(@PathVariable String id) {
+    public ResponseDTO deleteById(@PathVariable String id) {
         log.info("收到请求->删除用户:[{}]", id);
         userService.delUser(id);
         log.info("返回结果->用户删除完成");
@@ -96,16 +108,6 @@ public class SystemUserController extends BaseController {
         return ResponseDTO.returnSuccess();
     }
 
-    @PostMapping("/password/reset")
-    @ApiOperation(value = "重置密码", notes = "重置密码接口")
-    public ResponseDTO resetPassword(@RequestBody UserForm.ResetPassword form) {
-        log.info("收到请求->重置密码:[{}]", form);
-        super.validator(form, Groups.IsResetPassword.class);
-        userService.resetPassword(form);
-        log.info("返回结果->重置密码完成");
-        return ResponseDTO.returnSuccess();
-    }
-
     @PostMapping("/password/update")
     @ApiOperation(value = "修改密码", notes = "修改密码接口")
     public ResponseDTO updatePassword(@RequestBody UserForm.ResetPassword form) {
@@ -113,6 +115,16 @@ public class SystemUserController extends BaseController {
         super.validator(form, Groups.IsUpdatePassword.class);
         userService.updatePassword(form);
         log.info("返回结果->修改密码完成");
+        return ResponseDTO.returnSuccess();
+    }
+
+    @PostMapping("/password/reset")
+    @ApiOperation(value = "重置密码", notes = "重置密码接口")
+    public ResponseDTO resetPassword(@RequestBody UserForm.ResetPassword form) {
+        log.info("收到请求->重置密码:[{}]", form);
+        super.validator(form, Groups.IsResetPassword.class);
+        userService.resetPassword(form);
+        log.info("返回结果->重置密码完成");
         return ResponseDTO.returnSuccess();
     }
 

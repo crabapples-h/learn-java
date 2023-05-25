@@ -6,7 +6,7 @@ import cn.crabapples.system.entity.FileInfo;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FileInfoDAO extends BaseDAO<FileInfo, String> {
+public class FileInfoDAO extends BaseDAO {
     private final FileInfoRepository repository;
 
     public FileInfoDAO(FileInfoRepository repository) {
