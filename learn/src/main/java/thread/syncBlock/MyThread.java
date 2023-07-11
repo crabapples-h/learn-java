@@ -15,7 +15,7 @@ public class MyThread extends Thread {
     @Override
     public void run() {
         while (i < 100) {
-            // 同步代码块
+            // 同步代码块 也可以使用当前类的字节码对象 MyThread.class
             synchronized (o) {
                 try {
                     Thread.sleep(2);
