@@ -13,7 +13,7 @@ package thread.lock;
  */
 public class Main {
     public static void main(String[] args) {
-        final MyRunnable myRunnable = new MyRunnable();
+        MyRunnable myRunnable = new MyRunnable();
         new Thread(myRunnable, "线程1").start();
         new Thread(myRunnable, "线程2").start();
         new Thread(myRunnable, "线程3").start();

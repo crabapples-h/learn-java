@@ -4,7 +4,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MyRunnable implements Runnable {
-    Lock lock = new ReentrantLock();
+    static Lock lockObj = new ReentrantLock();
     int i = 0;
 
     @Override
@@ -15,12 +15,12 @@ public class MyRunnable implements Runnable {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            lock.lock();
+            lockObj.lock();
             if (i < 100) {
                 i++;
                 System.out.println(Thread.currentThread().getName() + ":" + i);
             }
-            lock.unlock();
+            lockObj.unlock();
         }
     }
 }
