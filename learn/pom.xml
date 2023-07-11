@@ -97,12 +97,6 @@
             <version>${quartz.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.46</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.5.9</version>
