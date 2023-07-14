@@ -1,6 +1,7 @@
 package thread.demo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Main04 {
     private static BigDecimal count = new BigDecimal("10");
@@ -16,27 +17,24 @@ public class Main04 {
     }
 
     private synchronized static void func() {
-        if (count.compareTo(ZERO) > 0) {
-            if (successCount < 3) {
-                if (successCount == 2) {
-                    System.out.println(Thread.currentThread().getName() + "抢到了:" + count);
-                    count = ZERO;
-                    successCount++;
-                } else {
-                    int random = ((int) (Math.random() * 1000)) / 100;
-                    BigDecimal money = new BigDecimal(random);
-                    BigDecimal subtract = count.subtract(money);
-                    if (count.compareTo(ZERO) > 0) {
-                        count = subtract;
-                        successCount++;
-                        System.out.println(Thread.currentThread().getName() + "抢到了:" + money);
-                    } else {
-                        func();
-                    }
-                }
+        if (successCount < 3) {
+            if (successCount == 2) {
+                successCount++;
+                System.out.println(Thread.currentThread().getName() + "抢到了:" + count);
             } else {
-                System.out.println(Thread.currentThread().getName() + "没抢到");
+                int random = (int) (Math.random() * 1000);
+                BigDecimal money = new BigDecimal(random).divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
+                BigDecimal subtract = count.subtract(money);
+                if (count.compareTo(ZERO) > 0 && subtract.compareTo(ZERO) > 0) {
+                    count = subtract;
+                    successCount++;
+                    System.out.println(Thread.currentThread().getName() + "抢到了:" + money);
+                } else {
+                    func();
+                }
             }
+        } else {
+            System.out.println(Thread.currentThread().getName() + "没抢到");
         }
     }
 }
