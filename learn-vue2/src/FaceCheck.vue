@@ -59,32 +59,11 @@ export default {
             await faceapi.loadAgeGenderModel('/models')
             const photo = document.getElementById('photo')
 
-            // const detectionsWithLandmarks = await faceapi.detectAllFaces(photo).withFaceLandmarks()
-            // let length = detectionsWithLandmarks.length
-            // const data = length ? () => {
-            //     console.log("%c%s%d", "color:red", "检测到人脸数:", length)
-            //     // alert("检测到人脸数:" + length)
-            // } : () => {
-            //     // alert("未检测到人脸或图片可辨识度低")
-            //     console.log("未检测到人脸或图片可辨识度低")
-            // }
-            // data()
-            // console.log(detectionsWithLandmarks)
-
-
             const canvas = faceapi.createCanvasFromMedia(photo)
             canvas.id = "check-result"
             document.body.append(canvas)
             this.canvas = canvas
             const displaySize = {width: photo.width, height: photo.height}
-
-            /* Display detected face bounding boxes */
-            // const detections = await faceapi.detectAllFaces(photo)
-            // // resize the detected boxes in case your displayed image has a different size than the original
-            // const resizedDetections = faceapi.resizeResults(detections, displaySize)
-            // // draw detections into the canvas
-            // faceapi.draw.drawDetections(canvas, resizedDetections)
-
 
             /* 显示面部特征 */
             const detectionsWithLandmarks = await faceapi
@@ -92,11 +71,21 @@ export default {
                 .withFaceLandmarks()
                 .withFaceExpressions()
                 .withAgeAndGender()
-            // resize the detected boxes and landmarks in case your displayed image has a different size than the original
+            let length = detectionsWithLandmarks.length
+            const data = length ? () => {
+                console.log("%c%s%d", "color:red", "检测到人脸数:", length)
+                // alert("检测到人脸数:" + length)
+            } : () => {
+                // alert("未检测到人脸或图片可辨识度低")
+                console.log("未检测到人脸或图片可辨识度低")
+            }
+            data()
+            console.log(detectionsWithLandmarks)
+            // 重置画布大小
             const resizedResults = faceapi.resizeResults(detectionsWithLandmarks, displaySize)
-            // draw detections into the canvas
+            // 绘制人脸方框
             faceapi.draw.drawDetections(canvas, resizedResults)
-            // draw the landmarks into the canvas
+            // 绘制面部特征点
             faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
             detectionsWithLandmarks.forEach(result=>{
                 const {age,gender,genderProbability} = result
