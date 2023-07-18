@@ -87,9 +87,9 @@ export default {
             //     .withFaceLandmarks()
             // // resize the detected boxes and landmarks in case your displayed image has a different size than the original
             // const resizedResults = faceapi.resizeResults(detectionsWithLandmarks, displaySize)
-            // // draw detections into the canvas
+            // 矩形标注面部
             // faceapi.draw.drawDetections(canvas, resizedResults)
-            // // draw the landmarks into the canvas
+            // 标注面部特征点
             // faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
 
 

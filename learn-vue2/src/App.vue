@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 <!--        <qr-code/>-->
-        <face-api/>
+        <face-check/>
         <!--        <div id="nav">-->
         <!--            <router-link to="/">Home</router-link>-->
         <!--            |-->
@@ -13,12 +13,12 @@
 </template>
 <script>
 import QrCode from "@/QrCode.vue";
-import FaceApi from "@/FaceApi.vue";
+import FaceCheck from "@/FaceCheck.vue";
 
 export default {
     name: 'app',
     mixins: [],
-    components: {QrCode,FaceApi},
+    components: {FaceCheck, QrCode},
     data() {
         return {
             painting: {},
