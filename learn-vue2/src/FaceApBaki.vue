@@ -35,6 +35,9 @@ export default {
                 navigator.mediaDevices.getUserMedia({video: true}).then(res => {
                     const video = document.getElementById('video')
                     video.srcObject = res
+                    const canvas2 = faceapi.createCanvasFromMedia(video)
+                    document.body.appendChild(canvas2)
+
                 })
             } catch (e) {
                 console.log(e)
