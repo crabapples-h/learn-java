@@ -4,14 +4,15 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 public class OpencvMac {
-
+    private static String MODEL_PATH = "/Users/mshe/developer/opencv-4.5.3/data/haarcascades/" +
+            "haarcascade_frontalface_default.xml";
     public static void main(String[] args) {
 //        System.setProperty("java.library.path", "/usr/local/share/java/opencv4");
 //        System.err.println(System.getProperty("java.library.path"));
         // 加载 OpenCV 库
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         // 加载人脸检测器（使用已经训练好的级联分类器）
-        CascadeClassifier faceDetector = new CascadeClassifier("/Users/mshe/developer/opencv-4.5.3/data/haarcascades/haarcascade_frontalface_default.xml");
+        CascadeClassifier faceDetector = new CascadeClassifier(MODEL_PATH);
         // 加载测试图像
         Mat image = Imgcodecs.imread("/Users/mshe/developer/image/1.JPEG");
         // 转换图像为灰度图

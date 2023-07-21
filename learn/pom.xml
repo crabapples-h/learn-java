@@ -24,7 +24,30 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
     <dependencies>
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-modelimport</artifactId>
+            <version>1.0.0-beta7</version> <!-- 根据最新版本进行调整 -->
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.tzolov.cv</groupId>
+            <artifactId>mtcnn</artifactId>
+            <version>0.0.4</version>
+        </dependency>
         <dependency>
             <groupId>org.openpnp</groupId>
             <artifactId>opencv</artifactId>
