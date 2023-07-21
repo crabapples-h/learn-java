@@ -1,10 +1,6 @@
 <template>
-    <div style="margin-top: 200px;text-align: center">
-        <div>
-            <img id="hidden-photo" src="" style="display: none"/>
-            <img id="photo" src="" style="width: 500px;height: 600px"/>
-            <input id="upload" type="file" @change="uploadImage" accept=".jpg, .jpeg, .png">
-        </div>
+    <div id="content">
+        <video id="video" autoplay controls width="888" height="1920" class="media" src="/1.MP4"></video>
     </div>
 </template>
 <script>
@@ -12,7 +8,7 @@
 import * as faceapi from "face-api.js";
 
 export default {
-    name: 'face-check',
+    name: 'face-check-video-file',
     mixins: [],
     components: {},
     data() {
@@ -22,17 +18,32 @@ export default {
     },
     async mounted() {
         await this.loadModel()
+        this.openVideo()
     },
     methods: {
         openVideo() {
-            try {
-                navigator.mediaDevices.getUserMedia({video: true}).then(res => {
-                    const video = document.getElementById('video')
-                    video.srcObject = res
-                })
-            } catch (e) {
-                console.log(e)
-            }
+            const _this = this
+            const video = document.getElementById('video')
+            let event = null
+            video.addEventListener("play", () => {
+                if (_this.canvas != null) {
+                    _this.canvas.remove()
+                }
+                let {width, height} = video
+                const canvas = faceapi.createCanvasFromMedia(video)
+                document.getElementById('content').append(canvas)
+                _this.canvas = canvas
+                let ctx = canvas.getContext('2d')
+                event = setInterval(async () => {
+                    let faceData = await _this.checkFace(video)
+                    ctx.drawImage(video, 0, 0, width, height);
+                    await _this.drawFaceData(faceData, canvas, width, height)
+                    // ctx.clearRect(0, 0, width, height)
+                }, 100)
+            })
+            video.addEventListener("pause", () => {
+                clearInterval(event)
+            })
         },
         async loadModel() {
             console.log(faceapi)
@@ -40,6 +51,7 @@ export default {
             await faceapi.loadFaceLandmarkModel('/models')
             await faceapi.loadFaceExpressionModel('/models')
             await faceapi.loadAgeGenderModel('/models')
+            await faceapi.loadTinyFaceDetectorModel('/models')
         },
         async uploadImage() {
             if (this.canvas) {
@@ -54,38 +66,21 @@ export default {
             this.drawFaceData(detectionsWithLandmarks)
         },
 
-        async checkFace() {
-            const photo = document.getElementById('hidden-photo')
+        async checkFace(source) {
             /* 检测面部特征 */
-            const detectionsWithLandmarks = await faceapi
-                .detectAllFaces(photo)
+            return faceapi
+                .detectAllFaces(source, new faceapi.TinyFaceDetectorOptions())
                 .withFaceLandmarks()
                 .withFaceExpressions()
-                .withAgeAndGender()
-            let length = detectionsWithLandmarks.length
-            const data = length ? () => {
-                console.log("%c%s%d", "color:red", "检测到人脸数:", length)
-                // alert("检测到人脸数:" + length)
-            } : () => {
-                // alert("未检测到人脸或图片可辨识度低")
-                console.log("未检测到人脸或图片可辨识度低")
-            }
-            data()
-            console.log(detectionsWithLandmarks)
-            return detectionsWithLandmarks
+                .withAgeAndGender();
         },
-        drawFaceData(detectionsWithLandmarks) {
-            const photo = document.getElementById('hidden-photo')
-            const canvas = faceapi.createCanvasFromMedia(photo)
-            canvas.id = "check-result"
-            canvas.style.display = "none"
-            document.body.append(canvas)
-            this.canvas = canvas
-            const displaySize = {width: photo.width, height: photo.height}
+        async drawFaceData(detections, canvas, width, height) {
+            // this.canvas = canvas
             // 重置画布大小
-            const resizedResults = faceapi.resizeResults(detectionsWithLandmarks, displaySize)
+            console.log(width, height)
+            console.log(canvas.width, canvas.height)
+            const resizedResults = await faceapi.resizeResults(detections, {width, height})
             // 绘制人脸方框
-            const minProbability = 2
             console.log(resizedResults)
             // faceapi.draw.drawDetections(canvas, resizedResults)
             resizedResults.forEach(e => {
@@ -104,18 +99,10 @@ export default {
                 const drawBox = new faceapi.draw.DrawBox(box, drawOptions)
                 drawBox.draw(canvas)
             })
-//             const box = {x: 50, y: 50, width: 100, height: 100}
-// // see DrawBoxOptions below
-//             const drawOptions = {
-//                 label: 'Hello I am a box!',
-//                 lineWidth: 2
-//             }
-//             const drawBox = new faceapi.draw.DrawBox(box, drawOptions)
-//             drawBox.draw(canvas)
-
-            // 绘制面部特征点
+            // // 绘制面部特征点
             faceapi.draw.drawFaceLandmarks(canvas, resizedResults)
-            detectionsWithLandmarks.forEach((result, index) => {
+            console.log(detections)
+            detections.forEach((result, index) => {
                 index += 1
                 const {age, gender, genderProbability, expressions} = result
                 // console.log(result)
@@ -146,17 +133,24 @@ export default {
                     `性别:${genderText} {${genderProbability.toFixed(1)}}`
                 ], result.detection.box.bottomLeft).draw(canvas)
             })
-            this.changeImageSize()
-        },
+            // this.changeImageSize()
+        }
+        ,
         changeImageSize() {
             document.getElementById('photo').src = this.canvas.toDataURL()
-        },
+        }
+        ,
 
     }
 }
 </script>
 
-<style>
+<style scoped>
+.media {
+    /*display: none;*/
+    /*opacity: 0;*/
+}
+
 </style>
 
 

@@ -1,7 +1,8 @@
 HELP.md
 */target/
 !.mvn/wrapper/maven-wrapper.jar
-
+*.MP4
+*.mp4
 ### STS ###
 .apt_generated
 .classpath
