@@ -38,7 +38,7 @@ spring:
   datasource.druid.driverClassName: ${dataBaseDrive}
   datasource.druid.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
   datasource.druid.username: root
-  datasource.druid.password:
+  datasource.druid.password: root
   #----- 多数据源配置(根据包名选择要使用的数据源) -----
   datasource.druid.first.driverClassName: ${dataBaseDrive}
   datasource.druid.first.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}

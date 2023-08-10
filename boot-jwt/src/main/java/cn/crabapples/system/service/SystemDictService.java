@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * TODO 系统相关服务[用户]
+ * TODO 系统相关服务[字典]
  *
  * @author Mr.He
  * 2021/4/25 0:34
@@ -21,33 +21,4 @@ import java.util.List;
  * pc-name mrhe
  */
 public interface SystemDictService extends BaseService {
-
-    SysUser findById(String id);
-
-    List<SysUser> findById(List<String> ids);
-
-    List<SysUser> findByName(String name);
-
-    SysUser findByUsername(String username);
-
-    List<SysUser> findAll();
-
-    Page<SysUser> findAll(PageDTO page);
-
-    List<SysUserDTO> findAll(HttpServletRequest request, PageDTO page);
-
-    SysUser addUser(UserForm form);
-
-    void delUser(String id);
-
-    SysUser editUser(UserForm form);
-
-    void lockUser(String id);
-
-    void unlockUser(String id);
-
-    void updatePassword(UserForm.ResetPassword form);
-
-    void resetPassword(UserForm.ResetPassword form);
-
 }
