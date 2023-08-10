@@ -17,7 +17,7 @@ import java.util.Optional;
  * qq 294046317
  * pc-name mrhe
  */
-public abstract class BaseDAO<T, ID> {
+public abstract class BaseDAO<T extends BaseEntity_Jpa, ID> {
     protected final static Sort DESC_CREATE_TIME = Sort.by("createTime").descending();
     protected final static Sort ASC_CREATE_TIME = Sort.by("createTime").ascending();
     protected final static Sort ASC_SORT = Sort.by("sort").ascending();

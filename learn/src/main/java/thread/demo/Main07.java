@@ -6,6 +6,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * TODO 多线程-案例7 在上一题基础上继续完成如下需求
+ *  在此次抽奖过程中，抽奖箱1总共产生了6个奖项，
+ *  分别为:10,20,100,500,2,300 最高奖项为300元，总计额为932元
+ *  在此次抽奖过程中，抽奖箱2总共产生了6个奖项，
+ *  分别为:5,50,200,800,80,700 最高奖项为800元，总计额为1835元
+ *  在此次抽奖过程中，抽奖箱2中产生了最大奖项,该奖项金额为800元
+ *
+ * @author Ms.He
+ * 2023/8/2 14:45
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mshe
+ */
 public class Main07 {
     private static final List<Integer> nums = new ArrayList<>();
     private static final List<Integer> t1 = new ArrayList<>();
@@ -50,8 +64,8 @@ public class Main07 {
             if (t1s == t2s && t2s == Thread.State.TERMINATED) {
                 Integer t1Max = max(t1);
                 Integer t2Max = max(t2);
-                System.err.println("抽奖箱1:" + t1 + "总额:" + sum(t1)+ "最大:" + max(t1));
-                System.err.println("抽奖箱2:" + t2 + "总额:" + sum(t2)+ "最大:" + max(t2));
+                System.err.println("抽奖箱1:" + t1 + "总额:" + sum(t1) + "最大:" + max(t1));
+                System.err.println("抽奖箱2:" + t2 + "总额:" + sum(t2) + "最大:" + max(t2));
                 break;
             }
         }

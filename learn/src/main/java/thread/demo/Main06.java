@@ -5,6 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * TODO 多线程-案例6
+ *  在上一题基础上继续完成如下需求:
+ *  不打印，抽完时一次性打印(随机)每次抽的过程中，
+ *  在此次抽奖过程中，抽奖箱1总共产生了6个奖项
+ *  分别为:10,20,100,500,2,300最高奖项为300元，总计额为932元
+ *  在此次抽奖过程中，抽奖箱2总共产生了6个奖项
+ *  分别为:5,50,200,800,80,700最高奖项为800元，总计额为1835元
+ *
+ * @author Ms.He
+ * 2023/8/2 14:44
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mshe
+ */
 public class Main06 {
     private static final List<Integer> nums = new ArrayList<>();
     private static final List<Integer> t1 = new ArrayList<>();

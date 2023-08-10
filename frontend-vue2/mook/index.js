@@ -4,6 +4,7 @@ const port = 3300
 const login = require('./data/Login.json')
 const userInfo = require('./data/UserInfo.json')
 const menus = require('./data/Menus.json')
+const fs = require("fs");
 app.post('/api/sys/login', (request, response) => {
     response.send(login)
 })

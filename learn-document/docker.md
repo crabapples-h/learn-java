@@ -1,4 +1,4 @@
-##docker启动容器
+## docker启动容器
 * *--network local-network --network-alias alias  指定需要加入的网络和在网络中的别名*
 * *--restart=always -d 自动重启,后台启动*
 * *-p 80:8080 --name name 端口映射和指定容器别名*
@@ -53,7 +53,7 @@ docker run \
     --appendonly yes
 ```
 ##
-####docker启动jumpserver &emsp; **port:30000 &emsp; port:2222**
+#### docker启动jumpserver &emsp; **port:30000 &emsp; port:2222**
 * 使用已有数据库(需要先建表)
 ``` mysql
 -- 建表 
@@ -108,7 +108,7 @@ docker run \
     --privileged=true 
 ```
 ##
-####docker启动jenkins &emsp; **port:8080 &emsp; port:50000**
+#### docker启动jenkins &emsp; **port:8080 &emsp; port:50000**
   * *-v $(pwd)/data/jenkins-data:/var/jenkins_home 映射本地路径*
   * *-v /var/run/docker.sock:/var/run/docker.sock 映射本地路径*
   * *-p 8080:8080  -p 50000:50000 --name jenkins 端口映射和指定容器别名*
@@ -126,7 +126,7 @@ docker run \
     jenkinsci/blueocean 
 ```
 ##
-####docker启动elasticsearch &emsp; **port:9200 &emsp; port:9300**
+#### docker启动elasticsearch &emsp; **port:9200 &emsp; port:9300**
 ```
 docker run \
     --network local-network --network-alias elasticsearch \
@@ -139,7 +139,7 @@ docker run \
     docker.elastic.co/elasticsearch/elasticsearch:7.10.0
 ```
 ##
-####docker启动gitlab &emsp; **port:443 &emsp; port:80 &emsp; port:22**
+#### docker启动gitlab &emsp; **port:443 &emsp; port:80 &emsp; port:22**
 ```
 docker run \
     --network local-network --network-alias gitlab \
@@ -151,7 +151,7 @@ docker run \
     gitlab/gitlab-ce
 ```
 ##
-####docker启动rabbitmq &emsp; **port:5672 &emsp; port:15672**
+#### docker启动rabbitmq &emsp; **port:5672 &emsp; port:15672**
 ```
 docker run \
     --network local-network --network-alias rabbitmq \

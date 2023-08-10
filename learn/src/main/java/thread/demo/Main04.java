@@ -3,6 +3,22 @@ package thread.demo;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * TODO 多线程-案例4
+ *  抢红包也用到了多线程。假设:100块，分成了3个包，现在有5个人去抢其中，红包是共享数据5个人是5条线程
+ *  打印结果如下:
+ *  XXX抢到了XXX元
+ *  XXX抢到了XXX元
+ *  XXX抢到了XXX元
+ *  XXX没抢到
+ *  XXX没抢到
+ *
+ * @author Ms.He
+ * 2023/8/2 14:43
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mshe
+ */
 public class Main04 {
     private static BigDecimal count = new BigDecimal("10");
     private static int successCount = 0;

@@ -2,8 +2,10 @@
     <div id="app">
         <!--        <qr-code/>-->
         <!--        <face-check-image/>-->
-        <!--        <face-check-video/>-->
-        <face-check-video-file/>
+<!--                <face-check-video/>-->
+<!--                <table-demo/>-->
+                <wechat-location/>
+<!--        <face-check-video-file/>-->
         <!--        <div id="nav">-->
         <!--            <router-link to="/">Home</router-link>-->
         <!--            |-->
@@ -18,11 +20,20 @@ import QrCode from "@/QrCode.vue";
 import FaceCheckImage from "@/FaceCheckImage.vue";
 import FaceCheckVideo from "@/FaceCheckVideo.vue";
 import FaceCheckVideoFile from "@/FaceCheckVideoFile.vue";
+import TableDemo from "@/TableDemo.vue";
+import WechatLocation from "@/WechatLocation.vue";
 
 export default {
     name: 'app',
     mixins: [],
-    components: {FaceCheckImage, FaceCheckVideo, FaceCheckVideoFile, QrCode},
+    components: {
+        WechatLocation,
+        FaceCheckImage,
+        FaceCheckVideo,
+        FaceCheckVideoFile,
+        QrCode,
+        TableDemo,
+    },
     data() {
         return {
             painting: {},
