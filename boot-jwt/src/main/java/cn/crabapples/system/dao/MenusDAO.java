@@ -43,12 +43,12 @@ public class MenusDAO extends BaseDAO<SysMenus, String> {
         return repository.save(entity);
     }
 
-    public Page<SysMenus> findRoot(PageDTO page) {
+    public Page<SysMenus> findMenusTree(PageDTO page) {
         Pageable pageable = PageRequest.of(page.getPageIndex(), page.getPageSize(), ASC_SORT);
         return repository.findByDelFlagAndIsRoot(pageable, DIC.NOT_DEL, DIC.IS_ROOT);
     }
 
-    public List<SysMenus> findRoot() {
+    public List<SysMenus> findMenusTree() {
         SysMenus sysMenusExample = new SysMenus();
         sysMenusExample.setIsRoot(DIC.IS_ROOT);
         sysMenusExample.setDelFlag(DIC.NOT_DEL);
@@ -58,9 +58,6 @@ public class MenusDAO extends BaseDAO<SysMenus, String> {
                 //对 delFlag 字段精确匹配
                 .withMatcher("delFlag", ExampleMatcher.GenericPropertyMatchers.exact());
         Example<SysMenus> example = Example.of(sysMenusExample, matcher);
-//        repository.findAll(of);
-//        repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
-//        return repository.findByDelFlagAndIsRoot(DIC.NOT_DEL, DIC.IS_ROOT);
         return repository.findAll(example);
     }
 

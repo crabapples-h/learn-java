@@ -4,6 +4,7 @@ import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,41 +42,32 @@ public class SystemRolesController extends BaseController {
      * 获取[当前用户]角色列表
      */
     @GetMapping("/user")
-    public ResponseDTO getUserRoles(HttpServletRequest request) {
+    public ResponseDTO getUserRoles() {
         log.info("收到请求->获取[当前用户]角色列表");
-        throw new ApplicationException("暂未实现");
-//        List<SysRolesDTO> list = rolesService.getUserRoles(request);
-//        log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
-//        return ResponseDTO.returnSuccess(list);
-    }
-
-    /**
-     * 获取[所有]角色列表
-     */
-    @GetMapping("/list")
-    public ResponseDTO getRolesList(HttpServletRequest request) throws IOException {
-        log.info("收到请求->获取[所有]角色列表");
-        List<SysRoles> list = rolesService.getRolesList(request);
-        log.info("返回结果->获取[所有]角色列表成功:[{}]", list);
+//        throw new ApplicationException("暂未实现");
+        List<SysRolesDTO> list = rolesService.getUserRoles();
+        log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
     /**
-     * 获取[分页]角色列表
+     * 获取角色列表
      */
-    @GetMapping("/page")
-    public ResponseDTO getRolesPage(HttpServletRequest request, PageDTO page) {
-        log.info("收到请求->获取[分页]角色列表");
-        List<SysRoles> list = rolesService.getRolesPage(request, page);
-        log.info("返回结果->获取[分页]角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
+    @GetMapping("/list")
+    public ResponseDTO getRolesPage(@RequestParam(name = "pageIndex", required = false) Integer pageIndex,
+                                    @RequestParam(name = "pageSize", required = false) Integer pageSize,
+                                    RolesForm form) {
+        log.info("收到请求->获取角色列表");
+        Iterable<SysRoles> list = rolesService.getRolesList(pageIndex, pageSize, form);
+        log.info("返回结果->获取角色列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
     }
 
     /**
      * 保存角色
      */
     @PostMapping("/save")
-    public ResponseDTO saveRoles(HttpServletRequest request, @RequestBody RolesForm form) {
+    public ResponseDTO saveRoles(@RequestBody RolesForm form) {
         log.info("收到请求->保存角色:[{}]", form);
         rolesService.saveRoles(form);
         log.info("返回结果->保存角色成功");

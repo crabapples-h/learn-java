@@ -71,15 +71,15 @@ public class SystemDictController extends BaseController {
         log.info("返回结果->获取权限列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
-
-    @GetMapping("/userInfo")
-    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo(HttpServletRequest request) {
-        log.info("收到请求->获取当前用户信息");
-        SysUser entity = sysService.getUserInfo(request);
-        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
-    }
+//
+//    @GetMapping("/userInfo")
+//    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
+//    public ResponseDTO getUserInfo() {
+//        log.info("收到请求->获取当前用户信息");
+//        SysUser entity = sysService.getUserInfo();
+//        log.info("返回结果->获取当前用户信息结束:[{}]", entity);
+//        return ResponseDTO.returnSuccess(entity);
+//    }
 
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "检测用户名是否被使用", notes = "检测用户名是否被使用接口")

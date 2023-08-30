@@ -29,13 +29,15 @@ export default {
       let data = {
         username: _this.username,
         password: _this.password
-      };
-      // 调用actions中的LOGIN方法进行登录操作
-      this.$store.dispatch('LOGIN', data).then(result=>{
-        this.$store.dispatch('USER_INFO')
+      }
+      // dispatch调用的是/store/modules里几个js文件中actions里的方法
+      this.$store.dispatch('LOGIN', data).then(result => {
+        console.log(result)
+        this.$store.dispatch('USER_BASE_INFO')
+        this.$store.dispatch('ROLES')
         this.$store.dispatch('MENUS')
-        this.$store.dispatch('PERMISSIONS')
-        this.$store.dispatch('ROUTERS')
+        // this.$store.dispatch('PERMISSIONS')
+        // this.$store.dispatch('ROUTERS')
         // this.$store.commit('INIT_ROUTER',null)
       })
 

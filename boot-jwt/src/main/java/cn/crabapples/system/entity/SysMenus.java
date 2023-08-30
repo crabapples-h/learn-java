@@ -6,10 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -53,6 +50,7 @@ public class SysMenus extends BaseEntity_Jpa {
     private String permission;
 
     @OneToMany
+    @JoinColumn(name = "pid",referencedColumnName = "id")
     private List<SysMenus> children;
 
     @Transient

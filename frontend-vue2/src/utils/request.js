@@ -16,7 +16,7 @@ import settings from '../../settings'
 
 const isCrypt = settings.isCrypt;
 const isDebug = settings.isDebug;
-const instance = axios.create({timeout: 1000 * 12});
+const instance = axios.create({timeout: 1000 * 120});
 
 instance.interceptors.request.use(
     config => {

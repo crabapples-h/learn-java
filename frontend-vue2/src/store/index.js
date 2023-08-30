@@ -4,6 +4,7 @@ import getters from "@/store/getters";
 import user from "@/store/modules/user";
 import sys from "@/store/modules/sys";
 import permissions from "@/store/modules/permissions";
+import roles from '@/store/modules/roles'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -11,6 +12,7 @@ const store = new Vuex.Store({
         user,
         sys,
         permissions,
+        roles,
     },
     state: {},
     mutations: {},

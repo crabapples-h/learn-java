@@ -27,24 +27,24 @@ public interface SystemMenusService extends BaseService {
      * 递归遍历所有菜单，判断菜单ID是否为角色所拥有，从最后一级菜单开始逐级返回子菜单中角色所拥有的菜单
      * 如果菜单被标记删除则直接将该菜单及其子菜单移除
      *
-     * @param menusIds 当前角色所拥有的菜单的ID
-     * @param allMenus 所有根菜单
+     * @param userMenuList 当前角色所拥有的菜单的ID
+     * @param allMenuTree  所有菜单树
      * @return 角色拥有的菜单树
      */
-    default List<SysMenus> filterRootMenusTree(List<String> menusIds, List<SysMenus> allMenus) {
-        return allMenus.stream().filter(e -> {
+    default List<SysMenus> filterRootMenusTree(List<String> userMenuList, List<SysMenus> allMenuTree) {
+        return allMenuTree.stream().filter(e -> {
             /*
              * 判断当前菜单是否被标记删除
              */
             if (DIC.IS_DEL == e.getDelFlag()) {
                 return false;
             }
-            List<SysMenus> children = filterRootMenusTree(menusIds, e.getChildren());
+            List<SysMenus> children = filterRootMenusTree(userMenuList, e.getChildren());
             e.setChildren(children);
             /*
              * 判断用户拥有的菜单中是否包含当前菜单
              */
-            boolean exist = menusIds.contains(e.getId());
+            boolean exist = userMenuList.contains(e.getId());
             /*
              * 判断用户拥有的菜单中是否包含当前菜单的子菜单
              */
@@ -57,7 +57,7 @@ public interface SystemMenusService extends BaseService {
 
     List<SysMenus> getMenusList();
 
-    List<SysMenus> getMenusPage( PageDTO page);
+    List<SysMenus> getMenusPage(PageDTO page);
 
     void saveMenus(MenusForm form);
 

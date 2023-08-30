@@ -9,8 +9,7 @@ import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRolesService;
-import cn.crabapples.system.service.SystemService;
-import com.alibaba.fastjson.JSONArray;
+import cn.crabapples.system.service.SystemUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -38,14 +37,14 @@ import java.util.stream.Collectors;
 //@CacheConfig(cacheNames = "user:")
 public class SystemMenusServiceImpl implements SystemMenusService {
     private final HttpServletRequest request;
-    private final SystemService systemService;
+    private final SystemUserService userService;
     private final SystemRolesService rolesService;
     private final MenusDAO menusDAO;
 
-    public SystemMenusServiceImpl(HttpServletRequest request, SystemService systemService,
+    public SystemMenusServiceImpl(HttpServletRequest request, SystemUserService userService,
                                   SystemRolesService rolesService, MenusDAO menusDAO) {
         this.request = request;
-        this.systemService = systemService;
+        this.userService = userService;
         this.rolesService = rolesService;
         this.menusDAO = menusDAO;
     }
@@ -62,9 +61,9 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     @Override
     public List<SysMenus> getUserMenus() {
         log.info("获取用户拥有的所有菜单");
-        List<String> menusList = getUserMenusIds();
-        List<SysMenus> allMenus = menusDAO.findRoot();
-        List<SysMenus> list = filterRootMenusTree(menusList, allMenus);
+        List<String> userMenuList = getUserMenusIds();
+        List<SysMenus> allRootMenuTree = menusDAO.findMenusTree();
+        List<SysMenus> list = filterRootMenusTree(userMenuList, allRootMenuTree);
         log.info("用户拥有的所有菜单[{}]", list);
         return list;
     }
@@ -74,21 +73,12 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 获取当前用户所拥有的角色的所有菜单ID并去重
      */
     private List<String> getUserMenusIds() {
-        SysUser user = systemService.getUserInfo(request);
-//        String roleIds = user.getRolesList();  if (StringUtils.isEmpty(roleIds)) {
-////            return Collections.EMPTY_LIST;
-////        }
-//
-//        List<SysRoles> roles = rolesService.getRolesList(request);
-//        List<SysRoles> roles = rolesService.getByIds(roleIds.split(","));
+        SysUser user = userService.getUserInfo();
         List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
         List<String> menusIds = new ArrayList<>();
         roles.forEach(e -> {
-            String ids = e.getMenusIds();
-            if (!StringUtils.isBlank(ids)) {
-                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
-                menusIds.addAll(idList);
-            }
+            List<String> idList = e.getMenusIds();
+            menusIds.addAll(idList);
         });
         return menusIds.stream().distinct().collect(Collectors.toList());
     }
@@ -118,8 +108,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     void removeRolesMenus(String id) {
         List<SysRoles> sysRoles = rolesService.findByMenusId(id);
         sysRoles.forEach(e -> {
-            String menusIds = e.getMenusIds().replace(id, "");
-            e.setMenusIds(menusIds);
+            e.getMenusIds().remove(id);
             rolesService.saveRoles(e);
         });
     }
@@ -129,7 +118,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public List<SysMenus> getMenusPage(PageDTO page) {
-        Page<SysMenus> menusPage = menusDAO.findRoot(page);
+        Page<SysMenus> menusPage = menusDAO.findMenusTree(page);
         Pageable pageable = menusPage.getPageable();
         page.setDataCount(menusDAO.count());
         page.setPageIndex(pageable.getPageNumber());
@@ -143,7 +132,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public List<SysMenus> getMenusList() {
-        List<SysMenus> sysMenus = menusDAO.findRoot();
+        List<SysMenus> sysMenus = menusDAO.findMenusTree();
         sysMenus = filterMenusByDelFlag(sysMenus);
         return sysMenus;
     }
@@ -213,6 +202,4 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         menusDAO.save(root);
         log.info("添加子菜单完成");
     }
-
-
 }

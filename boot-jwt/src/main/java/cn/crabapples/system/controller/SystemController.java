@@ -7,6 +7,7 @@ import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemService;
+import cn.crabapples.system.service.SystemUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +32,11 @@ import java.util.List;
 @RequestMapping("/api/system/")
 public class SystemController extends BaseController {
 
+    private final SystemUserService userService;
     private final SystemService sysService;
 
-    public SystemController(SystemService sysService) {
+    public SystemController(SystemUserService userService, SystemService sysService) {
+        this.userService = userService;
         this.sysService = sysService;
     }
 
@@ -76,7 +79,7 @@ public class SystemController extends BaseController {
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
     public ResponseDTO getUserInfo(HttpServletRequest request) {
         log.info("收到请求->获取当前用户信息");
-        SysUser entity = sysService.getUserInfo(request);
+        SysUser entity = userService.getUserInfo();
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
     }

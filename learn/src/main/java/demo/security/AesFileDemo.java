@@ -125,9 +125,10 @@ public class AesFileDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        File path = new File("d:/1");
-        for (File file : path.listFiles()) {
-           doFinal("",file,"d:/2",Cipher.DECRYPT_MODE);
+        File source = new File("");
+        String target = "/2";
+        for (File file : source.listFiles()) {
+            doFinal("", file, target, Cipher.ENCRYPT_MODE);
         }
     }
 }

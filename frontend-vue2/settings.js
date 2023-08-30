@@ -18,21 +18,4 @@ const settings = {
     customBaseUrl: false, //自定义baseUrl
 };
 
-//重写方法后栈溢出，需要修复
-export function log(...e) {
-    if (settings.isDebug) {
-        console.log(...e)
-    }
-}
-export function error(...e) {
-    if (settings.isDebug) {
-        console.error(...e)
-    }
-}
-export function warn(...e) {
-    if (settings.isDebug) {
-        console.warn(...e)
-    }
-}
-
 export default {settings}

@@ -46,23 +46,21 @@
 </template>
 
 <script>
-import {TreeSelect} from "ant-design-vue";
-import CPopButton from "@/components/c-pop-button";
-import {initCPagination} from "@/views/common/C-Pagination.js";
-import commonApi from "@/api/CommonApi"
-import {SysApis} from "@/api/Apis";
+import { TreeSelect } from 'ant-design-vue'
+import CPopButton from '@/components/c-pop-button'
+import { initCPagination } from '@/views/common/C-Pagination.js'
+import commonApi from '@/api/CommonApi'
+import { SysApis } from '@/api/Apis'
+import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
-  name: "roles-list",
+  name: 'roles-list',
   components: {
     CPopButton,
   },
+  mixins: [SystemMinix],
   data() {
     return {
-      SHOW_TYPE: TreeSelect.SHOW_CHILD,
-      labelCol: {span: 5},
-      wrapperCol: {span: 16},
-      pagination: initCPagination(this.changeIndex, this.changeSize),
       columns: [
         {
           dataIndex: 'name',
@@ -73,11 +71,10 @@ export default {
         {
           title: '操作',
           key: 'action',
-          scopedSlots: {customRender: 'action'},
+          scopedSlots: { customRender: 'action' },
           width: '50%'
         },
       ],
-      dataSource: [],
       menusColumns: [
         {
           dataIndex: 'name',
@@ -86,7 +83,7 @@ export default {
         {
           dataIndex: 'icon',
           title: '图标',
-          scopedSlots: {customRender: 'icon'},
+          scopedSlots: { customRender: 'icon' },
         },
         {
           dataIndex: 'sort',
@@ -95,16 +92,16 @@ export default {
         {
           dataIndex: 'type',
           title: '类型',
-          scopedSlots: {customRender: 'type'},
+          scopedSlots: { customRender: 'type' },
         },
       ],
       menusDataSource: [],
       rules: {
         roles: {
           name: [
-            {required: true, message: '请输入角色名称', trigger: 'blur'},
-            {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'blur'},
-            {whitespace: true, message: '请输入角色名称', trigger: 'blur'}
+            { required: true, message: '请输入角色名称', trigger: 'blur' },
+            { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'blur' },
+            { whitespace: true, message: '请输入角色名称', trigger: 'blur' }
           ],
         },
       },
@@ -121,29 +118,13 @@ export default {
         menus: false,
       },
       menusOptions: [],
-    };
+    }
   },
   activated() {
-    this.getList()
   },
   mounted() {
   },
   methods: {
-    changeIndex(pageIndex, pageSize) {
-      let page = {
-        pageIndex: pageIndex,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
-    changeSize(current, pageSize) {
-      let page = {
-        pageIndex: current,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
-
     resetRolesForm() {
       this.form.roles = {
         id: '',
@@ -155,32 +136,33 @@ export default {
       this.resetRolesForm()
       this.getList()
     },
-    getList(page) {
-      this.$http.get(SysApis.rolesListPage, {params: page}).then(result => {
+    getList({ current, pageSize }) {
+      let page = { pageIndex: current, pageSize }
+      this.$http.get(SysApis.rolesList, { params: page }).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         if (result.data !== null) {
-          this.dataSource = result.data;
-          this.pagination.total = result.page.dataCount
-          this.pagination.current = result.page.pageIndex + 1
+          this.dataSource = result.data.content || result.data.content
+          this.pagination.total = result.data.pageable.dataCount
+          this.pagination.current = result.data.pageable.pageIndex + 1
         }
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     removeRoles(e) {
       this.$http.post(`${SysApis.delRoles}/${e.id}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
+          this.$message.error(result.message)
           return
         }
         this.$message.success(result.message)
         this.refreshData()
       }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
+        console.log('请求出现错误:', error)
+      })
     },
     addRoles() {
       this.show.roles = true
@@ -203,27 +185,28 @@ export default {
     submitRolesForm() {
       this.$http.post(SysApis.saveRoles, this.form.roles).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         this.closeRolesForm()
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     getMenusList() {
+
       this.$http.get(SysApis.menusList).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         if (result.data !== null) {
-          this.menusOptions = result.data;
+          this.menusOptions = result.data
         }
         this.menusOptions = this.formatMenusOption(result.data)
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     formatMenusOption(tree) {
       return tree.map(e => {
@@ -247,6 +230,9 @@ export default {
       })
     },
     showMenus(e) {
+      this.$http.get(SysApis.menusList).then(result => {
+        console.log(result)
+      })
       console.log(e)
       let format = function (data) {
         return data.map(e => {
@@ -264,7 +250,7 @@ export default {
           return menus
         }).sort((a, b) => {
           return a.sort - b.sort
-        });
+        })
       }
       this.menusDataSource = format(e.sysMenus)
       console.log(this.menusDataSource)
@@ -279,14 +265,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #e9e9e9;
-  padding: 10px 16px;
-  background: #fff;
-  text-align: right;
-  z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    text-align: right;
+    z-index: 1;
 }
 </style>

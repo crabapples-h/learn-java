@@ -1,20 +1,19 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.dao.RolesDAO;
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
-import com.alibaba.fastjson.JSONArray;
+import cn.crabapples.system.service.SystemUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,50 +36,35 @@ import java.util.stream.Collectors;
 //@CacheConfig(cacheNames = "user:")
 public class SystemRolesServiceImpl implements SystemRolesService {
 
+    private final HttpServletRequest request;
     private final RolesDAO rolesDAO;
     private final MenusDAO menusDAO;
+    private final SystemUserService userService;
 
-    public SystemRolesServiceImpl(RolesDAO rolesDAO, MenusDAO menusDAO,
-                                  RedisTemplate<String, Object> redisTemplate) {
+    public SystemRolesServiceImpl(RolesDAO rolesDAO, MenusDAO menusDAO, StringRedisTemplate redisTemplate,
+                                  HttpServletRequest request, SystemUserService userService) {
         this.rolesDAO = rolesDAO;
         this.menusDAO = menusDAO;
+        this.request = request;
+        this.userService = userService;
     }
 
-//    /**
-//     * 获取用户拥有的角色列表
-//     */
-//    @Override
-//    public List<SysRolesDTO> getUserRoles(HttpServletRequest request) {
-//        SysUser user = systemService.getUserInfo(request);
-//        return user.getRolesList().stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
-//    }
+    /**
+     * 获取当前用户拥有的角色列表
+     */
+    @Override
+    public List<SysRolesDTO> getUserRoles() {
+        SysUser user = userService.getUserInfo();
+        List<SysRoles> roles = rolesDAO.findByIds(user.getRolesList());
+        return roles.stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
+    }
 
     /**
      * 获取角色列表(分页)
      */
     @Override
-    public List<SysRoles> getRolesPage(HttpServletRequest request, PageDTO page) {
-        log.info("获取[分页]角色列表:[{}]", page);
-        Page<SysRoles> rolesPage = rolesDAO.findAll(page);
-        Pageable pageable = rolesPage.getPageable();
-        page.setDataCount(rolesDAO.count());
-        page.setPageIndex(pageable.getPageNumber());
-        List<SysRoles> sysRoles = rolesPage.stream().collect(Collectors.toList());
-        sysRoles = setRoleMenus(sysRoles);
-        log.info("返回[分页]角色列表:[{}],页码:[{}]", sysRoles, page);
-        return sysRoles;
-    }
-
-    /**
-     * 获取角色列表(全部)
-     */
-    @Override
-    public List<SysRoles> getRolesList(HttpServletRequest request) {
-        log.info("获取[全部]角色列表");
-        List<SysRoles> sysRoles = rolesDAO.findAll();
-        sysRoles = setRoleMenus(sysRoles);
-        log.info("返回[全部]角色列表:[{}]", sysRoles);
-        return sysRoles;
+    public Iterable<SysRoles> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form) {
+        return rolesDAO.findAll(pageIndex, pageSize, form);
     }
 
     @Override
@@ -103,12 +87,9 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      */
     private List<SysRoles> setRoleMenus(List<SysRoles> source) {
         return source.stream().peek(e -> {
-            String ids = e.getMenusIds();
-            if (!StringUtils.isBlank(ids)) {
-                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
-                menusDAO.findByIds(idList);
-                e.setSysMenus(menusDAO.findByIds(idList));
-            }
+            List<String> idList = e.getMenusIds();
+            menusDAO.findByIds(idList);
+//                e.setSysMenus(menusDAO.findByIds(idList));
         }).collect(Collectors.toList());
     }
 
@@ -119,16 +100,9 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     @Transactional
     public SysRoles saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
-        String id = form.getId();
-        SysRoles entity;
-        if (StringUtils.isBlank(id)) {
-            entity = new SysRoles();
-        } else {
-            entity = rolesDAO.findById(form.getId());
-        }
+        SysRoles entity = StringUtils.isBlank(form.getId()) ? new SysRoles() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
-        String menusIds = JSONArray.toJSONString(form.getMenusList());
-        entity.setMenusIds(menusIds);
+        entity.setMenusIds(form.getMenusList());
         entity.setPermissionList(getPermissionList(form.getMenusList()));
         log.info("保存角色:[{}]", entity);
         return rolesDAO.save(entity);

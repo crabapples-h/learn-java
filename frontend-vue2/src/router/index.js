@@ -9,174 +9,180 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Index from "@/views/manage/Index";
-import Welcome from "@/views/manage/Welcome";
-import Login from "@/views/base/Login";
-import Error404 from "@/views/base/Error-404";
-import Error401 from "@/views/base/Error-401";
-import NProgress from "nprogress";
+import Index from '@/views/manage/Index'
+import Welcome from '@/views/manage/Welcome'
+import Login from '@/views/base/Login'
+import Error404 from '@/views/base/Error-404'
+import Error401 from '@/views/base/Error-401'
+import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import storage from "@/store/storage";
-import store from "@/store";
-import settings, {log, error, warn} from "../../settings";
+import storage from '@/store/storage'
+import store from '@/store'
+import settings, { log, error, warn } from '../../settings'
 
 Vue.use(VueRouter)
 
-NProgress.configure({showSpinner: false}) // 不显示进度环
+NProgress.configure({ showSpinner: false }) // 不显示进度环
 const staticRouter = [
-    {
-        path: '/',
-        meta: {title: '首页', icon: 'clipboard'},
-        redirect: '/login',
-        hidden: true
-    },
-    {
-        path: '/login',
-        meta: {title: '登陆', icon: 'clipboard'},
-        component: Login,
-        hidden: true
-    },
-    {
-        path: '/manage/index',
-        name: '/manage-index',
-        meta: {title: '首页', icon: 'clipboard'},
-        component: Index,
-        children: [
-            {
-                path: '/manage/welcome',
-                name: '/manage-welcome',
-                meta: {title: '首页', icon: 'clipboard'},
-                component: Welcome,
-            },
-        ]
-    },
-    {
-        path: '/loading',
-        meta: {title: '页面初始化中', icon: 'clipboard'},
-        component: () => import('@/views/base/Loading'),
-        hidden: true
-    },
-    {
-        path: '/404',
-        meta: {title: '找不到页面', icon: 'clipboard'},
-        component: Error404,
-        hidden: true
-    },
-    {
-        path: '/401',
-        meta: {title: '未获授权', icon: 'clipboard'},
-        component: Error401,
-        hidden: true
-    },
-    {path: '*', redirect: '/404', hidden: true}
+  {
+    path: '/',
+    meta: { title: '首页', icon: 'clipboard' },
+    redirect: '/login',
+    hidden: true
+  },
+  {
+    path: '/login',
+    meta: { title: '登陆', icon: 'clipboard' },
+    component: Login,
+    hidden: true
+  },
+  {
+    path: '/manage/index',
+    name: '/manage-index',
+    meta: { title: '首页', icon: 'clipboard' },
+    component: Index,
+    children: [
+      {
+        path: '/manage/welcome',
+        name: '/manage-welcome',
+        meta: { title: '首页', icon: 'clipboard' },
+        component: Welcome,
+      },
+    ]
+  },
+  {
+    path: '/loading',
+    meta: { title: '页面初始化中', icon: 'clipboard' },
+    component: () => import('@/views/base/Loading'),
+    hidden: true
+  },
+  {
+    path: '/404',
+    meta: { title: '找不到页面', icon: 'clipboard' },
+    component: Error404,
+    hidden: true
+  },
+  {
+    path: '/401',
+    meta: { title: '未获授权', icon: 'clipboard' },
+    component: Error401,
+    hidden: true
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ]
 const errorRouter = [
-    {
-        path: '/404',
-        meta: {title: '找不到页面', icon: 'clipboard'},
-        component: resolve => require(['@/views/base/Error-404.vue'], resolve),
-        hidden: true
-    },
-    {
-        path: '/401',
-        meta: {title: '未获授权', icon: 'clipboard'},
-        component: Error401,
-        hidden: true
-    },
-    {path: '*', redirect: '/404', hidden: true}
+  {
+    path: '/404',
+    meta: { title: '找不到页面', icon: 'clipboard' },
+    component: resolve => require(['@/views/base/Error-404.vue'], resolve),
+    hidden: true
+  },
+  {
+    path: '/401',
+    meta: { title: '未获授权', icon: 'clipboard' },
+    component: Error401,
+    hidden: true
+  },
+  { path: '*', redirect: '/404', hidden: true }
 ]
 let customRouter = {
-    path: '/',
-    component: resolve => require(['@/views/manage/Index.vue'], resolve),
-    name: 'layout',
-    meta: {title: '首页', icon: 'clipboard'},
-    children: null
+  path: '/',
+  component: resolve => require(['@/views/manage/Index.vue'], resolve),
+  name: 'layout',
+  meta: { title: '首页', icon: 'clipboard' },
+  children: null
 }
 let router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: staticRouter,
-});
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: staticRouter,
+})
 
 //将树状路由转换为list
 function tree2list(data) {
-    if (!data) {
-        return []
+  if (!data) {
+    return []
+  }
+  let array = []
+  data.forEach(e => {
+    if (e && e.path) {
+      array.push({
+        path: e.path,
+        component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
+        name: e.name,
+        meta: { title: e.name, icon: 'clipboard' },
+        hidden: e.hidden
+      })
     }
-    let array = []
-    data.forEach(e => {
-        if (e && e.path) {
-            array.push({
-                path: e.path,
-                component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
-                name: e.name,
-                meta: {title: e.name, icon: 'clipboard'},
-                hidden: e.hidden
-            })
-        }
-        if (e && e.children) {
-            array.push(...tree2list(e.children))
-            e.children = null
-        }
-    })
-    return array
+    if (e && e.children) {
+      array.push(...tree2list(e.children))
+      e.children = null
+    }
+  })
+  return array
 }
 
 const whiteList = ['/login', '/404', '/401'] // 白名单
-let initFinish = false
-function changePageTitle(e){
-    window.document.title = e.meta.title
+
+function changePageTitle(e) {
+  window.document.title = e.meta.title
 }
-function changePageIcon(e){
-    let link = document.querySelector("link[rel*='icon']")
-    link.href = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
-    document.getElementsByTagName('head')[0].appendChild(link)
+
+// 修改页面icon
+function changePageIcon(e) {
+  let link = document.querySelector('link[rel*=\'icon\']')
+  link.href = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
+  document.getElementsByTagName('head')[0].appendChild(link)
 }
+
 router.beforeEach((to, from, next) => {
-    changePageTitle(to)
-    // changePageIcon(to)
-    NProgress.start()
-    const path = to.path
-    const token = store.getters.TOKEN
-    log('路由地址----->path:', path)
-    log('token:', token)
-    if (whiteList.includes(path)) {
-        log('访问地址在白名单中：', path)
-        NProgress.done()
-        return next();
-    } else if (!token) {
-        warn('token不存在，且path不在白名单中，跳转重新登陆')
-        next({path: '/login'})
-    }
-    next()
+  changePageTitle(to)
+  // changePageIcon(to)
+  NProgress.start()
+  const path = to.path
+  const token = store.getters.TOKEN
+  console.log('路由地址----->path:', path)
+  console.log('token:', token)
+  if (whiteList.includes(path)) {
+    console.log('访问地址在白名单中：', path)
+    NProgress.done()
+    return next()
+  } else if (!token) {
+    console.warn('token不存在，且path不在白名单中，跳转重新登陆')
+    next({ path: '/login' })
+    return
+  }
+  next()
 })
 router.afterEach(() => {
-    NProgress.done() // finish progress bar
+  NProgress.done() // finish progress bar
 })
 
+//渲染动态路由
 function initRouter() {
-    customRouter.children = tree2list(storage.getUserMenus())
-    customRouter.children.push(...errorRouter)
-    router.addRoute(customRouter)
-    log(customRouter)
-    initFinish = true
-    log('初始化动态路由表完成')
+  store.dispatch('LOAD_FINISH', false)
+  customRouter.children = tree2list(storage.getUserMenus())
+  customRouter.children.push(...errorRouter)
+  router.addRoute(customRouter)
+  console.log(customRouter)
+  store.dispatch('LOAD_FINISH', true)
+  console.log('初始化动态路由表完成')
 }
 
 router.onReady(() => {
-    // console.log('onReady()----------------->加载路由')
+  // console.log('onReady()----------------->加载路由')
 })
 //获取原型对象上的push函数
 const originalPush = VueRouter.prototype.push
 const originalReplace = VueRouter.prototype.replace
 //修改原型对象中的push方法
 VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
+  return originalPush.call(this, location).catch(err => err)
 }
 // replace
 VueRouter.prototype.replace = function push(location, onResolve, onReject) {
-    if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
-    return originalReplace.call(this, location).catch(err => err)
+  if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
+  return originalReplace.call(this, location).catch(err => err)
 }
-export {initRouter}
+export { initRouter }
 export default router

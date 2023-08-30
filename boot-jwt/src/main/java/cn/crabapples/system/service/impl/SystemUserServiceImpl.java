@@ -3,6 +3,8 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
+import cn.crabapples.common.jwt.JwtConfigure;
+import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dao.UserDAO;
@@ -11,6 +13,7 @@ import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -41,10 +44,18 @@ public class SystemUserServiceImpl implements SystemUserService {
     private boolean isCrypt;
     private final UserDAO userDAO;
     private final RolesDAO rolesDAO;
+    @Value("${isDebug}")
+    private boolean isDebug;
+    private final JwtConfigure jwtConfigure;
+    private final HttpServletRequest request;
 
-    public SystemUserServiceImpl(UserDAO userDAO, RolesDAO rolesDAO) {
+
+    public SystemUserServiceImpl(UserDAO userDAO, RolesDAO rolesDAO, JwtConfigure jwtConfigure,
+                                 HttpServletRequest request) {
         this.userDAO = userDAO;
         this.rolesDAO = rolesDAO;
+        this.jwtConfigure = jwtConfigure;
+        this.request = request;
     }
 
     @Override
@@ -191,7 +202,24 @@ public class SystemUserServiceImpl implements SystemUserService {
         userDAO.save(user);
     }
 
-//    /**
+    /**
+     * 获取当前登录用户的信息
+     */
+    @Override
+    public SysUser getUserInfo() {
+        String userId = "001";
+        if (!isDebug) {
+            String token = request.getHeader(jwtConfigure.getAuthKey());
+            if (StringUtils.isEmpty(token)) {
+                throw new ApplicationException("token为空");
+            }
+            Claims claims = JwtTokenUtils.parseJWT(token, jwtConfigure.getBase64Secret());
+            userId = String.valueOf(claims.get("userId"));
+        }
+//        Object user = cacheUtils.get(userId);
+        return userDAO.findById(userId);
+    }
+    //    /**
 //     * 添加或编辑用户时将填充用户拥有的角色信息
 //     */
 //    private void setRolesList(List<String> ids, SysUser entity) {

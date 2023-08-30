@@ -19,12 +19,13 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
 public class WechatTestServiceImpl implements WechatTestService {
-    private static final String APPID = "xxxxx";
-    private static final String APP_SECRET = "xxxxx";
+    private static final String APPID = "wx0f6e9947ab89a6e3";
+    private static final String APP_SECRET = "34893470392a81e9a5ba9ad09037943f";
     private static final String BASE_URL = "https://api.weixin.qq.com/cgi-bin";
     private static final String TOKEN_URL = BASE_URL + "/token?grant_type=client_credential&appid={0}&secret={1}";
     private static final String TICKET_URL = BASE_URL + "/ticket/getticket?access_token={0}&type=jsapi";
@@ -46,7 +47,7 @@ public class WechatTestServiceImpl implements WechatTestService {
                 JSONObject responseBody = response.getBody();
                 if (Objects.nonNull(responseBody)) {
                     token = responseBody.getString("access_token");
-                    redisTemplate.opsForValue().set("wechat:token", token);
+                    redisTemplate.opsForValue().set("wechat:token", token, 90, TimeUnit.MINUTES);
                     return token;
                 }
             }
@@ -67,7 +68,7 @@ public class WechatTestServiceImpl implements WechatTestService {
                 JSONObject responseBody = response.getBody();
                 if (Objects.nonNull(responseBody)) {
                     ticket = responseBody.getString("ticket");
-                    redisTemplate.opsForValue().set("wechat:ticket", ticket);
+                    redisTemplate.opsForValue().set("wechat:ticket", ticket, 90, TimeUnit.MINUTES);
                     return ticket;
                 }
             }
@@ -85,11 +86,7 @@ public class WechatTestServiceImpl implements WechatTestService {
         String signSource = MessageFormat.format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}",
                 ticket, nonceStr, timestamp, URLEncoder.DEFAULT.encode(url, Charset.defaultCharset()));
         String sign = DigestUtils.sha1Hex(signSource);
-        WechatConfig config = new WechatConfig();
-        config.setAppId(APPID);
-        config.setTimestamp(timestamp);
-        config.setNonceStr(nonceStr);
-        config.setSign(sign);
+        WechatConfig config = WechatConfig.builder().appId(APPID).timestamp(timestamp).nonceStr(nonceStr).sign(sign).build();
         System.err.println(config);
         return config;
     }

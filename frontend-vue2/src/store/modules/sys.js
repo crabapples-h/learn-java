@@ -1,12 +1,19 @@
-import Vue from 'vue'
-
 const sys = {
-    state: {
-        sys: {
-            isDebug: true
-        }
+  state: {
+    sys: {
+      isDebug: true,
+      loadFinish: false,
+    }
+  },
+  mutations: {
+    LOAD_FINISH: (state, payload) => {
+      state.sys.loadFinish = payload
     },
-    mutations: {},
-    actions: {},
+  },
+  actions: {
+    LOAD_FINISH(object, data) {
+      object.commit('LOAD_FINISH', data)
+    }
+  },
 }
 export default sys

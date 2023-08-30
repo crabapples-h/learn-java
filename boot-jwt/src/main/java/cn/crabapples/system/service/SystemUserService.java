@@ -50,4 +50,5 @@ public interface SystemUserService extends BaseService {
 
     void resetPassword(UserForm.ResetPassword form);
 
+    SysUser getUserInfo();
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 public interface RolesRepository extends JpaRepository<SysRoles, String> ,BaseRepository<SysRoles,String>{
 
-    List<SysRoles> findByDelFlagAndMenusIdsContains(int delFlag, String menusId);
+//    List<SysRoles> findByDelFlagAndMenusIdsContains(int delFlag, String menusId);
 
 
 }

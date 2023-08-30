@@ -2,11 +2,13 @@ package cn.crabapples.common.config;
 
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.service.SystemService;
+import cn.crabapples.system.service.SystemUserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+
 /**
  * TODO 实现jpa审计功能
  *
@@ -18,17 +20,17 @@ import java.util.Optional;
  */
 @Configuration
 public class JpaAuditorAware implements AuditorAware<String> {
-    private final SystemService systemService;
+    private final SystemUserService userService;
     private final HttpServletRequest request;
 
-    public JpaAuditorAware(SystemService systemService, HttpServletRequest request) {
-        this.systemService = systemService;
+    public JpaAuditorAware(SystemUserService userService, HttpServletRequest request) {
+        this.userService = userService;
         this.request = request;
     }
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        SysUser userInfo = systemService.getUserInfo(request);
+        SysUser userInfo = userService.getUserInfo();
         return Optional.ofNullable(userInfo.getUsername());
     }
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="loading">
     <a-spin :tip="loadingText" size="large"/>
-
   </div>
 </template>
 
 <script>
+
 export default {
-  name: "Loading",
+  name: 'Loading',
   data() {
     return {
       loading: true,
@@ -15,23 +15,25 @@ export default {
     }
   },
   mounted() {
-    this.$router.replace('/manage/index')
-
-    setTimeout(() => {
-      this.$store.commit('INIT_ROUTER', null)
-      this.$router.replace('/manage/index')
-    }, 3000)
+    this.$store.commit('INIT_ROUTER', null)
+    let checkLoad = setInterval(() => {
+      const loadFinish = this.$store.state.sys.sys.loadFinish
+      if (loadFinish) {
+        clearInterval(checkLoad)
+        this.$router.replace('/manage/index')
+      }
+    }, 5)
   }
 }
 </script>
 
 <style scoped>
 .loading {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
 }
 </style>

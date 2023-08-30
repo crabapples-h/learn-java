@@ -98,7 +98,7 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public List<String> getUserPermissions(HttpServletRequest request) {
         log.info("获取用户拥有的所有权限");
-        List<String> menusList = getUserMenusIds(request);
+        List<String> menusList = getUserMenusIds();
         List<SysMenus> buttons = menusDAO.findButtonsByIds(menusList);
         return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
     }
@@ -106,40 +106,18 @@ public class SystemServiceImpl implements SystemService {
     /**
      * 获取当前用户所拥有的角色的所有菜单并去重
      */
-    private List<String> getUserMenusIds(HttpServletRequest request) {
-        SysUser user = getUserInfo(request);
+    private List<String> getUserMenusIds() {
+        SysUser user = userService.getUserInfo();
 //        String rolesIds = user.getRolesList();
 //        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
         List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
 
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
-            String ids = e.getMenusIds();
-            if (!StringUtils.isBlank(ids)) {
-                List<String> idList = JSONArray.parseArray(e.getMenusIds()).toJavaList(String.class);
-                menusId.addAll(idList);
-            }
+            List<String> idList = e.getMenusIds();
+            menusId.addAll(idList);
         });
         return menusId.stream().distinct().collect(Collectors.toList());
-    }
-
-
-    /**
-     * 获取当前登录用户的信息
-     */
-    @Override
-    public SysUser getUserInfo(HttpServletRequest request) {
-        String userId = "001";
-        if (!isDebug) {
-            String token = request.getHeader(jwtConfigure.getAuthKey());
-            if (StringUtils.isEmpty(token)) {
-                throw new ApplicationException("token为空");
-            }
-            Claims claims = JwtTokenUtils.parseJWT(token, jwtConfigure.getBase64Secret());
-            userId = String.valueOf(claims.get("userId"));
-        }
-//        Object user = cacheUtils.get(userId);
-        return userService.findById(userId);
     }
 
     @Override
