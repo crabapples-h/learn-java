@@ -75,7 +75,7 @@ public class RolesDAO extends BaseDAO<SysRoles, String> {
         if (null == pageIndex) {
             return repository.findAll(specification);
         }
-        Pageable pageable = PageRequest.of(pageIndex - 1, pageSize, DESC_CREATE_TIME);
+        Pageable pageable = PageRequest.of(pageIndex, pageSize, DESC_CREATE_TIME);
         return repository.findAll(specification, pageable);
     }
 

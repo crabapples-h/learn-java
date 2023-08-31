@@ -1,5 +1,6 @@
 import { initCPagination } from '@/views/common/C-Pagination'
 import { TreeSelect } from 'ant-design-vue'
+import { SysApis } from '@/api/Apis'
 
 export default {
   data() {
@@ -9,21 +10,51 @@ export default {
       wrapperCol: { span: 16 },
       pagination: initCPagination(this.changeIndex, this.changeSize),
       dataSource: [],
+      url: {
+        list: ''
+      }
     }
   },
   created() {
   },
   activated() {
-    this.getList(this.pagination)
+    this.getList()
   },
   mounted() {
   },
   methods: {
-    changeIndex() {
-      this.getList(this.pagination)
+    getQueryPage() {
+      let pageIndex = ~~this.pagination.current
+      return {
+        pageIndex: pageIndex >= 0 ? pageIndex - 1 : 0,
+        pageSize: this.pagination.pageSize
+      }
     },
-    changeSize() {
-      this.getList(this.pagination)
+    changeIndex(page, pageSize) {
+      this.getList()
     },
+    changeSize(pageIndex, pageSize) {
+      this.pagination.pageSize = pageSize
+      this.getList()
+    },
+    getList() {
+      let page = this.getQueryPage()
+      this.$http.get(this.url.list, { params: page }).then(result => {
+        if (result.status !== 200) {
+          this.$message.error(result.message)
+          return
+        }
+        if (result.data !== null) {
+          this.dataSource = result.data.content || result.data.content
+          if (result.data.pageable) {
+            this.pagination.total = result.data.totalElements
+            this.pagination.current = result.data.pageable.pageNumber + 1
+          }
+        }
+      }).catch(function (error) {
+        console.error('出现错误:', error)
+      })
+    },
+
   }
 }

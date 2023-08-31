@@ -118,6 +118,9 @@ export default {
         menus: false,
       },
       menusOptions: [],
+      url: {
+        list: SysApis.rolesList
+      }
     }
   },
   activated() {
@@ -136,22 +139,22 @@ export default {
       this.resetRolesForm()
       this.getList()
     },
-    getList({ current, pageSize }) {
-      let page = { pageIndex: current, pageSize }
-      this.$http.get(SysApis.rolesList, { params: page }).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        if (result.data !== null) {
-          this.dataSource = result.data.content || result.data.content
-          this.pagination.total = result.data.pageable.dataCount
-          this.pagination.current = result.data.pageable.pageIndex + 1
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error)
-      })
-    },
+    // getList() {
+    //   let page = this.getQueryPage()
+    //   this.$http.get(SysApis.rolesList, { params: page }).then(result => {
+    //     if (result.status !== 200) {
+    //       this.$message.error(result.message)
+    //       return
+    //     }
+    //     if (result.data !== null) {
+    //       this.dataSource = result.data.content || result.data.content
+    //       this.pagination.total = result.data.totalElements
+    //       this.pagination.current = result.data.pageable.pageNumber + 1
+    //     }
+    //   }).catch(function (error) {
+    //     console.error('出现错误:', error)
+    //   })
+    // },
     removeRoles(e) {
       this.$http.post(`${SysApis.delRoles}/${e.id}`).then(result => {
         if (result.status !== 200) {
