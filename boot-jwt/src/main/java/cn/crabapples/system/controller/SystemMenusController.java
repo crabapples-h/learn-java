@@ -5,6 +5,7 @@ import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import io.swagger.annotations.Api;
@@ -59,14 +60,14 @@ public class SystemMenusController extends BaseController {
     }
 
     /**
-     * 获取[分页]菜单列表
+     * 获取[角色]菜单列表
      */
-    @GetMapping("/page")
-    public ResponseDTO getMenusPage( PageDTO page) {
-        log.info("收到请求->获取[分页]菜单列表");
-        List<SysMenus> list = menusService.getMenusPage( page);
-        log.info("返回结果->获取[分页]菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
+    @GetMapping("/role/{id}")
+    public ResponseDTO getRoleMenus(@PathVariable String id) {
+        log.info("收到请求->获取[角色]菜单列表:[{}]", id);
+        SysRoleMenus entity = menusService.getRoleMenus(id);
+        log.info("返回结果->获取[角色]菜单列表成功:[{}]", entity);
+        return ResponseDTO.returnSuccess(entity);
     }
 
     /**
@@ -85,7 +86,7 @@ public class SystemMenusController extends BaseController {
      * 删除菜单-逻辑
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO removeMenus( @PathVariable String id) {
+    public ResponseDTO removeMenus(@PathVariable String id) {
         log.info("收到请求->[逻辑]删除菜单:[{}]", id);
         menusService.removeMenus(id);
         log.info("返回结果->[逻辑]删除菜单成功");
@@ -96,7 +97,7 @@ public class SystemMenusController extends BaseController {
      * 删除菜单-物理(待测试)
      */
     @PostMapping("/remove/really/{id}")
-    public ResponseDTO removeReallyMenus( @PathVariable String id) {
+    public ResponseDTO removeReallyMenus(@PathVariable String id) {
         log.info("收到请求->[物理]删除菜单:[{}]", id);
         menusService.removeReallyMenus(id);
         log.info("返回结果->[物理]删除菜单成功");

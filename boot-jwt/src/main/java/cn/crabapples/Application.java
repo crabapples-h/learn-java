@@ -3,6 +3,7 @@ package cn.crabapples;
 import cn.crabapples.common.datasource.packagename.DataSourceConfigure;
 import cn.crabapples.common.datasource.packagename.DataSourcePrimaryConfigure;
 import cn.crabapples.common.datasource.packagename.DataSourceSecondConfigure;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -51,6 +52,7 @@ import org.springframework.web.client.RestTemplate;
                         DataSourcePrimaryConfigure.class,
                         DataSourceSecondConfigure.class}),
 })
+//@MapperScan("com.baomidou.mybatisplus.samples.quickstart.mapper")
 
 //--------end-------
 //mybatis扫描路径(如果使用注解的方式可不用配置)

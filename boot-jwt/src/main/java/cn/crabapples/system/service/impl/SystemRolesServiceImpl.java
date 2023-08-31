@@ -103,7 +103,8 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         SysRoles entity = StringUtils.isBlank(form.getId()) ? new SysRoles() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
         entity.setMenusIds(form.getMenusList());
-        entity.setPermissionList(getPermissionList(form.getMenusList()));
+        List<String> permissionList = getPermissionList(form.getMenusList());
+        entity.setPermissionList(permissionList);
         log.info("保存角色:[{}]", entity);
         return rolesDAO.save(entity);
     }
@@ -114,11 +115,13 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     }
 
     /**
+     * 获取菜单下拥有的权限
      * 保存角色时设置角色拥有的权限
      */
-    private String getPermissionList(List<String> menusIds) {
+    private List<String> getPermissionList(List<String> menusIds) {
         log.info("获取角色权限:[{}]", menusIds);
-        String permissions = menusDAO.findButtonsByIds(menusIds).stream().map(SysMenus::getPermission).collect(Collectors.toList()).toString();
+        List<SysMenus> buttonsByIds = menusDAO.findButtonsByIds1(menusIds);
+        List<String> permissions = buttonsByIds.stream().map(SysMenus::getPermission).collect(Collectors.toList());
         log.info("角色权限:[{}]", permissions);
         return permissions;
     }

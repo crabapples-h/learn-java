@@ -4,6 +4,7 @@ import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
@@ -41,12 +42,12 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     private final SystemRolesService rolesService;
     private final MenusDAO menusDAO;
 
-    public SystemMenusServiceImpl(HttpServletRequest request, SystemUserService userService,
-                                  SystemRolesService rolesService, MenusDAO menusDAO) {
+    public SystemMenusServiceImpl(HttpServletRequest request, MenusDAO menusDAO,
+                                  SystemUserService userService, SystemRolesService rolesService) {
         this.request = request;
+        this.menusDAO = menusDAO;
         this.userService = userService;
         this.rolesService = rolesService;
-        this.menusDAO = menusDAO;
     }
 
 
@@ -67,7 +68,6 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         log.info("用户拥有的所有菜单[{}]", list);
         return list;
     }
-
 
     /**
      * 获取当前用户所拥有的角色的所有菜单ID并去重
@@ -173,7 +173,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     }
 
     /**
-     * 保存菜单时如果是添加菜单
+     * 保存菜单时如果是添加主菜单
      */
     private void addMenus(MenusForm form) {
         SysMenus entity = new SysMenus();
@@ -201,5 +201,10 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         root.setChildren(children);
         menusDAO.save(root);
         log.info("添加子菜单完成");
+    }
+
+    @Override
+    public SysRoleMenus getRoleMenus(String id) {
+        return menusDAO.getRoleMenus(id);
     }
 }

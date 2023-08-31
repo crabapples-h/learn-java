@@ -44,7 +44,6 @@ public class SystemRolesController extends BaseController {
     @GetMapping("/user")
     public ResponseDTO getUserRoles() {
         log.info("收到请求->获取[当前用户]角色列表");
-//        throw new ApplicationException("暂未实现");
         List<SysRolesDTO> list = rolesService.getUserRoles();
         log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);

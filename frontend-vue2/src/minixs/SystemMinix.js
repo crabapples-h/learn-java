@@ -23,6 +23,19 @@ export default {
   mounted() {
   },
   methods: {
+    listToTree(list, pidKey, pid = null) {
+      const tree = []
+      for (const item of list) {
+        if (item.pid === pid) {
+          const children = this.listToTree(list, item.id)
+          if (children.length) {
+            item.children = children
+          }
+          tree.push(item)
+        }
+      }
+      return tree
+    },
     getQueryPage() {
       let pageIndex = ~~this.pagination.current
       return {

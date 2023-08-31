@@ -5,10 +5,20 @@ import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.jpa.MenusRepository;
+import cn.crabapples.system.dao.jpa.RolesRepository;
+import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysRoleMenus;
+import cn.crabapples.system.entity.SysRoles;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +34,13 @@ import java.util.Optional;
 @Component
 public class MenusDAO extends BaseDAO<SysMenus, String> {
     private final MenusRepository repository;
+    private final RolesRepository rolesRepository;
+    private final MenusMapper mapper;
 
-    public MenusDAO(MenusRepository repository) {
+    public MenusDAO(MenusRepository repository, RolesRepository rolesRepository, MenusMapper mapper) {
         this.repository = repository;
+        this.rolesRepository = rolesRepository;
+        this.mapper = mapper;
     }
 
     public long count() {
@@ -69,15 +83,33 @@ public class MenusDAO extends BaseDAO<SysMenus, String> {
         return repository.findByDelFlagAndIdIn(DIC.NOT_DEL, ids);
     }
 
-    public List<SysMenus> findRootsByIds(List<String> ids) {
-        return repository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.IS_ROOT, ids);
-    }
-
     public List<SysMenus> findButtonsByIds(List<String> ids) {
-        return repository.findByDelFlagAndIdInAndMenusType(DIC.NOT_DEL, ids, DIC.MENUS_TYPE_BUTTON);
+        System.err.println(ids);
+        Specification<SysMenus> specification = new Specification<SysMenus>() {
+            final List<Predicate> predicates = new ArrayList<>();
+
+            @Override
+            public Predicate toPredicate(Root<SysMenus> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+                predicates.add(builder.equal(root.get("menusType"), DIC.MENUS_TYPE_BUTTON));
+                predicates.add(builder.equal(root.get("delFlag"), DIC.NOT_DEL));
+                predicates.add(builder.in(root.get("id")).value(ids));
+                return query.where(predicates.toArray(new Predicate[0])).getRestriction();
+            }
+        };
+        return repository.findAll(specification);
+    }
+    public List<SysMenus> findButtonsByIds1(List<String> ids) {
+       return mapper.findButtonsByIds(ids);
     }
 
     public void remove(String id) {
         repository.deleteById(id);
+    }
+
+    public SysRoleMenus getRoleMenus(String id) {
+        SysRoles role = rolesRepository.findById(id).orElseThrow(() -> new ApplicationException("角色不存在"));
+        List<SysMenus> menusList = repository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.NOT_DEL, role.getMenusIds());
+//        List<SysMenus> menusList = repository.findByIds(role.getMenusIds());
+        return new SysRoleMenus(role, menusList);
     }
 }

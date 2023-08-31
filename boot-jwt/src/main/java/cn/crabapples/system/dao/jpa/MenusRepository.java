@@ -25,8 +25,6 @@ public interface MenusRepository extends BaseRepository<SysMenus, String> {
 
     Page<SysMenus> findByDelFlagAndIsRoot(Pageable pageable, int delFlag, int isRoot);
 
-//    List<SysMenus> findRoot(Specification<SysMenus> specification);
-
     List<SysMenus> findByDelFlagAndIsRoot(int delFlag, int isRoot);
 
     List<SysMenus> findByDelFlagAndIsRootAndIdIn(int delFlag, int isRoot, List<String> ids);

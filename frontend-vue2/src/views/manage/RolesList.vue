@@ -119,7 +119,8 @@ export default {
       },
       menusOptions: [],
       url: {
-        list: SysApis.rolesList
+        list: SysApis.rolesList,
+        menuInfo: ''
       }
     }
   },
@@ -139,22 +140,6 @@ export default {
       this.resetRolesForm()
       this.getList()
     },
-    // getList() {
-    //   let page = this.getQueryPage()
-    //   this.$http.get(SysApis.rolesList, { params: page }).then(result => {
-    //     if (result.status !== 200) {
-    //       this.$message.error(result.message)
-    //       return
-    //     }
-    //     if (result.data !== null) {
-    //       this.dataSource = result.data.content || result.data.content
-    //       this.pagination.total = result.data.totalElements
-    //       this.pagination.current = result.data.pageable.pageNumber + 1
-    //     }
-    //   }).catch(function (error) {
-    //     console.error('出现错误:', error)
-    //   })
-    // },
     removeRoles(e) {
       this.$http.post(`${SysApis.delRoles}/${e.id}`).then(result => {
         if (result.status !== 200) {
@@ -174,11 +159,17 @@ export default {
     editRoles(e) {
       this.form.roles.id = e.id
       this.form.roles.name = e.name
-      let ids = []
-      this.formatDefaultMenusOption(ids, e.sysMenus)
-      this.form.roles.menusList = ids
-      this.getMenusList()
-      this.show.roles = true
+      this.$http.get(`${SysApis.roleMenus}/${e.id}`).then(result => {
+        this.getMenusList()
+        let ids = []
+        console.log(result.data.sysMenus)
+        this.formatDefaultMenusOption(ids, result.data.sysMenus)
+        this.show.roles = true
+      })
+      // let ids = []
+      // this.formatDefaultMenusOption(ids, e.sysMenus)
+      // this.form.roles.menusList = ids
+      // this.show.roles = true
     },
     closeRolesForm() {
       this.show.roles = false
@@ -197,7 +188,6 @@ export default {
       })
     },
     getMenusList() {
-
       this.$http.get(SysApis.menusList).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
@@ -211,6 +201,7 @@ export default {
         console.error('出现错误:', error)
       })
     },
+
     formatMenusOption(tree) {
       return tree.map(e => {
         return {
@@ -232,12 +223,9 @@ export default {
         }
       })
     },
+
     showMenus(e) {
-      this.$http.get(SysApis.menusList).then(result => {
-        console.log(result)
-      })
-      console.log(e)
-      let format = function (data) {
+      const format = function (data) {
         return data.map(e => {
           let menus = {
             key: e.id,
@@ -255,9 +243,10 @@ export default {
           return a.sort - b.sort
         })
       }
-      this.menusDataSource = format(e.sysMenus)
-      console.log(this.menusDataSource)
-      this.show.menus = true
+      this.$http.get(`${SysApis.roleMenus}/${e.id}`).then(result => {
+        this.menusDataSource = format(result.data.sysMenus)
+        this.show.menus = true
+      })
     },
     closeShowMenus() {
       this.show.menus = false

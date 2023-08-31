@@ -4,6 +4,7 @@ import cn.crabapples.common.DIC;
 import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,6 @@ import java.util.stream.Collectors;
  * pc-name mrhe
  */
 public interface SystemMenusService extends BaseService {
-
     /**
      * 生成菜单树(思路为:从所有菜单中逐级递归过滤出角色没有权限的菜单，保留角色拥有的菜单)
      * （角色表里存的菜单是字符串的形式，将字符串转换为数组然后分别把每个角色的菜单用递归的方法过滤出来）
@@ -33,21 +33,19 @@ public interface SystemMenusService extends BaseService {
      */
     default List<SysMenus> filterRootMenusTree(List<String> userMenuList, List<SysMenus> allMenuTree) {
         return allMenuTree.stream().filter(e -> {
-            /*
-             * 判断当前菜单是否被标记删除
-             */
+            // 判断当前菜单是否被标记删除
             if (DIC.IS_DEL == e.getDelFlag()) {
+                return false;
+            }
+            // 判断当前菜单是否是按钮
+            if (DIC.MENUS_TYPE_BUTTON == e.getMenusType()) {
                 return false;
             }
             List<SysMenus> children = filterRootMenusTree(userMenuList, e.getChildren());
             e.setChildren(children);
-            /*
-             * 判断用户拥有的菜单中是否包含当前菜单
-             */
+            // 判断用户拥有的菜单中是否包含当前菜单
             boolean exist = userMenuList.contains(e.getId());
-            /*
-             * 判断用户拥有的菜单中是否包含当前菜单的子菜单
-             */
+            // 判断用户拥有的菜单中是否包含当前菜单的子菜单
             boolean sizeZero = children.size() > 0;
             return exist || sizeZero;
         }).collect(Collectors.toList());
@@ -64,4 +62,6 @@ public interface SystemMenusService extends BaseService {
     void removeMenus(String id);
 
     void removeReallyMenus(String id);
+
+    SysRoleMenus getRoleMenus(String id);
 }

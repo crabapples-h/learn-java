@@ -36,7 +36,8 @@ public class SysRoles extends BaseEntity_Jpa {
 
     //角色拥有的权限列表
     @Column(columnDefinition = "longtext comment '权限列表'")
-    private String permissionList;
+    @Convert(converter = JpaConverterListJson.class)
+    private List<String> permissionList;
 
 //    @Transient
 //    private List<SysMenus> sysMenus;

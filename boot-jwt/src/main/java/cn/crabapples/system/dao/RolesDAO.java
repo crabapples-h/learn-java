@@ -16,6 +16,7 @@ import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**

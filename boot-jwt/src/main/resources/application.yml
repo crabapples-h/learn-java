@@ -12,7 +12,9 @@ server.application.name: learn
 spring.profiles.active: dev
 spring.servlet.multipart.max-file-size: 100MB
 
-mybatis.mapper-locations: mapper/*.xml
+#mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
