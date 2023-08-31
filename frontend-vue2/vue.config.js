@@ -1,6 +1,5 @@
 // let url = global.setting && global.setting.baseUrl;
 // let url = 'http://localhost:3300/';
-let url = 'http://localhost:9093/';
 let env = process.env.NODE_ENV;
 const path = require('path')
 console.log('启动环境:', env);
@@ -95,7 +94,7 @@ module.exports = {
         hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
             '/api': {
-                target: url, // 接口的域名
+                target: 'http://192.168.50.2:9093/', // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
                 // pathRewrite: {

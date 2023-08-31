@@ -1,5 +1,6 @@
 package cn.crabapples.common.base;
 
+import cn.crabapples.common.Dict;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
@@ -63,6 +64,7 @@ public abstract class BaseEntity_Jpa implements Serializable, Cloneable {
      * 删除标记 (0:正常 1:删除)
      */
     @Column(columnDefinition = "tinyint default 0 not null comment '删除标记'")
+    @Dict(dictCode = "delFlag")
     private Integer delFlag;
 
     /**

@@ -9,7 +9,7 @@ virtualPath: /file/
 server.port: 9093
 server.application.name: learn
 
-spring.profiles.active: dev-mac
+spring.profiles.active: dev
 spring.servlet.multipart.max-file-size: 100MB
 
 mybatis.mapper-locations: mapper/*.xml

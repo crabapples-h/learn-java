@@ -1,5 +1,6 @@
 package cn.crabapples.system.entity;
 
+import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity_Jpa;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class SysUser extends BaseEntity_Jpa {
     private String password;
 
     @Column(columnDefinition = "varchar(32)  not null comment '姓名'")
+    @Dict(dictCode = "test")
     private String name;
 
     @Column(columnDefinition = "varchar(32) comment '邮箱'")
