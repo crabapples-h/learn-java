@@ -15,6 +15,9 @@ export default {
   data() {
     return {}
   },
+  beforeCreate() {
+    debugger
+  },
   created() {
     this.init()
   },
@@ -24,7 +27,7 @@ export default {
       let LAST_PAGE = _this.$route.path
       let isWhiteList = whiteList.includes(LAST_PAGE)
       if (isWhiteList) {
-        localStorage.setItem('LAST_PAGE', '/manage-index')
+        localStorage.setItem('LAST_PAGE', '/manage/index')
       } else {
         localStorage.setItem('LAST_PAGE', _this.$route.path)
       }
@@ -40,6 +43,7 @@ export default {
         this.$store.dispatch('ROLES')
         this.$store.dispatch('MENUS')
         this.$store.dispatch('PERMISSIONS')
+        this.$router.replace('/loading')
       } else {
         console.log('token不存在:', token)
       }

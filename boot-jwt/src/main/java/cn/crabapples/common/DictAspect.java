@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
  * qq 294046317
  * pc-name mshe
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 @Slf4j
 public class DictAspect {
     private static final Logger logger = LoggerFactory.getLogger(DictAspect.class);

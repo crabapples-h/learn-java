@@ -32,7 +32,6 @@ const permissions = {
         if (status !== 200) {
           return
         }
-        console.log('用户菜单->', data)
         if (data !== null) {
           let formatMenus = function (data) {
             return data.map(e => {
@@ -69,7 +68,9 @@ const permissions = {
               }
             })
           }
-          object.commit('MENUS', formatMenus(data))
+          const menus = formatMenus(data)
+          object.commit('MENUS', menus)
+          object.commit('INIT_ROUTER', menus)
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

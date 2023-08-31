@@ -13,7 +13,7 @@ export default {
     };
   },
   activated() {
-    this.userInfo = this.$store.getters.USER_INFO
+    this.userInfo = this.$store.getters.USER_BASE_INFO
     console.log(this.userInfo)
   },
   mounted() {

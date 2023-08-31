@@ -20,8 +20,9 @@ import storage from '@/store/storage'
 import store from '@/store'
 
 Vue.use(VueRouter)
-
-NProgress.configure({ showSpinner: false }) // 不显示进度环
+// 不显示进度环
+NProgress.configure({ showSpinner: false })
+// 静态路由表
 const staticRouter = [
   {
     path: '/',
@@ -69,6 +70,7 @@ const staticRouter = [
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
+// 错误页面
 const errorRouter = [
   {
     path: '/404',
@@ -97,32 +99,32 @@ let router = new VueRouter({
   routes: staticRouter,
 })
 
-//将树状路由转换为list
-function tree2list(data) {
-  if (!data) {
-    return []
+// 森林转list
+function forestToList(forest) {
+  console.log('forest----->', forest)
+  const result = []
+
+  function traverse(node) {
+    result.push({
+      path: node.path,
+      component: resolve => require([`@/views/${node.filePath}.vue`], resolve),
+      name: node.name,
+      meta: { title: node.name, icon: 'clipboard' },
+      hidden: node.hidden
+    })
+    if (node && node.children) {
+      node.children.forEach(child => traverse(child))
+    }
   }
-  let array = []
-  data.forEach(e => {
-    if (e && e.path) {
-      array.push({
-        path: e.path,
-        component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
-        name: e.name,
-        meta: { title: e.name, icon: 'clipboard' },
-        hidden: e.hidden
-      })
-    }
-    if (e && e.children) {
-      array.push(...tree2list(e.children))
-      e.children = null
-    }
-  })
-  return array
+
+  forest.forEach(tree => traverse(tree))
+  return result
 }
 
-const whiteList = ['/login', '/404', '/401'] // 白名单
+// 白名单
+const whiteList = ['/login', '/404', '/401']
 
+// 修改页面title
 function changePageTitle(e) {
   window.document.title = e.meta.title
 }
@@ -144,9 +146,9 @@ router.beforeEach((to, from, next) => {
   // }
   const token = store.getters.TOKEN || storage.getToken()
   console.log('路由地址----->path:', path)
-  console.log('token:', JSON.stringify(token))
+  // console.log('token:', JSON.stringify(token))
   if (whiteList.includes(path)) {
-    console.log('访问地址在白名单中：', path)
+    // console.log('访问地址在白名单中：', path)
     NProgress.done()
     return next()
   } else if (!token) {
@@ -156,21 +158,26 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
-router.afterEach(() => {
+router.afterEach((route) => {
   NProgress.done() // finish progress bar
+
 })
 
 //渲染动态路由
-function initRouter() {
+function initRouter(menus) {
   store.dispatch('LOAD_FINISH', false)
-  let menus = storage.getUserMenus()
   console.log('开始初始化路由表,菜单数据:', menus)
-  customRouter.children = tree2list(menus)
+  customRouter.children = forestToList(menus)
   customRouter.children.push(...errorRouter)
   router.addRoute(customRouter)
-  console.log('新的路由表:-->', customRouter)
   store.dispatch('LOAD_FINISH', true)
   console.log('初始化动态路由表完成')
+  console.log('新的路由表:-->', customRouter)
+  // router = new VueRouter({
+  //   mode: 'history',
+  //   base: process.env.BASE_URL,
+  //   routes: customRouter,
+  // })
 }
 
 router.onReady(() => {
