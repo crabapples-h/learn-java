@@ -38,8 +38,7 @@ export default {
   },
   mounted() {
     this.$message.info('首页')
-    this.userInfo = this.$store.getters.USER_INFO
-    console.log(this.userInfo)
+    this.userInfo = this.$store.getters.USER_BASE_INFO
   },
   methods: {
     clickMenu(e) {
@@ -47,7 +46,6 @@ export default {
         window.open(e.link)
       }else{
         this.$router.push(e.path)
-
       }
     },
   }

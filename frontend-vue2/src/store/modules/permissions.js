@@ -25,10 +25,6 @@ const permissions = {
       state.permissions = payload
       storage.setPermissions(payload)
     },
-    setRouters: (state, payload) => {
-      state.routers = payload
-      storage.setRouters(payload)
-    },
   },
   actions: {
     MENUS(object, data) {
@@ -36,6 +32,7 @@ const permissions = {
         if (status !== 200) {
           return
         }
+        console.log('用户菜单->', data)
         if (data !== null) {
           let formatMenus = function (data) {
             return data.map(e => {
@@ -64,7 +61,7 @@ const permissions = {
                 }
                 return menus
               }
-              return null
+              return []
 
             }).sort((a, b) => {
               if (a && b && a.sort && b.sort) {
@@ -85,18 +82,6 @@ const permissions = {
         }
         if (data !== null) {
           object.commit('PERMISSIONS', data)
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error)
-      })
-    },
-    ROUTERS(object, data) {
-      commonApi.getUserMenus().then(({ status, data }) => {
-        if (status !== 200) {
-          return
-        }
-        if (data !== null) {
-          object.commit('setRouters', data)
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

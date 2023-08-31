@@ -32,15 +32,13 @@ export default {
       }
       // dispatch调用的是/store/modules里几个js文件中actions里的方法
       this.$store.dispatch('LOGIN', data).then(result => {
-        console.log(result)
         this.$store.dispatch('USER_BASE_INFO')
         this.$store.dispatch('ROLES')
         this.$store.dispatch('MENUS')
-        // this.$store.dispatch('PERMISSIONS')
-        // this.$store.dispatch('ROUTERS')
-        // this.$store.commit('INIT_ROUTER',null)
+        this.$store.dispatch('PERMISSIONS')
+        // this.$store.commit('INIT_ROUTER', null)
+        this.$router.replace('/loading')
       })
-
     },
   }
 }

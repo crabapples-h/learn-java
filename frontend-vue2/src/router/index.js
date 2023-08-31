@@ -18,7 +18,6 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import storage from '@/store/storage'
 import store from '@/store'
-import settings, { log, error, warn } from '../../settings'
 
 Vue.use(VueRouter)
 
@@ -140,9 +139,12 @@ router.beforeEach((to, from, next) => {
   // changePageIcon(to)
   NProgress.start()
   const path = to.path
-  const token = store.getters.TOKEN
+  // if (!store.state.sys.loadFinish) {
+  //   initRouter()
+  // }
+  const token = store.getters.TOKEN || storage.getToken()
   console.log('路由地址----->path:', path)
-  console.log('token:', token)
+  console.log('token:', JSON.stringify(token))
   if (whiteList.includes(path)) {
     console.log('访问地址在白名单中：', path)
     NProgress.done()
@@ -161,10 +163,12 @@ router.afterEach(() => {
 //渲染动态路由
 function initRouter() {
   store.dispatch('LOAD_FINISH', false)
-  customRouter.children = tree2list(storage.getUserMenus())
+  let menus = storage.getUserMenus()
+  console.log('开始初始化路由表,菜单数据:', menus)
+  customRouter.children = tree2list(menus)
   customRouter.children.push(...errorRouter)
   router.addRoute(customRouter)
-  console.log(customRouter)
+  console.log('新的路由表:-->', customRouter)
   store.dispatch('LOAD_FINISH', true)
   console.log('初始化动态路由表完成')
 }
@@ -184,5 +188,5 @@ VueRouter.prototype.replace = function push(location, onResolve, onReject) {
   if (onResolve || onReject) return originalReplace.call(this, location, onResolve, onReject)
   return originalReplace.call(this, location).catch(err => err)
 }
-export { initRouter }
+export { initRouter, whiteList }
 export default router

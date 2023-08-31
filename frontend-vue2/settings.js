@@ -3,7 +3,7 @@ const settings = {
     url: function (path) {
         return this.baseUrl;
     },
-    isDebug: false,
+    isDebug: true,
     isCrypt: false, //接口加密
     publicKey: '-----BEGIN PUBLIC KEY-----\n' +
         'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtEdgPwBkPuulvFSr0ESP\n' +

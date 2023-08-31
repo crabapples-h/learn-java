@@ -18,14 +18,11 @@ export default {
   getUserRoles: () => JSON.parse(localStorage.getItem('USER_ROLE_LIST')),
   setUserRoles: (data) => localStorage.setItem('USER_ROLE_LIST', JSON.stringify(data)),
 
-  getUserMenus: () => JSON.parse(localStorage.getItem('MENUS')),
-  setUserMenus: (data) => localStorage.setItem('MENUS', JSON.stringify(data)),
+  getUserMenus: () => JSON.parse(localStorage.getItem('USER_MENU_LIST')),
+  setUserMenus: (data) => localStorage.setItem('USER_MENU_LIST', JSON.stringify(data)),
 
-  getPermissions: () => JSON.parse(localStorage.getItem('PERMISSIONS')),
-  setPermissions: (data) => localStorage.setItem('PERMISSIONS', JSON.stringify(data)),
-
-  getRouters: () => JSON.parse(localStorage.getItem('ROUTERS')),
-  setRouters: (data) => localStorage.setItem('ROUTERS', JSON.stringify(data)),
+  getPermissions: () => JSON.parse(localStorage.getItem('USER_PERMISSION_LIST')),
+  setPermissions: (data) => localStorage.setItem('USER_PERMISSION_LIST', JSON.stringify(data)),
 
   logout: () => localStorage.removeItem('TOKEN'),
 }

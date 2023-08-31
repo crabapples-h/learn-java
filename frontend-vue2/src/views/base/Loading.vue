@@ -15,9 +15,10 @@ export default {
     }
   },
   mounted() {
+    console.log("loading页面调用初始化路由")
     this.$store.commit('INIT_ROUTER', null)
     let checkLoad = setInterval(() => {
-      const loadFinish = this.$store.state.sys.sys.loadFinish
+      const loadFinish = this.$store.state.sys.loadFinish
       if (loadFinish) {
         clearInterval(checkLoad)
         this.$router.replace('/manage/index')

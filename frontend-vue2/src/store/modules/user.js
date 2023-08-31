@@ -41,7 +41,7 @@ const user = {
           return Promise.reject(message)
         }
         object.commit('TOKEN', data)
-        return Promise.resolve(message)
+        return Promise.resolve({ status, data, message })
       }).catch(function (error) {
         console.error('出现错误:', error)
         return Promise.reject(message)
@@ -51,7 +51,6 @@ const user = {
       object.commit('TOKEN', data)
     },
     USER_BASE_INFO(object, data) {
-      router.replace('/loading')
       commonApi.getUserInfo().then(({ status, data, message }) => {
         if (status !== 200) {
           this.$message.error(message)

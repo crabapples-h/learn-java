@@ -8,6 +8,7 @@
 <script>
 import storage from '@/store/storage'
 import Loading from './views/base/Loading'
+import { whiteList } from '@/router'
 
 export default {
   name: 'App',
@@ -15,26 +16,30 @@ export default {
     return {}
   },
   created() {
-    this.initMenus()
+    this.init()
   },
   mounted() {
-    window.addEventListener('beforeunload', () => {
-      alert(1)
+    const _this = this
+    window.addEventListener('beforeunload', function (event) {
+      let LAST_PAGE = _this.$route.path
+      let isWhiteList = whiteList.includes(LAST_PAGE)
+      if (isWhiteList) {
+        localStorage.setItem('LAST_PAGE', '/manage-index')
+      } else {
+        localStorage.setItem('LAST_PAGE', _this.$route.path)
+      }
+      // event.returnValue = '确定要离开页面吗？'
     })
   },
   methods: {
-    beforeunload(e) {
-      alert(1)
-      console.log(e)
-    },
-    initMenus() {
+    init() {
       const token = storage.getToken()
       if (token) {
         this.$store.dispatch('INIT_TOKEN', token)
+        this.$store.dispatch('USER_BASE_INFO')
         this.$store.dispatch('ROLES')
         this.$store.dispatch('MENUS')
         this.$store.dispatch('PERMISSIONS')
-        this.$store.dispatch('USER_BASE_INFO')
       } else {
         console.log('token不存在:', token)
       }

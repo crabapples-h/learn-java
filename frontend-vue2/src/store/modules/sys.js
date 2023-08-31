@@ -1,13 +1,10 @@
 const sys = {
   state: {
-    sys: {
-      isDebug: true,
-      loadFinish: false,
-    }
+    loadFinish: false,
   },
   mutations: {
     LOAD_FINISH: (state, payload) => {
-      state.sys.loadFinish = payload
+      state.loadFinish = payload
     },
   },
   actions: {
