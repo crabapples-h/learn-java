@@ -38,6 +38,9 @@ instance.interceptors.response.use(response => {
       storage.logout()
       router.push('/login')
     }
+    if (response.data.status !== 200) {
+      notification.warn({ message: response.data.message })
+    }
     return response.status === 200 ? Promise.resolve(data) : Promise.reject(data)
   },
   // 服务器状态码不是200的情况

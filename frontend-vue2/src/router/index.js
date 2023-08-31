@@ -68,7 +68,8 @@ const staticRouter = [
     component: Error401,
     hidden: true
   },
-  { path: '*', redirect: '/404', hidden: true }
+  // 处理刷新页面404问题，添加通配符跳转到404页面后会导致页面刷新时，动态路由还未初始化，但是页面直接访问刷新前的url，就会匹配到404页面
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 // 错误页面
 const errorRouter = [
@@ -160,14 +161,15 @@ router.beforeEach((to, from, next) => {
 })
 router.afterEach((route) => {
   NProgress.done() // finish progress bar
-
 })
 
 //渲染动态路由
 function initRouter(menus) {
   store.dispatch('LOAD_FINISH', false)
   console.log('开始初始化路由表,菜单数据:', menus)
-  customRouter.children = forestToList(menus)
+  const newRouter = forestToList(menus)
+  newRouter.push({ path: '*', redirect: '/404', hidden: true })
+  customRouter.children = newRouter
   customRouter.children.push(...errorRouter)
   router.addRoute(customRouter)
   store.dispatch('LOAD_FINISH', true)

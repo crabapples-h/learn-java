@@ -18,6 +18,7 @@ export default {
     const _this = this
     let checkLoad = setInterval(() => {
       const loadFinish = this.$store.getters.LOAD_FINISH
+      console.log('监听路由渲染状态:', loadFinish)
       if (loadFinish) {
         console.log('检测到路由初始化完成')
         clearInterval(checkLoad)
