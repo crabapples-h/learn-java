@@ -8,13 +8,13 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.6.4",
-    "axios": "^0.19.2",
+    "axios": "0.21.2",
     "core-js": "^3.6.5",
     "jsencrypt": "^3.1.0",
     "jsrsasign": "^10.1.13",
     "nprogress": "^0.2.0",
     "style-resources-loader": "^1.4.1",
-    "vue": "^2.6.11",
+    "vue": "2.6.11",
     "vue-axios": "^2.1.5",
     "vue-canvas-poster": "^1.2.1",
     "vue-router": "^3.5.2",
@@ -27,7 +27,7 @@
     "@vue/cli-service": "~4.5.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "2.6.11"
   },
   "browserslist": [
     "> 1%",

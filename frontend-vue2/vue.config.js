@@ -2,8 +2,8 @@
 // let url = 'http://localhost:3300/';
 let url = 'http://localhost:9093/';
 let env = process.env.NODE_ENV;
-console.log(env);
 const path = require('path')
+console.log('启动环境:', env);
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -27,9 +27,8 @@ module.exports = {
     outputDir: "dist",
     // where to put static assets (js/css/img/font/...)
     // 是否在保存时使用‘eslint-loader’进行检查
-    // 有效值: true | false | 'error'
-    // 当设置为‘error’时，检查出的错误会触发编译失败
-    // lintOnSave: true,
+    // 有效值: true | false | 'error',当设置为‘error’时，检查出的错误会触发编译失败
+    lintOnSave: false,
     // 使用带有浏览器内编译器的完整构建版本 // https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
     // runtimeCompiler: false,
     // babel-loader默认会跳过`node_modules`依赖. // 通过这个选项可以显示转译一个依赖
@@ -37,7 +36,7 @@ module.exports = {
     //     /* string or regex */
     // ],
     // 是否为生产环境构建生成sourceMap?
-    // productionSourceMap: false,
+    productionSourceMap: false,
     // 调整内部的webpack配置. // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     // configureWebpack: () => {
     // },
@@ -57,7 +56,7 @@ module.exports = {
         // 也可以是传递给 extract-text-webpack-plugin 的选项对象
         // extract: true,
         // 允许生成 CSS source maps?
-        // sourceMap: false,
+        sourceMap: false,
         loaderOptions: {
             less: {
                 //If you are using less-loader@5 please spread the lessOptions to options directly

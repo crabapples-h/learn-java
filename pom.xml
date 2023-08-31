@@ -6,10 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>base-project</module>
-        <module>boot-jpa-notshiro</module>
-        <module>boot-jpa-security</module>
         <module>boot-jwt</module>
-        <module>cloud-jpa-security</module>
         <module>learn</module>
         <module>learn-document</module>
         <module>c51</module>

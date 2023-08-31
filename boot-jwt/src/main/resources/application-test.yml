@@ -1,8 +1,6 @@
 isDebug: true
 isCrypt: true
-dadaBaseUrl: localhost:3306
 #上传文件配置
-virtualPath: /file/
 uploadPath: /home/mrhe/uploadPath/
 #日志配置
 logging.level:
@@ -31,17 +29,17 @@ spring:
   jpa.hibernate.ddl-auto: update
   jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
   #----- 数据源基础配置 -----
-  datasource.druid.driverClassName: ${dataBaseDrive}
-  datasource.druid.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.driverClassName: com.mysql.cj.jdbc.Driver
+  datasource.druid.url: jdbc:mysql://192.168.50.2:3306/learn?useSSL=false&${dataBaseParam}
   datasource.druid.username: root
   datasource.druid.password:
   #----- 多数据源配置(根据包名选择要使用的数据源) -----
-  datasource.druid.first.driverClassName: ${dataBaseDrive}
-  datasource.druid.first.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.first.driverClassName: com.mysql.cj.jdbc.Driver
+  datasource.druid.first.url: jdbc:mysql://192.168.50.2:3306/learn?useSSL=false&${dataBaseParam}
   datasource.druid.first.username: root
   datasource.druid.first.password:
-  datasource.druid.second.driverClassName: ${dataBaseDrive}
-  datasource.druid.second.url: jdbc:mysql://${dadaBaseUrl}/${dataBaseName}?useSSL=false&${dataBaseParam}
+  datasource.druid.second.driverClassName: com.mysql.cj.jdbc.Driver
+  datasource.druid.second.url: jdbc:mysql://192.168.50.2:3306/learn?useSSL=false&${dataBaseParam}
   datasource.druid.second.username: root
   datasource.druid.second.password:
   #----- database more config -----

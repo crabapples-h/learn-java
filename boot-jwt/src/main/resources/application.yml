@@ -2,20 +2,21 @@ crabapples.AES_KEY: crabapples
 crabapples.REDIS_PREFIX: crabapples
 crabapples.TOKEN_CACHE_TIME: 30
 crabapples.SALT: crabapples
-dataBaseName: learn
-dataBaseDriveV8: com.mysql.cj.jdbc.Driver
-dataBaseDriveV5: com.mysql.jdbc.Driver
-dataBaseDrive: ${dataBaseDriveV8}
 dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
-
+#上传文件配置
+virtualPath: /file/
 ###
-server:
-  port: 9093
-  application.name: learn
+server.port: 9093
+server.application.name: learn
+
+spring.profiles.active: dev-mac
+spring.servlet.multipart.max-file-size: 100MB
+
+mybatis.mapper-locations: mapper/*.xml
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
-logging.file.name: d:/logs/springboot-shiro-jpa
+logging.file.name: d:/logs/springboot-jwt
 # 邮件配置
 mail:
   host: smtp.qq.com
@@ -25,11 +26,4 @@ mail:
   port: 465
   isAuth: true
   isDebug: true
-spring:
-  profiles:
-    active: dev
-  servlet:
-    multipart:
-      max-file-size: 100MB
-mybatis:
-  mapper-locations: mapper/*.xml
+
