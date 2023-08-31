@@ -71,6 +71,8 @@ const staticRouter = [
   // 处理刷新页面404问题，添加通配符跳转到404页面后会导致页面刷新时，动态路由还未初始化，但是页面直接访问刷新前的url，就会匹配到404页面
   // { path: '*', redirect: '/404', hidden: true }
 ]
+// 白名单路由
+const whiteList = ['/login', '/404', '/401']
 // 错误页面
 const errorRouter = [
   {
@@ -102,7 +104,6 @@ let router = new VueRouter({
 
 // 森林转list
 function forestToList(forest) {
-  console.log('forest----->', forest)
   const result = []
 
   function traverse(node) {
@@ -122,9 +123,6 @@ function forestToList(forest) {
   return result
 }
 
-// 白名单
-const whiteList = ['/login', '/404', '/401']
-
 // 修改页面title
 function changePageTitle(e) {
   window.document.title = e.meta.title
@@ -142,18 +140,13 @@ router.beforeEach((to, from, next) => {
   // changePageIcon(to)
   NProgress.start()
   const path = to.path
-  // if (!store.state.sys.loadFinish) {
-  //   initRouter()
-  // }
   const token = store.getters.TOKEN || storage.getToken()
-  console.log('路由地址----->path:', path)
-  // console.log('token:', JSON.stringify(token))
+  // console.log('路由地址----->path:', path)
   if (whiteList.includes(path)) {
-    // console.log('访问地址在白名单中：', path)
     NProgress.done()
     return next()
   } else if (!token) {
-    console.warn('token不存在，且path不在白名单中，跳转重新登陆')
+    console.warn('token不存在，且path不在白名单中，跳转登陆页面')
     next({ path: '/login' })
     return
   }
@@ -166,20 +159,15 @@ router.afterEach((route) => {
 //渲染动态路由
 function initRouter(menus) {
   store.dispatch('LOAD_FINISH', false)
-  console.log('开始初始化路由表,菜单数据:', menus)
+  // console.log('开始初始化路由表,菜单数据:', menus)
   const newRouter = forestToList(menus)
   newRouter.push({ path: '*', redirect: '/404', hidden: true })
   customRouter.children = newRouter
   customRouter.children.push(...errorRouter)
   router.addRoute(customRouter)
   store.dispatch('LOAD_FINISH', true)
-  console.log('初始化动态路由表完成')
-  console.log('新的路由表:-->', customRouter)
-  // router = new VueRouter({
-  //   mode: 'history',
-  //   base: process.env.BASE_URL,
-  //   routes: customRouter,
-  // })
+  console.log('动态路由初始化完成')
+  // console.log('新的路由表:-->', customRouter)
 }
 
 router.onReady(() => {
