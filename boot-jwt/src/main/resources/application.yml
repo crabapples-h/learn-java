@@ -13,12 +13,12 @@ spring.profiles.active: dev
 spring.servlet.multipart.max-file-size: 100MB
 
 #mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
-mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
-
+#mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
-logging.file.name: d:/logs/springboot-jwt
+logging.file.name: /var/logs/springboot-jwt
 # 邮件配置
 mail:
   host: smtp.qq.com
