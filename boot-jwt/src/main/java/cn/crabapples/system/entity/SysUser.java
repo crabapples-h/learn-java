@@ -33,10 +33,11 @@ import java.util.List;
 @ToString
 public class SysUser extends BaseEntity {
     // id 为自增主键
-    @Id(keyType = KeyType.Auto)
+    @Id(keyType = KeyType.Generator, value = "SnowFlakeIDKeyGenerator")
     private String id;
 
     // 用户名
+    @Column
     private String username;
 
     // 密码

@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * TODO 通用返回值DTO
@@ -26,15 +25,6 @@ public class ResponseDTO implements Serializable {
     private String message;
     private Object data;
     private Long time;
-    private PageDTO page;
-
-    private ResponseDTO(ResponseCode status, String message, Object data, PageDTO page) {
-        this.status = status.getCode();
-        this.message = message;
-        this.data = data;
-        this.page = page;
-        this.time = System.currentTimeMillis();
-    }
 
     private ResponseDTO(ResponseCode status, String message, Object data) {
         this.status = status.getCode();
@@ -57,10 +47,6 @@ public class ResponseDTO implements Serializable {
     }
 
     /*---------------- SUCCESS -------------*/
-    public static <T> ResponseDTO returnSuccess(Collection<T> data, PageDTO page) {
-        return new ResponseDTO(ResponseCode.SUCCESS, DIC.BASE_SUCCESS_MESSAGE, data, page);
-    }
-
     public static ResponseDTO returnSuccess(String message, Object data) {
         return new ResponseDTO(ResponseCode.SUCCESS, message, data);
     }

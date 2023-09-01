@@ -10,14 +10,17 @@ logging.level:
   org.hibernate.type.descriptor.sql.BasicBinder: trace
 # MyBatis-flux
 # 数据源配置
-#mybatis-flex.datasource:
-# 是否控制台打印 MyBatis-Flex 的 LOGO 及版本号。
-mybatis-flex.global-config.print-banner: true
-# 逻辑删除数据存在标记值
-mybatis-flex.global-config.normal-value-of-logic-delete: 0
-# 逻辑删除数据删除标记值
-mybatis-flex.global-config.deleted-value-of-logic-delete: 1
-mybatis-flex.global-config.logic-delete-column: del_flag
+mybatis-flex.datasource:
+  default:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/learn?useSSL=false&${dataBaseParam}
+    username: root
+    password: root
+mybatis-flex.global-config:
+  print-banner: true
+#  normal-value-of-logic-delete: 0
+#  deleted-value-of-logic-delete: 1
+#  logic-delete-column: del_flag
 # mybatis原生配置
 #mybatis-flex.configuration:
 #mybatis-flex.config-location:

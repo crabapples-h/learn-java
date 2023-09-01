@@ -24,9 +24,10 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
     public SysUser findOne(UserForm form) {
         SysUser example = form.toEntity();
         System.err.println(example);
+        example.setUsername("demo");
         QueryWrapper wrapper = QueryWrapper.create(example);
         System.err.println(wrapper.toSQL());
-        return mapper.selectOneByQuery(wrapper);
+        return getOne(wrapper.select());
     }
 
     public SysUser findById(String id) {
