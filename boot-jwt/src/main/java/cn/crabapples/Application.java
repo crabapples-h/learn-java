@@ -1,6 +1,5 @@
 package cn.crabapples;
 
-import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,7 +40,7 @@ import org.springframework.web.client.RestTemplate;
 
 //--------start-------
 // 动态数据源，使用@DataSourceChange(name="xxx")切换
-@Import({DynamicDataSourceRegister.class})
+//@Import({DynamicDataSourceRegister.class})
 //--------end-------
 
 //mybatis扫描路径(如果使用注解的方式可不用配置)
@@ -49,7 +48,7 @@ import org.springframework.web.client.RestTemplate;
 //        @MapperScan("cn.crabapples.custom.dao"),
         @MapperScan("cn.crabapples.system.dao")
 })
-
+@ComponentScan(basePackages = {"cn.crabapples"})
 //@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 //@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
 //@PropertySources({

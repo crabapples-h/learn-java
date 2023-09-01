@@ -1,8 +1,8 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
@@ -47,7 +47,7 @@ public class SystemController extends BaseController {
      * @return 登录成功返回token
      */
     @JwtIgnore
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
     public ResponseDTO login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);

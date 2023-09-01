@@ -1,6 +1,7 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.DIC;
 import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.mybatis.UserMapper;
 import cn.crabapples.system.entity.SysUser;
@@ -28,7 +29,12 @@ public class UserDAO extends BaseDAO<SysUser, String> {
     }
 
     public SysUser findOne(UserForm form) {
-        return mapper.selectOneByQuery(QueryWrapper.create(form.toEntity()));
+        SysUser example = form.toEntity();
+        System.err.println(example);
+        example.setDelFlag(DIC.NOT_DEL);
+        QueryWrapper wrapper = QueryWrapper.create(example);
+        System.err.println(wrapper);
+        return mapper.selectOneByQuery(wrapper);
     }
 
     public SysUser findById(String id) {
