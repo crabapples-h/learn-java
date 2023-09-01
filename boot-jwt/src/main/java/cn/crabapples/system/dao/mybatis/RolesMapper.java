@@ -1,5 +1,6 @@
 package cn.crabapples.system.dao.mybatis;
 
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.entity.SysRoles;
@@ -14,4 +15,6 @@ public interface RolesMapper extends BaseMapper<SysRoles> {
     List<SysRoleMenus> getRoleMenus(String id);
 
     List<SysMenus> findButtonsByIds(@Param("ids") List<String> ids);
+
+    List<SysRolesDTO> getUserRoles(@Param("user_id")String id);
 }

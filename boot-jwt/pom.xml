@@ -52,8 +52,6 @@
         </dependency>
 
 
-
-
         <!--        <dependency>-->
         <!--            <groupId>com.mybatis-flex</groupId>-->
         <!--            <artifactId>mybatis-flex-processor</artifactId>-->
@@ -61,10 +59,10 @@
         <!--        </dependency>-->
 
         <!-- 添加已适配 springboot 3 的 mybatis-spring 依赖-->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis</groupId>-->
-<!--            <artifactId>mybatis-spring</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis</groupId>-->
+        <!--            <artifactId>mybatis-spring</artifactId>-->
+        <!--        </dependency>-->
 
         <!--        <dependency>-->
         <!--            <groupId>com.github.pagehelper</groupId>-->
@@ -158,18 +156,6 @@
         <!--        </dependency>-->
     </dependencies>
     <build>
-        <resources>
-            <resource>
-                <directory>lib</directory>
-                <targetPath>BOOT-INF/lib/</targetPath>
-                <includes>
-                    <include>**/*.jar</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
         <plugins>
             <!--spring-boot-maven-plugin-->
             <plugin>

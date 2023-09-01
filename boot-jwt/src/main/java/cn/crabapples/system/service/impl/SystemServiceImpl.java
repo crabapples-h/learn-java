@@ -48,8 +48,8 @@ public class SystemServiceImpl implements SystemService {
     private final MenusDAO menusDAO;
     private final JwtConfigure jwtConfigure;
 
-    public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService, MenusDAO menusDAO,
-                             JwtConfigure jwtConfigure) {
+    public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
+                             MenusDAO menusDAO, JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.rolesService = rolesService;
         this.menusDAO = menusDAO;

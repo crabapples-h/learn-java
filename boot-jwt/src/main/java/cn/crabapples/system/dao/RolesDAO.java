@@ -2,6 +2,7 @@ package cn.crabapples.system.dao;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
+import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.form.RolesForm;
 import com.mybatisflex.core.query.QueryWrapper;
@@ -47,5 +48,9 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRoles> {
 
     public boolean deleteById(String id) {
         return removeById(id);
+    }
+
+    public List<SysRolesDTO> getUserRoles(String id) {
+        return mapper.getUserRoles(id);
     }
 }

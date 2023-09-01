@@ -16,7 +16,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,12 +53,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     @Override
     public List<SysRolesDTO> getUserRoles() {
         SysUser user = userService.getUserInfo();
-        List<String> rolesList = user.getRolesList();
-        if (rolesList.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<SysRoles> roles = rolesDAO.findByIds(rolesList);
-        return roles.stream().map(e -> e.toDTO(new SysRolesDTO())).collect(Collectors.toList());
+        return rolesDAO.getUserRoles(user.getId());
     }
 
     /**
