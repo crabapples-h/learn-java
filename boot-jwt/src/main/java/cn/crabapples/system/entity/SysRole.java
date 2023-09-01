@@ -5,9 +5,8 @@ import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.keygen.KeyGenerators;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -24,10 +23,10 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-@Getter
-@Setter
 @Table("sys_role")
-@ToString
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@Data(staticConstructor = "create")
 public class SysRole extends BaseEntity<SysRole> {
     // id 为自增主键
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)

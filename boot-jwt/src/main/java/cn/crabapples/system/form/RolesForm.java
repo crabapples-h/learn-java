@@ -33,7 +33,7 @@ public class RolesForm extends BaseForm<SysRole> {
 
     @Override
     public SysRole toEntity() {
-        SysRole entity = new SysRole();
+        SysRole entity =  SysRole.create();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

@@ -72,7 +72,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     @Override
     public boolean saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
-        SysRole entity = StringUtils.isBlank(form.getId()) ? new SysRole() : rolesDAO.findById(form.getId());
+        SysRole entity = StringUtils.isBlank(form.getId()) ? SysRole.create() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
         List<String> permissionList = getPermissionList(form.getMenusList());
         entity.setPermissionList(permissionList);

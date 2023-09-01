@@ -15,15 +15,15 @@ const SysApis = {
     userListPage: '/api/system/user/page',
     delUser: '/api/system/user/del',
     lockUser: '/api/system/user/lock',
-    unlockUser: '/api/system/user/unlock/',
+    unlockUser: '/api/system/user/unlock',
     //菜单 menus
     menusList: '/api/system/menus/list',
-    delMenus: '/api/system/menus/remove/',
+    delMenus: '/api/system/menus/remove',
     saveMenus: '/api/system/menus/save',
-    roleMenus: '/api/system/menus/role/',
+    roleMenus: '/api/system/menus/role',
     //角色 roles
     rolesList: '/api/system/roles/list',
-    delRoles: '/api/system/roles/remove/',
+    delRoles: '/api/system/roles/remove',
     saveRoles: '/api/system/roles/save',
 }
 export {SysApis}

@@ -154,7 +154,6 @@ public class SystemMenusServiceImpl implements SystemMenusService {
 
     @Override
     public SysRoleMenus getRoleMenus(String id) {
-        throw new ApplicationException("暂未实现");
-//        return menusDAO.getRoleMenus(id);
+        return menusDAO.getRoleMenus(id);
     }
 }

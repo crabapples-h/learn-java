@@ -10,11 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface MenusMapper extends BaseMapper<SysMenu> {
-    List<SysRoleMenus> getRoleMenus(String id);
+
+    SysRoleMenus getRoleMenus(@Param("roleId") String id);
 
     List<SysMenu> findButtonsByIds(@Param("ids") List<String> ids);
 
-    List<SysMenu> getUserMenus(@Param("userId")String id);
+    List<SysMenu> getUserMenus(@Param("userId") String id);
 
     List<SysMenu> findMenusTree();
+
 }

@@ -2,6 +2,9 @@ package cn.crabapples.mybatis.flex;
 
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysRole;
+import com.mybatisflex.core.query.QueryChain;
+import com.mybatisflex.core.query.QueryColumn;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +36,23 @@ public class MybatisFlexTest {
     public void case1() {
         List<SysMenu> menusTree = menusDAO.findMenusTree();
         System.out.println(menusTree);
+    }
+
+    /**
+     * 关联查询需要使用APT功能或QueryColumn
+     */
+    @Test
+    public void case2() {
+        String sql = QueryChain.create()
+                .select(
+                        new QueryColumn("sys_role", "id").as("id"),
+                        new QueryColumn("sys_role", "name").as("name"),
+                        new QueryColumn("sys_menu", "*")
+                ).from(SysRole.class)
+                .leftJoin("sys_role_menus")
+                .on(new QueryColumn("sys_role", "id").eq("role_id"))
+                .toSQL();
+        System.err.println(sql);
     }
 
 }

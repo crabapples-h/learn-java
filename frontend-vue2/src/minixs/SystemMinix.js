@@ -37,9 +37,8 @@ export default {
       return tree
     },
     getQueryPage() {
-      let pageIndex = ~~this.pagination.current
       return {
-        pageIndex: pageIndex >= 0 ? pageIndex - 1 : 0,
+        pageIndex: this.pagination.current,
         pageSize: this.pagination.pageSize
       }
     },
@@ -58,11 +57,11 @@ export default {
           return
         }
         if (result.data !== null) {
-          this.dataSource = result.data.content || result.data.content
-          if (result.data.pageable) {
-            this.pagination.total = result.data.totalElements
-            this.pagination.current = result.data.pageable.pageNumber + 1
-          }
+          this.dataSource = result.data.content || result.data
+          // if (result.data.pageable) {
+          //   this.pagination.total = result.data.totalElements
+          //   this.pagination.current = result.data.pageable.pageNumber + 1
+          // }
         }
       }).catch(function (error) {
         console.error('出现错误:', error)
