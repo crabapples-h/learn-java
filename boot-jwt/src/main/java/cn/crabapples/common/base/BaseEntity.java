@@ -1,18 +1,12 @@
 package cn.crabapples.common.base;
 
-import cn.crabapples.common.Dict;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
-import com.mybatisflex.annotation.Id;
+import com.mybatisflex.core.activerecord.Model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * TODO 实体类基础属性
@@ -25,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-public abstract class BaseEntity implements Serializable, Cloneable {
+public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable, Cloneable {
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);

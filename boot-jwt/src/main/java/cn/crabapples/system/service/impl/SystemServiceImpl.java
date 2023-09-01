@@ -6,8 +6,8 @@ import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.MenusDAO;
-import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemRolesService;
@@ -100,8 +100,8 @@ public class SystemServiceImpl implements SystemService {
         if (menusList.isEmpty()) {
             return Collections.emptyList();
         }
-        List<SysMenus> buttons = menusDAO.findButtonsByIds1(menusList);
-        return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
+        List<SysMenu> buttons = menusDAO.findButtonsByIds1(menusList);
+        return buttons.stream().map(SysMenu::getPermission).collect(Collectors.toList());
     }
 
     /**
@@ -115,10 +115,11 @@ public class SystemServiceImpl implements SystemService {
         if (rolesList.isEmpty()) {
             return Collections.emptyList();
         }
-        List<SysRoles> roles = rolesService.getByIds(rolesList);
+        List<SysRole> roles = rolesService.getByIds(rolesList);
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
-            List<String> idList = e.getMenusIds();
+            List<String> idList = e.getMenuList().stream()
+                    .map(SysMenu::getId).collect(Collectors.toList());
             menusId.addAll(idList);
         });
         return menusId.stream().distinct().collect(Collectors.toList());

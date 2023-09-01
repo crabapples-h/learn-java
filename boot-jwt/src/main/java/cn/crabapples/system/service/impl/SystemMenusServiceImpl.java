@@ -3,9 +3,9 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
 import cn.crabapples.system.dao.MenusDAO;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
@@ -17,8 +17,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,31 +57,15 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
-    public List<SysMenus> getUserMenus() {
+    public List<SysMenu> getUserMenus() {
         log.info("获取用户拥有的所有菜单");
-        List<String> userMenuList = getUserMenusIds();
-        List<SysMenus> allRootMenuTree = menusDAO.findMenusTree();
-        List<SysMenus> list = filterRootMenusTree(userMenuList, allRootMenuTree);
+        SysUser user = userService.getUserInfo();
+        List<String> userMenuList = menusDAO.getUserMenus(user.getId()).stream()
+                .map(SysMenu::getId).collect(Collectors.toList());
+        List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
+        List<SysMenu> list = filterRootMenusTree(userMenuList, allRootMenuTree);
         log.info("用户拥有的所有菜单[{}]", list);
         return list;
-    }
-
-    /**
-     * 获取当前用户所拥有的角色的所有菜单ID并去重
-     */
-    private List<String> getUserMenusIds() {
-        SysUser user = userService.getUserInfo();
-        List<String> rolesList = user.getRolesList();
-        if (rolesList.isEmpty()) {
-            return Collections.EMPTY_LIST;
-        }
-        List<SysRoles> roles = rolesService.getByIds(rolesList);
-        List<String> menusIds = new ArrayList<>();
-        roles.forEach(e -> {
-            List<String> idList = e.getMenusIds();
-            menusIds.addAll(idList);
-        });
-        return menusIds.stream().distinct().collect(Collectors.toList());
     }
 
     /**
@@ -91,7 +73,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public void removeMenus(String id) {
-        SysMenus entity = menusDAO.findById(id);
+        SysMenu entity = menusDAO.findById(id);
         entity.setDelFlag(DIC.IS_DEL);
         removeRolesMenus(id);
         menusDAO.save(entity);
@@ -109,7 +91,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 删除菜单后将所拥有该菜单的角色中把该菜单移除
      */
     void removeRolesMenus(String id) {
-        List<SysRoles> sysRoles = rolesService.findByMenusId(id);
+        List<SysRole> sysRoles = rolesService.findByMenusId(id);
         sysRoles.forEach(e -> {
 //            e.getMenusIds().remove(id);
 //            rolesService.saveRoles(e);
@@ -120,8 +102,8 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 获取菜单列表(全部)
      */
     @Override
-    public List<SysMenus> getMenusList() {
-        List<SysMenus> sysMenus = menusDAO.findMenusTree();
+    public List<SysMenu> getMenusList() {
+        List<SysMenu> sysMenus = menusDAO.findMenusTree();
         sysMenus = filterMenusByDelFlag(sysMenus);
         return sysMenus;
     }
@@ -129,9 +111,9 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     /**
      * 返回前端时移除菜单树中标记为删除的数据
      */
-    private List<SysMenus> filterMenusByDelFlag(List<SysMenus> sysMenus) {
+    private List<SysMenu> filterMenusByDelFlag(List<SysMenu> sysMenus) {
         return sysMenus.stream().filter(e -> {
-            List<SysMenus> children = filterMenusByDelFlag(e.getChildren());
+            List<SysMenu> children = filterMenusByDelFlag(e.getChildren());
             e.setChildren(children);
             return e.getDelFlag() == DIC.NOT_DEL;
         }).collect(Collectors.toList());
@@ -155,7 +137,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 保存菜单时如果是编辑菜单
      */
     private void editMenus(String id, MenusForm form) {
-        SysMenus entity = menusDAO.findById(id);
+        SysMenu entity = menusDAO.findById(id);
         BeanUtils.copyProperties(form, entity);
         log.info("修改菜单:[{}]", entity);
         menusDAO.save(entity);

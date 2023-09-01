@@ -2,13 +2,11 @@ package cn.crabapples.system.service;
 
 import cn.crabapples.common.DIC;
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -31,8 +29,9 @@ public interface SystemMenusService extends BaseService {
      * @param allMenuTree  所有菜单树
      * @return 角色拥有的菜单树
      */
-    default List<SysMenus> filterRootMenusTree(List<String> userMenuList, List<SysMenus> allMenuTree) {
+    default List<SysMenu> filterRootMenusTree(List<String> userMenuList, List<SysMenu> allMenuTree) {
         return allMenuTree.stream().filter(e -> {
+            System.err.println(e);
             // 判断当前菜单是否被标记删除
             if (DIC.IS_DEL == e.getDelFlag()) {
                 return false;
@@ -42,12 +41,8 @@ public interface SystemMenusService extends BaseService {
                 return false;
             }
             // children可能为null
-            List<SysMenus> children = e.getChildren();
-            if (Objects.isNull(children)) {
-                children = Collections.EMPTY_LIST;
-            }
-            children = filterRootMenusTree(userMenuList, children);
-            e.setChildren(children);
+            List<SysMenu> children = e.getChildren();
+            e.setChildren(filterRootMenusTree(userMenuList, children));
             // 判断用户拥有的菜单中是否包含当前菜单
             boolean exist = userMenuList.contains(e.getId());
             // 判断用户拥有的菜单中是否包含当前菜单的子菜单
@@ -56,9 +51,9 @@ public interface SystemMenusService extends BaseService {
         }).collect(Collectors.toList());
     }
 
-    List<SysMenus> getUserMenus();
+    List<SysMenu> getUserMenus();
 
-    List<SysMenus> getMenusList();
+    List<SysMenu> getMenusList();
 
     void saveMenus(MenusForm form);
 

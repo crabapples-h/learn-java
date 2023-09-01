@@ -1,7 +1,7 @@
 package cn.crabapples.spring;
 
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import com.alibaba.fastjson.JSONObject;
 import com.mysql.cj.jdbc.JdbcConnection;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class ApplicationTest {
 
     }
 
-    public List<SysRoles> loadData() throws IOException {
+    public List<SysRole> loadData() throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("test.json");
         InputStream inputStream = classPathResource.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -60,12 +60,12 @@ public class ApplicationTest {
             stringBuilder.append(line);
         }
         log.info("---end");
-        List<SysRoles> data = JSONObject.parseArray(stringBuilder.toString(), SysRoles.class);
+        List<SysRole> data = JSONObject.parseArray(stringBuilder.toString(), SysRole.class);
         System.err.println(data);
         return data;
     }
 
-    public List<SysRoles> loadDataForJdbc() throws ClassNotFoundException, SQLException {
+    public List<SysRole> loadDataForJdbc() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         JdbcConnection connection = (JdbcConnection) DriverManager.getConnection(URL, USERNAME, PASSWORD);
         System.err.println(connection);
@@ -79,7 +79,7 @@ public class ApplicationTest {
 
     @Test
     public void formatMenusTreeAsFile() throws SQLException, ClassNotFoundException {
-        List<SysRoles> roles = loadDataForJdbc();
+        List<SysRole> roles = loadDataForJdbc();
 //        roles.forEach(e -> {
 //            System.err.println(e);
 //        });

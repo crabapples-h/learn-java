@@ -3,13 +3,15 @@ package cn.crabapples.system.dao;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TODO 系统角色DAO
@@ -21,26 +23,26 @@ import java.util.List;
  * pc-name mrhe
  */
 @Component
-public class RolesDAO extends ServiceImpl<RolesMapper, SysRoles> {
+public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
 
-    public SysRoles findById(String id) {
+    public SysRole findById(String id) {
         return mapper.selectOneById(id);
     }
 
-    public boolean save(SysRoles entity) {
+    public boolean save(SysRole entity) {
         return saveOrUpdate(entity);
     }
 
-    public List<SysRoles> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
+    public List<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
         QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
         return mapper.selectListByQuery(wrapper);
     }
 
-    public List<SysRoles> findByIds(List<String> ids) {
+    public List<SysRole> findByIds(List<String> ids) {
         return mapper.selectListByIds(ids);
     }
 
-    public List<SysRoles> findByMenusId(String menusId) {
+    public List<SysRole> findByMenusId(String menusId) {
         throw new ApplicationException("暂未实现");
 //        return repository.findByDelFlagAndMenusIdsContains(DIC.NOT_DEL, menusId);
     }
@@ -50,7 +52,15 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRoles> {
         return removeById(id);
     }
 
-    public List<SysRolesDTO> getUserRoles(String id) {
+    public List<SysRolesDTO> getUserRolesDTO(String id) {
+        return getUserRoles(id).stream().map(e -> {
+            SysRolesDTO dto = new SysRolesDTO();
+            BeanUtils.copyProperties(e, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public List<SysRole> getUserRoles(String id) {
         return mapper.getUserRoles(id);
     }
 }

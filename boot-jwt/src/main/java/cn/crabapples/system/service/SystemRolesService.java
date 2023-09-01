@@ -2,7 +2,7 @@ package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 
 import java.util.List;
@@ -19,15 +19,16 @@ import java.util.List;
  */
 public interface SystemRolesService extends BaseService {
 
-    List<SysRolesDTO> getUserRoles();
+    List<SysRolesDTO> getUserRolesDTO();
 
-    List<SysRoles> getByIds(List<String> ids);
+    List<SysRole> getByIds(List<String> ids);
 
-    Iterable<SysRoles> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form);
+    Iterable<SysRole> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form);
 
     boolean saveRoles(RolesForm form);
 
     boolean removeRoles(String id);
 
-    List<SysRoles> findByMenusId(String id);
+    List<SysRole> findByMenusId(String id);
+
 }

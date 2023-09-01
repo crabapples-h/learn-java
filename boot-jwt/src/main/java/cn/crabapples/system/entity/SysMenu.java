@@ -3,13 +3,11 @@ package cn.crabapples.system.entity;
 import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.mybatisflex.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,11 +24,11 @@ import java.util.List;
  * qq 294046317
  * pc-name root
  */
-@Setter
-@Getter
-@Table("sys_menus")
-@ToString
-public class SysMenus extends BaseEntity {
+@Table("sys_menu")
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+@Data(staticConstructor = "create")
+public class SysMenu extends BaseEntity<SysMenu> {
     // id 为自增主键
     @Id(keyType = KeyType.Auto)
     private String id;
@@ -38,6 +36,7 @@ public class SysMenus extends BaseEntity {
     private String pid;
 
     // 排序
+    @Column(jdbcType = JdbcType.INTEGER)
     private Integer sort;
 
     // 菜单图标
@@ -49,10 +48,7 @@ public class SysMenus extends BaseEntity {
     private String link;
 
     // 菜单类型 1:目录 2:菜单 3:超链接 4:按钮
-    private Integer menusType;
-
-    // 是否为跟目录 0:是 1:否
-    private Integer isRoot;
+    private int menusType;
 
     // 浏览器访问路径(url)
     private String path;
@@ -63,11 +59,16 @@ public class SysMenus extends BaseEntity {
     // 授权标识
     private String permission;
 
-    @Column(ignore = true)
-    private List<SysMenus> children;
+    //    @Column(ignore = true)
+    @RelationOneToMany(selfField = "id", targetField = "pid")
+    private List<SysMenu> children;
 
     @JSONField(serialize = false)
     private Boolean showFlag;
+
+    //创建人
+    @CreatedBy
+    private String createBy;
 
     // 创建时间
     @CreatedDate
@@ -81,13 +82,12 @@ public class SysMenus extends BaseEntity {
     @Column(onUpdateValue = "now()", onInsertValue = "now()")
     private LocalDateTime updateTime;
 
+    /*
+     * issues 154
+     * 当字段类型被标记为 isLogicDelete ,且为Integer类型时会变成null
+     */
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
+    @Column(isLogicDelete = true, jdbcType = JdbcType.INTEGER)
     @Dict(dictCode = "delFlag")
-    private Integer delFlag;
-
-    //创建人
-    @CreatedBy
-    private String createBy;
-
+    private int delFlag;
 }

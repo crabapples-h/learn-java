@@ -1,10 +1,9 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
@@ -12,7 +11,6 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -43,7 +41,7 @@ public class SystemMenusController extends BaseController {
     @GetMapping("/user")
     public ResponseDTO getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单列表");
-        List<SysMenus> menus = menusService.getUserMenus();
+        List<SysMenu> menus = menusService.getUserMenus();
         log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
@@ -54,7 +52,7 @@ public class SystemMenusController extends BaseController {
     @GetMapping("/list")
     public ResponseDTO getMenusList() {
         log.info("收到请求->获取[所有]菜单列表");
-        List<SysMenus> list = menusService.getMenusList();
+        List<SysMenu> list = menusService.getMenusList();
         log.info("返回结果->获取[所有]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }

@@ -2,7 +2,7 @@ package cn.crabapples.system.form;
 
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseForm;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class DictForm extends BaseForm<SysMenus> {
+public class DictForm extends BaseForm<SysMenu> {
     private String id;
     private Integer sort;
 
@@ -55,8 +55,8 @@ public class DictForm extends BaseForm<SysMenus> {
     }
 
     @Override
-    public SysMenus toEntity() {
-        SysMenus entity = new SysMenus();
+    public SysMenu toEntity() {
+        SysMenu entity = SysMenu.create();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

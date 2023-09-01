@@ -3,7 +3,7 @@ package cn.crabapples.system.dao;
 import cn.crabapples.common.DIC;
 import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
-import cn.crabapples.system.entity.SysMenus;
+import cn.crabapples.system.entity.SysMenu;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
@@ -20,40 +20,46 @@ import java.util.List;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends ServiceImpl<MenusMapper, SysMenus> {
+public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
     private final RolesMapper rolesMapper;
 
     public MenusDAO(RolesMapper rolesMapper) {
         this.rolesMapper = rolesMapper;
     }
 
-    public SysMenus findById(String id) {
-        return mapper.selectOneById(id);
+    public SysMenu findById(String id) {
+        return SysMenu.create().setId(id).oneById();
     }
 
-    public boolean save(SysMenus entity) {
+    public boolean save(SysMenu entity) {
         return saveOrUpdate(entity);
     }
 
-    public List<SysMenus> findMenusTree() {
-        SysMenus example = new SysMenus();
-        example.setIsRoot(DIC.IS_ROOT);
-        QueryWrapper wrapper = QueryWrapper.create(example);
+    public boolean remove(String id) {
+        return SysMenu.create().setId(id).removeById();
+    }
+
+    public List<SysMenu> findButtonsByIds1(List<String> ids) {
+        QueryWrapper wrapper = QueryWrapper.create()
+                .where(SysMenu::getId).in(ids)
+                .where(SysMenu::getMenusType).eq(DIC.MENUS_TYPE_BUTTON);
         return list(wrapper);
     }
 
-    public List<SysMenus> findButtonsByIds1(List<String> ids) {
-        return mapper.findButtonsByIds(ids);
+
+    public List<SysMenu> getUserMenus(String id) {
+        return mapper.getUserMenus(id);
     }
 
-    public void remove(String id) {
-        mapper.deleteById(id);
+    /**
+     * 一对多递归查询所有菜单树
+     *
+     * @return 菜单树
+     */
+    public List<SysMenu> findMenusTree() {
+        QueryWrapper wrapper = QueryWrapper.create()
+                .where(SysMenu::getPid).isNull(true);
+        return mapper.selectListWithRelationsByQuery(wrapper);
     }
 
-//    public SysRoleMenus getRoleMenus(String id) {
-//        SysRoles role = rolesRepository.findById(id).orElseThrow(() -> new ApplicationException("角色不存在"));
-//        List<SysMenus> menusList = repository.findByDelFlagAndIsRootAndIdIn(DIC.NOT_DEL, DIC.NOT_DEL, role.getMenusIds());
-////        List<SysMenus> menusList = repository.findByIds(role.getMenusIds());
-//        return new SysRoleMenus(role, menusList);
-//    }
 }

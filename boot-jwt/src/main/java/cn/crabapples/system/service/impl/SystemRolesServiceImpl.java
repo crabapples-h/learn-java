@@ -3,8 +3,8 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.entity.SysMenus;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
@@ -47,25 +47,22 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         this.userService = userService;
     }
 
-    /**
-     * 获取当前用户拥有的角色列表
-     */
-    @Override
-    public List<SysRolesDTO> getUserRoles() {
+    // 获取当前用户的角色信息
+    public List<SysRolesDTO> getUserRolesDTO() {
         SysUser user = userService.getUserInfo();
-        return rolesDAO.getUserRoles(user.getId());
+        return rolesDAO.getUserRolesDTO(user.getId());
     }
 
     /**
      * 获取角色列表(分页)
      */
     @Override
-    public Iterable<SysRoles> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form) {
+    public Iterable<SysRole> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form) {
         return rolesDAO.findAll(pageIndex, pageSize, form);
     }
 
     @Override
-    public List<SysRoles> getByIds(List<String> ids) {
+    public List<SysRole> getByIds(List<String> ids) {
         return rolesDAO.findByIds(ids);
     }
 
@@ -75,9 +72,8 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     @Override
     public boolean saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
-        SysRoles entity = StringUtils.isBlank(form.getId()) ? new SysRoles() : rolesDAO.findById(form.getId());
+        SysRole entity = StringUtils.isBlank(form.getId()) ? new SysRole() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
-        entity.setMenusIds(form.getMenusList());
         List<String> permissionList = getPermissionList(form.getMenusList());
         entity.setPermissionList(permissionList);
         log.info("保存角色:[{}]", entity);
@@ -90,8 +86,8 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      */
     private List<String> getPermissionList(List<String> menusIds) {
         log.info("获取角色权限:[{}]", menusIds);
-        List<SysMenus> buttonsByIds = menusDAO.findButtonsByIds1(menusIds);
-        List<String> permissions = buttonsByIds.stream().map(SysMenus::getPermission).collect(Collectors.toList());
+        List<SysMenu> buttonsByIds = menusDAO.findButtonsByIds1(menusIds);
+        List<String> permissions = buttonsByIds.stream().map(SysMenu::getPermission).collect(Collectors.toList());
         log.info("角色权限:[{}]", permissions);
         return permissions;
     }
@@ -105,7 +101,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     }
 
     @Override
-    public List<SysRoles> findByMenusId(String id) {
+    public List<SysRole> findByMenusId(String id) {
         return rolesDAO.findByMenusId(id);
     }
 }

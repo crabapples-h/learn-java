@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -25,6 +26,7 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ApiModel("登录")
 public class UserForm extends BaseForm<SysUser> {

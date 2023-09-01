@@ -31,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class SysRoleMenus extends BaseEntity {
-    public SysRoleMenus(SysRoles role, List<SysMenus> menusList) {
+    public SysRoleMenus(SysRole role, List<SysMenu> menusList) {
         this.sysMenus = menusList;
         this.permissionList = role.getPermissionList();
         this.name = role.getName();
@@ -48,7 +48,7 @@ public class SysRoleMenus extends BaseEntity {
     private List<String> permissionList;
 
     //角色拥有的菜单列表
-    private List<SysMenus> sysMenus;
+    private List<SysMenu> sysMenus;
 
     // 创建时间
     @CreatedDate

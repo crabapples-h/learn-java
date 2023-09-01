@@ -1,11 +1,9 @@
 package cn.crabapples.system.controller;
 
-import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.entity.SysRoles;
+import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
 import io.swagger.annotations.Api;
@@ -13,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -44,7 +40,7 @@ public class SystemRolesController extends BaseController {
     @GetMapping("/user")
     public ResponseDTO getUserRoles() {
         log.info("收到请求->获取[当前用户]角色列表");
-        List<SysRolesDTO> list = rolesService.getUserRoles();
+        List<SysRolesDTO> list = rolesService.getUserRolesDTO();
         log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
@@ -57,7 +53,7 @@ public class SystemRolesController extends BaseController {
                                     @RequestParam(name = "pageSize", required = false) Integer pageSize,
                                     RolesForm form) {
         log.info("收到请求->获取角色列表");
-        Iterable<SysRoles> list = rolesService.getRolesList(pageIndex, pageSize, form);
+        Iterable<SysRole> list = rolesService.getRolesList(pageIndex, pageSize, form);
         log.info("返回结果->获取角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }

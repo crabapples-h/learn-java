@@ -32,7 +32,7 @@ import java.util.List;
 @Setter
 @Table(value = "sys_user")
 @ToString
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseEntity<SysUser> {
     // id 为自增主键
     @Id(keyType = KeyType.Generator,value =  KeyGenerators.snowFlakeId)
     private String id;

@@ -3,10 +3,7 @@ package cn.crabapples.system.entity;
 import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,18 +26,21 @@ import java.util.List;
  */
 @Getter
 @Setter
-@Table("sys_roles")
+@Table("sys_role")
 @ToString
-public class SysRoles extends BaseEntity {
+public class SysRole extends BaseEntity<SysRole> {
     // id 为自增主键
-    @Id(keyType = KeyType.Generator,value = KeyGenerators.snowFlakeId)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
 
     // 名称
     private String name;
 
     //角色拥有的菜单列表
-    private List<String> menusIds;
+    @RelationManyToMany(joinTable = "sys_role_menus",
+            joinSelfColumn = "role_id",
+            joinTargetColumn = "menu_id")
+    private List<SysMenu> menuList;
 
     //角色拥有的权限列表
     private List<String> permissionList;
