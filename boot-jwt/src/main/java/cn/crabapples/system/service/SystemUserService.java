@@ -1,13 +1,9 @@
 package cn.crabapples.system.service;
 
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import org.springframework.data.domain.Page;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -32,23 +28,19 @@ public interface SystemUserService extends BaseService {
 
     List<SysUser> findAll();
 
-    Page<SysUser> findAll(PageDTO page);
+    int addUser(UserForm form);
 
-    List<SysUserDTO> findAll(HttpServletRequest request, PageDTO page);
+    int delUser(String id);
 
-    SysUser addUser(UserForm form);
+    int editUser(UserForm form);
 
-    void delUser(String id);
+    int lockUser(String id);
 
-    SysUser editUser(UserForm form);
+    int unlockUser(String id);
 
-    void lockUser(String id);
+    int updatePassword(UserForm.ResetPassword form);
 
-    void unlockUser(String id);
-
-    void updatePassword(UserForm.ResetPassword form);
-
-    void resetPassword(UserForm.ResetPassword form);
+    int resetPassword(UserForm.ResetPassword form);
 
     SysUser getUserInfo();
 }

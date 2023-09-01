@@ -1,10 +1,8 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.PageDTO;
-import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.system.dto.SysUserDTO;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemUserService;
@@ -13,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -42,11 +39,11 @@ public class SystemUserController extends BaseController {
      */
     @GetMapping("/page")
     @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
-    public ResponseDTO getUserPage(HttpServletRequest request, PageDTO page) {
+    public ResponseDTO getUserPage() {
         log.info("收到请求->获取[分页]用户列表");
-        List<SysUserDTO> list = userService.findAll(request, page);
+        List<SysUser> list = userService.findAll();
         log.info("返回结果->获取[分页]用户列表->完成:[{}]", list);
-        return ResponseDTO.returnSuccess(list, page);
+        return ResponseDTO.returnSuccess(list);
     }
 
     @PostMapping("/add")
@@ -54,9 +51,9 @@ public class SystemUserController extends BaseController {
     public ResponseDTO addUser(@RequestBody UserForm form) {
         log.info("收到请求->添加用户:[{}]", form);
         super.validator(form, Groups.IsAdd.class);
-        SysUser entity = userService.addUser(form);
-        log.info("返回结果->添加用户->完成:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
+        int status = userService.addUser(form);
+        log.info("返回结果->添加用户->完成:[{}]", status);
+        return ResponseDTO.returnSuccess(status);
     }
 
     @PostMapping("/edit")
@@ -64,9 +61,9 @@ public class SystemUserController extends BaseController {
     public ResponseDTO editUser(@RequestBody UserForm form) {
         log.info("收到请求->编辑用户:[{}]", form);
         super.validator(form, Groups.IsEdit.class);
-        SysUser entity = userService.editUser(form);
-        log.info("返回结果->用户编辑完成:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
+        int status = userService.editUser(form);
+        log.info("返回结果->用户编辑完成:[{}]", status);
+        return ResponseDTO.returnSuccess(status);
     }
 
     @PostMapping("/del/{id}")

@@ -1,7 +1,7 @@
 package cn.crabapples.system.service.impl;
 
+import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoleMenus;
@@ -14,8 +14,6 @@ import cn.crabapples.system.service.SystemUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,23 +106,9 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     void removeRolesMenus(String id) {
         List<SysRoles> sysRoles = rolesService.findByMenusId(id);
         sysRoles.forEach(e -> {
-            e.getMenusIds().remove(id);
-            rolesService.saveRoles(e);
+//            e.getMenusIds().remove(id);
+//            rolesService.saveRoles(e);
         });
-    }
-
-    /**
-     * 获取菜单列表(分页)
-     */
-    @Override
-    public List<SysMenus> getMenusPage(PageDTO page) {
-        Page<SysMenus> menusPage = menusDAO.findMenusTree(page);
-        Pageable pageable = menusPage.getPageable();
-        page.setDataCount(menusDAO.count());
-        page.setPageIndex(pageable.getPageNumber());
-        List<SysMenus> sysMenus = menusPage.stream().collect(Collectors.toList());
-        sysMenus = filterMenusByDelFlag(sysMenus);
-        return sysMenus;
     }
 
     /**
@@ -173,38 +157,17 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     }
 
     /**
-     * 保存菜单时如果是添加主菜单
-     */
-    private void addMenus(MenusForm form) {
-        SysMenus entity = new SysMenus();
-        BeanUtils.copyProperties(form, entity);
-        log.info("添加新菜单:[{}]", form);
-        String parentId = form.getParentId();
-        log.info("parentId:[{}][{}]", parentId, StringUtils.isBlank(parentId));
-        if (!StringUtils.isBlank(parentId)) {
-            addChildrenMenus(parentId, entity);
-        } else {
-            menusDAO.save(entity);
-        }
-    }
-
-    /**
      * 保存菜单时如果是添加子菜单
      */
-    private void addChildrenMenus(String prentId, SysMenus entity) {
-        log.info("添加子菜单,parentId:[{}],[{}]", prentId, entity);
-        SysMenus root = menusDAO.findById(prentId);
-        List<SysMenus> children = root.getChildren();
-        entity.setIsRoot(DIC.NOT_ROOT);
-        entity = menusDAO.save(entity);
-        children.add(entity);
-        root.setChildren(children);
-        menusDAO.save(root);
-        log.info("添加子菜单完成");
+    private void addMenus(MenusForm form) {
+        log.info("添加菜单,[{}]", form);
+        menusDAO.save(form.toEntity());
+        log.info("添加菜单完成");
     }
 
     @Override
     public SysRoleMenus getRoleMenus(String id) {
-        return menusDAO.getRoleMenus(id);
+        throw new ApplicationException("暂未实现");
+//        return menusDAO.getRoleMenus(id);
     }
 }

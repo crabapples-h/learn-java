@@ -9,6 +9,7 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Table("sys_dict_item")
+@ToString
 public class SysDictItem extends BaseEntity {
     // id 为自增主键
     @Id(keyType = KeyType.Auto)

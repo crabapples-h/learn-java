@@ -30,17 +30,18 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     /**
      * 上传文件
+     *
      * @return 返回上传的文件信息
      */
     @Override
-    public FileInfo uploadFile(HttpServletRequest request) {
+    public int uploadFile(HttpServletRequest request) {
         MultipartFile multipartFile = getFile(request);
         FileUtils fileUtils = new FileUtils(uploadPath, virtualPath);
         FileInfo fileInfo = fileUtils.saveFile(multipartFile);
         return saveFileInfo(fileInfo);
     }
 
-    private FileInfo saveFileInfo(FileInfo fileInfo) {
+    private int saveFileInfo(FileInfo fileInfo) {
         return fileInfoDAO.save(fileInfo);
     }
 

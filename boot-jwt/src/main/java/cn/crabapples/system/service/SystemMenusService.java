@@ -55,8 +55,6 @@ public interface SystemMenusService extends BaseService {
 
     List<SysMenus> getMenusList();
 
-    List<SysMenus> getMenusPage(PageDTO page);
-
     void saveMenus(MenusForm form);
 
     void removeMenus(String id);

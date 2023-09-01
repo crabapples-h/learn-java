@@ -2,9 +2,9 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
+import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoles;
@@ -14,10 +14,7 @@ import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
-import com.alibaba.fastjson.JSONArray;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -99,7 +96,7 @@ public class SystemServiceImpl implements SystemService {
     public List<String> getUserPermissions(HttpServletRequest request) {
         log.info("获取用户拥有的所有权限");
         List<String> menusList = getUserMenusIds();
-        List<SysMenus> buttons = menusDAO.findButtonsByIds(menusList);
+        List<SysMenus> buttons = menusDAO.findButtonsByIds1(menusList);
         return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
     }
 

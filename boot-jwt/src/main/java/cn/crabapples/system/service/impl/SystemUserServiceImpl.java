@@ -2,13 +2,11 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dao.UserDAO;
-import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemUserService;
@@ -18,15 +16,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * TODO 用户相关服务实现类[用户]
@@ -65,53 +59,33 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public List<SysUser> findById(List<String> ids) {
-        return userDAO.findById(ids);
+        return userDAO.findByIds(ids);
     }
 
     @Override
     public List<SysUser> findByName(String name) {
-        return userDAO.findByName(name);
+        UserForm form = new UserForm();
+        form.setName(name);
+        return userDAO.findAll(form);
     }
 
     @Override
     public SysUser findByUsername(String username) {
-        return userDAO.findByUsername(username);
+        UserForm form = new UserForm();
+        form.setUsername(username);
+        return userDAO.findOne(form);
     }
 
-    /**
-     * 获取用户列表[全部]
-     */
     @Override
     public List<SysUser> findAll() {
-        return userDAO.findAll(DIC.NOT_DEL);
+        return userDAO.findAll();
     }
-
-    /**
-     * 获取用户列表[分页]
-     */
-    @Override
-    public Page<SysUser> findAll(PageDTO page) {
-        return userDAO.findAll(page, DIC.NOT_DEL);
-    }
-
-    /**
-     * 获取用户列表[分页](返回脱敏后的用户列表)
-     */
-    @Override
-    public List<SysUserDTO> findAll(HttpServletRequest request, PageDTO page) {
-        Page<SysUser> userPage = userDAO.findAll(page, DIC.NOT_DEL);
-        Pageable pageable = userPage.getPageable();
-        page.setDataCount(userDAO.count());
-        page.setPageIndex(pageable.getPageNumber());
-        return userDAO.findAll(page, DIC.NOT_DEL).stream().map(e -> e.toDTO(new SysUserDTO())).collect(Collectors.toList());
-    }
-
 
     /**
      * 添加用户
      */
     @Override
-    public SysUser addUser(UserForm form) {
+    public int addUser(UserForm form) {
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(form, entity);
         String password;
@@ -131,16 +105,15 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 删除用户
      */
     @Override
-    @Transactional
-    public void delUser(String id) {
-        userDAO.delUser(id);
+    public int delUser(String id) {
+        return userDAO.delUser(id);
     }
 
     /**
      * 编辑用户
      */
     @Override
-    public SysUser editUser(UserForm form) {
+    public int editUser(UserForm form) {
         SysUser entity = userDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
         String password = form.getPassword();
@@ -158,25 +131,23 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 锁定用户
      */
     @Override
-    @Transactional
-    public void lockUser(String id) {
-        userDAO.lockUser(id);
+    public int lockUser(String id) {
+        return userDAO.lockUser(id);
     }
 
     /**
      * 解锁用户
      */
     @Override
-    @Transactional
-    public void unlockUser(String id) {
-        userDAO.unlockUser(id);
+    public int unlockUser(String id) {
+        return userDAO.unlockUser(id);
     }
 
     /**
      * 修改密码
      */
     @Override
-    public void updatePassword(UserForm.ResetPassword form) {
+    public int updatePassword(UserForm.ResetPassword form) {
         SysUser user = checkPassword(form);
         String password = form.getOldPassword();
         String newPassword = form.getNewPassword();
@@ -184,7 +155,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (user.getPassword().equals(password)) {
             newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
             user.setPassword(newPassword);
-            userDAO.save(user);
+            return userDAO.save(user);
         }
         throw new ApplicationException("密码错误");
     }
@@ -193,13 +164,13 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 重置密码
      */
     @Override
-    public void resetPassword(UserForm.ResetPassword form) {
+    public int resetPassword(UserForm.ResetPassword form) {
         SysUser user = checkPassword(form);
         String newPassword = form.getNewPassword();
         AssertUtils.notNull(user, "用户不存在");
         newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
         user.setPassword(newPassword);
-        userDAO.save(user);
+        return userDAO.save(user);
     }
 
     /**

@@ -1,15 +1,20 @@
 package cn.crabapples.system.entity;
 
+import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.config.JpaConverterListJson;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -21,30 +26,47 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-@Entity
 @Getter
 @Setter
-@DynamicInsert
-@DynamicUpdate
+@Table("sys_roles")
+@ToString
 public class SysRoles extends BaseEntity {
+
+    // id 为自增主键
+    @Id(keyType = KeyType.Auto)
+    private String id;
+
     // 名称
     private String name;
 
     //角色拥有的菜单列表
-    @Column(columnDefinition = "longtext comment '菜单Id'")
-    @Convert(converter = JpaConverterListJson.class)
     private List<String> menusIds;
 
     //角色拥有的权限列表
-    @Column(columnDefinition = "longtext comment '权限列表'")
-    @Convert(converter = JpaConverterListJson.class)
     private List<String> permissionList;
+
+    // 创建时间
+    @CreatedDate
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @Column(onInsertValue = "now()")
+    private LocalDateTime createTime;
+
+    // 更新时间
+    @LastModifiedDate
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @Column(onUpdateValue = "now()", onInsertValue = "now()")
+    private LocalDateTime updateTime;
+
+    // 删除标记 (0:正常 1:删除)
+    @Column(isLogicDelete = true)
+    @Dict(dictCode = "delFlag")
+    private Integer delFlag;
+
+    //创建人
+    @CreatedBy
+    private String createBy;
+
 
 //    @Transient
 //    private List<SysMenus> sysMenus;
-
-    @Override
-    public String toString() {
-        return JSONObject.toJSONString(this);
-    }
 }

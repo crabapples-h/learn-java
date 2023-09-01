@@ -1,6 +1,5 @@
 package cn.crabapples.system.service.impl;
 
-import cn.crabapples.common.DIC;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dto.SysRolesDTO;
@@ -17,7 +16,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,33 +70,11 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         return rolesDAO.findByIds(ids);
     }
 
-    @Override
-    public List<SysRoles> getByIds(String[] ids) {
-        return rolesDAO.findByIds(ids);
-    }
-
-    @Override
-    public SysRoles getById(String id) {
-        return rolesDAO.findById(id);
-    }
-
-    /**
-     * 获取角色时设置角色拥有的菜单
-     */
-    private List<SysRoles> setRoleMenus(List<SysRoles> source) {
-        return source.stream().peek(e -> {
-            List<String> idList = e.getMenusIds();
-            menusDAO.findByIds(idList);
-//                e.setSysMenus(menusDAO.findByIds(idList));
-        }).collect(Collectors.toList());
-    }
-
     /**
      * 保存角色
      */
     @Override
-    @Transactional
-    public SysRoles saveRoles(RolesForm form) {
+    public int saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
         SysRoles entity = StringUtils.isBlank(form.getId()) ? new SysRoles() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
@@ -107,11 +83,6 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         entity.setPermissionList(permissionList);
         log.info("保存角色:[{}]", entity);
         return rolesDAO.save(entity);
-    }
-
-    @Override
-    public SysRoles saveRoles(SysRoles e) {
-        return rolesDAO.save(e);
     }
 
     /**
@@ -130,11 +101,8 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      * 删除角色
      */
     @Override
-    public SysRoles removeRoles(String id) {
-        log.info("删除角色:[{}]", id);
-        SysRoles entity = rolesDAO.findById(id);
-        entity.setDelFlag(DIC.IS_DEL);
-        return rolesDAO.save(entity);
+    public int removeRoles(String id) {
+        return rolesDAO.deleteById(id);
     }
 
     @Override

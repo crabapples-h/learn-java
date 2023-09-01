@@ -2,7 +2,6 @@ package cn.crabapples.system.entity;
 
 import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
@@ -10,6 +9,7 @@ import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Table("file_info")
+@ToString
 public class FileInfo extends BaseEntity {
     // id 为自增主键
     @Id(keyType = KeyType.Auto)
@@ -60,10 +61,4 @@ public class FileInfo extends BaseEntity {
     //创建人
     @CreatedBy
     private String createBy;
-
-
-    @Override
-    public String toString() {
-        return JSONObject.toJSONString(this);
-    }
 }
