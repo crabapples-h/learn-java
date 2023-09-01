@@ -7,6 +7,7 @@ import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,7 +34,7 @@ import java.util.List;
 @ToString
 public class SysUser extends BaseEntity {
     // id 为自增主键
-    @Id(keyType = KeyType.Generator, value = "SnowFlakeIDKeyGenerator")
+    @Id(keyType = KeyType.Generator,value =  KeyGenerators.snowFlakeId)
     private String id;
 
     // 用户名
@@ -81,7 +82,7 @@ public class SysUser extends BaseEntity {
     // 删除标记 (0:正常 1:删除)
     @Column(isLogicDelete = true)
     @Dict(dictCode = "delFlag")
-    private Boolean delFlag;
+    private Integer delFlag;
 
     //创建人
     @CreatedBy

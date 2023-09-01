@@ -1,14 +1,14 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.PageDTO;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.entity.SysMenus;
 import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +41,12 @@ public interface SystemMenusService extends BaseService {
             if (DIC.MENUS_TYPE_BUTTON == e.getMenusType()) {
                 return false;
             }
-            List<SysMenus> children = filterRootMenusTree(userMenuList, e.getChildren());
+            // children可能为null
+            List<SysMenus> children = e.getChildren();
+            if (Objects.isNull(children)) {
+                children = Collections.EMPTY_LIST;
+            }
+            children = filterRootMenusTree(userMenuList, children);
             e.setChildren(children);
             // 判断用户拥有的菜单中是否包含当前菜单
             boolean exist = userMenuList.contains(e.getId());

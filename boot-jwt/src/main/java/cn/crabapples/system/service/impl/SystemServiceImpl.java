@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,6 +97,9 @@ public class SystemServiceImpl implements SystemService {
     public List<String> getUserPermissions(HttpServletRequest request) {
         log.info("获取用户拥有的所有权限");
         List<String> menusList = getUserMenusIds();
+        if (menusList.isEmpty()) {
+            return Collections.emptyList();
+        }
         List<SysMenus> buttons = menusDAO.findButtonsByIds1(menusList);
         return buttons.stream().map(SysMenus::getPermission).collect(Collectors.toList());
     }
@@ -107,8 +111,11 @@ public class SystemServiceImpl implements SystemService {
         SysUser user = userService.getUserInfo();
 //        String rolesIds = user.getRolesList();
 //        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
-        List<SysRoles> roles = rolesService.getByIds(user.getRolesList());
-
+        final List<String> rolesList = user.getRolesList();
+        if (rolesList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<SysRoles> roles = rolesService.getByIds(rolesList);
         List<String> menusId = new ArrayList<>();
         roles.forEach(e -> {
             List<String> idList = e.getMenusIds();

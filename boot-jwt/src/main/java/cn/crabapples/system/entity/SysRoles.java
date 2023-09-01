@@ -7,6 +7,7 @@ import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -31,9 +32,8 @@ import java.util.List;
 @Table("sys_roles")
 @ToString
 public class SysRoles extends BaseEntity {
-
     // id 为自增主键
-    @Id(keyType = KeyType.Auto)
+    @Id(keyType = KeyType.Generator,value = KeyGenerators.snowFlakeId)
     private String id;
 
     // 名称

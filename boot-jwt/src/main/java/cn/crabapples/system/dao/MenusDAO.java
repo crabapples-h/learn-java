@@ -38,9 +38,8 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenus> {
     public List<SysMenus> findMenusTree() {
         SysMenus example = new SysMenus();
         example.setIsRoot(DIC.IS_ROOT);
-        example.setDelFlag(DIC.NOT_DEL);
         QueryWrapper wrapper = QueryWrapper.create(example);
-        return mapper.selectListByQuery(wrapper);
+        return list(wrapper);
     }
 
     public List<SysMenus> findButtonsByIds1(List<String> ids) {
