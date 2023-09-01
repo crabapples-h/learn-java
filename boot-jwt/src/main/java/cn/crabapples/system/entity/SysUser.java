@@ -1,8 +1,9 @@
 package cn.crabapples.system.entity;
 
 import cn.crabapples.common.Dict;
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
+import com.mybatisflex.annotation.Column;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,46 +20,38 @@ import java.util.List;
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
- * <p>
- * Entity 表示这是一个和数据库表相关联的类
  */
-@Entity
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
-public class SysUser extends BaseEntity_Jpa {
+public class SysUser extends BaseEntity {
 
-    @Column(columnDefinition = "varchar(32)  not null comment '用户名'", unique = true)
+    // 用户名
     private String username;
 
-    @Column(columnDefinition = "varchar(64) not null comment '密码'")
+    // 密码
     private String password;
 
-    @Column(columnDefinition = "varchar(32)  not null comment '姓名'")
+    // 姓名
     @Dict(dictCode = "test")
     private String name;
 
-    @Column(columnDefinition = "varchar(32) comment '邮箱'")
+    // 邮箱
     private String mail;
 
-    @Column(columnDefinition = "varchar(15) comment '电话'")
+    // 电话
     private String phone;
 
-    /**
-     * Column nullable = false 数据字段不能为空
-     */
-    @Column(columnDefinition = "tinyint default 0 not null comment '年龄'")
+    // 年龄
     private Integer age;
 
     @LastModifiedBy
-    @Column(columnDefinition = "varchar(32) comment '最后操作用户'")
+    // 最后操作用户
     private String lastModifiedBy;
 
-    @ElementCollection
     @Column
     private List<String> rolesList;
 
-    @Column(columnDefinition = "tinyint default 0 not null comment '用户状态标记 0:正常 1:禁用'")
+    // 用户状态标记 0:正常 1:禁用
     private Integer status;
 
     @Override

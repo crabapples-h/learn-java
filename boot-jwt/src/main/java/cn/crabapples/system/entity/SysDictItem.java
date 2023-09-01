@@ -1,24 +1,55 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.Dict;
+import cn.crabapples.common.base.BaseEntity;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@Entity
-@DynamicInsert
-@DynamicUpdate
-public class SysDictItem extends BaseEntity_Jpa {
-    @Column(columnDefinition = "varchar(64) not null comment '名称'")
+@Table("sys_dict_item")
+public class SysDictItem extends BaseEntity {
+    // id 为自增主键
+    @Id(keyType = KeyType.Auto)
+    private String id;
+
+    // 名称
     private String name;
-    @Column(columnDefinition = "varchar(64) not null comment '值'")
+    // 值
     private String value;
-    @Column(columnDefinition = "varchar(64) not null comment '字典编码'")
+    // 字典编码
     private String dictCode;
+
+
+    // 创建时间
+    @CreatedDate
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @Column(onInsertValue = "now()")
+    private LocalDateTime createTime;
+
+    // 更新时间
+    @LastModifiedDate
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @Column(onUpdateValue = "now()", onInsertValue = "now()")
+    private LocalDateTime updateTime;
+
+    // 删除标记 (0:正常 1:删除)
+    @Column(isLogicDelete = true)
+    @Dict(dictCode = "delFlag")
+    private Integer delFlag;
+
+    //创建人
+    @CreatedBy
+    private String createBy;
+
 }

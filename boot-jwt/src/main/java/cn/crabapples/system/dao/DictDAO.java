@@ -1,15 +1,15 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.base.BaseDAO;
-import cn.crabapples.system.dao.jpa.DictRepository;
-import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.dao.mybatis.DictMapper;
+import cn.crabapples.system.entity.SysDict;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DictDAO extends BaseDAO<SysUser, String> {
-    private final DictRepository repository;
+public class DictDAO extends BaseDAO<SysDict, String> {
+    private final DictMapper mapper;
 
-    public DictDAO(DictRepository repository) {
-        this.repository = repository;
+    public DictDAO(DictMapper mapper) {
+        this.mapper = mapper;
     }
 }

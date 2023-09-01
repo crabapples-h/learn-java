@@ -1,6 +1,6 @@
 package cn.crabapples.test.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.JSONObject;
 import java.io.Serializable;
 
@@ -8,7 +8,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class SysUser extends BaseEntity_Jpa implements Serializable {
+public class SysUser extends BaseEntity implements Serializable {
     private String id;
 
     private Integer age;

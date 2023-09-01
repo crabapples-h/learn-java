@@ -1,9 +1,8 @@
 package cn.crabapples;
 
-import cn.crabapples.common.datasource.packagename.DataSourceConfigure;
-import cn.crabapples.common.datasource.packagename.DataSourcePrimaryConfigure;
-import cn.crabapples.common.datasource.packagename.DataSourceSecondConfigure;
+import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -12,8 +11,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.context.annotation.*;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,29 +36,19 @@ import org.springframework.web.client.RestTemplate;
  */
 
 //@SpringBootApplication
-@EnableJpaAuditing
 @SpringBootConfiguration
 @EnableAutoConfiguration
 
 //--------start-------
-// 多数据源配置，提供两种方式，通常情况下使用单数据源即可
 // 动态数据源，使用@DataSourceChange(name="xxx")切换
-//@Import({DynamicDataSourceRegister.class})
-// 排除多数据源配置，根据包名选择数据源(仅适用于jpa)
-@ComponentScan(basePackages = {"cn.crabapples"}, excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
-                classes = {DataSourceConfigure.class,
-                        DataSourcePrimaryConfigure.class,
-                        DataSourceSecondConfigure.class}),
-})
-//@MapperScan("com.baomidou.mybatisplus.samples.quickstart.mapper")
-
+@Import({DynamicDataSourceRegister.class})
 //--------end-------
+
 //mybatis扫描路径(如果使用注解的方式可不用配置)
-//@MapperScans({
+@MapperScans({
 //        @MapperScan("cn.crabapples.custom.dao"),
-//        @MapperScan("cn.crabapples.system.dao")
-//})
+        @MapperScan("cn.crabapples.system.dao")
+})
 
 //@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 //@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)

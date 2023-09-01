@@ -1,8 +1,9 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.base.BaseEntity_Jpa;
+import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.config.JpaConverterListJson;
 import com.alibaba.fastjson.JSONObject;
+import com.mybatisflex.annotation.Column;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -25,8 +26,8 @@ import java.util.List;
 @Setter
 @DynamicInsert
 @DynamicUpdate
-public class SysRoles extends BaseEntity_Jpa {
-    @Column(columnDefinition = "varchar(64) ")
+public class SysRoles extends BaseEntity {
+    // 名称
     private String name;
 
     //角色拥有的菜单列表

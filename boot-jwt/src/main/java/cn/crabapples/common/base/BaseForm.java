@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public abstract class BaseForm<T extends BaseEntity_Jpa> {
+public abstract class BaseForm<T extends BaseEntity> {
     protected String id;
     protected Integer pageIndex;
     protected Integer pageSize;
