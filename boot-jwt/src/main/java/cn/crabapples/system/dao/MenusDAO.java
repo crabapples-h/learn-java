@@ -1,11 +1,11 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.DIC;
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.entity.SysMenus;
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,21 +20,19 @@ import java.util.List;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends BaseDAO<SysMenus, String> {
-    private final MenusMapper mapper;
+public class MenusDAO extends ServiceImpl<MenusMapper, SysMenus> {
     private final RolesMapper rolesMapper;
 
-    public MenusDAO(MenusMapper mapper, RolesMapper rolesMapper) {
+    public MenusDAO(RolesMapper rolesMapper) {
         this.rolesMapper = rolesMapper;
-        this.mapper = mapper;
     }
 
     public SysMenus findById(String id) {
         return mapper.selectOneById(id);
     }
 
-    public int save(SysMenus entity) {
-        return mapper.insertOrUpdate(entity);
+    public boolean save(SysMenus entity) {
+        return saveOrUpdate(entity);
     }
 
     public List<SysMenus> findMenusTree() {

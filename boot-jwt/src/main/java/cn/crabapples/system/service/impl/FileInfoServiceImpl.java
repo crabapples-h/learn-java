@@ -34,14 +34,14 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return 返回上传的文件信息
      */
     @Override
-    public int uploadFile(HttpServletRequest request) {
+    public boolean uploadFile(HttpServletRequest request) {
         MultipartFile multipartFile = getFile(request);
         FileUtils fileUtils = new FileUtils(uploadPath, virtualPath);
         FileInfo fileInfo = fileUtils.saveFile(multipartFile);
         return saveFileInfo(fileInfo);
     }
 
-    private int saveFileInfo(FileInfo fileInfo) {
+    private boolean saveFileInfo(FileInfo fileInfo) {
         return fileInfoDAO.save(fileInfo);
     }
 

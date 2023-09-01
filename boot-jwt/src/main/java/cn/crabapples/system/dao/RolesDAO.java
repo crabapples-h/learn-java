@@ -1,11 +1,11 @@
 package cn.crabapples.system.dao;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.base.BaseDAO;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.entity.SysRoles;
 import cn.crabapples.system.form.RolesForm;
 import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,19 +20,14 @@ import java.util.List;
  * pc-name mrhe
  */
 @Component
-public class RolesDAO extends BaseDAO<SysRoles, String> {
-    private final RolesMapper mapper;
-
-    public RolesDAO(RolesMapper mapper) {
-        this.mapper = mapper;
-    }
+public class RolesDAO extends ServiceImpl<RolesMapper, SysRoles> {
 
     public SysRoles findById(String id) {
         return mapper.selectOneById(id);
     }
 
-    public int save(SysRoles entity) {
-        return mapper.insertOrUpdate(entity);
+    public boolean save(SysRoles entity) {
+        return saveOrUpdate(entity);
     }
 
     public List<SysRoles> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
@@ -50,7 +45,7 @@ public class RolesDAO extends BaseDAO<SysRoles, String> {
     }
 
 
-    public int deleteById(String id) {
-        return mapper.deleteById(id);
+    public boolean deleteById(String id) {
+        return removeById(id);
     }
 }

@@ -9,6 +9,25 @@ logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type.descriptor.sql.BasicBinder: trace
 
+# MyBatis-flux
+# 数据源配置
+#mybatis-flex.datasource:
+# 是否控制台打印 MyBatis-Flex 的 LOGO 及版本号。
+mybatis-flex.global-config.print-banner: true
+# 逻辑删除数据存在标记值
+mybatis-flex.global-config.normal-value-of-logic-delete: 0
+# 逻辑删除数据删除标记值
+mybatis-flex.global-config.deleted-value-of-logic-delete: 1
+mybatis-flex.global-config.logic-delete-column: del_flag
+# mybatis原生配置
+#mybatis-flex.configuration:
+#mybatis-flex.config-location:
+# MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，
+# 注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名（即 XML 中调用的时候不用包含包名）。
+#mybatis-flex.type-aliases-package:
+#mybatis-flex.admin-config:
+#mybatis-flex.seata-config:
+
 spring:
   #----- mongodb -----
   data.mongodb.database: learn

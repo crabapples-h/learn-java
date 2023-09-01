@@ -51,7 +51,7 @@ public class SystemUserController extends BaseController {
     public ResponseDTO addUser(@RequestBody UserForm form) {
         log.info("收到请求->添加用户:[{}]", form);
         super.validator(form, Groups.IsAdd.class);
-        int status = userService.addUser(form);
+        boolean status = userService.addUser(form);
         log.info("返回结果->添加用户->完成:[{}]", status);
         return ResponseDTO.returnSuccess(status);
     }
@@ -61,7 +61,7 @@ public class SystemUserController extends BaseController {
     public ResponseDTO editUser(@RequestBody UserForm form) {
         log.info("收到请求->编辑用户:[{}]", form);
         super.validator(form, Groups.IsEdit.class);
-        int status = userService.editUser(form);
+        boolean status = userService.editUser(form);
         log.info("返回结果->用户编辑完成:[{}]", status);
         return ResponseDTO.returnSuccess(status);
     }

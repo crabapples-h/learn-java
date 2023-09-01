@@ -18,7 +18,7 @@ mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/
 # nacos配置
 nacos.config.server-addr: 192.168.3.20:8848
 # 日志配置
-logging.file.name: /var/logs/springboot-jwt
+logging.file.name: logs/springboot-jwt/
 # 邮件配置
 mail:
   host: smtp.qq.com

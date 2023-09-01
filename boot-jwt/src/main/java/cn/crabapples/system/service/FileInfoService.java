@@ -23,7 +23,7 @@ public interface FileInfoService {
         return multipartRequest.getFile("file");
     }
 
-    int uploadFile(HttpServletRequest request);
+    boolean uploadFile(HttpServletRequest request);
 
     FileInfo getById(String id);
 }

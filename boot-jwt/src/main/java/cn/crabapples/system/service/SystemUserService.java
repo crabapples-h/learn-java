@@ -28,19 +28,19 @@ public interface SystemUserService extends BaseService {
 
     List<SysUser> findAll();
 
-    int addUser(UserForm form);
+    boolean addUser(UserForm form);
 
-    int delUser(String id);
+    boolean delUser(String id);
 
-    int editUser(UserForm form);
+    boolean editUser(UserForm form);
 
-    int lockUser(String id);
+    boolean lockUser(String id);
 
-    int unlockUser(String id);
+    boolean unlockUser(String id);
 
-    int updatePassword(UserForm.ResetPassword form);
+    boolean updatePassword(UserForm.ResetPassword form);
 
-    int resetPassword(UserForm.ResetPassword form);
+    boolean resetPassword(UserForm.ResetPassword form);
 
     SysUser getUserInfo();
 }

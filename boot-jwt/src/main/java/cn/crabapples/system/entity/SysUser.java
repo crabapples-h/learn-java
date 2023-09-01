@@ -2,7 +2,6 @@ package cn.crabapples.system.entity;
 
 import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
@@ -30,7 +29,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@Table("sys_user")
+@Table(value = "sys_user")
 @ToString
 public class SysUser extends BaseEntity {
     // id 为自增主键
@@ -81,7 +80,7 @@ public class SysUser extends BaseEntity {
     // 删除标记 (0:正常 1:删除)
     @Column(isLogicDelete = true)
     @Dict(dictCode = "delFlag")
-    private Integer delFlag;
+    private Boolean delFlag;
 
     //创建人
     @CreatedBy

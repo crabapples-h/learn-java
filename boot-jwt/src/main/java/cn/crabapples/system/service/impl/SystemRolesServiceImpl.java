@@ -74,7 +74,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      * 保存角色
      */
     @Override
-    public int saveRoles(RolesForm form) {
+    public boolean saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
         SysRoles entity = StringUtils.isBlank(form.getId()) ? new SysRoles() : rolesDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
@@ -101,7 +101,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      * 删除角色
      */
     @Override
-    public int removeRoles(String id) {
+    public boolean removeRoles(String id) {
         return rolesDAO.deleteById(id);
     }
 

@@ -25,9 +25,9 @@ public interface SystemRolesService extends BaseService {
 
     Iterable<SysRoles> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form);
 
-    int saveRoles(RolesForm form);
+    boolean saveRoles(RolesForm form);
 
-    int removeRoles(String id);
+    boolean removeRoles(String id);
 
     List<SysRoles> findByMenusId(String id);
 }

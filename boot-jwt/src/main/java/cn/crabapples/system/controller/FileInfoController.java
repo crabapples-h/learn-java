@@ -29,7 +29,7 @@ public class FileInfoController extends BaseController {
     @JwtIgnore
     public ResponseDTO uploadFile(HttpServletRequest request) {
         log.info("收到请求->上传文件");
-        int status = fileInfoService.uploadFile(request);
+        boolean status = fileInfoService.uploadFile(request);
         log.info("返回结果->上传文件结束:[{}]", status);
         return ResponseDTO.returnSuccess("上传成功", status);
     }

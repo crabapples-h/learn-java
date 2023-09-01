@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SystemUserServiceImpl implements SystemUserService {
+public class SystemUserServiceImpl  implements SystemUserService {
     @Value("${isCrypt}")
     private boolean isCrypt;
     private final UserDAO userDAO;
@@ -85,7 +85,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 添加用户
      */
     @Override
-    public int addUser(UserForm form) {
+    public boolean addUser(UserForm form) {
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(form, entity);
         String password;
@@ -95,17 +95,16 @@ public class SystemUserServiceImpl implements SystemUserService {
             password = form.getPassword();
         }
         entity.setPassword(password);
-        entity.setDelFlag(DIC.NOT_DEL);
         entity.setStatus(DIC.USER_LOCK);
 //        entity.setRolesList( form.getRolesList()));
-        return userDAO.save(entity);
+        return userDAO.saveOrUpdate(entity);
     }
 
     /**
      * 删除用户
      */
     @Override
-    public int delUser(String id) {
+    public boolean delUser(String id) {
         return userDAO.delUser(id);
     }
 
@@ -113,7 +112,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 编辑用户
      */
     @Override
-    public int editUser(UserForm form) {
+    public boolean editUser(UserForm form) {
         SysUser entity = userDAO.findById(form.getId());
         BeanUtils.copyProperties(form, entity);
         String password = form.getPassword();
@@ -124,14 +123,14 @@ public class SystemUserServiceImpl implements SystemUserService {
         }
         entity.setPassword(password);
 //        entity.setRolesList(String.join(",", form.getRolesList()));
-        return userDAO.save(entity);
+        return userDAO.saveOrUpdate(entity);
     }
 
     /**
      * 锁定用户
      */
     @Override
-    public int lockUser(String id) {
+    public boolean lockUser(String id) {
         return userDAO.lockUser(id);
     }
 
@@ -139,7 +138,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 解锁用户
      */
     @Override
-    public int unlockUser(String id) {
+    public boolean unlockUser(String id) {
         return userDAO.unlockUser(id);
     }
 
@@ -147,7 +146,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 修改密码
      */
     @Override
-    public int updatePassword(UserForm.ResetPassword form) {
+    public boolean updatePassword(UserForm.ResetPassword form) {
         SysUser user = checkPassword(form);
         String password = form.getOldPassword();
         String newPassword = form.getNewPassword();
@@ -155,7 +154,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (user.getPassword().equals(password)) {
             newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
             user.setPassword(newPassword);
-            return userDAO.save(user);
+            return userDAO.saveOrUpdate(user);
         }
         throw new ApplicationException("密码错误");
     }
@@ -164,13 +163,13 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 重置密码
      */
     @Override
-    public int resetPassword(UserForm.ResetPassword form) {
+    public boolean resetPassword(UserForm.ResetPassword form) {
         SysUser user = checkPassword(form);
         String newPassword = form.getNewPassword();
         AssertUtils.notNull(user, "用户不存在");
         newPassword = MD5.create().digestHex(newPassword.getBytes(StandardCharsets.UTF_8));
         user.setPassword(newPassword);
-        return userDAO.save(user);
+        return userDAO.saveOrUpdate(user);
     }
 
     /**
