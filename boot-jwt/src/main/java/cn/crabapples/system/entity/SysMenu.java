@@ -1,6 +1,5 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.mybatisflex.annotation.*;
@@ -24,7 +23,7 @@ import java.util.List;
  * qq 294046317
  * pc-name root
  */
-@Table("sys_menu")
+@Table(value = "sys_menu", camelToUnderline = true)
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
@@ -34,9 +33,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     private String id;
 
     private String pid;
-
     // 排序
-    @Column(jdbcType = JdbcType.INTEGER)
     private Integer sort;
 
     // 菜单图标
@@ -47,8 +44,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     // 超链接地址
     private String link;
 
-    // 菜单类型 1:目录 2:菜单 3:超链接 4:按钮
-    private int menusType;
+    private Integer menusType;
 
     // 浏览器访问路径(url)
     private String path;
@@ -63,8 +59,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     @RelationOneToMany(selfField = "id", targetField = "pid")
     private List<SysMenu> children;
 
-    @JSONField(serialize = false)
-    private Boolean showFlag;
+    private Integer showFlag;
 
     //创建人
     @CreatedBy
@@ -88,6 +83,6 @@ public class SysMenu extends BaseEntity<SysMenu> {
      */
     // 删除标记 (0:正常 1:删除)
     @Column(isLogicDelete = true, jdbcType = JdbcType.INTEGER)
-    @Dict(dictCode = "delFlag")
+    @JSONField(serialize = false)
     private int delFlag;
 }

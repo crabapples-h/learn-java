@@ -4,7 +4,6 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
-import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemService;
 import io.swagger.annotations.Api;
@@ -12,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -65,9 +63,9 @@ public class SystemDictController extends BaseController {
     }
 
     @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions(HttpServletRequest request) {
+    public ResponseDTO getUserPermissions() {
         log.info("收到请求->获取所有权限列表");
-        List<String> list = sysService.getUserPermissions(request);
+        List<String> list = sysService.getUserPermissions();
         log.info("返回结果->获取权限列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }

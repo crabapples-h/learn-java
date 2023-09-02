@@ -68,10 +68,10 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions(HttpServletRequest request) {
-        log.info("收到请求->获取所有权限列表");
-        List<String> list = sysService.getUserPermissions(request);
-        log.info("返回结果->获取权限列表成功:[{}]", list);
+    public ResponseDTO getUserPermissions() {
+        log.info("收到请求->获取用户权限列表");
+        List<String> list = sysService.getUserPermissions();
+        log.info("返回结果->获取用户权限列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 

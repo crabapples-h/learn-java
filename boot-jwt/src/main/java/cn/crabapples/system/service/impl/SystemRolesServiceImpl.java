@@ -48,6 +48,12 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     }
 
     // 获取当前用户的角色信息
+    public List<SysRole> getUserRoles() {
+        SysUser user = userService.getUserInfo();
+        return rolesDAO.getUserRoles(user.getId());
+    }
+
+    // 获取当前用户的角色信息 DTO
     public List<SysRolesDTO> getUserRolesDTO() {
         SysUser user = userService.getUserInfo();
         return rolesDAO.getUserRolesDTO(user.getId());

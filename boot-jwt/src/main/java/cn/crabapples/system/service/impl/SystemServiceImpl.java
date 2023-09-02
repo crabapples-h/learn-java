@@ -10,6 +10,7 @@ import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
+import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemService;
 import cn.crabapples.system.service.SystemUserService;
@@ -18,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,13 +45,15 @@ public class SystemServiceImpl implements SystemService {
     private boolean isCrypt;
     private final SystemUserService userService;
     private final SystemRolesService rolesService;
+    private final SystemMenusService menusService;
     private final MenusDAO menusDAO;
     private final JwtConfigure jwtConfigure;
 
     public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
-                             MenusDAO menusDAO, JwtConfigure jwtConfigure) {
+                             SystemMenusService menusService, MenusDAO menusDAO, JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.rolesService = rolesService;
+        this.menusService = menusService;
         this.menusDAO = menusDAO;
         this.jwtConfigure = jwtConfigure;
     }
@@ -92,16 +94,20 @@ public class SystemServiceImpl implements SystemService {
 
     /**
      * 获取用户拥有的权限
+     * (权限只针对按钮才有)
      */
     @Override
-    public List<String> getUserPermissions(HttpServletRequest request) {
+    public List<String> getUserPermissions() {
         log.info("获取用户拥有的所有权限");
-        List<String> menusList = getUserMenusIds();
-        if (menusList.isEmpty()) {
-            return Collections.emptyList();
-        }
-        List<SysMenu> buttons = menusDAO.findButtonsByIds1(menusList);
-        return buttons.stream().map(SysMenu::getPermission).collect(Collectors.toList());
+        List<SysRole> userRoleList = rolesService.getUserRoles();
+        List<String> roleIds = userRoleList.stream().map(SysRole::getId).collect(Collectors.toList());
+        List<SysMenu> roleMenuList = menusService.getRoleMenusList(roleIds);
+        return roleMenuList.stream()
+                .filter(e -> {
+                    System.err.println(e);
+                    return DIC.MENUS_TYPE_BUTTON == e.getMenusType();
+                })
+                .map(SysMenu::getPermission).collect(Collectors.toList());
     }
 
     /**
@@ -111,7 +117,7 @@ public class SystemServiceImpl implements SystemService {
         SysUser user = userService.getUserInfo();
 //        String rolesIds = user.getRolesList();
 //        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
-        final List<String> rolesList = user.getRolesList();
+        List<String> rolesList = user.getRolesList();
         if (rolesList.isEmpty()) {
             return Collections.emptyList();
         }

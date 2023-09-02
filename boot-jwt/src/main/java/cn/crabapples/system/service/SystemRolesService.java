@@ -19,6 +19,8 @@ import java.util.List;
  */
 public interface SystemRolesService extends BaseService {
 
+    List<SysRole> getUserRoles();
+
     List<SysRolesDTO> getUserRolesDTO();
 
     List<SysRole> getByIds(List<String> ids);

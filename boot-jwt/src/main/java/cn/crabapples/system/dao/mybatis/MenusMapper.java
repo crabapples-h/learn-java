@@ -13,10 +13,11 @@ public interface MenusMapper extends BaseMapper<SysMenu> {
 
     SysRoleMenus getRoleMenus(@Param("roleId") String id);
 
-    List<SysMenu> findButtonsByIds(@Param("ids") List<String> ids);
-
     List<SysMenu> getUserMenus(@Param("userId") String id);
 
     List<SysMenu> findMenusTree();
 
+    List<SysMenu> getRoleMenusList(@Param("roleId") String id);
+
+    List<SysMenu> getRoleListMenusList(@Param("roleIds") List<String> ids);
 }

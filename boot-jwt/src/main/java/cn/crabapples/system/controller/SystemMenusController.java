@@ -41,7 +41,7 @@ public class SystemMenusController extends BaseController {
     @GetMapping("/user")
     public ResponseDTO getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单列表");
-        List<SysMenu> menus = menusService.getUserMenus();
+        List<SysMenu> menus = menusService.getUserMenusTree();
         log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
@@ -63,7 +63,7 @@ public class SystemMenusController extends BaseController {
     @GetMapping("/role/{id}")
     public ResponseDTO getRoleMenus(@PathVariable String id) {
         log.info("收到请求->获取[角色]菜单列表:[{}]", id);
-        SysRoleMenus entity = menusService.getRoleMenus(id);
+        SysRoleMenus entity = menusService.getRoleMenusTree(id);
         log.info("返回结果->获取[角色]菜单列表成功:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
     }
@@ -75,30 +75,19 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO saveMenus(@RequestBody MenusForm form) {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
-        menusService.saveMenus(form);
-        log.info("返回结果->保存菜单成功");
+        boolean status = menusService.saveMenus(form);
+        log.info("返回结果->保存菜单成功:[{}]", status);
         return ResponseDTO.returnSuccess();
     }
 
     /**
-     * 删除菜单-逻辑
+     * 删除菜单
      */
     @PostMapping("/remove/{id}")
     public ResponseDTO removeMenus(@PathVariable String id) {
-        log.info("收到请求->[逻辑]删除菜单:[{}]", id);
-        menusService.removeMenus(id);
-        log.info("返回结果->[逻辑]删除菜单成功");
-        return ResponseDTO.returnSuccess();
-    }
-
-    /**
-     * 删除菜单-物理(待测试)
-     */
-    @PostMapping("/remove/really/{id}")
-    public ResponseDTO removeReallyMenus(@PathVariable String id) {
-        log.info("收到请求->[物理]删除菜单:[{}]", id);
-        menusService.removeReallyMenus(id);
-        log.info("返回结果->[物理]删除菜单成功");
+        log.info("收到请求->删除菜单:[{}]", id);
+        boolean status = menusService.removeMenus(id);
+        log.info("返回结果->删除菜单成功:[{}]", status);
         return ResponseDTO.returnSuccess();
     }
 

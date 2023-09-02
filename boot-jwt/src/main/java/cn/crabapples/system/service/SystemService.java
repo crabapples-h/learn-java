@@ -1,10 +1,8 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,7 +18,7 @@ public interface SystemService extends BaseService {
 
     String login(UserForm form);
 
-    List<String> getUserPermissions(HttpServletRequest request);
+    List<String> getUserPermissions();
 
     boolean checkUsername(String username);
 

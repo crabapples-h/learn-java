@@ -10,6 +10,7 @@ import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,13 +50,12 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
         return list(wrapper);
     }
 
-
     public List<SysMenu> getUserMenus(String id) {
         return mapper.getUserMenus(id);
     }
 
     /**
-     * 一对多递归查询所有菜单树
+     * 查询所有菜单树 一对多递归
      *
      * @return 菜单树
      */
@@ -71,9 +71,13 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      * @param id 角色id
      * @return 角色拥有的菜单树
      */
-    public SysRoleMenus getRoleMenus(String id) {
+    public SysRoleMenus getRoleMenusTree(String id) {
         SysRoleMenus sysRoleMenus = mapper.getRoleMenus(id);
-        List<SysMenu> tree = convertToTree(sysRoleMenus.getSysMenus());
+        List<SysMenu> roleMenuList = sysRoleMenus.getSysMenus();
+        if (roleMenuList.isEmpty()) {
+            roleMenuList = Collections.emptyList();
+        }
+        List<SysMenu> tree = convertToTree(roleMenuList);
         sysRoleMenus.setSysMenus(tree);
         return sysRoleMenus;
     }
@@ -110,5 +114,15 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
                 }
             }
         }
+    }
+
+    // 获取角色拥有的菜单(包括按钮)
+    public List<SysMenu> getRoleMenusList(String id) {
+        return mapper.getRoleMenusList(id);
+    }
+
+    // 获取角色(多个)拥有的菜单(包括按钮)
+    public List<SysMenu> getRoleMenusList(List<String> ids) {
+        return mapper.getRoleListMenusList(ids);
     }
 }
