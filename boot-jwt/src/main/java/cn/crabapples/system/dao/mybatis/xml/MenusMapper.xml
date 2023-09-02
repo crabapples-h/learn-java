@@ -23,9 +23,45 @@
             <result property="delFlag" column="del_flag"/>
         </collection>
     </resultMap>
-    <!--递归查询菜单树,已经使用DAO中的一对多递归查询的方式代替 -->
-    <!--虽然可以查出来，但是并不会将子集放入children字段中,需要手动构建resultMap-->
-    <select id="findMenusTree" resultType="cn.crabapples.system.entity.SysMenu">
+    <resultMap id="sysMenus" type="cn.crabapples.system.entity.SysMenu">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="sort" column="sort"/>
+        <result property="icon" column="icon"/>
+        <result property="name" column="name"/>
+        <result property="link" column="link"/>
+        <result property="menusType" column="menus_type"/>
+        <result property="path" column="path"/>
+        <result property="filePath" column="file_path"/>
+        <result property="permission" column="permission"/>
+        <result property="path" column="path"/>
+        <result property="showFlag" column="show_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+        <collection property="children" ofType="cn.crabapples.system.entity.SysMenu"
+                    select="findMenusTree" column="{id=id}"/>
+    </resultMap>
+    <!--        <collection property="children" ofType="cn.crabapples.system.entity.SysMenu" resultMap="sysMenus"/>-->
+
+    <!--递归查询菜单树-->
+    <select id="findMenusTree" resultMap="sysMenus">
+        select *
+        from sys_menu
+        where del_flag = 0
+        <choose>
+            <when test="id == null">
+                and pid is null
+            </when>
+            <otherwise>
+                and pid = #{id}
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <select id="findMenusTree1" resultMap="sysMenus">
         with recursive menusTree as (select *
                                      from sys_menu
                                      where pid is null

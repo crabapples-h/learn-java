@@ -3,10 +3,7 @@ package cn.crabapples.system.entity;
 import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,15 +11,17 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 @Setter
 @Getter
-@Table("sys_dict")
+@TableName("sys_dict")
 @ToString
 public class SysDict extends BaseEntity {
     // id 为自增主键
-    @Id(keyType = KeyType.Auto)
+    @TableId(type = ASSIGN_UUID)
     private String id;
 
     //名称
@@ -33,17 +32,17 @@ public class SysDict extends BaseEntity {
     // 创建时间
     @CreatedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onInsertValue = "now()")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     // 更新时间
     @LastModifiedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onUpdateValue = "now()", onInsertValue = "now()")
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
+    @TableLogic
     @Dict(dictCode = "delFlag")
     private Integer delFlag;
 

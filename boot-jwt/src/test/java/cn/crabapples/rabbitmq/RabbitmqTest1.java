@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
-public class RabbitmqTest {
+public class RabbitmqTest1 {
     @Autowired
     RabbitTemplate rabbitTemplate;
 

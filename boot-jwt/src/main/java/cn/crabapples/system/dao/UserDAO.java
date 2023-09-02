@@ -4,8 +4,8 @@ import cn.crabapples.common.ApplicationException;
 import cn.crabapples.system.dao.mybatis.UserMapper;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,24 +14,23 @@ import java.util.List;
 public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
     public List<SysUser> findAll() {
-        return mapper.selectAll();
+        return baseMapper.selectList(new QueryWrapper<>());
     }
 
     public List<SysUser> findAll(UserForm form) {
-        return mapper.selectListByQuery(QueryWrapper.create(form.toEntity()));
+        return baseMapper.selectList(new QueryWrapper<>(form.toEntity()));
     }
 
     public SysUser findOne(UserForm form) {
-        SysUser example = form.toEntity();
-        return getOne(QueryWrapper.create(example));
+        return getOne(new QueryWrapper<>(form.toEntity()));
     }
 
     public SysUser findById(String id) {
-        return mapper.selectOneById(id);
+        return getById(id);
     }
 
     public List<SysUser> findByIds(List<String> ids) {
-        return mapper.selectListByIds(ids);
+        return baseMapper.selectBatchIds(ids);
     }
 
     public boolean delUser(String id) {

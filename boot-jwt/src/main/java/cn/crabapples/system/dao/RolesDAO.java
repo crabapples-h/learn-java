@@ -5,10 +5,11 @@ import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,20 +27,21 @@ import java.util.stream.Collectors;
 public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
 
     public SysRole findById(String id) {
-        return mapper.selectOneById(id);
+        return getById(id);
     }
 
+    @Transactional
     public boolean save(SysRole entity) {
         return saveOrUpdate(entity);
     }
 
     public List<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
-        QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
-        return mapper.selectListByQuery(wrapper);
+        QueryWrapper<SysRole> wrapper = new QueryWrapper<>(form.toEntity());
+        return baseMapper.selectList(wrapper);
     }
 
     public List<SysRole> findByIds(List<String> ids) {
-        return mapper.selectListByIds(ids);
+        return baseMapper.selectBatchIds(ids);
     }
 
     public List<SysRole> findByMenusId(String menusId) {
@@ -61,6 +63,6 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
     }
 
     public List<SysRole> getUserRoles(String id) {
-        return mapper.getUserRoles(id);
+        return baseMapper.getUserRoles(id);
     }
 }

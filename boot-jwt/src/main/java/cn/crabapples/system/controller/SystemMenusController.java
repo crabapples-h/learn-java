@@ -36,13 +36,13 @@ public class SystemMenusController extends BaseController {
     }
 
     /**
-     * 获取[当前用户]菜单列表
+     * 获取[当前用户]菜单树
      */
     @GetMapping("/user")
     public ResponseDTO getUserMenus() {
-        log.info("收到请求->获取[当前用户]菜单列表");
+        log.info("收到请求->获取[当前用户]菜单树");
         List<SysMenu> menus = menusService.getUserMenusTree();
-        log.info("返回结果->获取[当前用户]菜单列表成功:[{}]", menus);
+        log.info("返回结果->获取[当前用户]菜单树:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
 

@@ -1,4 +1,4 @@
-//package cn.crabapples.mybatis.flex;
+package cn.crabapples.mybatis.plus;//package cn.crabapples.mybatis.flex;
 //
 //import cn.crabapples.system.dao.MenusDAO;
 //import cn.crabapples.system.entity.SysMenu;

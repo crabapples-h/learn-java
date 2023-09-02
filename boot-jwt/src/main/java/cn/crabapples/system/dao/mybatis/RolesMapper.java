@@ -1,9 +1,9 @@
 package cn.crabapples.system.dao.mybatis;
 
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.entity.SysRole;
-import com.mybatisflex.core.BaseMapper;
+import cn.crabapples.system.entity.SysRoleMenus;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

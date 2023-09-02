@@ -1,4 +1,4 @@
-package cn.crabapples.datasource;
+package cn.crabapples.mybatis;
 
 import cn.crabapples.test.dao.mybatis.UserMapperTest;
 import cn.crabapples.test.entity.SysUser;

@@ -1,14 +1,9 @@
-package cn.crabapples.spring.rabbitmq;
+package cn.crabapples.rabbitmq;
 
 import com.rabbitmq.client.*;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -20,7 +15,7 @@ import java.util.concurrent.TimeoutException;
  * qq 294046317
  * pc-name 29404
  */
-public class RabbitmqTest {
+public class RabbitmqTest2 {
     private static final String QUEUE_NAME = "test_simple_queue";
 
     public static Connection getConnection() throws IOException, TimeoutException {

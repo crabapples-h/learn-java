@@ -2,7 +2,7 @@ package cn.crabapples.system.dao;
 
 import cn.crabapples.system.dao.mybatis.FileInfoMapper;
 import cn.crabapples.system.entity.FileInfo;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 @Component

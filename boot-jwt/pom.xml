@@ -45,11 +45,19 @@
         <!--        </dependency>-->
 
         <!--mybatis-flex-->
+<!--        <dependency>-->
+<!--            <groupId>com.mybatis-flex</groupId>-->
+<!--            <artifactId>mybatis-flex-spring-boot-starter</artifactId>-->
+<!--            <version>1.6.3</version>-->
+<!--        </dependency>-->
+
+        <!--mybatis-plus-->
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-            <version>1.6.3</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-starter.version}</version>
         </dependency>
+
 
 
         <!--        <dependency>-->

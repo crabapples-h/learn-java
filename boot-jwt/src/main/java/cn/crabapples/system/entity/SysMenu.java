@@ -2,17 +2,18 @@ package cn.crabapples.system.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.mybatisflex.annotation.*;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.apache.ibatis.type.JdbcType;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * TODO 系统菜单
@@ -23,13 +24,12 @@ import java.util.List;
  * qq 294046317
  * pc-name root
  */
-@Table(value = "sys_menu", camelToUnderline = true)
+@TableName(value = "sys_menu")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
 public class SysMenu extends BaseEntity<SysMenu> {
-    // id 为自增主键
-    @Id(keyType = KeyType.Auto)
+    @TableId(type = ASSIGN_UUID)
     private String id;
 
     private String pid;
@@ -55,8 +55,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     // 授权标识
     private String permission;
 
-    //    @Column(ignore = true)
-    @RelationOneToMany(selfField = "id", targetField = "pid")
+    @TableField(exist = false)
     private List<SysMenu> children;
 
     private Integer showFlag;
@@ -68,21 +67,17 @@ public class SysMenu extends BaseEntity<SysMenu> {
     // 创建时间
     @CreatedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onInsertValue = "now()")
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     // 更新时间
     @LastModifiedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onUpdateValue = "now()", onInsertValue = "now()")
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
-    /*
-     * issues 154
-     * 当字段类型被标记为 isLogicDelete ,且为Integer类型时会变成null
-     */
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true, jdbcType = JdbcType.INTEGER)
+    @TableLogic
     @JSONField(serialize = false)
     private int delFlag;
 }

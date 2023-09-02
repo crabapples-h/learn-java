@@ -1,27 +1,21 @@
-package cn.crabapples;//package cn.crabapples;
+//package cn.crabapples;
 //
-//import cn.crabapples.zsqcz.common.Groups;
-//import cn.crabapples.zsqcz.common.base.BaseController;
-//import cn.crabapples.zsqcz.common.config.ApplicationConfigure;
-//import cn.crabapples.zsqcz.common.dto.ResponseDTO;
-//import cn.crabapples.zsqcz.common.utils.jwt.JwtIgnore;
-//import cn.crabapples.zsqcz.system.entity.SysUser;
-//import cn.crabapples.zsqcz.system.entity.WebsocketMessage;
-//import cn.crabapples.zsqcz.system.service.websocket.MessageService;
-//import cn.crabapples.zsqcz.test.form.DemoPostForm1;
-//import cn.crabapples.zsqcz.test.form.DemoPostForm2;
-//import cn.crabapples.zsqcz.test.service.UserServiceTest;
+//import cn.crabapples.common.Groups;
+//import cn.crabapples.common.base.BaseController;
+//import cn.crabapples.common.config.ApplicationConfigure;
+//import cn.crabapples.common.jwt.JwtIgnore;
+//import cn.crabapples.system.entity.WebsocketMessage;
+//import cn.crabapples.system.service.websocket.MessageService;
+//import cn.crabapples.test.form.DemoPostForm1;
+//import cn.crabapples.test.form.DemoPostForm2;
 //import lombok.extern.slf4j.Slf4j;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
-//import org.springframework.amqp.core.AcknowledgeMode;
 //import org.springframework.amqp.core.Message;
-//import org.springframework.amqp.rabbit.core.RabbitTemplate;
 //import org.springframework.validation.BindingResult;
 //import org.springframework.web.bind.annotation.*;
 //
 //import javax.validation.Valid;
-//import java.util.List;
 //
 ///**
 // * TODO 一个演示的controller

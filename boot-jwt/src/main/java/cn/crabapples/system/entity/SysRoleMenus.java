@@ -1,13 +1,14 @@
 package cn.crabapples.system.entity;
 
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+
+import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * TODO 角色菜单实体类
@@ -31,7 +32,7 @@ public class SysRoleMenus {
     }
 
     // id 为自增主键
-    @Id(keyType = KeyType.Auto)
+    @TableId(type = ASSIGN_UUID)
     private String id;
 
     private String name;

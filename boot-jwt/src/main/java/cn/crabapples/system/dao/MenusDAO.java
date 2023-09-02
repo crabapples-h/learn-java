@@ -5,9 +5,10 @@ import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,26 +33,27 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
     }
 
     public SysMenu findById(String id) {
-        return SysMenu.create().setId(id).oneById();
+        return getById(id);
     }
 
+    @Transactional
     public boolean save(SysMenu entity) {
         return saveOrUpdate(entity);
     }
 
     public boolean remove(String id) {
-        return SysMenu.create().setId(id).removeById();
+        return removeById(id);
     }
 
     public List<SysMenu> findButtonsByIds1(List<String> ids) {
-        QueryWrapper wrapper = QueryWrapper.create()
-                .where(SysMenu::getId).in(ids)
-                .where(SysMenu::getMenusType).eq(DIC.MENUS_TYPE_BUTTON);
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(SysMenu::getId, ids)
+                .eq(SysMenu::getMenusType, DIC.MENUS_TYPE_BUTTON);
         return list(wrapper);
     }
 
     public List<SysMenu> getUserMenus(String id) {
-        return mapper.getUserMenus(id);
+        return baseMapper.getUserMenus(id);
     }
 
     /**
@@ -60,9 +62,7 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      * @return 菜单树
      */
     public List<SysMenu> findMenusTree() {
-        QueryWrapper wrapper = QueryWrapper.create()
-                .where(SysMenu::getPid).isNull(true);
-        return mapper.selectListWithRelationsByQuery(wrapper);
+        return baseMapper.findMenusTree(null);
     }
 
     /**
@@ -72,7 +72,7 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      * @return 角色拥有的菜单树
      */
     public SysRoleMenus getRoleMenusTree(String id) {
-        SysRoleMenus sysRoleMenus = mapper.getRoleMenus(id);
+        SysRoleMenus sysRoleMenus = baseMapper.getRoleMenus(id);
         List<SysMenu> roleMenuList = sysRoleMenus.getSysMenus();
         if (roleMenuList.isEmpty()) {
             roleMenuList = Collections.emptyList();
@@ -118,11 +118,11 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
     // 获取角色拥有的菜单(包括按钮)
     public List<SysMenu> getRoleMenusList(String id) {
-        return mapper.getRoleMenusList(id);
+        return baseMapper.getRoleMenusList(id);
     }
 
     // 获取角色(多个)拥有的菜单(包括按钮)
     public List<SysMenu> getRoleMenusList(List<String> ids) {
-        return mapper.getRoleListMenusList(ids);
+        return baseMapper.getRoleListMenusList(ids);
     }
 }

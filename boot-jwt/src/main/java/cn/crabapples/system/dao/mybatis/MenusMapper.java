@@ -2,7 +2,7 @@ package cn.crabapples.system.dao.mybatis;
 
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
-import com.mybatisflex.core.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,7 +15,7 @@ public interface MenusMapper extends BaseMapper<SysMenu> {
 
     List<SysMenu> getUserMenus(@Param("userId") String id);
 
-    List<SysMenu> findMenusTree();
+    List<SysMenu> findMenusTree(@Param("id") String id);
 
     List<SysMenu> getRoleMenusList(@Param("roleId") String id);
 

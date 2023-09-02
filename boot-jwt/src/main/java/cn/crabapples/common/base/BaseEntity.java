@@ -1,7 +1,6 @@
 package cn.crabapples.common.base;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mybatisflex.core.activerecord.Model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
@@ -19,7 +18,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable, Cloneable {
+public abstract class BaseEntity<T> implements Serializable, Cloneable {
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);
@@ -30,7 +29,7 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
         return super.clone();
     }
 
-    public <T> T toDTO(T dto) {
+    public T toDTO(T dto) {
         BeanUtils.copyProperties(this, dto);
         return dto;
     }

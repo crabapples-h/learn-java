@@ -29,6 +29,32 @@
     <artifactId>learn-java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <profiles>
+        <profile>
+            <id>window</id>
+            <properties>
+                <vue-package>yarn.cmd</vue-package>
+                <nacos.server-addr>192.168.3.20:8848</nacos.server-addr>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <vue-package>yarn</vue-package>
+                <nacos.server-addr>192.168.3.20:8848</nacos.server-addr>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <properties>
+                <vue-package>yarn</vue-package>
+                <nacos.server-addr>192.168.3.20:8848</nacos.server-addr>
+            </properties>
+        </profile>
+    </profiles>
 
     <properties>
         <!--基础工具-->
@@ -64,7 +90,8 @@
         <nacos-client.version>1.0.1</nacos-client.version>
         <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
-        <druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
+        <druid-spring-boot-starter.version>1.2.15</druid-spring-boot-starter.version>
+        <mybatis-plus-starter.version>3.5.2</mybatis-plus-starter.version>
         <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
         <spring-websocket.version>5.1.6.RELEASE</spring-websocket.version>
         <!--es-->
@@ -98,6 +125,7 @@
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
+                <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/java</directory>
