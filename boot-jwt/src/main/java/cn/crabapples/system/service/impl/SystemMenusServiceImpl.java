@@ -3,7 +3,6 @@ package cn.crabapples.system.service.impl;
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRole;
-import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
@@ -55,7 +54,8 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     public List<SysMenu> getUserMenusTree() {
         log.info("获取用户拥有的所有菜单");
         SysUser user = userService.getUserInfo();
-        List<String> userMenuList = menusDAO.getUserMenus(user.getId()).stream()
+        List<SysMenu> userMenus = menusDAO.getUserMenus(user.getId());
+        List<String> userMenuList = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
         List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
         List<SysMenu> list = filterRootMenusTree(userMenuList, allRootMenuTree);
@@ -65,7 +65,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
 
     @Override
     public boolean removeMenus(String id) {
-       return menusDAO.remove(id);
+        return menusDAO.remove(id);
     }
 
     /**
@@ -101,24 +101,5 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     }
 
 
-    /**
-     * 根据获取角色菜单树
-     *
-     * @param id 角色id
-     * @return 菜单树
-     */
-    @Override
-    public SysRoleMenus getRoleMenusTree(String id) {
-        return menusDAO.getRoleMenusTree(id);
-    }
 
-    @Override
-    public List<SysMenu> getRoleMenusList(String id) {
-        return menusDAO.getRoleMenusList(id);
-    }
-
-    @Override
-    public List<SysMenu> getRoleMenusList(List<String> ids) {
-        return menusDAO.getRoleMenusList(ids);
-    }
 }

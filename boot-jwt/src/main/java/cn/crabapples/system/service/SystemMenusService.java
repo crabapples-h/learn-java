@@ -42,7 +42,6 @@ public interface SystemMenusService extends BaseService {
      */
     default List<SysMenu> filterRootMenusTree(List<String> userMenuList, List<SysMenu> allMenuTree) {
         return allMenuTree.stream().filter(e -> {
-            System.err.println(e);
             // 判断当前菜单是否被标记删除
             if (DIC.IS_DEL == e.getDelFlag()) {
                 return false;
@@ -70,9 +69,4 @@ public interface SystemMenusService extends BaseService {
 
     boolean removeMenus(String id);
 
-    SysRoleMenus getRoleMenusTree(String id);
-
-    List<SysMenu> getRoleMenusList(String id);
-
-    List<SysMenu> getRoleMenusList(List<String> ids);
 }

@@ -41,7 +41,6 @@ public class SysUser extends BaseEntity<SysUser> {
     private String password;
 
     // 姓名
-    @Dict(dictCode = "test")
     private String name;
 
     // 邮箱

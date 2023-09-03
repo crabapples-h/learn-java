@@ -1,6 +1,7 @@
 package cn.crabapples.common.base;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
@@ -18,7 +19,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public abstract class BaseEntity<T> implements Serializable, Cloneable {
+public abstract class BaseEntity<T extends Model<?>> extends Model<T> implements Serializable, Cloneable {
     @Override
     public String toString() {
         return JSONObject.toJSONString(this);

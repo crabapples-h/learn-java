@@ -11,14 +11,14 @@ logging.level:
 
 # MyBatis-flux
 # 数据源配置
-mybatis-flex.datasource:
-  default:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/learn?useSSL=false&${dataBaseParam}
-    username: root
-    password: root
-mybatis-flex.global-config:
-  print-banner: true
+#mybatis-plus.datasource:
+#  default:
+#    driverClassName: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/learn?useSSL=false&${dataBaseParam}
+#    username: root
+#    password: root
+#mybatis-plus.global-config:
+#  print-banner: true
 # mybatis原生配置
 #mybatis-flex.configuration:
 #mybatis-flex.config-location:

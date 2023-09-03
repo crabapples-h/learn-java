@@ -5,15 +5,11 @@ import cn.crabapples.common.DIC;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
-import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import cn.crabapples.system.service.SystemMenusService;
-import cn.crabapples.system.service.SystemRolesService;
-import cn.crabapples.system.service.SystemService;
-import cn.crabapples.system.service.SystemUserService;
+import cn.crabapples.system.service.*;
 import cn.hutool.crypto.digest.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,16 +41,15 @@ public class SystemServiceImpl implements SystemService {
     private boolean isCrypt;
     private final SystemUserService userService;
     private final SystemRolesService rolesService;
-    private final SystemMenusService menusService;
-    private final MenusDAO menusDAO;
+    private final SystemRoleMenusService roleMenusService;
     private final JwtConfigure jwtConfigure;
 
     public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
-                             SystemMenusService menusService, MenusDAO menusDAO, JwtConfigure jwtConfigure) {
+                             SystemRoleMenusService roleMenusService,
+                             JwtConfigure jwtConfigure) {
         this.userService = userService;
         this.rolesService = rolesService;
-        this.menusService = menusService;
-        this.menusDAO = menusDAO;
+        this.roleMenusService = roleMenusService;
         this.jwtConfigure = jwtConfigure;
     }
 
@@ -101,7 +96,7 @@ public class SystemServiceImpl implements SystemService {
         log.info("获取用户拥有的所有权限");
         List<SysRole> userRoleList = rolesService.getUserRoles();
         List<String> roleIds = userRoleList.stream().map(SysRole::getId).collect(Collectors.toList());
-        List<SysMenu> roleMenuList = menusService.getRoleMenusList(roleIds);
+        List<SysMenu> roleMenuList = roleMenusService.getRoleMenusList(roleIds);
         return roleMenuList.stream()
                 .filter(e -> {
                     System.err.println(e);

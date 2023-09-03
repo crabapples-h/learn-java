@@ -42,7 +42,7 @@ public class SysRole extends BaseEntity<SysRole> {
     private List<SysMenu> menuList;
 
     //角色拥有的权限列表
-    private List<String> permissionList;
+//    private List<String> permissionList;
 
     // 创建时间
     @CreatedDate

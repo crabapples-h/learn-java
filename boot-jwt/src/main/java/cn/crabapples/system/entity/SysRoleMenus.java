@@ -24,13 +24,6 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @ToString
 @NoArgsConstructor
 public class SysRoleMenus {
-    public SysRoleMenus(SysRole role, List<SysMenu> menusList) {
-        this.sysMenus = menusList;
-        this.permissionList = role.getPermissionList();
-        this.name = role.getName();
-        this.setId(role.getId());
-    }
-
     // id 为自增主键
     @TableId(type = ASSIGN_UUID)
     private String id;
@@ -38,7 +31,7 @@ public class SysRoleMenus {
     private String name;
 
     //角色拥有的权限列表
-    private List<String> permissionList;
+//    private List<String> permissionList;
 
     //角色拥有的菜单列表
     private List<SysMenu> sysMenus;

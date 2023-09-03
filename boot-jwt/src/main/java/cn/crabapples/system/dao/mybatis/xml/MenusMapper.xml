@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.crabapples.system.dao.mybatis.MenusMapper">
-    <resultMap id="roleMenus" type="cn.crabapples.system.entity.SysRoleMenus">
-        <id property="id" column="role_id"/>
-        <result property="name" column="role_name"/>
-        <collection property="sysMenus" ofType="cn.crabapples.system.entity.SysMenu">
-            <id property="id" column="id"/>
-            <result property="pid" column="pid"/>
-            <result property="sort" column="sort"/>
-            <result property="icon" column="icon"/>
-            <result property="name" column="name"/>
-            <result property="link" column="link"/>
-            <result property="menusType" column="menus_ype"/>
-            <result property="path" column="path"/>
-            <result property="filePath" column="filePath"/>
-            <result property="permission" column="permission"/>
-            <result property="path" column="path"/>
-            <result property="showFlag" column="show_flag"/>
-            <result property="createBy" column="create_by"/>
-            <result property="createTime" column="create_time"/>
-            <result property="updateTime" column="update_time"/>
-            <result property="delFlag" column="del_flag"/>
-        </collection>
-    </resultMap>
     <resultMap id="sysMenus" type="cn.crabapples.system.entity.SysMenu">
         <id property="id" column="id"/>
         <result property="pid" column="pid"/>
@@ -73,16 +51,6 @@
         from menusTree;
     </select>
 
-    <select id="getRoleMenus" resultMap="roleMenus">
-        select role.id   as role_id,
-               role.name as role_name,
-               sm.*
-        from sys_role as role
-                 left join sys_role_menus srm on role.id = srm.role_id
-                 left join sys_menu sm on srm.menu_id = sm.id
-        where role.id = #{roleId}
-    </select>
-
     <select id="getUserMenus" resultType="cn.crabapples.system.entity.SysMenu">
         select distinct sys_menu.*
         from sys_user
@@ -91,25 +59,5 @@
                  INNER JOIN sys_menu on sys_menu.id = sys_role_menus.menu_id
         where sys_user.id = #{userId}
     </select>
-
-    <select id="getRoleMenusList" resultType="cn.crabapples.system.entity.SysMenu">
-        select sm.*
-        from sys_role as role
-                 left join sys_role_menus srm on role.id = srm.role_id
-                 left join sys_menu sm on srm.menu_id = sm.id
-        where role.id = #{roleId}
-    </select>
-
-    <select id="getRoleListMenusList" resultType="cn.crabapples.system.entity.SysMenu">
-        select sm.*
-        from sys_role as role
-        left join sys_role_menus srm on role.id = srm.role_id
-        left join sys_menu sm on srm.menu_id = sm.id
-        where role.id in
-        <foreach collection="roleIds" open="(" close=")" separator="," item="item">
-            #{item}
-        </foreach>
-    </select>
-
 
 </mapper>

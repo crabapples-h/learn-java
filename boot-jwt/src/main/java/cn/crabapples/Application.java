@@ -1,5 +1,6 @@
 package cn.crabapples;
 
+import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,7 +50,13 @@ import org.springframework.web.client.RestTemplate;
 //        @MapperScan("cn.crabapples.custom.dao"),
         @MapperScan("cn.crabapples.system.dao")
 })
-@ComponentScan(basePackages = {"cn.crabapples"})
+
+
+
+@ComponentScan(basePackages = {"cn.crabapples"}, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+                classes = {DynamicDataSourceRegister.class}),
+})
 //@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
 //@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
 //@PropertySources({

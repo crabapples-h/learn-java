@@ -1,12 +1,13 @@
 package cn.crabapples.system.controller;
 
 import cn.crabapples.common.Groups;
-import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.ResponseDTO;
+import cn.crabapples.common.base.BaseController;
 import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
+import cn.crabapples.system.service.SystemRoleMenusService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,11 @@ import java.util.List;
 public class SystemMenusController extends BaseController {
 
     private final SystemMenusService menusService;
+    private final SystemRoleMenusService roleMenusService;
 
-    public SystemMenusController(SystemMenusService menusService) {
+    public SystemMenusController(SystemMenusService menusService, SystemRoleMenusService roleMenusService) {
         this.menusService = menusService;
+        this.roleMenusService = roleMenusService;
     }
 
     /**
@@ -63,7 +66,7 @@ public class SystemMenusController extends BaseController {
     @GetMapping("/role/{id}")
     public ResponseDTO getRoleMenus(@PathVariable String id) {
         log.info("收到请求->获取[角色]菜单列表:[{}]", id);
-        SysRoleMenus entity = menusService.getRoleMenusTree(id);
+        SysRoleMenus entity = roleMenusService.getRoleMenusTree(id);
         log.info("返回结果->获取[角色]菜单列表成功:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
     }

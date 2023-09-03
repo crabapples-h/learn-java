@@ -79,5 +79,5 @@ public class SysMenu extends BaseEntity<SysMenu> {
     // 删除标记 (0:正常 1:删除)
     @TableLogic
     @JSONField(serialize = false)
-    private int delFlag;
+    private Integer delFlag;
 }

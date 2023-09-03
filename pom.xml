@@ -90,7 +90,7 @@
         <nacos-client.version>1.0.1</nacos-client.version>
         <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
-        <druid-spring-boot-starter.version>1.2.15</druid-spring-boot-starter.version>
+        <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
         <mybatis-plus-starter.version>3.5.2</mybatis-plus-starter.version>
         <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
         <spring-websocket.version>5.1.6.RELEASE</spring-websocket.version>

@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -77,7 +76,7 @@ public class SystemController extends BaseController {
 
     @GetMapping("/userInfo")
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo(HttpServletRequest request) {
+    public ResponseDTO getUserInfo() {
         log.info("收到请求->获取当前用户信息");
         SysUser entity = userService.getUserInfo();
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);

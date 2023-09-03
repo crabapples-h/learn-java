@@ -11,8 +11,12 @@
           <a-input v-model="form.roles.name"/>
         </a-form-model-item>
         <a-form-model-item label="菜单">
-          <a-tree-select :tree-data="menusOptions" v-model="form.roles.menusList" tree-checkable
-                         :show-checked-strategy="SHOW_TYPE" :show-line="show.treeLine" :checkStrictly="false"/>
+          <a-tree-select :tree-data="menusOptions"
+                         v-model="form.roles.menusList"
+                         tree-checkable
+                         :show-checked-strategy="SHOW_TYPE"
+                         :show-line="show.treeLine"
+                         :checkStrictly="false"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -21,7 +25,9 @@
       </div>
     </a-drawer>
     <a-modal :visible.sync="show.menus" width="50%" :footer="null" @cancel="closeShowMenus">
-      <a-table :data-source="menusDataSource" key="id" :columns="menusColumns" :pagination="false">
+      <a-table :data-source="menusDataSource"
+               :columns="menusColumns"
+               :pagination="false">
         <span slot="icon" slot-scope="text, record">
         <a-icon :type='text.substring(text.indexOf("\"") + 1,text.lastIndexOf("\"")) || "appstore"'/>
       </span>
@@ -129,6 +135,9 @@ export default {
   mounted() {
   },
   methods: {
+    rowKeyCreate() {
+      return Math.random()
+    },
     resetRolesForm() {
       this.form.roles = {
         id: '',
@@ -164,11 +173,12 @@ export default {
         let ids = []
         console.log(result.data.sysMenus)
         this.formatDefaultMenusOption(ids, result.data.sysMenus)
+        this.form.roles.menusList = ids
         this.show.roles = true
+        console.log(this.form.roles.menusList)
       })
       // let ids = []
       // this.formatDefaultMenusOption(ids, e.sysMenus)
-      // this.form.roles.menusList = ids
       // this.show.roles = true
     },
     closeRolesForm() {
@@ -218,9 +228,8 @@ export default {
         if (children.length >= 0) {
           this.formatDefaultMenusOption(ids, children)
         }
-        if (e.delFlag === 0) {
-          ids.push(e.id)
-        }
+        console.log(e.id)
+        ids.push(e.id)
       })
     },
 
@@ -228,6 +237,7 @@ export default {
       const format = function (data) {
         return data.map(e => {
           let menus = {
+            id: e.id,
             key: e.id,
             name: e.name,
             icon: e.icon,
