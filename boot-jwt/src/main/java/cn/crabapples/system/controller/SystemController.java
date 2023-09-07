@@ -28,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/system/")
 @Slf4j
-@Api("系统管理")
+@Api("系统功能")
 public class SystemController extends BaseController {
 
     private final SystemUserService userService;

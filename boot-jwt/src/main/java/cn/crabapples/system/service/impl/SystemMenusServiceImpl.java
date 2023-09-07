@@ -8,6 +8,7 @@ import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemUserService;
+import cn.crabapples.test.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -52,14 +53,15 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
     public List<SysMenu> getUserMenusTree() {
-        log.info("获取用户拥有的所有菜单");
+        log.debug("获取用户拥有的所有菜单");
         SysUser user = userService.getUserInfo();
         List<SysMenu> userMenus = menusDAO.getUserMenus(user.getId());
-        List<String> userMenuList = userMenus.stream()
+        List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
         List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
-        List<SysMenu> list = filterRootMenusTree(userMenuList, allRootMenuTree);
-        log.info("用户拥有的所有菜单[{}]", list);
+        Utils.saveObj(allRootMenuTree,"allRootMenuTree");
+        List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
+        log.debug("用户拥有的所有菜单[{}]", list);
         return list;
     }
 

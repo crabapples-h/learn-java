@@ -2,12 +2,10 @@ package cn.crabapples.common.config;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 import java.lang.reflect.Method;
@@ -21,8 +19,8 @@ import java.lang.reflect.Method;
  * qq 294046317
  * pc-name 29404
  */
-@Aspect
-@Configuration
+//@Aspect
+//@Configuration
 @Order(50)
 public class AopConfigure {
     private static final Logger logger = LoggerFactory.getLogger(AopConfigure.class);

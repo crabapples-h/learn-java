@@ -1,6 +1,5 @@
 package cn.crabapples.system.entity;
 
-import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;

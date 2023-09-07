@@ -26,7 +26,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
     }
 
     public SysUser findById(String id) {
-        return getById(id);
+        return baseMapper.selectById(id);
     }
 
     public List<SysUser> findByIds(List<String> ids) {

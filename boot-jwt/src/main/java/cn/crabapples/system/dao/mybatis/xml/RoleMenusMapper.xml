@@ -63,5 +63,24 @@
         </foreach>
     </select>
 
-
+<insert id="a">
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','00eed5e8-a8df-4f6d-b758-c6bf8af47a37');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','828e0ec3-69c1-4eac-8d19-339f7b3fb917');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','950cc9fc-08e0-434e-ac57-4f3d66680ef0');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','4bfb47b0-1235-40da-ab56-8fb5863957fa');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','54bc1606-8c0e-4824-9e37-d25744d10550');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','c717739f-cef5-4b02-bbd5-f865fc1c2061');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','df83b0c9-7d96-448a-a337-8e85664dce0e');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','eefb0cb6-a1d5-40e9-922c-e5ada9ac510e');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','4e5aae5a-1a1e-4b64-89a8-3dae010ec2e5');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','b5ae23e0-c026-443f-b316-8f67eafa8fd8');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','f2e2258b-0ef5-4175-948e-dfdec4185785');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','28da4001-5f34-4174-a29d-151b5567ff3d');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','3aaf0b5c-5d08-4e72-8ab3-869388525b6d');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','73e3102d-5319-45c6-a3d2-156524aed6f1');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','cb983e73-af3a-4369-8c47-f83984642df3');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','47ef4177-39ee-40ff-b587-d108ca4db764');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','8a475740-d314-4885-aebd-100b22ddf625');
+    insert into  sys_role_menus values ('37276b55-dc6a-49d5-9ae3-271e1783d442','dee9ad90-08e2-4792-8c09-fe6d8b5d04cb');
+</insert>
 </mapper>

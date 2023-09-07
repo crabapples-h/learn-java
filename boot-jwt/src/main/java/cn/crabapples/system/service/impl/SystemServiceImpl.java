@@ -1,7 +1,7 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.DIC;
+import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
@@ -9,7 +9,10 @@ import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
-import cn.crabapples.system.service.*;
+import cn.crabapples.system.service.SystemRoleMenusService;
+import cn.crabapples.system.service.SystemRolesService;
+import cn.crabapples.system.service.SystemService;
+import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +47,7 @@ public class SystemServiceImpl implements SystemService {
     private final SystemRoleMenusService roleMenusService;
     private final JwtConfigure jwtConfigure;
 
+
     public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
                              SystemRoleMenusService roleMenusService,
                              JwtConfigure jwtConfigure) {
@@ -52,6 +56,8 @@ public class SystemServiceImpl implements SystemService {
         this.roleMenusService = roleMenusService;
         this.jwtConfigure = jwtConfigure;
     }
+
+
 
     /**
      * Cacheable

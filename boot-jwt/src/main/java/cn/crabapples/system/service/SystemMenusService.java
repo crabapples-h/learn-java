@@ -1,9 +1,8 @@
 package cn.crabapples.system.service;
 
-import cn.crabapples.common.DIC;
+import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 
 import java.util.List;
@@ -42,14 +41,15 @@ public interface SystemMenusService extends BaseService {
      */
     default List<SysMenu> filterRootMenusTree(List<String> userMenuList, List<SysMenu> allMenuTree) {
         return allMenuTree.stream().filter(e -> {
+            System.err.println(e);
             // 判断当前菜单是否被标记删除
             if (DIC.IS_DEL == e.getDelFlag()) {
                 return false;
             }
             // 判断当前菜单是否是按钮
-            if (DIC.MENUS_TYPE_BUTTON == e.getMenusType()) {
-                return false;
-            }
+//            if (DIC.MENUS_TYPE_BUTTON == e.getMenusType()) {
+//                return false;
+//            }
             // children可能为null
             List<SysMenu> children = e.getChildren();
             e.setChildren(filterRootMenusTree(userMenuList, children));

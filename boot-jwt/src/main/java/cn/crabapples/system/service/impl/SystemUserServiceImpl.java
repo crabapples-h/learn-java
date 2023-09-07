@@ -1,7 +1,7 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.DIC;
+import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;

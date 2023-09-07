@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 @RestController
-@Api("系统管理[菜单]")
+@Api("系统接口[菜单]")
 @Slf4j
 @RequestMapping("/api/system/menus")
 public class SystemMenusController extends BaseController {
@@ -45,7 +45,7 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单树");
         List<SysMenu> menus = menusService.getUserMenusTree();
-        log.info("返回结果->获取[当前用户]菜单树:[{}]", menus);
+//        log.info("返回结果->获取[当前用户]菜单树:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
 

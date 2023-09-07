@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@Api("系统管理")
+@Api("系统接口[字典]")
 @Slf4j
 @RequestMapping("/api/system/dict")
 public class SystemDictController extends BaseController {

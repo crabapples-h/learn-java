@@ -1,5 +1,6 @@
 package cn.crabapples.common;
 
+import cn.crabapples.common.dic.DIC;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,7 +57,7 @@ public class ResponseDTO implements Serializable {
     }
 
     public static ResponseDTO returnSuccess() {
-        return returnSuccess(DIC.BASE_SUCCESS_MESSAGE, null);
+        return returnSuccess(cn.crabapples.common.dic.DIC.BASE_SUCCESS_MESSAGE, null);
     }
 
 

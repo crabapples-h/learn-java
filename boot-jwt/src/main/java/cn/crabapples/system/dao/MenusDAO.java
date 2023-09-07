@@ -1,6 +1,6 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.DIC;
+import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

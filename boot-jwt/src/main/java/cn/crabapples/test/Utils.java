@@ -12,8 +12,8 @@ import java.io.*;
  * pc-name 29404
  */
 public class Utils {
-    public static void saveObj(Object obj, String f) {
-        File file = new File("d:/" + f);
+    public static void saveObj(Object obj, String name) {
+        File file = new File("d:/" + name);
         try {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(obj);
@@ -24,8 +24,8 @@ public class Utils {
         }
     }
 
-    public static Object readObj(String f) {
-        File file = new File("d:/" + f);
+    public static Object readObj(String name) {
+        File file = new File("d:/" + name);
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
             return ois.readObject();

@@ -1,4 +1,4 @@
-package cn.crabapples.common;
+package cn.crabapples.common.dic;
 
 /**
  * TODO 字典信息
