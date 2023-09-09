@@ -3,9 +3,10 @@ package cn.crabapples.system.controller;
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.form.UserForm;
 import cn.crabapples.system.service.SystemUserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -38,31 +39,36 @@ public class SystemUserController extends BaseController {
      * 获取[分页]用户列表
      */
     @GetMapping("/page")
-    @ApiOperation(value = "获取[分页]用户列表", notes = "获取[分页]用户列表接口")
-    public ResponseDTO getUserPage() {
-        log.info("收到请求->获取[分页]用户列表");
-        List<SysUser> list = userService.findAll();
-        log.info("返回结果->获取[分页]用户列表->完成:[{}]", list);
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    public ResponseDTO getUserPage(
+            @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            UserForm form) {
+        log.info("收到请求->获取用户列表:[{}]", form);
+        IPage<SysUserDTO> list = userService.findAll(pageIndex, pageSize, form);
+        log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
-    @PostMapping("/add")
-    @ApiOperation(value = "添加用户", notes = "添加用户接口")
-    public ResponseDTO addUser(@RequestBody UserForm form) {
-        log.info("收到请求->添加用户:[{}]", form);
-        super.validator(form, Groups.IsAdd.class);
-        boolean status = userService.addUser(form);
-        log.info("返回结果->添加用户->完成:[{}]", status);
-        return ResponseDTO.returnSuccess(status);
+    /**
+     * 获取[不分页]用户列表
+     */
+    @GetMapping("/list")
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    public ResponseDTO getUserList(UserForm form) {
+        log.info("收到请求->获取用户列表:[{}]", form);
+        List<SysUserDTO> list = userService.findAll(form);
+        log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
     }
 
-    @PostMapping("/edit")
-    @ApiOperation(value = "编辑用户", notes = "编辑用户接口")
-    public ResponseDTO editUser(@RequestBody UserForm form) {
-        log.info("收到请求->编辑用户:[{}]", form);
-        super.validator(form, Groups.IsEdit.class);
-        boolean status = userService.editUser(form);
-        log.info("返回结果->用户编辑完成:[{}]", status);
+    @PostMapping("/save")
+    @ApiOperation(value = "保存用户", notes = "保存用户接口")
+    public ResponseDTO saveUser(@RequestBody UserForm form) {
+        log.info("收到请求->保存用户:[{}]", form);
+        super.validator(form, Groups.IsAdd.class);
+        boolean status = userService.saveUser(form);
+        log.debug("返回结果->添加用户->完成:[{}]", status);
         return ResponseDTO.returnSuccess(status);
     }
 

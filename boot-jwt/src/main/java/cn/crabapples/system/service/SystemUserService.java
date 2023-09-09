@@ -1,8 +1,10 @@
 package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;
 
@@ -20,19 +22,17 @@ public interface SystemUserService extends BaseService {
 
     SysUser findById(String id);
 
-    List<SysUser> findById(List<String> ids);
+    List<SysUser> findByIds(List<String> ids);
 
-    List<SysUser> findByName(String name);
+    List<SysUserDTO> findByName(String name);
 
     SysUser findByUsername(String username);
 
-    List<SysUser> findAll();
+    IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form);
 
-    boolean addUser(UserForm form);
+    List<SysUserDTO> findAll(UserForm form);
 
     boolean delUser(String id);
-
-    boolean editUser(UserForm form);
 
     boolean lockUser(String id);
 
@@ -43,4 +43,6 @@ public interface SystemUserService extends BaseService {
     boolean resetPassword(UserForm.ResetPassword form);
 
     SysUser getUserInfo();
+
+    boolean saveUser(UserForm form);
 }

@@ -2,11 +2,9 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.system.dao.MenusDAO;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
-import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.crabapples.test.Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -32,15 +30,13 @@ import java.util.stream.Collectors;
 public class SystemMenusServiceImpl implements SystemMenusService {
     private final HttpServletRequest request;
     private final SystemUserService userService;
-    private final SystemRolesService rolesService;
     private final MenusDAO menusDAO;
 
     public SystemMenusServiceImpl(HttpServletRequest request, MenusDAO menusDAO,
-                                  SystemUserService userService, SystemRolesService rolesService) {
+                                  SystemUserService userService) {
         this.request = request;
         this.menusDAO = menusDAO;
         this.userService = userService;
-        this.rolesService = rolesService;
     }
 
     /**
@@ -59,7 +55,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
         List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
-        Utils.saveObj(allRootMenuTree,"allRootMenuTree");
+        Utils.saveObj(allRootMenuTree, "allRootMenuTree");
         List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
         log.debug("用户拥有的所有菜单[{}]", list);
         return list;
@@ -89,19 +85,4 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         sysMenus = filterMenusByDelFlag(sysMenus);
         return sysMenus;
     }
-
-
-    /**
-     * 删除菜单后将所拥有该菜单的角色中把该菜单移除
-     */
-    void removeRolesMenus(String id) {
-        List<SysRole> sysRoles = rolesService.findByMenusId(id);
-        sysRoles.forEach(e -> {
-//            e.getMenusIds().remove(id);
-//            rolesService.saveRoles(e);
-        });
-    }
-
-
-
 }

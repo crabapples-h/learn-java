@@ -109,7 +109,6 @@ function forestToList(forest) {
   function traverse(node) {
     if (node.hasOwnProperty('path')) {
       if (node.menusType !== 2) {
-        console.log(node)
         result.push({
           path: node.path,
           component: resolve => require([`@/views/${node.filePath}.vue`], resolve),

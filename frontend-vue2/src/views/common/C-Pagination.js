@@ -1,18 +1,5 @@
-const CPagination = {
-  pageSize: 10,
-  pageSizeOptions: ['10', '20', '30', '40'],
-  total: 10,
-  size: 'middle',
-  showSizeChanger: true,
-  buildOptionText: (({ value }) => {
-    return `${value}条/页`
-  }),
-  onChange: null,
-  onShowSizeChange: null,
-}
-
 export function initCPagination(changeIndex, changeSize) {
-  let CPagination = {
+  return {
     pageSize: 10,
     pageSizeOptions: ['10', '20', '30', '40'],
     total: 10,
@@ -22,11 +9,8 @@ export function initCPagination(changeIndex, changeSize) {
     buildOptionText: (({ value }) => {
       return `${value}条/页`
     }),
-    onChange: null,
-    onShowSizeChange: null,
+    onChange: changeIndex,
+    onShowSizeChange: changeSize,
   }
-  CPagination.onChange = changeIndex
-  CPagination.onShowSizeChange = changeSize
-  return CPagination
 }
 

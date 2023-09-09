@@ -28,14 +28,14 @@ const commonApi = {
   //获取用户拥有的角色
   getUserRoles() {
     return instance({
-      url: SysApis.userRoleList,
+      url: SysApis.userRoles,
       method: 'get',
     })
   },
   //获取用户拥有的菜单，并根据菜单生成路由表
   getUserMenus() {
     return instance({
-      url: SysApis.menus,
+      url: SysApis.menusUser,
       method: 'get',
     })
   },

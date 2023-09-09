@@ -8,7 +8,7 @@
           <a-input v-model="form.userInfo.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.userInfo.username" :disabled="form.type===1" placeholder="请输入用户名"
+          <a-input v-model="form.userInfo.username" :disabled="show.isEdit" placeholder="请输入用户名"
                    @blur="checkUsername"/>
         </a-form-model-item>
         <a-form-model-item label="姓名" prop="name">
@@ -23,22 +23,17 @@
         <a-form-model-item label="电话" prop="phone">
           <a-input v-model="form.userInfo.phone" placeholder="请输入电话号码"/>
         </a-form-model-item>
-        <a-form-model-item label="密码" prop="password">
-          <a-input v-model="form.userInfo.password" placeholder="请输入密码"/>
+        <a-form-model-item label="新密码">
+          <a-input v-model="form.userInfo.newPassword" placeholder="请输入新密码"/>
         </a-form-model-item>
-        <span v-if="form.userInfo.role === 0">
-          <a-form-model-item label="权限" prop="role">
-            <a-radio-group v-model="form.userInfo.role" default-value="2">
-              <a-radio value="1">科研管理员</a-radio>
-              <a-radio value="2">科研人员</a-radio>
-            </a-radio-group>
-          </a-form-model-item>
-        </span>
-        <a-form-model-item label="角色" prop="tags">
-          <a-select mode="multiple" v-model="form.userInfo.rolesList" placeholder="请选择角色">
-            <a-select-option v-for="item in rolesOptions" :key="item.id">
-              {{ item.name }}
-            </a-select-option>
+        <a-form-model-item label="重复密码">
+          <a-input v-model="form.userInfo.againPassword" placeholder="请输入重复密码"/>
+        </a-form-model-item>
+        <a-form-model-item label="角色">
+          <a-select mode="multiple"
+                    v-model="form.userInfo.roleList"
+                    placeholder="请选择角色"
+                    :options="roleOptions">
           </a-select>
         </a-form-model-item>
       </a-form-model>
@@ -68,7 +63,8 @@
       </span>
       <span slot="action" slot-scope="text, record">
         <span v-if="record.role !== 0">
-          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary" v-if="record.status === 0"
+          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary"
+                        v-if="record.status === 0"
                         v-auth:sys:user:lock/>
           <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"
                         v-auth:sys:user:unlock/>
@@ -80,7 +76,8 @@
         </span>
         <a-button type="primary" size="small" @click="editUser(record)" v-auth:sys:user:edit>编辑</a-button>
         <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="showResetPassword(record)" v-auth:sys:user:reset>重置密码</a-button>
+        <a-button type="primary" size="small" @click="showResetPassword(record)"
+                  v-auth:sys:user:reset>重置密码</a-button>
       </span>
     </a-table>
   </div>
@@ -88,57 +85,14 @@
 
 <script>
 
-import CPopButton from "@/components/c-pop-button";
-import CButton from "@/components/c-button";
-import {initCPagination} from "@/views/common/C-Pagination";
-import {SysApis} from "@/api/Apis";
+import { SysApis } from '@/api/Apis'
+import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
-  name: "user-list",
-  components: {
-    CButton,
-    CPopButton,
-  },
+  name: 'user-list',
+  mixins: [SystemMinix],
   data() {
     return {
-      rules: {
-        username: [
-          {required: true, message: '请输入用户名', trigger: 'change'},
-          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
-          {whitespace: true, message: '请输入用户名', trigger: 'change'}
-        ],
-        name: [
-          {required: true, message: '请输入名称', trigger: 'change'},
-          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
-          {whitespace: true, message: '请输入名称', trigger: 'change'}
-        ],
-        age: [
-          {required: true, message: '请输入年龄', trigger: 'change'},
-        ],
-        mail: [
-          {required: true, message: '请输入邮箱', trigger: 'change'},
-          {whitespace: true, message: '请输入邮箱', trigger: 'change'}
-        ],
-        phone: [
-          {required: true, message: '请输入电话', trigger: 'change'},
-          {whitespace: true, message: '请输入电话', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
-        ],
-        role: [
-          {required: true, message: '请选择角色', trigger: 'change'},
-        ],
-        password:[],
-        newPassword: [
-          {required: true, message: '请输入密码', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
-          {whitespace: true, message: '请输入密码', trigger: 'change'}
-        ],
-        againPassword: [
-          {required: true, message: '请重复输入密码', trigger: 'change'},
-          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
-          {whitespace: true, message: '请重复输入密码', trigger: 'change'}
-        ],
-      },
       columns: [
         {
           dataIndex: 'username',
@@ -166,31 +120,19 @@ export default {
           key: 'phone',
         },
         {
-          dataIndex: 'role',
-          title: '角色',
-          key: 'role',
-          scopedSlots: {customRender: 'role'}
-        },
-        {
           dataIndex: 'status',
           title: '状态',
           key: 'status',
-          scopedSlots: {customRender: 'status'}
+          scopedSlots: { customRender: 'status' }
         },
         {
           title: '操作',
           key: 'action',
-          scopedSlots: {customRender: 'action'},
+          scopedSlots: { customRender: 'action' },
         },
       ],
-      dataSource: [],
-      pagination: initCPagination(this.changeIndex, this.changeSize),
-      count: 0,
-      labelCol: {span: 5},
-      wrapperCol: {span: 16},
-      rolesOptions: [],
+      roleOptions: [],
       form: {
-        type: 0,
         userInfo: {
           id: '',
           username: '',
@@ -198,9 +140,9 @@ export default {
           age: '',
           mail: '',
           phone: '',
-          role: 1,
-          status: null,
-          rolesList: [],
+          roleList: [],
+          newPassword: '',
+          againPassword: '',
         },
         resetPassword: {
           id: '',
@@ -212,118 +154,105 @@ export default {
         tags: false,
         userInfo: false,
         resetPassword: false,
+        isEdit: false,
       },
-    };
+      url: {
+        list: SysApis.userPage,
+        save: SysApis.saveUser,
+        lock: SysApis.lockUser,
+        unlock: SysApis.unlockUser,
+        delete: SysApis.delUser,
+        userRoles: SysApis.userRoles,
+        roleList: SysApis.roleList,
+      },
+    }
   },
   activated() {
-    this.getList()
   },
   mounted() {
+    this.getRoleList()
   },
   methods: {
-    changeIndex(pageIndex, pageSize) {
-      let page = {
-        pageIndex: pageIndex,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
-    changeSize(current, pageSize) {
-      let page = {
-        pageIndex: current,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
-    getRolesList() {
-      this.$http.get(SysApis.rolesList).then(result => {
+    getRoleList() {
+      this.$http.get(this.url.roleList).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
-        if (result.data !== null) {
-          this.rolesOptions = result.data;
-        }
+        this.roleOptions = result.data.map(e => {
+          return {
+            label: e.name,
+            value: e.id,
+          }
+        })
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    },
-    refreshData() {
-      this.getList()
-    },
-    getList(page) {
-      this.$http.get(SysApis.userListPage, {params: page}).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
-        }
-        if (result.data !== null) {
-          this.dataSource = result.data;
-          this.pagination.total = result.page.dataCount
-          this.pagination.current = result.page.pageIndex + 1
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     lockUser(e) {
-      this.$http.post(`${SysApis.lockUser}/${e.id}`).then(result => {
+      this.$http.post(`${this.url.lock}/${e.id}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
+          this.$message.error(result.message)
           return
         }
         this.refreshData()
         this.$message.success(result.message)
       }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
+        console.log('请求出现错误:', error)
+      })
     },
     unlockUser(e) {
-      this.$http.post(`${SysApis.unlockUser}/${e.id}`).then(result => {
+      this.$http.post(`${this.url.unlock}/${e.id}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
+          this.$message.error(result.message)
           return
         }
         this.refreshData()
         this.$message.success(result.message)
       }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
+        console.log('请求出现错误:', error)
+      })
     },
     removeUser(e) {
-      const _this = this;
+      const _this = this
       this.$confirm({
         title: '确认操作?',
         cancelText: '取消',
         okText: '确定',
         onOk() {
-          _this.$http.post(`${SysApis.delUser}/${e.id}`).then(result => {
+          _this.$http.post(`${_this.url.delete}/${e.id}`).then(result => {
             if (result.status !== 200) {
-              _this.$message.error(result.message);
+              _this.$message.error(result.message)
               return
             }
             _this.$message.success(result.message)
-            _this.this.refreshData()
+            _this.refreshData()
           }).catch(function (error) {
-            console.log('请求出现错误:', error);
-          });
+            console.log('请求出现错误:', error)
+          })
         },
-      });
+      })
     },
     addUser() {
-      this.form.type = 0
-      this.getRolesList()
+      this.show.isEdit = false
       this.show.userInfo = true
     },
     editUser(e) {
-      this.form.type = 1
+      this.show.isEdit = true
       this.form.userInfo = e
-      this.form.userInfo.rolesList = e.rolesList.map(r => {
-        return r.id
+      this.$http.get(`${this.url.userRoles}/${e.id}`).then(result => {
+        if (result.status !== 200) {
+          this.$message.error(result.message)
+          return
+        }
+        this.$set(this.form.userInfo, 'roleList', result.data.map(r => {
+          return r.id
+        }))
+      }).catch(function (error) {
+        console.error('出现错误:', error)
       })
-      console.log(this.form.userInfo.rolesList)
-      this.getRolesList()
       this.show.userInfo = true
+
     },
     closeForm() {
       this.form.userInfo = {
@@ -333,34 +262,33 @@ export default {
         mail: '',
         role: null,
         status: null,
-        tags: [],
       }
       this.show.userInfo = false
       this.refreshData()
     },
     submitForm() {
-      let url = this.form.type === 0 ? SysApis.addUser : SysApis.editUser
-      this.$http.post(url, this.form.userInfo).then(result => {
+      console.log(this.form.userInfo)
+      this.$http.post(this.url.save, this.form.userInfo).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         this.closeForm()
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     checkUsername() {
       let username = this.form.userInfo.username
       this.$http.get(`${SysApis.checkUsername}/${username}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
-        this.$message.success(result.message);
+        this.$message.success(result.message)
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     closeResetPassword() {
       this.show.resetPassword = false
@@ -373,14 +301,14 @@ export default {
     submitResetPassword() {
       this.$http.post(SysApis.resetPassword, this.form.resetPassword).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
+          this.$message.error(result.message)
           return
         }
         this.$message.success(result.message)
         this.closeResetPassword()
       }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
+        console.log('请求出现错误:', error)
+      })
     },
   }
 }
@@ -388,14 +316,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #e9e9e9;
-  padding: 10px 16px;
-  background: #fff;
-  text-align: right;
-  z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    text-align: right;
+    z-index: 1;
 }
 </style>

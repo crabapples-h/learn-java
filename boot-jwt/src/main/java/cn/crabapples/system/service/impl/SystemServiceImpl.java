@@ -114,7 +114,7 @@ public class SystemServiceImpl implements SystemService {
         SysUser user = userService.getUserInfo();
 //        String rolesIds = user.getRolesList();
 //        List<SysRoles> roles = rolesService.getByIds(rolesIds.split(","));
-        List<String> rolesList = user.getRolesList();
+        List<String> rolesList = user.getRoleList();
         if (rolesList.isEmpty()) {
             return Collections.emptyList();
         }

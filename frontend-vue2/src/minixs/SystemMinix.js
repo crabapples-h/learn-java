@@ -1,10 +1,17 @@
 import { initCPagination } from '@/views/common/C-Pagination'
 import { TreeSelect } from 'ant-design-vue'
-import { SysApis } from '@/api/Apis'
+import CButton from '@comp/c-button.vue'
+import CPopButton from '@comp/c-pop-button.vue'
+import rules from '@/utils/rule'
 
 export default {
+  components: {
+    CButton,
+    CPopButton,
+  },
   data() {
     return {
+      rules: rules,
       SHOW_TYPE: TreeSelect.SHOW_CHILD,
       labelCol: { span: 5 },
       wrapperCol: { span: 16 },
@@ -42,10 +49,13 @@ export default {
         pageSize: this.pagination.pageSize
       }
     },
-    changeIndex(page, pageSize) {
+    changeIndex(pageIndex, pageSize) {
+      this.pagination.current = pageIndex
+      this.pagination.pageSize = pageSize
       this.getList()
     },
     changeSize(pageIndex, pageSize) {
+      this.pagination.current = pageIndex
       this.pagination.pageSize = pageSize
       this.getList()
     },
@@ -57,16 +67,19 @@ export default {
           return
         }
         if (result.data !== null) {
-          this.dataSource = result.data.content || result.data
+          this.dataSource = result.data.records || result.data
           // if (result.data.pageable) {
-          //   this.pagination.total = result.data.totalElements
-          //   this.pagination.current = result.data.pageable.pageNumber + 1
+          this.pagination.total = result.data.total
+          this.pagination.current = result.data.current
+          this.pagination.pageSize = result.data.size
           // }
         }
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
     },
-
+    refreshData() {
+      this.getList()
+    },
   }
 }

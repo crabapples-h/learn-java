@@ -1,24 +1,43 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.dao.mybatis.UserMapper;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
-    public List<SysUser> findAll() {
-        return baseMapper.selectList(new QueryWrapper<>());
+    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
+        Page<SysUser> page = Page.of(pageIndex, pageSize);
+        IPage<SysUser> sysUserList = baseMapper.selectPage(page, new QueryWrapper<>(form.toEntity()));
+        List<SysUserDTO> collect = sysUserList.getRecords().stream().map(e -> {
+            final SysUserDTO dto = new SysUserDTO();
+            BeanUtils.copyProperties(e, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        Page<SysUserDTO> dtoPage = new Page<>();
+        BeanUtils.copyProperties(sysUserList, dtoPage);
+        dtoPage.setRecords(collect);
+        return dtoPage;
     }
 
-    public List<SysUser> findAll(UserForm form) {
-        return baseMapper.selectList(new QueryWrapper<>(form.toEntity()));
+    public List<SysUserDTO> findAll(UserForm form) {
+        return baseMapper.selectList(new QueryWrapper<>(form.toEntity())).stream().map(e -> {
+            final SysUserDTO dto = new SysUserDTO();
+            BeanUtils.copyProperties(e, dto);
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     public SysUser findOne(UserForm form) {
@@ -38,10 +57,10 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
     }
 
     public boolean lockUser(String id) {
-        throw new ApplicationException("暂未实现");
+        return SysUser.create().selectById(id).setStatus(DIC.USER_LOCK).updateById();
     }
 
     public boolean unlockUser(String id) {
-        throw new ApplicationException("暂未实现");
+        return SysUser.create().selectById(id).setStatus(DIC.USER_UNLOCK).updateById();
     }
 }

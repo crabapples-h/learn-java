@@ -3,9 +3,8 @@ package cn.crabapples.system.entity;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -25,10 +24,10 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
  * qq 294046317
  * pc-name 29404
  */
-@Getter
-@Setter
+@Accessors(chain = true)
 @TableName(value = "sys_user")
-@ToString
+@Data(staticConstructor = "create")
+@EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity<SysUser> {
     @TableId(type = ASSIGN_UUID)
     private String id;
@@ -56,7 +55,7 @@ public class SysUser extends BaseEntity<SysUser> {
     private String lastModifiedBy;
 
     @TableField(exist = false)
-    private List<String> rolesList;
+    private List<String> roleList;
 
     // 用户状态标记 0:正常 1:禁用
     private Integer status;

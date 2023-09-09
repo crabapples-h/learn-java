@@ -4,7 +4,6 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRoleMenus;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRoleMenusService;
@@ -27,13 +26,13 @@ import java.util.List;
 @RestController
 @Api("系统接口[菜单]")
 @Slf4j
-@RequestMapping("/api/system/menus")
-public class SystemMenusController extends BaseController {
+@RequestMapping("/api/system/menu")
+public class SystemMenuController extends BaseController {
 
     private final SystemMenusService menusService;
     private final SystemRoleMenusService roleMenusService;
 
-    public SystemMenusController(SystemMenusService menusService, SystemRoleMenusService roleMenusService) {
+    public SystemMenuController(SystemMenusService menusService, SystemRoleMenusService roleMenusService) {
         this.menusService = menusService;
         this.roleMenusService = roleMenusService;
     }
@@ -60,22 +59,12 @@ public class SystemMenusController extends BaseController {
         return ResponseDTO.returnSuccess(list);
     }
 
+
     /**
      * 获取[角色]菜单列表
      */
     @GetMapping("/role/{id}")
     public ResponseDTO getRoleMenus(@PathVariable String id) {
-        log.info("收到请求->获取[角色]菜单列表:[{}]", id);
-        SysRoleMenus entity = roleMenusService.getRoleMenusTree(id);
-        log.debug("返回结果->获取[角色]菜单列表成功:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
-    }
-
-    /**
-     * 获取[角色]菜单列表
-     */
-    @GetMapping("/role1/{id}")
-    public ResponseDTO getRoleMenus1(@PathVariable String id) {
         log.info("收到请求->获取[角色]菜单列表:[{}]", id);
         List<SysMenu> list = roleMenusService.getRoleMenusList(id);
         log.debug("返回结果->获取[角色]菜单列表成功:[{}]", list);

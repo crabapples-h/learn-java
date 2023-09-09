@@ -6,6 +6,7 @@ import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRolesService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,12 @@ import java.util.List;
 @RestController
 @Api("系统接口[角色]")
 @Slf4j
-@RequestMapping("/api/system/roles")
-public class SystemRolesController extends BaseController {
+@RequestMapping("/api/system/role")
+public class SystemRoleController extends BaseController {
 
     private final SystemRolesService rolesService;
 
-    public SystemRolesController(SystemRolesService rolesService) {
+    public SystemRoleController(SystemRolesService rolesService) {
         this.rolesService = rolesService;
     }
 
@@ -45,15 +46,37 @@ public class SystemRolesController extends BaseController {
     }
 
     /**
+     * 获取[当前用户]角色列表
+     */
+    @GetMapping("/user/{id}")
+    public ResponseDTO getUserRolesById(@PathVariable String id) {
+        log.info("收到请求->获取用户角色列表:[{}]", id);
+        List<SysRolesDTO> list = rolesService.getUserRolesById(id);
+        log.debug("返回结果->获取[当前用户]角色列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
+
+    /**
+     * 获取角色列表
+     */
+    @GetMapping("/page")
+    public ResponseDTO getRolesPage(
+            @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            RolesForm form) {
+        log.info("收到请求->获取角色列表");
+        IPage<SysRole> list = rolesService.getRolesPage(pageIndex, pageSize, form);
+        log.debug("返回结果->获取角色列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
+
+    /**
      * 获取角色列表
      */
     @GetMapping("/list")
-    public ResponseDTO getRolesPage(
-            @RequestParam(name = "pageIndex", required = false) Integer pageIndex,
-            @RequestParam(name = "pageSize", required = false) Integer pageSize,
-            RolesForm form) {
+    public ResponseDTO getRolesList(RolesForm form) {
         log.info("收到请求->获取角色列表");
-        Iterable<SysRole> list = rolesService.getRolesList(pageIndex, pageSize, form);
+        List<SysRole> list = rolesService.getRolesList( form);
         log.debug("返回结果->获取角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }

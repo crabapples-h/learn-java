@@ -1,11 +1,12 @@
 package cn.crabapples.system.dao;
 
-import cn.crabapples.common.ApplicationException;
 import cn.crabapples.system.dao.mybatis.RolesMapper;
 import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.entity.SysRole;
 import cn.crabapples.system.form.RolesForm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -26,27 +27,24 @@ import java.util.stream.Collectors;
 @Component
 public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
 
-    public SysRole findById(String id) {
-        return getById(id);
-    }
-
     @Transactional
     public boolean save(SysRole entity) {
         return saveOrUpdate(entity);
     }
 
-    public List<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
+    public IPage<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
+        Page<SysRole> page = Page.of(pageIndex, pageSize);
+        QueryWrapper<SysRole> wrapper = new QueryWrapper<>(form.toEntity());
+        return baseMapper.selectPage(page, wrapper);
+    }
+
+    public List<SysRole> findAll(RolesForm form) {
         QueryWrapper<SysRole> wrapper = new QueryWrapper<>(form.toEntity());
         return baseMapper.selectList(wrapper);
     }
 
     public List<SysRole> findByIds(List<String> ids) {
         return baseMapper.selectBatchIds(ids);
-    }
-
-    public List<SysRole> findByMenusId(String menusId) {
-        throw new ApplicationException("暂未实现");
-//        return repository.findByDelFlagAndMenusIdsContains(DIC.NOT_DEL, menusId);
     }
 
 

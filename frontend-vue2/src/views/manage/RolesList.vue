@@ -55,9 +55,9 @@
       <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="removeRoles(record)"
                       v-auth:sys:roles:del/>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" v-auth:sys:roles:del/>
         <a-button type="primary" size="small" @click="editRoles(record)" v-auth:sys:roles:edit>编辑</a-button>
-        <a-divider type="vertical"/>
+        <a-divider type="vertical" v-auth:sys:roles:edit/>
         <a-button type="primary" size="small" @click="showMenus(record)">查看菜单</a-button>
       </span>
     </a-table>
@@ -65,18 +65,13 @@
 </template>
 
 <script>
-import { TreeSelect } from 'ant-design-vue'
 import CPopButton from '@/components/c-pop-button'
-import { initCPagination } from '@/views/common/C-Pagination.js'
 import commonApi from '@/api/CommonApi'
 import { SysApis } from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
   name: 'roles-list',
-  components: {
-    CPopButton,
-  },
   mixins: [SystemMinix],
   data() {
     return {
@@ -141,8 +136,11 @@ export default {
         children: 'children', title: 'name', key: 'id'
       },
       url: {
-        list: SysApis.rolesList,
-        menuInfo: ''
+        list: SysApis.rolePage,
+        delete: SysApis.delRoles,
+        roleMenus: SysApis.roleMenus,
+        save: SysApis.saveRoles,
+        menuList: SysApis.menuList,
       }
     }
   },
@@ -152,9 +150,6 @@ export default {
     this.getMenusList()
   },
   methods: {
-    rowKeyCreate() {
-      return Math.random()
-    },
     resetRolesForm() {
       this.form.roles = {
         id: '',
@@ -167,7 +162,7 @@ export default {
       this.getList()
     },
     removeRoles(e) {
-      this.$http.post(`${SysApis.delRoles}/${e.id}`).then(result => {
+      this.$http.post(`${this.url.delete}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
@@ -184,7 +179,7 @@ export default {
     editRoles(e) {
       this.form.roles.id = e.id
       this.form.roles.name = e.name
-      this.$http.get(`${SysApis.roleMenus1}/${e.id}`).then(result => {
+      this.$http.get(`${this.url.roleMenus}/${e.id}`).then(result => {
         this.form.roles.menusList = result.data.map(e => {
           return e.id
         })
@@ -197,8 +192,7 @@ export default {
       commonApi.refreshSysData()
     },
     submitRolesForm() {
-      console.log(this.form.roles)
-      this.$http.post(SysApis.saveRoles, this.form.roles).then(result => {
+      this.$http.post(this.url.saveRoles, this.form.roles).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
@@ -209,7 +203,7 @@ export default {
       })
     },
     getMenusList() {
-      this.$http.get(SysApis.menusList).then(result => {
+      this.$http.get(this.url.menuList).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return

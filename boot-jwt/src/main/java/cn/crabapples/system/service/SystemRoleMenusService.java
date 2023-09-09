@@ -2,14 +2,11 @@ package cn.crabapples.system.service;
 
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRoleMenus;
 
 import java.util.List;
 
 
 public interface SystemRoleMenusService extends BaseService {
-
-    SysRoleMenus getRoleMenusTree(String id);
 
     List<SysMenu> getRoleMenusList(String id);
 

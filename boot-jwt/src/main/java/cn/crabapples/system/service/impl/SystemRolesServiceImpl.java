@@ -10,6 +10,7 @@ import cn.crabapples.system.form.RolesForm;
 import cn.crabapples.system.service.SystemRoleMenusService;
 import cn.crabapples.system.service.SystemRolesService;
 import cn.crabapples.system.service.SystemUserService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -60,11 +61,24 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         return rolesDAO.getUserRolesDTO(user.getId());
     }
 
+    @Override
+    public List<SysRolesDTO> getUserRolesById(String id) {
+        return rolesDAO.getUserRolesDTO(id);
+    }
+
+    /**
+     * 获取角色列表(不分页)
+     */
+    @Override
+    public List<SysRole> getRolesList(RolesForm form) {
+        return rolesDAO.findAll(form);
+    }
+
     /**
      * 获取角色列表(分页)
      */
     @Override
-    public Iterable<SysRole> getRolesList(Integer pageIndex, Integer pageSize, RolesForm form) {
+    public IPage<SysRole> getRolesPage(Integer pageIndex, Integer pageSize, RolesForm form) {
         return rolesDAO.findAll(pageIndex, pageSize, form);
     }
 
@@ -81,7 +95,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
         log.info("保存角色:[{}]", form);
         SysRole entity = form.toEntity();
         boolean status = entity.insertOrUpdate();
-        roleMenusService.saveRoleMenus(entity.getId(),form.getMenusList());
+        roleMenusService.saveRoleMenus(entity.getId(), form.getMenusList());
         return status;
     }
 
@@ -103,10 +117,5 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     @Override
     public boolean removeRoles(String id) {
         return rolesDAO.deleteById(id);
-    }
-
-    @Override
-    public List<SysRole> findByMenusId(String id) {
-        return rolesDAO.findByMenusId(id);
     }
 }

@@ -1,22 +1,22 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
-import cn.crabapples.system.dao.RolesDAO;
 import cn.crabapples.system.dao.UserDAO;
+import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.UserForm;
+import cn.crabapples.system.service.SystemUserRoleService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -33,23 +33,23 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SystemUserServiceImpl  implements SystemUserService {
+public class SystemUserServiceImpl implements SystemUserService {
     @Value("${isCrypt}")
     private boolean isCrypt;
     private final UserDAO userDAO;
-    private final RolesDAO rolesDAO;
     @Value("${isDebug}")
     private boolean isDebug;
     private final JwtConfigure jwtConfigure;
     private final HttpServletRequest request;
+    private final SystemUserRoleService userRoleService;
 
 
-    public SystemUserServiceImpl(UserDAO userDAO, RolesDAO rolesDAO, JwtConfigure jwtConfigure,
-                                 HttpServletRequest request) {
+    public SystemUserServiceImpl(UserDAO userDAO, JwtConfigure jwtConfigure,
+                                 HttpServletRequest request, SystemUserRoleService userRoleService) {
         this.userDAO = userDAO;
-        this.rolesDAO = rolesDAO;
         this.jwtConfigure = jwtConfigure;
         this.request = request;
+        this.userRoleService = userRoleService;
     }
 
     @Override
@@ -58,12 +58,12 @@ public class SystemUserServiceImpl  implements SystemUserService {
     }
 
     @Override
-    public List<SysUser> findById(List<String> ids) {
+    public List<SysUser> findByIds(List<String> ids) {
         return userDAO.findByIds(ids);
     }
 
     @Override
-    public List<SysUser> findByName(String name) {
+    public List<SysUserDTO> findByName(String name) {
         UserForm form = new UserForm();
         form.setName(name);
         return userDAO.findAll(form);
@@ -77,27 +77,33 @@ public class SystemUserServiceImpl  implements SystemUserService {
     }
 
     @Override
-    public List<SysUser> findAll() {
-        return userDAO.findAll();
+    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
+        return userDAO.findAll(pageIndex, pageSize, form);
     }
 
-    /**
-     * 添加用户
-     */
     @Override
-    public boolean addUser(UserForm form) {
-        SysUser entity = new SysUser();
-        BeanUtils.copyProperties(form, entity);
-        String password;
-        if (isCrypt) {
-            password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
-        } else {
-            password = form.getPassword();
+    public List<SysUserDTO> findAll(UserForm form) {
+        return userDAO.findAll(form);
+    }
+
+    @Override
+    public boolean saveUser(UserForm form) {
+        SysUser entity = form.toEntity();
+        String newPassword = form.getNewPassword();
+        String againPassword = form.getAgainPassword();
+        if (!StringUtils.isEmpty(newPassword)) {
+            if (!newPassword.equals(againPassword)) {
+                throw new ApplicationException("两次密码不一致");
+            }
+            entity.setPassword(encryptPassword(newPassword));
         }
-        entity.setPassword(password);
-        entity.setStatus(DIC.USER_LOCK);
-//        entity.setRolesList( form.getRolesList()));
-        return userDAO.saveOrUpdate(entity);
+        boolean status = entity.insertOrUpdate();
+        userRoleService.saveUserRoles(entity.getId(), entity.getRoleList());
+        return status;
+    }
+
+    private String encryptPassword(String password) {
+        return isCrypt ? MD5.create().digestHex(password.getBytes(StandardCharsets.UTF_8)) : password;
     }
 
     /**
@@ -106,24 +112,6 @@ public class SystemUserServiceImpl  implements SystemUserService {
     @Override
     public boolean delUser(String id) {
         return userDAO.delUser(id);
-    }
-
-    /**
-     * 编辑用户
-     */
-    @Override
-    public boolean editUser(UserForm form) {
-        SysUser entity = userDAO.findById(form.getId());
-        BeanUtils.copyProperties(form, entity);
-        String password = form.getPassword();
-        if (!StringUtils.isEmpty(password)) {
-            if (isCrypt) {
-                password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
-            }
-        }
-        entity.setPassword(password);
-//        entity.setRolesList(String.join(",", form.getRolesList()));
-        return userDAO.saveOrUpdate(entity);
     }
 
     /**

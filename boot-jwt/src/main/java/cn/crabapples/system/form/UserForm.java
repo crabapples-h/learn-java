@@ -60,10 +60,26 @@ public class UserForm extends BaseForm<SysUser> {
     @ApiModelProperty(example = "admin")
     private String username;
 
-    @Length(max = 16, message = "长度错误", groups = {Groups.IsCheckLength.class, Groups.IsLogin.class, Groups.IsUpdatePassword.class})
+    @Length(max = 16, message = "密码长度错误", groups = {Groups.IsCheckLength.class, Groups.IsLogin.class, Groups.IsUpdatePassword.class})
     @NotBlank(message = "密码不能为空", groups = {Groups.IsNotNull.class, Groups.IsLogin.class, Groups.IsUpdatePassword.class})
     @ApiModelProperty(example = "12345678")
     private String password;
+
+    @Length(max = 16, message = "原密码长度错误", groups = {Groups.IsCheckLength.class, Groups.IsUpdatePassword.class})
+    @NotBlank(message = "原密码不能为空", groups = {Groups.IsNotNull.class, Groups.IsUpdatePassword.class})
+    @ApiModelProperty(example = "12345678")
+    private String oldPassword;
+
+    @Length(max = 16, message = "新密码长度错误", groups = {Groups.IsCheckLength.class, Groups.IsUpdatePassword.class})
+    @NotBlank(message = "新密码不能为空", groups = {Groups.IsNotNull.class, Groups.IsUpdatePassword.class})
+    @ApiModelProperty(example = "12345678")
+    private String newPassword;
+
+    @Length(max = 16, message = "重复密码长度错误", groups = {Groups.IsCheckLength.class, Groups.IsUpdatePassword.class})
+    @NotBlank(message = "重复密码不能为空", groups = {Groups.IsNotNull.class, Groups.IsUpdatePassword.class})
+    @ApiModelProperty(example = "12345678")
+    private String againPassword;
+
 
     @Length(max = 16)
     @NotBlank(message = "姓名不能为空", groups = {Groups.IsNotNull.class, Groups.IsAdd.class, Groups.IsEdit.class})
@@ -80,11 +96,11 @@ public class UserForm extends BaseForm<SysUser> {
     @NotNull(message = "年龄不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
     private Integer age;
 
-    private List<String> rolesList;
+    private List<String> roleList;
 
     @Override
     public SysUser toEntity() {
-        SysUser entity = new SysUser();
+        SysUser entity = SysUser.create();
         BeanUtils.copyProperties(this, entity);
 //        if (null != rolesList)
 //            entity.setRolesList(String.join(",", rolesList));

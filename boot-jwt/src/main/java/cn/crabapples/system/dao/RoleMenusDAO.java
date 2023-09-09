@@ -2,8 +2,6 @@ package cn.crabapples.system.dao;
 
 import cn.crabapples.system.dao.mybatis.RoleMenusMapper;
 import cn.crabapples.system.entity.SysMenu;
-import cn.crabapples.system.entity.SysRoleMenus;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,10 +10,12 @@ import java.util.Objects;
 
 
 @Component
-public class RoleMenusDAO extends ServiceImpl<RoleMenusMapper, SysRoleMenus> {
+public class RoleMenusDAO  {
 
-    public SysRoleMenus getRoleMenus(String id) {
-        return baseMapper.getRoleMenus(id);
+    private final RoleMenusMapper mapper;
+
+    public RoleMenusDAO(RoleMenusMapper mapper) {
+        this.mapper = mapper;
     }
 
     /**
@@ -39,7 +39,6 @@ public class RoleMenusDAO extends ServiceImpl<RoleMenusMapper, SysRoleMenus> {
 //        sysRoleMenus.setSysMenus(tree);
 //        return sysRoleMenus;
 //    }
-
     private List<SysMenu> convertToTree(List<SysMenu> list) {
         List<SysMenu> roots = new ArrayList<>();
         for (SysMenu node : list) {
@@ -73,19 +72,19 @@ public class RoleMenusDAO extends ServiceImpl<RoleMenusMapper, SysRoleMenus> {
 
     // 获取角色拥有的菜单(包括按钮)
     public List<SysMenu> getRoleMenusList(String id) {
-        return baseMapper.getRoleMenusList(id);
+        return mapper.getRoleMenusList(id);
     }
 
     // 获取角色(多个)拥有的菜单(包括按钮)
     public List<SysMenu> getRoleMenusList(List<String> ids) {
-        return baseMapper.getRoleListMenusList(ids);
+        return mapper.getRoleListMenusList(ids);
     }
 
     public void saveRoleMenus(String id, List<String> menusList) {
-        baseMapper.deleteRoleMenus(id);
+        mapper.deleteRoleMenus(id);
         if (!menusList.isEmpty())
             menusList.forEach(e -> {
-                baseMapper.saveRoleMenus(id, e);
+                mapper.saveRoleMenus(id, e);
             });
     }
 
