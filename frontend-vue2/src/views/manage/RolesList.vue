@@ -16,7 +16,18 @@
                          tree-checkable
                          :show-checked-strategy="SHOW_TYPE"
                          :show-line="show.treeLine"
-                         :checkStrictly="false"/>
+                         :checkStrictly="false"
+                         v-if="false"/>
+
+          <a-tree
+            v-model="form.roles.menusList"
+            checkable
+            :auto-expand-parent="true"
+            :selected-keys="form.roles.menusList"
+            :tree-data="menusOptions"
+            :replace-fields="replaceFields"
+          />
+
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -24,19 +35,21 @@
         <a-button type="primary" @click="submitRolesForm">保存</a-button>
       </div>
     </a-drawer>
-    <a-modal :visible.sync="show.menus" width="50%" :footer="null" @cancel="closeShowMenus">
-      <a-table :data-source="menusDataSource"
-               :columns="menusColumns"
-               :pagination="false">
+    <a-modal title="菜单列表" :visible.sync="show.menus" width="50%" :footer="null" @cancel="closeShowMenus">
+      <div style="height: 60vh;overflow-y: scroll">
+        <a-table :data-source="menusDataSource"
+                 :columns="menusColumns"
+                 :pagination="false">
         <span slot="icon" slot-scope="text, record">
         <a-icon :type='text.substring(text.indexOf("\"") + 1,text.lastIndexOf("\"")) || "appstore"'/>
       </span>
-        <span slot="type" slot-scope="text, record">
+          <span slot="type" slot-scope="text, record">
         <a-tag size="small" color="green" v-if="record.menusType === 1">菜单</a-tag>
         <a-tag size="small" color="blue" v-if="record.menusType === 2">按钮</a-tag>
         <a-tag size="small" color="purple" v-if="record.menusType === 3">超链接</a-tag>
       </span>
-      </a-table>
+        </a-table>
+      </div>
     </a-modal>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
@@ -124,6 +137,9 @@ export default {
         menus: false,
       },
       menusOptions: [],
+      replaceFields: {
+        children: 'children', title: 'name', key: 'id'
+      },
       url: {
         list: SysApis.rolesList,
         menuInfo: ''
@@ -133,6 +149,7 @@ export default {
   activated() {
   },
   mounted() {
+    this.getMenusList()
   },
   methods: {
     rowKeyCreate() {
@@ -163,23 +180,16 @@ export default {
     },
     addRoles() {
       this.show.roles = true
-      this.getMenusList()
     },
     editRoles(e) {
       this.form.roles.id = e.id
       this.form.roles.name = e.name
-      this.$http.get(`${SysApis.roleMenus}/${e.id}`).then(result => {
-        this.getMenusList()
-        let ids = []
-        console.log(result.data.sysMenus)
-        this.formatDefaultMenusOption(ids, result.data.sysMenus)
-        this.form.roles.menusList = ids
+      this.$http.get(`${SysApis.roleMenus1}/${e.id}`).then(result => {
+        this.form.roles.menusList = result.data.map(e => {
+          return e.id
+        })
         this.show.roles = true
-        console.log(this.form.roles.menusList)
       })
-      // let ids = []
-      // this.formatDefaultMenusOption(ids, e.sysMenus)
-      // this.show.roles = true
     },
     closeRolesForm() {
       this.show.roles = false
@@ -187,6 +197,7 @@ export default {
       commonApi.refreshSysData()
     },
     submitRolesForm() {
+      console.log(this.form.roles)
       this.$http.post(SysApis.saveRoles, this.form.roles).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
@@ -206,30 +217,8 @@ export default {
         if (result.data !== null) {
           this.menusOptions = result.data
         }
-        this.menusOptions = this.formatMenusOption(result.data)
       }).catch(function (error) {
         console.error('出现错误:', error)
-      })
-    },
-
-    formatMenusOption(tree) {
-      return tree.map(e => {
-        return {
-          title: e.name,
-          value: e.id,
-          key: e.id,
-          children: this.formatMenusOption(e.children)
-        }
-      })
-    },
-    formatDefaultMenusOption(ids, rolesMenus) {
-      rolesMenus.forEach(e => {
-        let children = e.children
-        if (children.length >= 0) {
-          this.formatDefaultMenusOption(ids, children)
-        }
-        console.log(e.id)
-        ids.push(e.id)
       })
     },
 

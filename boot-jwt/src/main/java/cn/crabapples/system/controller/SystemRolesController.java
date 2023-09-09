@@ -40,7 +40,7 @@ public class SystemRolesController extends BaseController {
     public ResponseDTO getUserRoles() {
         log.info("收到请求->获取[当前用户]角色列表");
         List<SysRolesDTO> list = rolesService.getUserRolesDTO();
-        log.info("返回结果->获取[当前用户]角色列表成功:[{}]", list);
+        log.debug("返回结果->获取[当前用户]角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
@@ -48,12 +48,13 @@ public class SystemRolesController extends BaseController {
      * 获取角色列表
      */
     @GetMapping("/list")
-    public ResponseDTO getRolesPage(@RequestParam(name = "pageIndex", required = false) Integer pageIndex,
-                                    @RequestParam(name = "pageSize", required = false) Integer pageSize,
-                                    RolesForm form) {
+    public ResponseDTO getRolesPage(
+            @RequestParam(name = "pageIndex", required = false) Integer pageIndex,
+            @RequestParam(name = "pageSize", required = false) Integer pageSize,
+            RolesForm form) {
         log.info("收到请求->获取角色列表");
         Iterable<SysRole> list = rolesService.getRolesList(pageIndex, pageSize, form);
-        log.info("返回结果->获取角色列表成功:[{}]", list);
+        log.debug("返回结果->获取角色列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 

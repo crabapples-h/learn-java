@@ -21,6 +21,7 @@ const SysApis = {
     delMenus: '/api/system/menus/remove',
     saveMenus: '/api/system/menus/save',
     roleMenus: '/api/system/menus/role',
+    roleMenus1: '/api/system/menus/role1',
     //角色 roles
     rolesList: '/api/system/roles/list',
     delRoles: '/api/system/roles/remove',

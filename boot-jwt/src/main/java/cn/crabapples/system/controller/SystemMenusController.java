@@ -45,7 +45,7 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单树");
         List<SysMenu> menus = menusService.getUserMenusTree();
-//        log.info("返回结果->获取[当前用户]菜单树:[{}]", menus);
+        log.debug("返回结果->获取[当前用户]菜单树:[{}]", menus);
         return ResponseDTO.returnSuccess(menus);
     }
 
@@ -56,7 +56,7 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO getMenusList() {
         log.info("收到请求->获取[所有]菜单列表");
         List<SysMenu> list = menusService.getMenusList();
-        log.info("返回结果->获取[所有]菜单列表成功:[{}]", list);
+        log.debug("返回结果->获取[所有]菜单列表成功:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
@@ -67,8 +67,19 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO getRoleMenus(@PathVariable String id) {
         log.info("收到请求->获取[角色]菜单列表:[{}]", id);
         SysRoleMenus entity = roleMenusService.getRoleMenusTree(id);
-        log.info("返回结果->获取[角色]菜单列表成功:[{}]", entity);
+        log.debug("返回结果->获取[角色]菜单列表成功:[{}]", entity);
         return ResponseDTO.returnSuccess(entity);
+    }
+
+    /**
+     * 获取[角色]菜单列表
+     */
+    @GetMapping("/role1/{id}")
+    public ResponseDTO getRoleMenus1(@PathVariable String id) {
+        log.info("收到请求->获取[角色]菜单列表:[{}]", id);
+        List<SysMenu> list = roleMenusService.getRoleMenusList(id);
+        log.debug("返回结果->获取[角色]菜单列表成功:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
     }
 
     /**
@@ -79,7 +90,7 @@ public class SystemMenusController extends BaseController {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
         boolean status = menusService.saveMenus(form);
-        log.info("返回结果->保存菜单成功:[{}]", status);
+        log.debug("返回结果->保存菜单成功:[{}]", status);
         return ResponseDTO.returnSuccess();
     }
 
@@ -90,7 +101,7 @@ public class SystemMenusController extends BaseController {
     public ResponseDTO removeMenus(@PathVariable String id) {
         log.info("收到请求->删除菜单:[{}]", id);
         boolean status = menusService.removeMenus(id);
-        log.info("返回结果->删除菜单成功:[{}]", status);
+        log.debug("返回结果->删除菜单成功:[{}]", status);
         return ResponseDTO.returnSuccess();
     }
 

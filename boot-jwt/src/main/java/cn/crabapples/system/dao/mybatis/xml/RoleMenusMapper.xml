@@ -44,11 +44,10 @@
     </select>
 
     <select id="getRoleMenusList" resultType="cn.crabapples.system.entity.SysMenu">
-        select sm.*
-        from sys_role as role
-                 left join sys_role_menus srm on role.id = srm.role_id
-                 left join sys_menu sm on srm.menu_id = sm.id
-        where role.id = #{roleId}
+        select sys_menu.*
+        from sys_role_menus
+                 left join sys_menu on sys_role_menus.menu_id = sys_menu.id
+        where sys_role_menus.role_id = #{roleId}
     </select>
 
     <select id="getRoleListMenusList" resultType="cn.crabapples.system.entity.SysMenu">

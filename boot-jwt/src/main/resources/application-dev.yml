@@ -80,6 +80,8 @@ spring:
   datasource.druid.keep-alive: true
   # 连接超时时间，单位毫秒
   datasource.druid.max-wait: 60000
+  datasource.druid.remove-abandoned: true
+  datasource.druid.remove-abandoned-timeout-millis: 72000
   # 连接最少存活时间，单位毫秒
   datasource.druid.min-evictable-idle-time-millis: 30000
   # 是否开启preparedStatement缓存，某些数据库开启缓存后可提升性能，如oracle

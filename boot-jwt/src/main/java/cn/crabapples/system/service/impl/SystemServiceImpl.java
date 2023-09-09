@@ -58,7 +58,6 @@ public class SystemServiceImpl implements SystemService {
     }
 
 
-
     /**
      * Cacheable
      * * key: redis中key的值
@@ -104,10 +103,7 @@ public class SystemServiceImpl implements SystemService {
         List<String> roleIds = userRoleList.stream().map(SysRole::getId).collect(Collectors.toList());
         List<SysMenu> roleMenuList = roleMenusService.getRoleMenusList(roleIds);
         return roleMenuList.stream()
-                .filter(e -> {
-                    System.err.println(e);
-                    return DIC.MENUS_TYPE_BUTTON == e.getMenusType();
-                })
+                .filter(e -> DIC.MENUS_TYPE_BUTTON == e.getMenusType())
                 .map(SysMenu::getPermission).collect(Collectors.toList());
     }
 
