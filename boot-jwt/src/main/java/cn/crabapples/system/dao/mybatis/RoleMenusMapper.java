@@ -17,7 +17,7 @@ public interface RoleMenusMapper extends BaseMapper<SysRoleMenus> {
 
     List<SysMenu> getRoleListMenusList(@Param("roleIds") List<String> ids);
 
-    void saveRoleMenus(@Param("roleId")String id, @Param("menuIds")List<String> menusList);
+    void saveRoleMenus(@Param("roleId")String id, @Param("menuId")String menuId);
 
     void deleteRoleMenus(@Param("roleId")String id);
 }

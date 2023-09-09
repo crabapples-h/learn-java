@@ -7,28 +7,38 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+
 @Component
 public class RoleMenusDAO extends ServiceImpl<RoleMenusMapper, SysRoleMenus> {
+
+    public SysRoleMenus getRoleMenus(String id) {
+        return baseMapper.getRoleMenus(id);
+    }
+
     /**
      * 根据获取角色菜单树
      *
      * @param id 角色id
      * @return 角色拥有的菜单树
      */
-    public SysRoleMenus getRoleMenusTree(String id) {
-        SysRoleMenus sysRoleMenus = baseMapper.getRoleMenus(id);
-        List<SysMenu> roleMenuList = sysRoleMenus.getSysMenus();
-        if (roleMenuList.isEmpty()) {
-            roleMenuList = Collections.emptyList();
-        }
-        List<SysMenu> tree = convertToTree(roleMenuList);
-        sysRoleMenus.setSysMenus(tree);
-        return sysRoleMenus;
-    }
+//    public SysRoleMenus getRoleMenusTree(String id) {
+//        SysRoleMenus sysRoleMenus = baseMapper.getRoleMenus(id);
+//        List<SysMenu> roleMenuList = sysRoleMenus.getSysMenus();
+//        if (roleMenuList.isEmpty()) {
+//            roleMenuList = Collections.emptyList();
+//        }
+//        List<String> menuIds = roleMenuList.stream()
+//                .map(SysMenu::getId).collect(Collectors.toList());
+//        List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
+//        List<SysMenu> tree = super.filterRootMenusTree(menuIds, allRootMenuTree);
+//
+//
+//        sysRoleMenus.setSysMenus(tree);
+//        return sysRoleMenus;
+//    }
 
     private List<SysMenu> convertToTree(List<SysMenu> list) {
         List<SysMenu> roots = new ArrayList<>();
@@ -74,6 +84,10 @@ public class RoleMenusDAO extends ServiceImpl<RoleMenusMapper, SysRoleMenus> {
     public void saveRoleMenus(String id, List<String> menusList) {
         baseMapper.deleteRoleMenus(id);
         if (!menusList.isEmpty())
-            baseMapper.saveRoleMenus(id, menusList);
+            menusList.forEach(e -> {
+                baseMapper.saveRoleMenus(id, e);
+            });
     }
+
+
 }

@@ -36,7 +36,6 @@
                 and pid = #{id}
             </otherwise>
         </choose>
-
     </select>
 
     <select id="findMenusTree1" resultMap="sysMenus">

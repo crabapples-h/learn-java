@@ -24,9 +24,8 @@
         </collection>
     </resultMap>
     <insert id="saveRoleMenus">
-        <foreach collection="menuIds" item="menuId" separator=";">
-            insert into sys_role_menus (role_id,menu_id) values  (#{roleId},#{menuId})
-        </foreach>
+        insert into sys_role_menus
+        values (#{roleId}, #{menuId})
     </insert>
     <delete id="deleteRoleMenus">
         delete

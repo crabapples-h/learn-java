@@ -26,7 +26,7 @@ public class FilterMenuTreeTest {
     }
 
     // 系统管理->用户管理->锁定用户
-    static List<SysMenu> filterRootMenusTree(String id, List<SysMenu> allMenuTree) {
+    public static List<SysMenu> filterRootMenusTree(String id, List<SysMenu> allMenuTree) {
         List<SysMenu> exist = new ArrayList<>();
         for (SysMenu menu : allMenuTree) {
             String menuName = menu.getName();

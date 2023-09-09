@@ -60,7 +60,7 @@ const permissions = {
                 }
                 return menus
               }
-              return []
+              return undefined
 
             }).sort((a, b) => {
               if (a && b && a.sort && b.sort) {

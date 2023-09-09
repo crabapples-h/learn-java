@@ -107,16 +107,18 @@ function forestToList(forest) {
   const result = []
 
   function traverse(node) {
-   if(node.hasOwnProperty('path')){
-    console.log(node)
-     result.push({
-       path: node.path,
-       component: resolve => require([`@/views/${node.filePath}.vue`], resolve),
-       name: node.name,
-       meta: { title: node.name, icon: 'clipboard' },
-       hidden: node.hidden
-     })
-   }
+    if (node.hasOwnProperty('path')) {
+      if (node.menusType !== 2) {
+        console.log(node)
+        result.push({
+          path: node.path,
+          component: resolve => require([`@/views/${node.filePath}.vue`], resolve),
+          name: node.name,
+          meta: { title: node.name, icon: 'clipboard' },
+          hidden: node.hidden
+        })
+      }
+    }
     if (node && node.children) {
       node.children.forEach(child => traverse(child))
     }

@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -73,7 +72,7 @@ public class SystemRolesController extends BaseController {
      * 删除角色
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO removeRoles(HttpServletRequest request, @PathVariable String id) {
+    public ResponseDTO removeRoles(@PathVariable String id) {
         log.info("收到请求->删除角色:[{}]", id);
         rolesService.removeRoles(id);
         log.info("返回结果->删除角色成功");
