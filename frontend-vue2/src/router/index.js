@@ -114,7 +114,7 @@ function forestToList(forest) {
           component: resolve => require([`@/views/${node.filePath}.vue`], resolve),
           name: node.name,
           meta: { title: node.name, icon: 'clipboard' },
-          hidden: node.hidden
+          hidden: node.showFlag === 1
         })
       }
     }

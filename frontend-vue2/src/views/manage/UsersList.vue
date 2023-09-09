@@ -42,21 +42,7 @@
         <a-button type="primary" @click="submitForm">保存</a-button>
       </div>
     </a-drawer>
-    <a-modal title="重置密码" :visible.sync="show.resetPassword" width="30%" ok-text="确认" cancel-text="取消"
-             @ok="submitResetPassword" @cancel="closeResetPassword">
-      <a-form-model :model="form.resetPassword" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="新密码" prop="newPassword">
-          <a-input-password v-model="form.resetPassword.newPassword"/>
-        </a-form-model-item>
-        <a-form-model-item label="重复密码" prop="againPassword">
-          <a-input-password v-model="form.resetPassword.againPassword"/>
-        </a-form-model-item>
-      </a-form-model>
-    </a-modal>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
-      <span slot="tags" slot-scope="tags">
-        <a-tag v-for="tag in tags" :rowKey="tag.id" :color="tag.color">{{ tag.name }}</a-tag>
-      </span>
       <span slot="status" slot-scope="status">
         <a-tag color="green" v-if="status === 0">正常</a-tag>
         <a-tag color="red" v-else>锁定</a-tag>
@@ -75,9 +61,6 @@
           <a-divider type="vertical"/>
         </span>
         <a-button type="primary" size="small" @click="editUser(record)" v-auth:sys:user:edit>编辑</a-button>
-        <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="showResetPassword(record)"
-                  v-auth:sys:user:reset>重置密码</a-button>
       </span>
     </a-table>
   </div>
@@ -144,16 +127,9 @@ export default {
           newPassword: '',
           againPassword: '',
         },
-        resetPassword: {
-          id: '',
-          newPassword: '',
-          againPassword: '',
-        },
       },
       show: {
-        tags: false,
         userInfo: false,
-        resetPassword: false,
         isEdit: false,
       },
       url: {
@@ -260,14 +236,11 @@ export default {
         name: '',
         age: '',
         mail: '',
-        role: null,
-        status: null,
       }
       this.show.userInfo = false
       this.refreshData()
     },
     submitForm() {
-      console.log(this.form.userInfo)
       this.$http.post(this.url.save, this.form.userInfo).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
@@ -288,26 +261,6 @@ export default {
         this.$message.success(result.message)
       }).catch(function (error) {
         console.error('出现错误:', error)
-      })
-    },
-    closeResetPassword() {
-      this.show.resetPassword = false
-      this.refreshData()
-    },
-    showResetPassword(e) {
-      this.form.resetPassword.id = e.id
-      this.show.resetPassword = true
-    },
-    submitResetPassword() {
-      this.$http.post(SysApis.resetPassword, this.form.resetPassword).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        this.$message.success(result.message)
-        this.closeResetPassword()
-      }).catch(function (error) {
-        console.log('请求出现错误:', error)
       })
     },
   }

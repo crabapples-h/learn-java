@@ -44,5 +44,8 @@ const rules = {
     { min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change' },
     { whitespace: true, message: '请重复输入密码', trigger: 'change' }
   ],
+  menusType: [
+    { required: true, message: '类型不能为空', trigger: 'change' },
+  ],
 }
 export default rules

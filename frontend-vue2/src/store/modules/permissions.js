@@ -35,11 +35,14 @@ const permissions = {
         if (data !== null) {
           let formatMenus = function (data) {
             return data.map(e => {
+              if (e.showFlag !== 0) {
+                return {}
+              }
               if (e.menusType !== 2) {
                 let icon = e.icon.substring(e.icon.indexOf('"') + 1, e.icon.lastIndexOf('"'))
                 let menus = {
                   id: e.id,
-                  key: e.id,
+                  pid: e.pid,
                   name: e.name,
                   icon: icon,
                   path: e.path,

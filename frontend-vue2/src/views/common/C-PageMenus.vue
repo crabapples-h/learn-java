@@ -1,23 +1,25 @@
 <template>
   <div>
     <a-layout-sider>
-      <a-menu style="width: 200px;height: 100%" mode="inline">
-        <a-sub-menu :key="item.key" v-for="item in menus" v-if="item.children && item.children.length">
+      <a-menu style="width: 200px;height: 100%" mode="inline"
+              :default-open-keys="OPEN_MENU_IDS"
+              :defaultSelectedKeys="SELECT_MENU_IDS">
+        <a-sub-menu :key="item.id" v-for="item in menus" v-if="item.children && item.children.length">
           <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-          <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
+          <a-sub-menu :key="item.id" v-if="item.children && item.children.length" v-for="item in item.children">
             <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.key" v-for="item in item.children" @click="click(item)">
+            <a-menu-item :key="item.id" v-for="item in item.children" @click="click(item)">
               <a-icon :type="item.icon" v-if="item.icon"/>
-              <span>222{{ item.name }}</span>
+              <span>{{ item.name }}</span>
               <span>{{ item.icon }}</span>
             </a-menu-item>
           </a-sub-menu>
-          <a-menu-item :key="item.key" v-else @click="click(item)">
+          <a-menu-item :key="item.id" v-else @click="click(item)">
             <a-icon :type="item.icon" v-if="item.icon"/>
             <span>{{ item.name }}</span>
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item :key="item.key" v-else @click="click(item)">
+        <a-menu-item :key="item.id" v-else @click="click(item)">
           <a-icon :type="item.icon" v-if="item.icon"/>
           <span>{{ item.name }}</span>
         </a-menu-item>
@@ -29,7 +31,7 @@
 <script>
 
 export default {
-  name: "C-PageMenus",
+  name: 'C-PageMenus',
   props: {
     menus: {
       type: Array,
@@ -43,7 +45,12 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      OPEN_MENU_IDS: [localStorage.getItem('OPEN_MENU_IDS')],
+      SELECT_MENU_IDS: [localStorage.getItem('SELECT_MENU_IDS')],
+    }
+  },
+  beforeCreate() {
   },
   activated() {
   },
@@ -51,8 +58,10 @@ export default {
   },
   methods: {
     click(e) {
-      this.$emit("clickMenu", e)
-    }
+      localStorage.setItem('OPEN_MENU_IDS', e.pid)
+      localStorage.setItem('SELECT_MENU_IDS', e.id)
+      this.$emit('clickMenu', e)
+    },
   }
 }
 </script>

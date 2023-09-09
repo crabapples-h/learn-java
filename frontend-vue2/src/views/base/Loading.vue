@@ -20,7 +20,7 @@ export default {
       const loadFinish = this.$store.getters.LOAD_FINISH
       console.log('监听路由渲染状态:', loadFinish)
       if (loadFinish) {
-        console.log('检测到路由初始化完成')
+        console.log('检测到路由初始化完成', '即将跳转页面')
         clearInterval(checkLoad)
         let lastPage = localStorage.getItem('LAST_PAGE')
         if (!lastPage || lastPage === '/loading') {

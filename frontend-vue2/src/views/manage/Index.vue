@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import CPageHeader from "@/views/common/C-PageHeader";
-import CPageMenus from "@/views/common/C-PageMenus";
-import CPageFooter from "@/views/common/C-PageFooter";
-import permissions from "@/store/modules/permissions";
+import CPageHeader from '@/views/common/C-PageHeader'
+import CPageMenus from '@/views/common/C-PageMenus'
+import CPageFooter from '@/views/common/C-PageFooter'
+import permissions from '@/store/modules/permissions'
 
 export default {
-  name: "Index",
+  name: 'Index',
   components: {
     CPageHeader,
     CPageMenus,
@@ -32,7 +32,7 @@ export default {
     return {
       title: '管理',
       userInfo: {},
-    };
+    }
   },
   activated() {
   },
@@ -42,9 +42,9 @@ export default {
   },
   methods: {
     clickMenu(e) {
-      if(e.menusType===3){
+      if (e.menusType === 3) {
         window.open(e.link)
-      }else{
+      } else {
         this.$router.push(e.path)
       }
     },

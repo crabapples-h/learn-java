@@ -52,6 +52,12 @@
             </a-radio>
           </a-radio-group>
         </a-form-model-item>
+        <a-form-model-item label="是否隐藏" prop="showFlag" v-if="form.menus.menusType !== 2">
+          <a-radio-group name="radioGroup" v-model="form.menus.showFlag">
+            <a-radio :value="0">显示</a-radio>
+            <a-radio :value="1">隐藏</a-radio>
+          </a-radio-group>
+        </a-form-model-item>
         <a-form-model-item label="浏览器访问路径" prop="path" v-if="form.menus.menusType === 1">
           <a-input v-model="form.menus.path"/>
         </a-form-model-item>
@@ -95,21 +101,15 @@
 
 <script>
 
-import CPopButton from "@comp/c-pop-button";
-import {initCPagination} from "@/views/common/C-Pagination";
-import commonApi from "@/api/CommonApi";
-import {SysApis} from "@/api/Apis";
-
+import commonApi from '@/api/CommonApi'
+import { SysApis } from '@/api/Apis'
+import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
-  name: "menus-list",
-  components: {
-    CPopButton,
-  },
+  name: 'menus-list',
+  mixins: [SystemMinix],
   data() {
     return {
-      labelCol: {span: 5},
-      wrapperCol: {span: 16},
       columns: [
         {
           dataIndex: 'name',
@@ -118,7 +118,7 @@ export default {
         {
           dataIndex: 'icon',
           title: '图标',
-          scopedSlots: {customRender: 'icon'},
+          scopedSlots: { customRender: 'icon' },
         },
         {
           dataIndex: 'sort',
@@ -127,7 +127,7 @@ export default {
         {
           dataIndex: 'type',
           title: '类型',
-          scopedSlots: {customRender: 'type'},
+          scopedSlots: { customRender: 'type' },
         },
         {
           dataIndex: 'permission',
@@ -136,20 +136,19 @@ export default {
         {
           dataIndex: 'action',
           title: '操作',
-          scopedSlots: {customRender: 'action'},
+          scopedSlots: { customRender: 'action' },
         },
       ],
       dataSource: [],
-      pagination: initCPagination(this.changeIndex, this.changeSize),
       rules: {
         menus: {
           name: [
-            {required: true, message: '请输入菜单名称', trigger: 'change'},
-            {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
-            {whitespace: true, message: '请输入菜单名称', trigger: 'change'}
+            { required: true, message: '请输入菜单名称', trigger: 'change' },
+            { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
+            { whitespace: true, message: '请输入菜单名称', trigger: 'change' }
           ],
           menusType: [
-            {required: true, message: '类型不能为空', trigger: 'change'},
+            { required: true, message: '类型不能为空', trigger: 'change' },
           ],
         },
       },
@@ -165,38 +164,29 @@ export default {
           filePath: '',
           permission: '',
           link: '',
+          showFlag: '',
         },
       },
       show: {
         menus: false,
         test: false,
       },
-    };
+      url: {
+        list: SysApis.menuPage,
+        save: SysApis.saveMenus,
+        delete: SysApis.delMenus,
+      }
+    }
   },
   activated() {
-    this.getList()
   },
   mounted() {
   },
   methods: {
-    changeIndex(pageIndex, pageSize) {
-      let page = {
-        pageIndex: pageIndex,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
-    changeSize(current, pageSize) {
-      let page = {
-        pageIndex: current,
-        pageSize: pageSize,
-      }
-      this.getList(page)
-    },
     resetMenusForm() {
       this.form.menus = {
         id: '',
-        parentId: '',
+        pid: '',
         name: '',
         menusType: '',
         icon: '',
@@ -205,17 +195,19 @@ export default {
         filePath: '',
         permission: '',
         link: '',
+        showFlag: '',
       }
     },
     refreshData() {
       this.resetMenusForm()
       this.getList()
     },
-    getList(page) {
-      this.$http.get(SysApis.menusListPage, {params: page}).then(result => {
+    getList() {
+      let page = this.getQueryPage()
+      this.$http.get(this.url.list, { params: page }).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         if (result.data !== null) {
           let format = function (data) {
@@ -232,6 +224,7 @@ export default {
                 link: e.link,
                 filePath: e.filePath,
                 permission: e.permission,
+                showFlag: e.showFlag,
               }
               if (e.children && e.children.length > 0) {
                 menus.children = format(e.children)
@@ -239,37 +232,37 @@ export default {
               return menus
             }).sort((a, b) => {
               return a.sort - b.sort
-            });
+            })
           }
-          this.dataSource = format(result.data)
-          this.pagination.total = result.page.dataCount
-          this.pagination.current = result.page.pageIndex + 1
+          this.dataSource = format(result.data.records)
+          this.pagination.total = result.data.total
+          this.pagination.current = result.data.current
+          this.pagination.pageSize = result.data.size
         }
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
     removeMenus(e) {
-      this.$http.post(`${SysApis.delMenus}/${e.id}`).then(result => {
+      this.$http.post(`${this.url.delete}/${e.id}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
+          this.$message.error(result.message)
           return
         }
         this.refreshData()
         this.$message.success(result.message)
       }).catch(function (error) {
-        console.log('请求出现错误:', error);
-      });
+        console.log('请求出现错误:', error)
+      })
     },
     addMenus() {
       this.show.menus = true
     },
     addChildMenus(e) {
-      this.form.menus.parentId = e.id
+      this.form.menus.pid = e.id
       this.show.menus = true
     },
     editMenus(e) {
-      console.log(e)
       this.form.menus = e
       this.show.menus = true
     },
@@ -279,15 +272,15 @@ export default {
       commonApi.refreshSysData()
     },
     submitMenusForm() {
-      this.$http.post(SysApis.saveMenus, this.form.menus).then(result => {
+      this.$http.post(this.url.save, this.form.menus).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
+          this.$message.error(result.message)
+          return
         }
         this.closeMenusForm()
       }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
+        console.error('出现错误:', error)
+      })
     },
   }
 }
@@ -295,14 +288,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px solid #e9e9e9;
-  padding: 10px 16px;
-  background: #fff;
-  text-align: right;
-  z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px;
+    background: #fff;
+    text-align: right;
+    z-index: 1;
 }
 </style>

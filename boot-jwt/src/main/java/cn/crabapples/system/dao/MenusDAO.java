@@ -4,6 +4,8 @@ import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.dao.mybatis.MenusMapper;
 import cn.crabapples.system.entity.SysMenu;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +23,6 @@ import java.util.List;
  */
 @Component
 public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
-
-    public SysMenu findById(String id) {
-        return getById(id);
-    }
-
-    @Transactional
-    public boolean save(SysMenu entity) {
-        return saveOrUpdate(entity);
-    }
 
     public boolean remove(String id) {
         return removeById(id);
@@ -56,4 +49,8 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
         return baseMapper.findMenusTree(null);
     }
 
+    public IPage<SysMenu> getMenuPage(Page<SysMenu> page) {
+        return baseMapper.findMenusTreePage(page,null);
+
+    }
 }

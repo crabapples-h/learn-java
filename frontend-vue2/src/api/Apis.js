@@ -18,6 +18,7 @@ const SysApis = {
 
   //菜单 menu
   menuList: '/api/system/menu/list',
+  menuPage: '/api/system/menu/page',
   delMenus: '/api/system/menu/remove',
   saveMenus: '/api/system/menu/save',
   roleMenus: '/api/system/menu/role',

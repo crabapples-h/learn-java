@@ -192,7 +192,7 @@ export default {
       commonApi.refreshSysData()
     },
     submitRolesForm() {
-      this.$http.post(this.url.saveRoles, this.form.roles).then(result => {
+      this.$http.post(this.url.save, this.form.roles).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
@@ -236,8 +236,8 @@ export default {
           return a.sort - b.sort
         })
       }
-      this.$http.get(`${SysApis.roleMenus}/${e.id}`).then(result => {
-        this.menusDataSource = format(result.data.sysMenus)
+      this.$http.get(`${this.url.roleMenus}/${e.id}`).then(result => {
+        this.menusDataSource = format(result.data)
         this.show.menus = true
       })
     },

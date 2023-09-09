@@ -7,6 +7,8 @@ import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.crabapples.test.Utils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -73,7 +75,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public boolean saveMenus(MenusForm form) {
-        return menusDAO.save(form.toEntity());
+        return menusDAO.saveOrUpdate(form.toEntity());
     }
 
     /**
@@ -81,8 +83,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public List<SysMenu> getMenusList() {
-        List<SysMenu> sysMenus = menusDAO.findMenusTree();
-        sysMenus = filterMenusByDelFlag(sysMenus);
-        return sysMenus;
+        return menusDAO.findMenusTree();
+    }
+
+    @Override
+    public IPage<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form) {
+        return menusDAO.getMenuPage(Page.of(pageIndex,pageSize));
     }
 }
