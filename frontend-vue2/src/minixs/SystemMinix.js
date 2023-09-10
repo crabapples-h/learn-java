@@ -2,7 +2,7 @@ import { initCPagination } from '@/views/common/C-Pagination'
 import { TreeSelect } from 'ant-design-vue'
 import CButton from '@comp/c-button.vue'
 import CPopButton from '@comp/c-pop-button.vue'
-import rules from '@/utils/rule'
+import formRules from '@/utils/formRules'
 
 export default {
   components: {
@@ -11,7 +11,7 @@ export default {
   },
   data() {
     return {
-      rules: rules,
+      formRules: formRules,
       SHOW_TYPE: TreeSelect.SHOW_CHILD,
       labelCol: { span: 5 },
       wrapperCol: { span: 16 },
@@ -19,7 +19,8 @@ export default {
       dataSource: [],
       url: {
         list: ''
-      }
+      },
+      form: {},
     }
   },
   created() {
@@ -68,6 +69,9 @@ export default {
         }
         if (result.data !== null) {
           this.dataSource = result.data.records || result.data
+          this.dataSource = this.dataSource.sort((a, b) => {
+            return a.sort - b.sort
+          })
           // if (result.data.pageable) {
           this.pagination.total = result.data.total
           this.pagination.current = result.data.current
@@ -78,8 +82,23 @@ export default {
         console.error('出现错误:', error)
       })
     },
+    remove(e) {
+      this.$http.post(`${this.url.delete}/${e.id}`).then(result => {
+        if (result.status !== 200) {
+          this.$message.error(result.message)
+          return
+        }
+        this.refreshData()
+        this.$message.success(result.message)
+      }).catch(function (error) {
+        console.log('请求出现错误:', error)
+      })
+    },
     refreshData() {
       this.getList()
+    },
+    resetForm() {
+      this.form = {}
     },
   }
 }

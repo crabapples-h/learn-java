@@ -3,17 +3,17 @@
     <a-button @click="addRoles" v-auth:sys:roles:add>添加角色</a-button>
     <a-divider/>
     <a-drawer title="" width="50%" :visible="show.roles" @close="closeRolesForm">
-      <a-form-model :model="form.roles" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-model :model="form" :rules="formRules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="roleForm">
         <a-form-model-item label="ID" style="display: none">
-          <a-input v-model="form.roles.id" disabled placeholder="新建时自动生成"/>
+          <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="名称" prop="name">
-          <a-input v-model="form.roles.name"/>
+          <a-input v-model="form.name"/>
         </a-form-model-item>
         <a-form-model-item label="菜单">
           <a-tree-select
             :tree-data="menusOptions"
-            v-model="form.roles.menusList"
+            v-model="form.menusList"
             tree-checkable
             :show-checked-strategy="SHOW_TYPE"
             :show-line="show.treeLine"
@@ -21,11 +21,11 @@
             :replace-fields="replaceFields"
             v-if="false"/>
           <a-tree
-            v-model="form.roles.menusList"
+            v-model="form.menusList"
             :checkable="true"
             :default-expand-all="true"
             :check-strictly="false"
-            :selected-keys="form.roles.menusList"
+            :selected-keys="form.menusList"
             :tree-data="menusOptions"
             :replace-fields="replaceFields"/>
         </a-form-model-item>
@@ -74,6 +74,7 @@ export default {
   mixins: [SystemMinix],
   data() {
     return {
+      formRules: {},
       columns: [
         {
           dataIndex: 'name',
@@ -109,13 +110,6 @@ export default {
         },
       ],
       menusDataSource: [],
-      form: {
-        roles: {
-          id: '',
-          name: '',
-          menusList: [],
-        },
-      },
       show: {
         treeLine: true,
         roles: false,
@@ -141,15 +135,8 @@ export default {
     this.getMenusList()
   },
   methods: {
-    resetRolesForm() {
-      this.form.roles = {
-        id: '',
-        name: '',
-        menusList: [],
-      }
-    },
     refreshData() {
-      this.resetRolesForm()
+      this.resetForm()
       this.getList()
     },
     removeRoles(e) {
@@ -170,8 +157,8 @@ export default {
     },
     editRoles(e) {
       this.getMenusList()
-      this.form.roles.id = e.id
-      this.form.roles.name = e.name
+      this.form.id = e.id
+      this.form.name = e.name
       this.$http.get(`${this.url.roleMenus}/${e.id}`).then(result => {
         let hasMenuList = result.data.map(e => {
           return { id: e.id, name: e.name, pid: e.pid, sort: e.sort }
@@ -189,7 +176,7 @@ export default {
         /*
          * 3.如果角色拥有的菜单中包含了没有权限的菜单则将其过滤掉
          */
-        this.form.roles.menusList = result.data.filter(e => {
+        this.form.menusList = result.data.filter(e => {
           return !differentMenuList.includes(e.id)
         }).map(e => e.id)
       })
@@ -201,14 +188,18 @@ export default {
       commonApi.refreshSysData()
     },
     submitRolesForm() {
-      this.$http.post(this.url.save, this.form.roles).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
+      this.$refs.roleForm.validate(valid => {
+        if (valid) {
+          this.$http.post(this.url.save, this.form).then(result => {
+            if (result.status !== 200) {
+              this.$message.error(result.message)
+              return
+            }
+            this.closeRolesForm()
+          }).catch(function (error) {
+            console.error('出现错误:', error)
+          })
         }
-        this.closeRolesForm()
-      }).catch(function (error) {
-        console.error('出现错误:', error)
       })
     },
     tree2list(list, data) {

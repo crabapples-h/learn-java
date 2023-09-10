@@ -1,4 +1,4 @@
-const rules = {
+const formRules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'change' },
     { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
@@ -8,6 +8,10 @@ const rules = {
     { required: true, message: '请输入名称', trigger: 'change' },
     { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
     { whitespace: true, message: '请输入名称', trigger: 'change' }
+  ],
+  code: [
+    { required: true, message: '请输入代码', trigger: 'change' },
+    { whitespace: true, message: '请输入代码', trigger: 'change' }
   ],
   age: [
     { required: true, message: '请输入年龄', trigger: 'change' },
@@ -44,8 +48,5 @@ const rules = {
     { min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change' },
     { whitespace: true, message: '请重复输入密码', trigger: 'change' }
   ],
-  menusType: [
-    { required: true, message: '类型不能为空', trigger: 'change' },
-  ],
 }
-export default rules
+export default formRules

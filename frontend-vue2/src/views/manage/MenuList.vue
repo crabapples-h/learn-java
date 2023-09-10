@@ -2,45 +2,23 @@
   <div>
     <a-button @click="addMenus()" v-auth:sys:menus:add>添加菜单</a-button>
     <a-divider/>
-    <a-drawer title="" width="50%" :visible="show.test" @close="closeMenusForm">
-      <a-form-model :model="form.menus" :rules="rules.menus" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="ID">
-          <a-input v-model="form.menus.id" disabled placeholder="新建角色时自动生成"/>
-        </a-form-model-item>
-        <a-form-model-item label="名称" prop="name">
-          <a-input v-model="form.menus.name"/>
-        </a-form-model-item>
-        <a-form-model-item label="菜单">
-          <a-radio-group name="radioGroup" v-model="form.menus.menusType">
-            <a-radio :value="1"> A</a-radio>
-            <a-radio :value="2"> B</a-radio>
-            <a-radio :value="3"> C</a-radio>
-            <a-radio :value="4"> D</a-radio>
-          </a-radio-group>
-        </a-form-model-item>
-      </a-form-model>
-      <div class="drawer-bottom-button">
-        <a-button :style="{ marginRight: '8px' }" @click="closeMenusForm">关闭</a-button>
-        <a-button type="primary" @click="submitMenusForm">保存</a-button>
-      </div>
-    </a-drawer>
     <a-modal :visible="show.menus" width="50%" ok-text="确认" cancel-text="取消" @ok="submitMenusForm"
              @cancel="closeMenusForm">
-      <a-form-model :model="form.menus" :rules="rules.menus" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-model :model="form" :rules="formRules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="menuForm">
         <a-form-model-item label="ID" style="display: none">
-          <a-input v-model="form.menus.id" disabled placeholder="新建时自动生成"/>
+          <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="名称" prop="name">
-          <a-input v-model="form.menus.name"/>
+          <a-input v-model="form.name"/>
         </a-form-model-item>
-        <a-form-model-item label="图标" prop="icon" v-if="form.menus.menusType === 1||form.menus.menusType === 3">
-          <a-input v-model="form.menus.icon"/>
+        <a-form-model-item label="图标" prop="icon" v-if="form.menusType === 1||form.menusType === 3">
+          <a-input v-model="form.icon"/>
         </a-form-model-item>
-        <a-form-model-item label="排序" prop="sort" v-if="form.menus.menusType === 1">
-          <a-input-number :min="0" :max="9999" v-model="form.menus.sort"/>
+        <a-form-model-item label="排序" prop="sort" v-if="form.menusType === 1">
+          <a-input-number :min="0" :max="9999" v-model="form.sort"/>
         </a-form-model-item>
         <a-form-model-item label="类型" prop="menusType">
-          <a-radio-group name="radioGroup" v-model="form.menus.menusType">
+          <a-radio-group name="radioGroup" v-model="form.menusType">
             <a-radio :value="1">
               <a-tag size="small" color="green">菜单</a-tag>
             </a-radio>
@@ -52,23 +30,23 @@
             </a-radio>
           </a-radio-group>
         </a-form-model-item>
-        <a-form-model-item label="是否隐藏" prop="showFlag" v-if="form.menus.menusType !== 2">
-          <a-radio-group name="radioGroup" v-model="form.menus.showFlag">
+        <a-form-model-item label="是否隐藏" prop="showFlag" v-if="form.menusType !== 2">
+          <a-radio-group name="radioGroup" v-model="form.showFlag">
             <a-radio :value="0">显示</a-radio>
             <a-radio :value="1">隐藏</a-radio>
           </a-radio-group>
         </a-form-model-item>
-        <a-form-model-item label="浏览器访问路径" prop="path" v-if="form.menus.menusType === 1">
-          <a-input v-model="form.menus.path"/>
+        <a-form-model-item label="浏览器访问路径" prop="path" v-if="form.menusType === 1">
+          <a-input v-model="form.path"/>
         </a-form-model-item>
-        <a-form-model-item label="文件路径" prop="filePath" v-if="form.menus.menusType === 1">
-          <a-input addon-before="@/views/" addon-after=".vue" v-model="form.menus.filePath"/>
+        <a-form-model-item label="文件路径" prop="filePath" v-if="form.menusType === 1">
+          <a-input addon-before="@/views/" addon-after=".vue" v-model="form.filePath"/>
         </a-form-model-item>
-        <a-form-model-item label="授权标识" prop="permission" v-if="form.menus.menusType === 2">
-          <a-input v-model="form.menus.permission"/>
+        <a-form-model-item label="授权标识" prop="permission" v-if="form.menusType === 2">
+          <a-input v-model="form.permission"/>
         </a-form-model-item>
-        <a-form-model-item label="超链接地址" prop="link" v-if="form.menus.menusType === 3">
-          <a-input v-model="form.menus.link"/>
+        <a-form-model-item label="超链接地址" prop="link" v-if="form.menusType === 3">
+          <a-input v-model="form.link"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -110,6 +88,26 @@ export default {
   mixins: [SystemMinix],
   data() {
     return {
+      formRules: {
+        menusType: [
+          { required: true, message: '类型不能为空', trigger: 'change' },
+        ],
+        showFlag: [
+          { required: true, message: '请选择是否隐藏', trigger: 'change' },
+        ],
+        filePath: [
+          { required: true, message: '请输入文件路径', trigger: 'change' },
+          { whitespace: true, message: '请输入文件路径', trigger: 'change' }
+        ],
+        path: [
+          { required: true, message: '请输入浏览器访问路径', trigger: 'change' },
+          { whitespace: true, message: '请输入浏览器访问路径', trigger: 'change' }
+        ],
+        link: [
+          { required: true, message: '请输入超链接地址', trigger: 'change' },
+          { whitespace: true, message: '请输入超链接地址', trigger: 'change' }
+        ],
+      },
       columns: [
         {
           dataIndex: 'name',
@@ -140,33 +138,6 @@ export default {
         },
       ],
       dataSource: [],
-      rules: {
-        menus: {
-          name: [
-            { required: true, message: '请输入菜单名称', trigger: 'change' },
-            { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
-            { whitespace: true, message: '请输入菜单名称', trigger: 'change' }
-          ],
-          menusType: [
-            { required: true, message: '类型不能为空', trigger: 'change' },
-          ],
-        },
-      },
-      form: {
-        menus: {
-          id: '',
-          parentId: '',
-          name: '',
-          menusType: '',
-          icon: '',
-          sort: '',
-          path: '',
-          filePath: '',
-          permission: '',
-          link: '',
-          showFlag: '',
-        },
-      },
       show: {
         menus: false,
         test: false,
@@ -183,23 +154,8 @@ export default {
   mounted() {
   },
   methods: {
-    resetMenusForm() {
-      this.form.menus = {
-        id: '',
-        pid: '',
-        name: '',
-        menusType: '',
-        icon: '',
-        sort: '',
-        path: '',
-        filePath: '',
-        permission: '',
-        link: '',
-        showFlag: '',
-      }
-    },
     refreshData() {
-      this.resetMenusForm()
+      this.resetForm()
       this.getList()
     },
     getList() {
@@ -259,11 +215,11 @@ export default {
       this.show.menus = true
     },
     addChildMenus(e) {
-      this.form.menus.pid = e.id
+      this.form.pid = e.id
       this.show.menus = true
     },
     editMenus(e) {
-      this.form.menus = e
+      this.form = e
       this.show.menus = true
     },
     closeMenusForm() {
@@ -272,14 +228,19 @@ export default {
       commonApi.refreshSysData()
     },
     submitMenusForm() {
-      this.$http.post(this.url.save, this.form.menus).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
+      this.$refs.menuForm.validate(valid => {
+        if (valid) {
+          this.$http.post(this.url.save, this.form).then(result => {
+            if (result.status !== 200) {
+              this.$message.error(result.message)
+              return
+            }
+            this.closeMenusForm()
+          }).catch(function (error) {
+            console.error('出现错误:', error)
+          })
+        } else {
         }
-        this.closeMenusForm()
-      }).catch(function (error) {
-        console.error('出现错误:', error)
       })
     },
   }

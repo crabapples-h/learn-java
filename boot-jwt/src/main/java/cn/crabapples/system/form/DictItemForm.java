@@ -1,15 +1,11 @@
 package cn.crabapples.system.form;
 
-import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseForm;
-import cn.crabapples.system.entity.SysMenu;
-import com.alibaba.fastjson.JSONObject;
+import cn.crabapples.system.entity.SysDictItem;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.BeanUtils;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * TODO 系统字典项Form
@@ -22,41 +18,16 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-public class DictItemForm extends BaseForm<SysMenu> {
+@ToString
+public class DictItemForm extends BaseForm<SysDictItem> {
     private String id;
-    private Integer sort;
-
-    private String icon;
-
-    private String parentId;
-
-    @NotBlank(message = "菜单名称不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
-    private String name;
-
-    private String url;
-
-    /**
-     * 菜单类型 1:目录 2:菜单 3:外部链接 4:按钮
-     */
-    @NotNull(message = "菜单类型不能为空", groups = {Groups.IsAdd.class, Groups.IsEdit.class})
-    private Integer menusType;
-
-    private Integer level;
-
-    private String path;
-
-    private String filePath;
-
-    private String permission;
+    private String dictCode;
+    private String code;
+    private String value;
 
     @Override
-    public String toString() {
-        return JSONObject.toJSONString(this);
-    }
-
-    @Override
-    public SysMenu toEntity() {
-        SysMenu entity =  SysMenu.create();
+    public SysDictItem toEntity() {
+        SysDictItem entity = SysDictItem.create();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

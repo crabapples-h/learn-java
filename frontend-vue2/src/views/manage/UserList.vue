@@ -3,35 +3,36 @@
     <a-button @click="addUser" v-auth:sys:user:add>添加用户</a-button>
     <a-divider/>
     <a-drawer width="30%" :visible="show.userInfo" @close="closeForm">
-      <a-form-model :model="form.userInfo" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-model :model="form" :rules="formRules" :label-col="labelCol" :wrapper-col="wrapperCol"
+                    ref="userForm">
         <a-form-model-item label="id" prop="id" style="display: none">
-          <a-input v-model="form.userInfo.id" disabled placeholder="新建时自动生成"/>
+          <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
         <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.userInfo.username" :disabled="show.isEdit" placeholder="请输入用户名"
+          <a-input v-model="form.username" :disabled="show.isEdit" placeholder="请输入用户名"
                    @blur="checkUsername"/>
         </a-form-model-item>
-        <a-form-model-item label="姓名" prop="name">
-          <a-input v-model="form.userInfo.name" placeholder="请输入姓名"/>
+        <a-form-model-item label="姓名" prop="requireInput">
+          <a-input v-model="form.name" placeholder="请输入姓名"/>
         </a-form-model-item>
         <a-form-model-item label="年龄" prop="age">
-          <a-input-number v-model="form.userInfo.age" placeholder="请输入年龄"/>
+          <a-input-number v-model="form.age" placeholder="请输入年龄"/>
         </a-form-model-item>
         <a-form-model-item label="邮箱" prop="mail">
-          <a-input v-model="form.userInfo.mail" placeholder="请输入邮箱"/>
+          <a-input v-model="form.mail" placeholder="请输入邮箱"/>
         </a-form-model-item>
         <a-form-model-item label="电话" prop="phone">
-          <a-input v-model="form.userInfo.phone" placeholder="请输入电话号码"/>
+          <a-input v-model="form.phone" placeholder="请输入电话号码"/>
         </a-form-model-item>
         <a-form-model-item label="新密码">
-          <a-input v-model="form.userInfo.newPassword" placeholder="请输入新密码"/>
+          <a-input v-model="form.newPassword" placeholder="请输入新密码"/>
         </a-form-model-item>
         <a-form-model-item label="重复密码">
-          <a-input v-model="form.userInfo.againPassword" placeholder="请输入重复密码"/>
+          <a-input v-model="form.againPassword" placeholder="请输入重复密码"/>
         </a-form-model-item>
         <a-form-model-item label="角色">
           <a-select mode="multiple"
-                    v-model="form.userInfo.roleList"
+                    v-model="form.roleList"
                     placeholder="请选择角色"
                     :options="roleOptions">
           </a-select>
@@ -115,19 +116,6 @@ export default {
         },
       ],
       roleOptions: [],
-      form: {
-        userInfo: {
-          id: '',
-          username: '',
-          name: '',
-          age: '',
-          mail: '',
-          phone: '',
-          roleList: [],
-          newPassword: '',
-          againPassword: '',
-        },
-      },
       show: {
         userInfo: false,
         isEdit: false,
@@ -215,13 +203,13 @@ export default {
     },
     editUser(e) {
       this.show.isEdit = true
-      this.form.userInfo = e
+      this.form = e
       this.$http.get(`${this.url.userRoles}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
         }
-        this.$set(this.form.userInfo, 'roleList', result.data.map(r => {
+        this.$set(this.form, 'roleList', result.data.map(r => {
           return r.id
         }))
       }).catch(function (error) {
@@ -231,28 +219,27 @@ export default {
 
     },
     closeForm() {
-      this.form.userInfo = {
-        id: '',
-        name: '',
-        age: '',
-        mail: '',
-      }
+      this.form = {}
       this.show.userInfo = false
       this.refreshData()
     },
     submitForm() {
-      this.$http.post(this.url.save, this.form.userInfo).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
+      this.$refs.userForm.validate(valid => {
+        if (valid) {
+          this.$http.post(this.url.save, this.form).then(result => {
+            if (result.status !== 200) {
+              this.$message.error(result.message)
+              return
+            }
+            this.closeForm()
+          }).catch(function (error) {
+            console.error('出现错误:', error)
+          })
         }
-        this.closeForm()
-      }).catch(function (error) {
-        console.error('出现错误:', error)
       })
     },
     checkUsername() {
-      let username = this.form.userInfo.username
+      let username = this.form.username
       this.$http.get(`${SysApis.checkUsername}/${username}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)

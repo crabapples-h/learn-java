@@ -1,66 +1,76 @@
 <template>
   <div>
-    <a-button @click="addUser" v-auth:sys:user:add>添加字典</a-button>
+    <a-button @click="showAdd()" v-auth:sys:menus:add>添加字典</a-button>
     <a-divider/>
-    <a-drawer width="30%" :visible="show.userInfo" @close="closeForm">
-      <a-form-model :model="form.userInfo" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="id" prop="id" style="display: none">
-          <a-input v-model="form.userInfo.id" disabled placeholder="新建时自动生成"/>
+    <a-drawer title="字典详情" width="50%" :visible="show.dictItem" @close="closeDictItem">
+      <a-button type="primary" size="small" @click="showAddItem()">新增</a-button>
+      <a-divider/>
+      <a-table :data-source="dictItemList" key="id" bordered>
+        <a-table-column key="code" title="字典项代码" data-index="code"/>
+        <a-table-column key="value" title="字典项值" data-index="value"/>
+        <a-table-column key="id" title="操作" data-index="id">
+          <template slot-scope="text, record">
+            <a-button type="primary" size="small" @click="showEditItem(record)">编辑</a-button>
+            <a-divider type="vertical"/>
+            <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="removeDictItem(record)"/>
+          </template>
+        </a-table-column>
+      </a-table>
+    </a-drawer>
+    <a-modal :visible="show.addItem" width="50%" ok-text="确认" cancel-text="取消" @ok="submitAddItemForm"
+             @cancel="closeAddItem">
+      <a-form-model :model="itemForm" :rules="formRules"
+                    :label-col="labelCol"
+                    :wrapper-col="wrapperCol"
+                    ref="dictItemForm">
+        <a-form-model-item label="字典项代码" prop="code">
+          <a-input v-model="itemForm.code"/>
         </a-form-model-item>
-        <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.userInfo.username" :disabled="show.isEdit" placeholder="请输入用户名"
-                   @blur="checkUsername"/>
+        <a-form-model-item label="字典项值" prop="value">
+          <a-input v-model="itemForm.value"/>
         </a-form-model-item>
-        <a-form-model-item label="姓名" prop="name">
-          <a-input v-model="form.userInfo.name" placeholder="请输入姓名"/>
+      </a-form-model>
+      <div class="drawer-bottom-button">
+        <a-button :style="{ marginRight: '8px' }" @click="closeAddItem">关闭</a-button>
+        <a-button type="primary" @click="submitAddItemForm">保存</a-button>
+      </div>
+    </a-modal>
+    <a-modal :visible="show.add" width="50%" ok-text="确认" cancel-text="取消" @ok="submitForm"
+             @cancel="closeForm">
+      <a-form-model :model="form" :rules="formRules"
+                    :label-col="labelCol"
+                    :wrapper-col="wrapperCol"
+                    ref="dictForm">
+        <a-form-model-item label="ID" style="display: none">
+          <a-input v-model="form.id" disabled placeholder="新建字典时自动生成"/>
         </a-form-model-item>
-        <a-form-model-item label="年龄" prop="age">
-          <a-input-number v-model="form.userInfo.age" placeholder="请输入年龄"/>
+        <a-form-model-item label="字典名称" prop="name">
+          <a-input v-model="form.name"/>
         </a-form-model-item>
-        <a-form-model-item label="邮箱" prop="mail">
-          <a-input v-model="form.userInfo.mail" placeholder="请输入邮箱"/>
+        <a-form-model-item label="字典代码" prop="code">
+          <a-input v-model="form.code"/>
         </a-form-model-item>
-        <a-form-model-item label="电话" prop="phone">
-          <a-input v-model="form.userInfo.phone" placeholder="请输入电话号码"/>
-        </a-form-model-item>
-        <a-form-model-item label="新密码">
-          <a-input v-model="form.userInfo.newPassword" placeholder="请输入新密码"/>
-        </a-form-model-item>
-        <a-form-model-item label="重复密码">
-          <a-input v-model="form.userInfo.againPassword" placeholder="请输入重复密码"/>
-        </a-form-model-item>
-        <a-form-model-item label="角色">
-          <a-select mode="multiple"
-                    v-model="form.userInfo.roleList"
-                    placeholder="请选择角色"
-                    :options="roleOptions">
-          </a-select>
+        <a-form-model-item label="排序" prop="sort">
+          <a-input v-model="form.sort"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
         <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
         <a-button type="primary" @click="submitForm">保存</a-button>
       </div>
-    </a-drawer>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
-      <span slot="status" slot-scope="status">
-        <a-tag color="green" v-if="status === 0">正常</a-tag>
-        <a-tag color="red" v-else>锁定</a-tag>
-      </span>
+    </a-modal>
+    <a-table :data-source="dataSource" key="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
-        <span v-if="record.role !== 0">
-          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary"
-                        v-if="record.status === 0"
-                        v-auth:sys:user:lock/>
-          <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"
-                        v-auth:sys:user:unlock/>
-          <a-divider type="vertical"/>
-        </span>
-        <span v-if="record.role !== 0">
-          <c-pop-button title="确认要删除吗" text="删除" @click="removeUser(record)" type="danger" v-auth:sys:user:del/>
-          <a-divider type="vertical"/>
-        </span>
-        <a-button type="primary" size="small" @click="editUser(record)" v-auth:sys:user:edit>编辑</a-button>
+        <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)"/>
+        <a-divider type="vertical"/>
+        <a-button type="primary" size="small" @click="showEdit(record)">编辑</a-button>
+        <a-divider type="vertical"/>
+        <a-button type="primary" size="small" @click="showAddItem(record)">添加字典项</a-button>
+        <a-divider type="vertical"/>
+        <a-button type="primary" size="small" @click="showDictItem(record)">查看字典项</a-button>
+      </span>
+      <span slot="icon" slot-scope="text, record">
+        <a-icon :type='text.substring(text.indexOf("\"") + 1,text.lastIndexOf("\"")) || "appstore"'/>
       </span>
     </a-table>
   </div>
@@ -72,195 +82,144 @@ import { SysApis } from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
-  name: 'user-list',
+  name: 'menus-list',
   mixins: [SystemMinix],
   data() {
     return {
+      formRules: {
+        value: [
+          { required: true, message: '请输入字典项值', trigger: 'change' },
+          { whitespace: true, message: '请输入字典项值', trigger: 'change' }
+        ],
+      },
       columns: [
         {
-          dataIndex: 'username',
-          key: 'username',
-          title: '用户名',
-        },
-        {
           dataIndex: 'name',
-          title: '姓名',
-          key: 'name',
+          title: '名称',
         },
         {
-          dataIndex: 'age',
-          title: '年龄',
-          key: 'age',
+          dataIndex: 'code',
+          title: '代码',
         },
         {
-          dataIndex: 'mail',
-          title: '邮箱',
-          key: 'mail',
+          dataIndex: 'sort',
+          title: '排序',
         },
         {
-          dataIndex: 'phone',
-          title: '电话',
-          key: 'phone',
-        },
-        {
-          dataIndex: 'status',
-          title: '状态',
-          key: 'status',
-          scopedSlots: { customRender: 'status' }
-        },
-        {
+          dataIndex: 'action',
           title: '操作',
-          key: 'action',
           scopedSlots: { customRender: 'action' },
         },
       ],
-      roleOptions: [],
-      form: {
-        userInfo: {
-          id: '',
-          username: '',
-          name: '',
-          age: '',
-          mail: '',
-          phone: '',
-          roleList: [],
-          newPassword: '',
-          againPassword: '',
-        },
-      },
+      dataSource: [],
+      dictItemList: [],
+      itemForm: {},
       show: {
-        userInfo: false,
-        isEdit: false,
+        add: false,
+        addItem: false,
+        dictItem: false,
       },
       url: {
-        list: SysApis.userPage,
-        save: SysApis.saveUser,
-        lock: SysApis.lockUser,
-        unlock: SysApis.unlockUser,
-        delete: SysApis.delUser,
-        userRoles: SysApis.userRoles,
-        roleList: SysApis.roleList,
-      },
+        list: SysApis.dictPage,
+        save: SysApis.saveDicts,
+        delete: SysApis.delDicts,
+        saveDictItems: SysApis.saveDictItems,
+        dictItemListByCode: SysApis.dictItemListByCode,
+        deleteDictItems: SysApis.delDictItems,
+      }
     }
   },
   activated() {
   },
   mounted() {
-    this.getRoleList()
   },
   methods: {
-    getRoleList() {
-      this.$http.get(this.url.roleList).then(result => {
+    showDictItem(e) {
+      this.itemForm.dictCode = e.code
+      this.$http.get(`${this.url.dictItemListByCode}/${e.code}`,).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
         }
-        this.roleOptions = result.data.map(e => {
-          return {
-            label: e.name,
-            value: e.id,
-          }
-        })
+        if (result.data !== null) {
+          this.dictItemList = result.data.records || result.data
+        }
+        this.show.dictItem = true
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
     },
-    lockUser(e) {
-      this.$http.post(`${this.url.lock}/${e.id}`).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        this.refreshData()
-        this.$message.success(result.message)
-      }).catch(function (error) {
-        console.log('请求出现错误:', error)
-      })
+    closeDictItem() {
+      this.show.dictItem = false
     },
-    unlockUser(e) {
-      this.$http.post(`${this.url.unlock}/${e.id}`).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        this.refreshData()
-        this.$message.success(result.message)
-      }).catch(function (error) {
-        console.log('请求出现错误:', error)
-      })
+    showAddItem(e) {
+      if (e) {
+        this.itemForm.dictCode = e.code
+      }
+      this.show.addItem = true
     },
-    removeUser(e) {
-      const _this = this
-      this.$confirm({
-        title: '确认操作?',
-        cancelText: '取消',
-        okText: '确定',
-        onOk() {
-          _this.$http.post(`${_this.url.delete}/${e.id}`).then(result => {
+    showEditItem(e) {
+      this.itemForm = e
+      this.show.addItem = true
+    },
+    closeAddItem(e) {
+      this.show.addItem = false
+    },
+    submitAddItemForm() {
+      this.$refs.dictItemForm.validate(valid => {
+        if (valid) {
+          this.$http.post(this.url.saveDictItems, this.itemForm).then(result => {
             if (result.status !== 200) {
-              _this.$message.error(result.message)
+              this.$message.error(result.message)
               return
             }
-            _this.$message.success(result.message)
-            _this.refreshData()
+            this.closeAddItem()
           }).catch(function (error) {
-            console.log('请求出现错误:', error)
+            console.error('出现错误:', error)
           })
-        },
-      })
-    },
-    addUser() {
-      this.show.isEdit = false
-      this.show.userInfo = true
-    },
-    editUser(e) {
-      this.show.isEdit = true
-      this.form.userInfo = e
-      this.$http.get(`${this.url.userRoles}/${e.id}`).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
         }
-        this.$set(this.form.userInfo, 'roleList', result.data.map(r => {
-          return r.id
-        }))
-      }).catch(function (error) {
-        console.error('出现错误:', error)
       })
-      this.show.userInfo = true
-
+    },
+    showAdd() {
+      this.show.add = true
+    },
+    showEdit(e) {
+      this.form = e
+      this.show.add = true
     },
     closeForm() {
-      this.form.userInfo = {
-        id: '',
-        name: '',
-        age: '',
-        mail: '',
-      }
-      this.show.userInfo = false
+      this.show.add = false
       this.refreshData()
     },
     submitForm() {
-      this.$http.post(this.url.save, this.form.userInfo).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
+      this.$refs.dictForm.validate(valid => {
+        if (valid) {
+          this.$http.post(this.url.save, this.form).then(result => {
+            if (result.status !== 200) {
+              this.$message.error(result.message)
+              return
+            }
+            this.closeForm()
+          }).catch(function (error) {
+            console.error('出现错误:', error)
+          })
+        } else {
+          console.log('error submit!!')
+          return false
         }
-        this.closeForm()
-      }).catch(function (error) {
-        console.error('出现错误:', error)
       })
+
     },
-    checkUsername() {
-      let username = this.form.userInfo.username
-      this.$http.get(`${SysApis.checkUsername}/${username}`).then(result => {
+    removeDictItem(e) {
+      this.$http.post(`${this.url.deleteDictItems}/${e.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
         }
+        this.showDictItem(e)
         this.$message.success(result.message)
       }).catch(function (error) {
-        console.error('出现错误:', error)
+        console.log('请求出现错误:', error)
       })
     },
   }
