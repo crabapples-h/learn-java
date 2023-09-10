@@ -3,7 +3,7 @@
     <a-button @click="addRoles" v-auth:sys:roles:add>添加角色</a-button>
     <a-divider/>
     <a-drawer title="" width="50%" :visible="show.roles" @close="closeRolesForm">
-      <a-form-model :model="form.roles" :rules="rules.roles" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-model :model="form.roles" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-model-item label="ID" style="display: none">
           <a-input v-model="form.roles.id" disabled placeholder="新建时自动生成"/>
         </a-form-model-item>
@@ -11,23 +11,23 @@
           <a-input v-model="form.roles.name"/>
         </a-form-model-item>
         <a-form-model-item label="菜单">
-          <a-tree-select :tree-data="menusOptions"
-                         v-model="form.roles.menusList"
-                         tree-checkable
-                         :show-checked-strategy="SHOW_TYPE"
-                         :show-line="show.treeLine"
-                         :checkStrictly="false"
-                         v-if="false"/>
-
+          <a-tree-select
+            :tree-data="menusOptions"
+            v-model="form.roles.menusList"
+            tree-checkable
+            :show-checked-strategy="SHOW_TYPE"
+            :show-line="show.treeLine"
+            :checkStrictly="false"
+            :replace-fields="replaceFields"
+            v-if="false"/>
           <a-tree
             v-model="form.roles.menusList"
-            checkable
-            :auto-expand-parent="true"
+            :checkable="true"
+            :default-expand-all="true"
+            :check-strictly="false"
             :selected-keys="form.roles.menusList"
             :tree-data="menusOptions"
-            :replace-fields="replaceFields"
-          />
-
+            :replace-fields="replaceFields"/>
         </a-form-model-item>
       </a-form-model>
       <div class="drawer-bottom-button">
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import CPopButton from '@/components/c-pop-button'
 import commonApi from '@/api/CommonApi'
 import { SysApis } from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
@@ -110,15 +109,6 @@ export default {
         },
       ],
       menusDataSource: [],
-      rules: {
-        roles: {
-          name: [
-            { required: true, message: '请输入角色名称', trigger: 'blur' },
-            { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'blur' },
-            { whitespace: true, message: '请输入角色名称', trigger: 'blur' }
-          ],
-        },
-      },
       form: {
         roles: {
           id: '',
@@ -141,7 +131,8 @@ export default {
         roleMenus: SysApis.roleMenus,
         save: SysApis.saveRoles,
         menuList: SysApis.menuList,
-      }
+      },
+      allMenuList: []
     }
   },
   activated() {
@@ -174,17 +165,35 @@ export default {
       })
     },
     addRoles() {
+      this.getMenusList()
       this.show.roles = true
     },
     editRoles(e) {
+      this.getMenusList()
       this.form.roles.id = e.id
       this.form.roles.name = e.name
       this.$http.get(`${this.url.roleMenus}/${e.id}`).then(result => {
-        this.form.roles.menusList = result.data.map(e => {
-          return e.id
+        let hasMenuList = result.data.map(e => {
+          return { id: e.id, name: e.name, pid: e.pid, sort: e.sort }
         })
-        this.show.roles = true
+        /*
+         * 新增子菜单后，需要将其父级菜单设置为未选择状态
+         * 1.首先从两个数组中筛选出不一样的元素，这些元素就是没有权限的菜单
+         * 2.记录下没有权限的菜单的pid
+         */
+        let differentMenuList = this.allMenuList.filter(e => {
+          return hasMenuList.every(r => {
+            return e.id !== r.id
+          })
+        }).map(e => e.pid)
+        /*
+         * 3.如果角色拥有的菜单中包含了没有权限的菜单则将其过滤掉
+         */
+        this.form.roles.menusList = result.data.filter(e => {
+          return !differentMenuList.includes(e.id)
+        }).map(e => e.id)
       })
+      this.show.roles = true
     },
     closeRolesForm() {
       this.show.roles = false
@@ -202,6 +211,12 @@ export default {
         console.error('出现错误:', error)
       })
     },
+    tree2list(list, data) {
+      list.forEach(r => {
+        data.push({ id: r.id, name: r.name, pid: r.pid, sort: r.sort })
+        this.tree2list(r.children, data)
+      })
+    },
     getMenusList() {
       this.$http.get(this.url.menuList).then(result => {
         if (result.status !== 200) {
@@ -209,13 +224,15 @@ export default {
           return
         }
         if (result.data !== null) {
+          let allMenuList = []
           this.menusOptions = result.data
+          this.tree2list(this.menusOptions, allMenuList)
+          this.allMenuList = allMenuList
         }
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
     },
-
     showMenus(e) {
       const format = function (data) {
         return data.map(e => {

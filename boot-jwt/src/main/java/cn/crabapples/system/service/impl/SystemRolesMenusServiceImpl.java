@@ -39,4 +39,9 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
     public void saveRoleMenus(String id, List<String> menusList) {
         roleMenusDAO.saveRoleMenus(id, menusList);
     }
+
+    @Override
+    public void delByMenuId(String pid) {
+        roleMenusDAO.delByMenuId(pid);
+    }
 }

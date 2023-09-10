@@ -10,6 +10,11 @@
         from sys_role_menus
         where role_id = #{roleId};
     </delete>
+    <delete id="delByMenuId">
+        delete
+        from sys_role_menus
+        where menu_id = #{menuId};
+    </delete>
 
     <select id="getRoleMenusList" resultType="cn.crabapples.system.entity.SysMenu">
         select sys_menu.*

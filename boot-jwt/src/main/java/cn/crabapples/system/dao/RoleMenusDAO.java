@@ -89,4 +89,7 @@ public class RoleMenusDAO  {
     }
 
 
+    public void delByMenuId(String pid) {
+        mapper.delByMenuId(pid);
+    }
 }

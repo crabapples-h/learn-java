@@ -5,12 +5,14 @@ import cn.crabapples.system.entity.SysMenu;
 import cn.crabapples.system.entity.SysUser;
 import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
+import cn.crabapples.system.service.SystemRoleMenusService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.crabapples.test.Utils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,13 +34,15 @@ import java.util.stream.Collectors;
 public class SystemMenusServiceImpl implements SystemMenusService {
     private final HttpServletRequest request;
     private final SystemUserService userService;
+    private final SystemRoleMenusService roleMenusService;
     private final MenusDAO menusDAO;
 
     public SystemMenusServiceImpl(HttpServletRequest request, MenusDAO menusDAO,
-                                  SystemUserService userService) {
+                                  SystemUserService userService, SystemRoleMenusService roleMenusService) {
         this.request = request;
         this.menusDAO = menusDAO;
         this.userService = userService;
+        this.roleMenusService = roleMenusService;
     }
 
     /**
@@ -75,6 +79,10 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public boolean saveMenus(MenusForm form) {
+        if(!StringUtils.isEmpty(form.getPid())){
+            // 当添加子菜单时，将其父级菜单从已拥有的权限中移除，避免角色直接拥有新添加的菜单的权限
+//            roleMenusService.delByMenuId(form.getPid());
+        }
         return menusDAO.saveOrUpdate(form.toEntity());
     }
 

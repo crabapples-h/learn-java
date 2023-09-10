@@ -4,9 +4,8 @@ import cn.crabapples.common.dic.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,19 +14,20 @@ import java.util.Date;
 
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
 @TableName("sys_dict")
 @ToString
-public class SysDict extends BaseEntity {
+@Data(staticConstructor = "create")
+@Accessors(chain = true)
+public class SysDict extends BaseEntity<SysDict> {
     // id 为自增主键
     @TableId(type = ASSIGN_UUID)
     private String id;
-
-    //名称
-    private String name;
-    //编码
+    private Integer sort;
     private String code;
+    private String name;
 
     // 创建时间
     @CreatedDate
