@@ -45,4 +45,6 @@ public interface SystemUserService extends BaseService {
     SysUser getUserInfo();
 
     boolean saveUser(UserForm form);
+
+    SysUserDTO getById(String id);
 }

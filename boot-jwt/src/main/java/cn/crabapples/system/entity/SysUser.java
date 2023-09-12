@@ -1,6 +1,7 @@
 package cn.crabapples.system.entity;
 
 import cn.crabapples.common.base.BaseEntity;
+import cn.crabapples.common.dic.Dict;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
@@ -31,25 +32,21 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 public class SysUser extends BaseEntity<SysUser> {
     @TableId(type = ASSIGN_UUID)
     private String id;
-
     // 用户名
     private String username;
-
     // 密码
     private String password;
-
     // 姓名
     private String name;
-
     // 邮箱
     private String mail;
-
     // 电话
     private String phone;
-
     // 年龄
     private Integer age;
-
+    // 年龄
+    @Dict(dictCode = "gender")
+    private Integer gender;
     // 最后操作用户
     @LastModifiedBy
     private String lastModifiedBy;

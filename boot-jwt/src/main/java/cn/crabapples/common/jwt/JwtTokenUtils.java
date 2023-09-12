@@ -63,7 +63,7 @@ public class JwtTokenUtils {
             //userId是重要信息，进行加密下
             String encryId = Base64Util.encode(userId);
             //添加构成JWT的参数
-            JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
+            JwtBuilder builder = Jwts.builder().setHeaderParam("type", "JWT")
                     // 可以将基本不重要的对象信息放到claims
                     .claim("userId", userId)
                     .setSubject(username)           // 代表这个JWT的主体，即它的所有人

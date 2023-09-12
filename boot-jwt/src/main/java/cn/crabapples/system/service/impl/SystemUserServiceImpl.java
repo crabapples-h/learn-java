@@ -14,6 +14,7 @@ import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -100,6 +101,14 @@ public class SystemUserServiceImpl implements SystemUserService {
         boolean status = entity.insertOrUpdate();
         userRoleService.saveUserRoles(entity.getId(), entity.getRoleList());
         return status;
+    }
+
+    @Override
+    public SysUserDTO getById(String id) {
+        SysUser user = userDAO.getById(id);
+        SysUserDTO dto = new SysUserDTO();
+        BeanUtils.copyProperties(user, dto);
+        return dto;
     }
 
     private String encryptPassword(String password) {

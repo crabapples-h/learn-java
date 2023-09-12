@@ -119,4 +119,14 @@ public class SystemUserController extends BaseController {
         return ResponseDTO.returnSuccess();
     }
 
+    @GetMapping("/get/{id}")
+    @ApiOperation(value = "根据Id获取用户", notes = "根据Id获取用户接口")
+    public ResponseDTO getById(@PathVariable String id) {
+        log.info("收到请求->根据Id获取用户:[{}]", id);
+        SysUserDTO entity = userService.getById(id);
+        log.info("返回结果-根据Id获取用户完成");
+        return ResponseDTO.returnSuccess(entity);
+    }
+
+
 }

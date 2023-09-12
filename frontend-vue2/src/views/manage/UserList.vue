@@ -94,10 +94,16 @@ export default {
           key: 'age',
         },
         {
+          dataIndex: 'gender_dictValue',
+          title: '性别',
+          key: 'gender',
+        },
+        {
           dataIndex: 'mail',
           title: '邮箱',
           key: 'mail',
         },
+
         {
           dataIndex: 'phone',
           title: '电话',

@@ -85,6 +85,7 @@ export default {
   name: 'menus-list',
   mixins: [SystemMinix],
   data() {
+
     return {
       formRules: {
         value: [
