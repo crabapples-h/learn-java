@@ -88,13 +88,15 @@ export default {
           this.$message.error(result.message)
           return
         }
-        this.refreshData()
         this.$message.success(result.message)
       }).catch(function (error) {
         console.log('请求出现错误:', error)
+      }).finally(() => {
+        this.refreshData()
       })
     },
     refreshData() {
+      this.resetForm()
       this.getList()
     },
     resetForm() {

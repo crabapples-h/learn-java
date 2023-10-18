@@ -55,6 +55,7 @@ export default {
   activated() {
   },
   mounted() {
+    console.log(this.OPEN_MENU_IDS)
   },
   methods: {
     click(e) {

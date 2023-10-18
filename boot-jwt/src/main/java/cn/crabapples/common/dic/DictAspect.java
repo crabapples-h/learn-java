@@ -5,12 +5,10 @@ import cn.crabapples.system.service.impl.SystemDictServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +22,8 @@ import java.util.Map;
  * qq 294046317
  * pc-name mshe
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 @Slf4j
 public class DictAspect {
     private static final Logger logger = LoggerFactory.getLogger(DictAspect.class);
