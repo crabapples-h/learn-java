@@ -34,7 +34,7 @@ import SystemMinix from '@/minixs/SystemMinix'
 import AddMenu from '@/views/manage/sys-menu/add.vue'
 
 export default {
-	name: 'menus-list',
+	name: 'menu-list',
 	mixins: [SystemMinix],
 	components: {
 		AddMenu

@@ -171,7 +171,7 @@ function initRouter(menus) {
   router.addRoute(customRouter)
   store.dispatch('LOAD_FINISH', true)
   console.log('动态路由初始化完成')
-  // console.log('新的路由表:-->', customRouter)
+  console.log('新的路由表:-->', customRouter)
 }
 
 router.onReady(() => {

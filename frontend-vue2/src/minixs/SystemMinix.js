@@ -61,26 +61,30 @@ export default {
       this.getList()
     },
     getList() {
-      let page = this.getQueryPage()
-      this.$http.get(this.url.list, { params: page }).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        if (result.data !== null) {
-          this.dataSource = result.data.records || result.data
-          this.dataSource = this.dataSource.sort((a, b) => {
-            return a.sort - b.sort
-          })
-          // if (result.data.pageable) {
-          this.pagination.total = result.data.total
-          this.pagination.current = result.data.current
-          this.pagination.pageSize = result.data.size
-          // }
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error)
-      })
+      if (this.url.list) {
+        let page = this.getQueryPage()
+        this.$http.get(this.url.list, { params: page }).then(result => {
+          if (result.status !== 200) {
+            this.$message.error(result.message)
+            return
+          }
+          if (result.data !== null) {
+            this.dataSource = result.data.records || result.data
+            this.dataSource = this.dataSource.sort((a, b) => {
+              return a.sort - b.sort
+            })
+            // if (result.data.pageable) {
+            this.pagination.total = result.data.total
+            this.pagination.current = result.data.current
+            this.pagination.pageSize = result.data.size
+            // }
+          }
+        }).catch(function (error) {
+          console.error('出现错误:', error)
+        })
+      } else {
+        console.log('组件[%s]的[url.list]为空', this.$route.path)
+      }
     },
     remove(e) {
       this.$http.post(`${this.url.delete}/${e.id}`).then(result => {

@@ -3,7 +3,7 @@
 		<a-button @click="showAdd" v-auth:sys:roles:add>添加角色</a-button>
 		<a-divider/>
 		<add-role :visible="show.add" @cancel="closeForm" ref="addMenu"/>
-		<role-detail :visible="show.detail" @cancel="closeShowDetail" ref="detail"/>
+<!--		<role-detail :visible="show.detail" @cancel="closeShowDetail" ref="detail"/>-->
 		<a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
         <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="remove(record)"
@@ -26,7 +26,7 @@ import AddRole from '@/views/manage/sys-role/add.vue'
 import RoleDetail from '@/views/manage/sys-role/detail.vue'
 
 export default {
-	name: 'roles-list',
+	name: 'role-list',
 	mixins: [SystemMinix],
 	components: {AddRole, RoleDetail},
 	data() {
@@ -97,7 +97,7 @@ export default {
 			})
 			this.show.add = true
 		},
-		
+
 		showDetail(e) {
 			this.$http.get(`${this.url.roleMenus}/${e.id}`).then(result => {
 				console.log(result.data)
@@ -109,7 +109,7 @@ export default {
 		closeShowDetail() {
 			this.show.detail = false
 		},
-		
+
 	}
 }
 </script>
