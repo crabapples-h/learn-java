@@ -61,7 +61,7 @@ export default {
       this.getList()
     },
     getList() {
-      if (this.url.list) {
+      if (!!this.url.list) {
         let page = this.getQueryPage()
         this.$http.get(this.url.list, { params: page }).then(result => {
           if (result.status !== 200) {

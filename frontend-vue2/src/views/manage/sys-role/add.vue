@@ -11,7 +11,7 @@
       <a-form-model-item label="菜单">
         <a-tree-select
           :tree-data="menusOptions"
-          v-model="form.menusList"
+          v-model="form.hasMenusIds"
           tree-checkable
           :show-checked-strategy="SHOW_TYPE"
           :show-line="show.treeLine"
@@ -19,11 +19,11 @@
           :replace-fields="replaceFields"
           v-if="false"/>
         <a-tree
-          v-model="form.menusList"
+          v-model="form.hasMenusIds"
           :checkable="true"
           :default-expand-all="true"
           :check-strictly="false"
-          :selected-keys="form.menusList"
+          :selected-keys="form.hasMenusIds"
           :tree-data="menusOptions"
           :replace-fields="replaceFields"/>
       </a-form-model-item>
@@ -49,6 +49,17 @@ export default {
     },
     cancel: {
       type: Function,
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+  },
+  watch: {
+    isEdit(nowValue, oldValue) {
+      if (nowValue) {
+        this.loadRoleMenus()
+      }
     }
   },
   data() {
@@ -61,19 +72,57 @@ export default {
         treeLine: true,
       },
       menusOptions: [],
-      initLoad: false,
       url: {
         save: SysApis.saveRoles,
         menuList: SysApis.menuList,
+        roleMenus: SysApis.roleMenus,
       },
+      form:{
+        hasMenusIds:[]
+      },
+      allMenuList: [],
     }
   },
   activated() {
-  },
-  mounted() {
     this.getMenusList()
   },
+  mounted() {
+  },
   methods: {
+    loadRoleMenus() {
+      this.$http.get(`${this.url.roleMenus}/${this.form.id}`).then(result => {
+        console.log(result.data)
+        let hasMenus = []
+        let hasMenusIds = []
+        result.data.forEach(e => {
+          hasMenus.push({ id: e.id, name: e.name, pid: e.pid, sort: e.sort })
+          hasMenusIds.push(e.id)
+        })
+        this.form.hasMenusIds = hasMenusIds
+        // console.log('hasMenus', hasMenus)
+        console.log('hasMenusIds', hasMenusIds)
+
+        /*
+        * 新增子菜单后再编辑时，需要将其父级菜单设置为未选择状态
+        * 1.首先从两个数组中筛选出不一样的元素，这些元素就是没有权限的菜单
+        * 2.记录下没有权限的菜单的pid
+        */
+        // let notHasMenus = this.allMenuList.filter(e => {
+        //   return hasMenus.every(r => {
+        //     return e.id !== r.id
+        //   })
+        // }).map(e => e.id)
+        // console.log('notHasMenus', notHasMenus)
+        console.log('allMenuList', this.allMenuList)
+        /*
+         * 3.如果角色拥有的菜单中包含了没有权限的菜单则将其过滤掉
+         */
+        // this.form.menusList = result.data.filter(e => {
+        //   return !notHasMenus.includes(e.id)
+        // }).map(e => e.id)
+        // console.log(this.form.menusList, '  this.form.menusList')
+      })
+    },
     getMenusList() {
       this.$http.get(this.url.menuList).then(result => {
         if (result.status !== 200) {
@@ -81,20 +130,21 @@ export default {
           return
         }
         if (result.data !== null) {
-          let allMenuList = []
           this.menusOptions = result.data
-          this.tree2list(this.menusOptions, allMenuList)
-          this.allMenuList = allMenuList
+          this.allMenuList = this.tree2list(this.menusOptions)
         }
       }).catch(function (error) {
         console.error('出现错误:', error)
+      }).finally(() => {
+
       })
     },
-    tree2list(list, data) {
+    tree2list(list, data = []) {
       list.forEach(r => {
         data.push({ id: r.id, name: r.name, pid: r.pid, sort: r.sort })
         this.tree2list(r.children, data)
       })
+      return data
     },
     closeForm() {
       this.form = {}
