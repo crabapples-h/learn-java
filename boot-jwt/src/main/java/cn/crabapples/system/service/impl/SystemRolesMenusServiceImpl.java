@@ -22,12 +22,19 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
     /**
      * 根据获取角色菜单列表
      *
-     * @param id 角色id
+     * @param roleId 角色id
      * @return 菜单列表
      */
     @Override
-    public List<SysMenu> getRoleMenusList(String id) {
-        return roleMenusDAO.getRoleMenusList(id);
+    public List<SysMenu> getRoleMenusList(String roleId) {
+        return listToTree(roleMenusDAO.getRoleMenusList(roleId));
+    }
+
+    private List<SysMenu> listToTree(List<SysMenu> list) {
+        for (SysMenu sysMenu : list) {
+
+        }
+        return list;
     }
 
     @Override

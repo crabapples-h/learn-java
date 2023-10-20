@@ -10,20 +10,20 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class FilterMenuTreeTest {
-    public static void main(String[] args) {
-        List<SysMenu> allRootMenuTree = (List<SysMenu>) Utils.readObj("allRootMenuTree");
-        List<String> userMenuIds = new ArrayList<>();
-        userMenuIds.add("4bfb47b0-1235-40da-ab56-8fb5863957fa");
-        userMenuIds.add("4bfb47b0-1235-40da-ab56-8fb5863957fa");
-
-
-
-
-        for (String id : userMenuIds) {
-            List<SysMenu> menusTree = filterRootMenusTree(id, allRootMenuTree);
-            System.err.println(menusTree);
-        }
-    }
+//    public static void main(String[] args) {
+//        List<SysMenu> allRootMenuTree = (List<SysMenu>) Utils.readObj("allRootMenuTree");
+//        List<String> userMenuIds = new ArrayList<>();
+//        userMenuIds.add("4bfb47b0-1235-40da-ab56-8fb5863957fa");
+//        userMenuIds.add("4bfb47b0-1235-40da-ab56-8fb5863957fa");
+//
+//
+//
+//
+//        for (String id : userMenuIds) {
+//            List<SysMenu> menusTree = filterRootMenusTree(id, allRootMenuTree);
+//            System.err.println(menusTree);
+//        }
+//    }
 
     // 系统管理->用户管理->锁定用户
     public static List<SysMenu> filterRootMenusTree(String id, List<SysMenu> allMenuTree) {

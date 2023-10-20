@@ -62,17 +62,18 @@ public class SysMenu extends BaseEntity<SysMenu> {
 
     //创建人
     @CreatedBy
+    @JSONField(serialize = false)
     private String createBy;
 
     // 创建时间
     @CreatedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     // 更新时间
     @LastModifiedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 

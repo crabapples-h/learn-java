@@ -7,7 +7,6 @@ import cn.crabapples.system.form.MenusForm;
 import cn.crabapples.system.service.SystemMenusService;
 import cn.crabapples.system.service.SystemRoleMenusService;
 import cn.crabapples.system.service.SystemUserService;
-import cn.crabapples.test.Utils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +60,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
         List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
-        Utils.saveObj(allRootMenuTree, "allRootMenuTree");
+//        Utils.saveObj(allRootMenuTree, "allRootMenuTree");
         List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
         log.debug("用户拥有的所有菜单[{}]", list);
         return list;

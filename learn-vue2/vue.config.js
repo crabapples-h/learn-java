@@ -1,6 +1,6 @@
 // let url = global.setting && global.setting.baseUrl;
 // let url = 'http://localhost:3300/';
-let url = 'http://localhost:9093/';
+let url = 'http://localhost:9999/';
 let env = process.env.NODE_ENV;
 console.log(env);
 const path = require('path')
@@ -91,7 +91,7 @@ module.exports = {
         disableHostCheck: true,
         open: process.platform === "darwin",
         host: "0.0.0.0",
-        port: 8080,
+        port: 9999,
         https: false,
         hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
@@ -99,10 +99,10 @@ module.exports = {
                 target: url, // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-                // pathRewrite: {
+                pathRewrite: {
                 // 把 /api 开头的路径替换为 ''
-                //     '^/api': ''
-                // }
+                    '^/api': ''
+                }
             },
         },
         // string | Object

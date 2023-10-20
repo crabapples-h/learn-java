@@ -37,19 +37,12 @@
         <!--            <version>2.1.2</version>-->
         <!--        </dependency>-->
 
-        <!--mybatis-plus-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.baomidou</groupId>-->
-        <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
-        <!--            <version>3.3.2</version>-->
-        <!--        </dependency>-->
-
         <!--mybatis-flex-->
-<!--        <dependency>-->
-<!--            <groupId>com.mybatis-flex</groupId>-->
-<!--            <artifactId>mybatis-flex-spring-boot-starter</artifactId>-->
-<!--            <version>1.6.3</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.mybatis-flex</groupId>-->
+        <!--            <artifactId>mybatis-flex-spring-boot-starter</artifactId>-->
+        <!--            <version>1.6.3</version>-->
+        <!--        </dependency>-->
 
         <!--mybatis-plus-->
         <dependency>
@@ -57,7 +50,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus-starter.version}</version>
         </dependency>
-
 
 
         <!--        <dependency>-->
@@ -198,18 +190,11 @@
             </plugin>
             <!--maven-compiler-plugin-->
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>

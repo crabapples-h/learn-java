@@ -7,7 +7,7 @@ import '@public/color.less'
 import router from './router'
 import store from './store'
 
-import axios from '@/utils/axios'
+// import axios from '@/utils/axios'
 
 const vue = createApp({
     render: () => h(App)
