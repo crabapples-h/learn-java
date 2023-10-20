@@ -9,7 +9,7 @@
         <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="remove(record)"
                       v-auth:sys:roles:del/>
         <a-divider type="vertical" v-auth:sys:roles:del/>
-        <a-button type="primary" size="small" @click="edit(record)" v-auth:sys:roles:edit>编辑</a-button>
+        <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:roles:edit>编辑</a-button>
         <a-divider type="vertical" v-auth:sys:roles:edit/>
         <a-button type="primary" size="small" @click="showDetail(record)">查看菜单</a-button>
       </span>
@@ -71,9 +71,8 @@ export default {
       this.refreshData()
       commonApi.refreshSysData()
     },
-    edit(e) {
-      this.$refs.addMenu.form.id = e.id
-      this.$refs.addMenu.form.name = e.name
+    showEdit(e) {
+      this.$refs.addMenu.form = e
       this.show.add = true
       this.show.edit = true
     },

@@ -1,25 +1,19 @@
 <template>
-  <a-modal :visible="visible" width="50%" ok-text="确认" cancel-text="取消" @ok="submit"
-           @cancel="closeForm">
-    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="form">
-      <a-form-model-item label="ID" style="display: none">
-        <a-input v-model="form.id" disabled placeholder="新建字典时自动生成"/>
-      </a-form-model-item>
-      <a-form-model-item label="字典名称" prop="name">
-        <a-input v-model="form.name"/>
-      </a-form-model-item>
-      <a-form-model-item label="字典代码" prop="code">
-        <a-input v-model="form.code"/>
-      </a-form-model-item>
-      <a-form-model-item label="排序" prop="sort">
-        <a-input v-model="form.sort"/>
-      </a-form-model-item>
-    </a-form-model>
-    <div class="drawer-bottom-button">
-      <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
-      <a-button type="primary" @click="submit">保存</a-button>
-    </div>
-  </a-modal>
+  <a-drawer title="字典详情" width="50%" :visible="visible" @close="closeDetail">
+    <a-button type="primary" size="small" @click="showAddItem()">新增</a-button>
+    <a-divider/>
+    <a-table :data-source="dictItemList" key="id" bordered>
+      <a-table-column key="code" title="字典项代码" data-index="code"/>
+      <a-table-column key="value" title="字典项值" data-index="value"/>
+      <a-table-column key="id" title="操作" data-index="id">
+        <template slot-scope="text, record">
+          <a-button type="primary" size="small" @click="showEditItem(record)">编辑</a-button>
+          <a-divider type="vertical"/>
+          <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="removeDictItem(record)"/>
+        </template>
+      </a-table-column>
+    </a-table>
+  </a-drawer>
 </template>
 
 <script>

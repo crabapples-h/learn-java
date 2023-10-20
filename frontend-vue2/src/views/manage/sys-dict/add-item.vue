@@ -1,18 +1,11 @@
 <template>
-  <a-modal :visible="visible" width="50%" ok-text="确认" cancel-text="取消" @ok="submit"
-           @cancel="closeForm">
+  <a-modal :visible="visible" width="50%" ok-text="确认" cancel-text="取消" @ok="submit" @cancel="closeForm">
     <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="form">
-      <a-form-model-item label="ID" style="display: none">
-        <a-input v-model="form.id" disabled placeholder="新建字典时自动生成"/>
-      </a-form-model-item>
-      <a-form-model-item label="字典名称" prop="name">
-        <a-input v-model="form.name"/>
-      </a-form-model-item>
-      <a-form-model-item label="字典代码" prop="code">
+      <a-form-model-item label="字典项代码" prop="code">
         <a-input v-model="form.code"/>
       </a-form-model-item>
-      <a-form-model-item label="排序" prop="sort">
-        <a-input v-model="form.sort"/>
+      <a-form-model-item label="字典项值" prop="value">
+        <a-input v-model="form.value"/>
       </a-form-model-item>
     </a-form-model>
     <div class="drawer-bottom-button">
@@ -20,6 +13,7 @@
       <a-button type="primary" @click="submit">保存</a-button>
     </div>
   </a-modal>
+
 </template>
 
 <script>
@@ -28,7 +22,7 @@ import { SysApis } from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 
 export default {
-  name: 'dict-add',
+  name: 'dict-item-add',
   mixins: [SystemMinix],
   props: {
     visible: {
@@ -37,6 +31,10 @@ export default {
     },
     cancel: {
       type: Function,
+    },
+    dictId: {
+      type: String,
+      default: false
     },
   },
   data() {
@@ -69,6 +67,7 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
+          this.form.dictId = this.dictId
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message)

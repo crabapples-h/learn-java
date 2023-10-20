@@ -37,11 +37,6 @@ public class UserForm extends BaseForm<SysUser> {
         private String id;
 
         @Length(max = 16, message = "长度错误", groups = {Groups.IsCheckLength.class})
-        @NotBlank(message = "密码不能为空", groups = {Groups.IsNotNull.class})
-        @ApiModelProperty(example = "12345678")
-        private String oldPassword;
-
-        @Length(max = 16, message = "长度错误", groups = {Groups.IsCheckLength.class})
         @NotBlank(message = "新密码不能为空", groups = {Groups.IsNotNull.class})
         @ApiModelProperty(example = "12345678")
         private String newPassword;
@@ -50,6 +45,15 @@ public class UserForm extends BaseForm<SysUser> {
         @NotBlank(message = "重复密码不能为空", groups = {Groups.IsNotNull.class})
         @ApiModelProperty(example = "12345678")
         private String againPassword;
+    }
+
+    @Getter
+    @Setter
+    public static class UpdatePassword extends ResetPassword{
+        @Length(max = 16, message = "长度错误", groups = {Groups.IsCheckLength.class})
+        @NotBlank(message = "密码不能为空", groups = {Groups.IsNotNull.class})
+        @ApiModelProperty(example = "12345678")
+        private String oldPassword;
     }
 
     @NotBlank(message = "id不能为空", groups = {Groups.IsNotNull.class, Groups.IsEdit.class})

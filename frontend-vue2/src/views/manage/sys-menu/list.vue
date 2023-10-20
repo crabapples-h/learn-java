@@ -6,7 +6,7 @@
       <span slot="action" slot-scope="text, record">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)" v-auth:sys:menus:del/>
         <a-divider type="vertical"/>
-        <a-button type="primary" size="small" @click="edit(record)" v-auth:sys:menus:edit>编辑</a-button>
+        <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:menus:edit>编辑</a-button>
         <span v-if="record.menusType === 1">
           <a-divider type="vertical"/>
           <a-button type="primary" size="small" @click="showAddChild(record)"
@@ -133,7 +133,7 @@ export default {
 			this.$refs.addMenu.form.pid = e.id
 			this.show.add = true
 		},
-		edit(e) {
+		showEdit(e) {
 			this.$refs.addMenu.form = e
 			this.show.add = true
 		},

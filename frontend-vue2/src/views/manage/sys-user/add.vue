@@ -1,82 +1,91 @@
 <template>
-  <div>
-    <a-button @click="addUser" v-auth:sys:user:add>添加用户</a-button>
-    <a-divider/>
-    <a-drawer width="30%" :visible="show.userInfo" @close="closeForm">
-      <a-form-model :model="form" :rules="formRules" :label-col="labelCol" :wrapper-col="wrapperCol"
-                    ref="userForm">
-        <a-form-model-item label="id" prop="id" style="display: none">
-          <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
-        </a-form-model-item>
-        <a-form-model-item label="用户名" prop="username">
-          <a-input v-model="form.username" :disabled="show.isEdit" placeholder="请输入用户名"
-                   @blur="checkUsername"/>
-        </a-form-model-item>
-        <a-form-model-item label="姓名" prop="requireInput">
-          <a-input v-model="form.name" placeholder="请输入姓名"/>
-        </a-form-model-item>
-        <a-form-model-item label="年龄" prop="age">
-          <a-input-number v-model="form.age" placeholder="请输入年龄"/>
-        </a-form-model-item>
-        <a-form-model-item label="邮箱" prop="mail">
-          <a-input v-model="form.mail" placeholder="请输入邮箱"/>
-        </a-form-model-item>
-        <a-form-model-item label="电话" prop="phone">
-          <a-input v-model="form.phone" placeholder="请输入电话号码"/>
-        </a-form-model-item>
-        <a-form-model-item label="新密码">
-          <a-input v-model="form.newPassword" placeholder="请输入新密码"/>
-        </a-form-model-item>
-        <a-form-model-item label="重复密码">
-          <a-input v-model="form.againPassword" placeholder="请输入重复密码"/>
-        </a-form-model-item>
-        <a-form-model-item label="角色">
-          <a-select mode="multiple"
-                    v-model="form.roleList"
-                    placeholder="请选择角色"
-                    :options="roleOptions">
-          </a-select>
-        </a-form-model-item>
-      </a-form-model>
-      <div class="drawer-bottom-button">
-        <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
-        <a-button type="primary" @click="submitForm">保存</a-button>
-      </div>
-    </a-drawer>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
-      <span slot="status" slot-scope="status">
-        <a-tag color="green" v-if="status === 0">正常</a-tag>
-        <a-tag color="red" v-else>锁定</a-tag>
-      </span>
-      <span slot="action" slot-scope="text, record">
-        <span v-if="record.role !== 0">
-          <c-pop-button title="确认要锁定吗" text="锁定" @click="lockUser(record)" type="primary"
-                        v-if="record.status === 0"
-                        v-auth:sys:user:lock/>
-          <c-pop-button title="确认要解锁吗" text="解锁" @click="unlockUser(record)" v-if="record.status === 1"
-                        v-auth:sys:user:unlock/>
-          <a-divider type="vertical"/>
-        </span>
-        <span v-if="record.role !== 0">
-          <c-pop-button title="确认要删除吗" text="删除" @click="removeUser(record)" type="danger" v-auth:sys:user:del/>
-          <a-divider type="vertical"/>
-        </span>
-        <a-button type="primary" size="small" @click="editUser(record)" v-auth:sys:user:edit>编辑</a-button>
-      </span>
-    </a-table>
-  </div>
+  <a-drawer title="添加用户" width="30%" :visible="visible" @close="closeForm">
+    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="userForm">
+      <a-form-model-item label="id" prop="id" style="display: none">
+        <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
+      </a-form-model-item>
+      <a-form-model-item label="用户名" prop="username">
+        <a-input v-model="form.username" :disabled="isEdit" placeholder="请输入用户名" />
+      </a-form-model-item>
+      <a-form-model-item label="姓名" prop="name">
+        <a-input v-model="form.name" placeholder="请输入姓名"/>
+      </a-form-model-item>
+      <a-form-model-item label="年龄" prop="age">
+        <a-input-number v-model="form.age" placeholder="请输入年龄"/>
+      </a-form-model-item>
+      <a-form-model-item label="邮箱" prop="mail">
+        <a-input v-model="form.mail" placeholder="请输入邮箱"/>
+      </a-form-model-item>
+      <a-form-model-item label="电话" prop="phone">
+        <a-input v-model="form.phone" placeholder="请输入电话号码"/>
+      </a-form-model-item>
+      <a-form-model-item label="角色">
+        <a-select mode="multiple" v-model="form.roleList" placeholder="请选择角色" :options="roleOptions"/>
+      </a-form-model-item>
+    </a-form-model>
+    <div class="drawer-bottom-button">
+      <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
+      <a-button type="primary" @click="submit">保存</a-button>
+    </div>
+  </a-drawer>
 </template>
 
 <script>
 
 import { SysApis } from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
+import { checkValidate } from 'ant-design-vue/lib/_util/moment-util'
 
 export default {
-  name: 'user-list',
+  name: 'user-add',
   mixins: [SystemMinix],
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    cancel: {
+      type: Function,
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
+    },
+  },
+  watch: {
+    isEdit(nowValue, oldValue) {
+      if (nowValue) {
+        this.loadUserRoles()
+      }
+    }
+  },
   data() {
     return {
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'change' },
+          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
+          { whitespace: true, message: '请输入用户名', trigger: 'change' },
+          { validator: this.checkUsername, message: '用户名已经存在', trigger: 'change' }
+        ],
+        name: [
+          { required: true, message: '请输入名称', trigger: 'change' },
+          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
+          { whitespace: true, message: '请输入名称', trigger: 'change' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'change' },
+        ],
+        mail: [
+          { required: true, message: '请输入邮箱', trigger: 'change' },
+          { whitespace: true, message: '请输入邮箱', trigger: 'change' }
+        ],
+        phone: [
+          { required: true, message: '请输入电话', trigger: 'change' },
+          { whitespace: true, message: '请输入电话', trigger: 'change' },
+          { min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change' },
+        ],
+      },
       columns: [
         {
           dataIndex: 'username',
@@ -122,16 +131,8 @@ export default {
         },
       ],
       roleOptions: [],
-      show: {
-        userInfo: false,
-        isEdit: false,
-      },
       url: {
-        list: SysApis.userPage,
         save: SysApis.saveUser,
-        lock: SysApis.lockUser,
-        unlock: SysApis.unlockUser,
-        delete: SysApis.delUser,
         userRoles: SysApis.userRoles,
         roleList: SysApis.roleList,
       },
@@ -150,67 +151,14 @@ export default {
           return
         }
         this.roleOptions = result.data.map(e => {
-          return {
-            label: e.name,
-            value: e.id,
-          }
+          return { label: e.name, value: e.id }
         })
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
     },
-    lockUser(e) {
-      this.$http.post(`${this.url.lock}/${e.id}`).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        this.refreshData()
-        this.$message.success(result.message)
-      }).catch(function (error) {
-        console.log('请求出现错误:', error)
-      })
-    },
-    unlockUser(e) {
-      this.$http.post(`${this.url.unlock}/${e.id}`).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
-        }
-        this.refreshData()
-        this.$message.success(result.message)
-      }).catch(function (error) {
-        console.log('请求出现错误:', error)
-      })
-    },
-    removeUser(e) {
-      const _this = this
-      this.$confirm({
-        title: '确认操作?',
-        cancelText: '取消',
-        okText: '确定',
-        onOk() {
-          _this.$http.post(`${_this.url.delete}/${e.id}`).then(result => {
-            if (result.status !== 200) {
-              _this.$message.error(result.message)
-              return
-            }
-            _this.$message.success(result.message)
-            _this.refreshData()
-          }).catch(function (error) {
-            console.log('请求出现错误:', error)
-          })
-        },
-      })
-    },
-    addUser() {
-      this.show.isEdit = false
-      this.show.userInfo = true
-    },
-    editUser(e) {
-      this.show.isEdit = true
-      this.form = e
-      this.$http.get(`${this.url.userRoles}/${e.id}`).then(result => {
+    loadUserRoles() {
+      this.$http.get(`${this.url.userRoles}/${this.form.id.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
@@ -221,37 +169,34 @@ export default {
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
-      this.show.userInfo = true
-
     },
     closeForm() {
-      this.form = {}
-      this.show.userInfo = false
-      this.refreshData()
+      this.form = {
+        roleList: []
+      }
+      this.$emit('cancel')
     },
-    submitForm() {
+    submit() {
       this.$refs.userForm.validate(valid => {
         if (valid) {
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message)
-              return
             }
-            this.closeForm()
           }).catch(function (error) {
             console.error('出现错误:', error)
+          }).finally(() => {
+            this.closeForm()
           })
         }
       })
     },
-    checkUsername() {
-      let username = this.form.username
-      this.$http.get(`${SysApis.checkUsername}/${username}`).then(result => {
+    checkUsername(rule, value, callback) {
+      this.$http.get(`${SysApis.checkUsername}/${value}`).then(result => {
         if (result.status !== 200) {
-          this.$message.error(result.message)
-          return
+          callback(new Error('用户名已经存在'));
         }
-        this.$message.success(result.message)
+        callback();
       }).catch(function (error) {
         console.error('出现错误:', error)
       })

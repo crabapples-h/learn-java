@@ -143,7 +143,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 修改密码
      */
     @Override
-    public boolean updatePassword(UserForm.ResetPassword form) {
+    public boolean updatePassword(UserForm.UpdatePassword form) {
         SysUser user = checkPassword(form);
         String password = form.getOldPassword();
         String newPassword = form.getNewPassword();

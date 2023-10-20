@@ -19,11 +19,10 @@
           :replace-fields="replaceFields"
           v-if="false"/>
         <a-tree
-          v-model="form.hasMenusIds"
+          v-model="form.menuList"
           :checkable="true"
           :default-expand-all="true"
           :check-strictly="false"
-          :selected-keys="form.hasMenusIds"
           :tree-data="menusOptions"
           :replace-fields="replaceFields"/>
       </a-form-model-item>
@@ -67,7 +66,13 @@ export default {
       replaceFields: {
         children: 'children', title: 'name', key: 'id'
       },
-      rules: {},
+      rules: {
+        name: [
+          { required: true, message: '请输入名称', trigger: 'change' },
+          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
+          { whitespace: true, message: '请输入名称', trigger: 'change' }
+        ],
+      },
       show: {
         treeLine: true,
       },
@@ -77,8 +82,8 @@ export default {
         menuList: SysApis.menuList,
         roleMenus: SysApis.roleMenus,
       },
-      form:{
-        hasMenusIds:[]
+      form: {
+        menuList: []
       },
       allMenuList: [],
     }
@@ -91,36 +96,11 @@ export default {
   methods: {
     loadRoleMenus() {
       this.$http.get(`${this.url.roleMenus}/${this.form.id}`).then(result => {
-        console.log(result.data)
-        let hasMenus = []
         let hasMenusIds = []
         result.data.forEach(e => {
-          hasMenus.push({ id: e.id, name: e.name, pid: e.pid, sort: e.sort })
           hasMenusIds.push(e.id)
         })
-        this.form.hasMenusIds = hasMenusIds
-        // console.log('hasMenus', hasMenus)
-        console.log('hasMenusIds', hasMenusIds)
-
-        /*
-        * 新增子菜单后再编辑时，需要将其父级菜单设置为未选择状态
-        * 1.首先从两个数组中筛选出不一样的元素，这些元素就是没有权限的菜单
-        * 2.记录下没有权限的菜单的pid
-        */
-        // let notHasMenus = this.allMenuList.filter(e => {
-        //   return hasMenus.every(r => {
-        //     return e.id !== r.id
-        //   })
-        // }).map(e => e.id)
-        // console.log('notHasMenus', notHasMenus)
-        console.log('allMenuList', this.allMenuList)
-        /*
-         * 3.如果角色拥有的菜单中包含了没有权限的菜单则将其过滤掉
-         */
-        // this.form.menusList = result.data.filter(e => {
-        //   return !notHasMenus.includes(e.id)
-        // }).map(e => e.id)
-        // console.log(this.form.menusList, '  this.form.menusList')
+        this.form.menuList = hasMenusIds
       })
     },
     getMenusList() {
@@ -131,7 +111,10 @@ export default {
         }
         if (result.data !== null) {
           this.menusOptions = result.data
-          this.allMenuList = this.tree2list(this.menusOptions)
+          this.allMenuList = this.tree2list(this.menusOptions).sort((a, b) => {
+            console.log(b.sort - a.sort)
+            return b.sort - a.sort
+          })
         }
       }).catch(function (error) {
         console.error('出现错误:', error)
@@ -147,7 +130,9 @@ export default {
       return data
     },
     closeForm() {
-      this.form = {}
+      this.form = {
+        menuList: []
+      }
       this.$emit('cancel')
     },
     submit() {

@@ -23,7 +23,7 @@ import java.util.List;
 public class RolesForm extends BaseForm<SysRole> {
     private String name;
 
-    private List<String> menusList;
+    private List<String> menuList;
 
 
     @Override

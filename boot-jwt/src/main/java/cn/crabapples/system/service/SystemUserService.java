@@ -38,7 +38,7 @@ public interface SystemUserService extends BaseService {
 
     boolean unlockUser(String id);
 
-    boolean updatePassword(UserForm.ResetPassword form);
+    boolean updatePassword(UserForm.UpdatePassword form);
 
     boolean resetPassword(UserForm.ResetPassword form);
 

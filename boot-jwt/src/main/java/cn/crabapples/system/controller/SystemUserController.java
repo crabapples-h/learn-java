@@ -111,7 +111,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/password/update")
     @ApiOperation(value = "修改密码", notes = "修改密码接口")
-    public ResponseDTO updatePassword(@RequestBody UserForm.ResetPassword form) {
+    public ResponseDTO updatePassword(@RequestBody UserForm.UpdatePassword form) {
         log.info("收到请求->修改密码:[{}]", form);
         super.validator(form, Groups.IsUpdatePassword.class);
         userService.updatePassword(form);
