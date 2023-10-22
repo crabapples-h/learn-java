@@ -67,15 +67,25 @@ public class SystemDictController extends BaseController {
     }
 
     @GetMapping("/item/list/code/{code}")
-    @ApiOperation(value = "系统字典", notes = "获取系统字典项接口")
+    @ApiOperation(value = "系统字典", notes = "获取系统字典项接口{code}")
     public ResponseDTO getDictItemListByCode(@PathVariable String code) {
-        log.info("收到请求->获取系统字典项:[{}]", code);
+        log.info("收到请求->获取系统字典项,code:[{}]", code);
         List<SysDictItem> list = dictService.getDictItemListByCode(code);
         log.debug("返回结果->获取系统字典项完成:[{}]", list);
         return ResponseDTO.returnSuccess(list);
     }
 
-    @PostMapping("/remove/item/{id}")
+
+    @GetMapping("/item/list/id/{id}")
+    @ApiOperation(value = "系统字典", notes = "获取系统字典项接口{id}")
+    public ResponseDTO getDictItemListById(@PathVariable String id) {
+        log.info("收到请求->获取系统字典项,id:[{}]", id);
+        List<SysDictItem> list = dictService.getDictItemListById(id);
+        log.debug("返回结果->获取系统字典项完成:[{}]", list);
+        return ResponseDTO.returnSuccess(list);
+    }
+
+    @PostMapping("/item/remove/{id}")
     @ApiOperation(value = "系统字典", notes = "删除系统字典接口")
     public ResponseDTO deleteItemById(@PathVariable String id) {
         log.info("收到请求->删除系统字典项:[{}]", id);

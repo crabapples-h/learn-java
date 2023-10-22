@@ -43,7 +43,6 @@ export default {
       this.loadDetail()
     }
   },
-
   data() {
     return {
       columns: [
@@ -85,7 +84,6 @@ export default {
   methods: {
     loadDetail() {
       this.$http.get(`${this.url.roleMenus}/${this.roleId}`).then(result => {
-        console.log(result.data)
         this.dataSource = buildTree(result.data, '')
       })
     },

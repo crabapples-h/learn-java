@@ -20,5 +20,8 @@ public interface SystemDictService extends BaseService {
 
     List<SysDictItem> getDictItemListByCode(String code);
 
+    List<SysDictItem> getDictItemListById(String id);
+
     boolean deleteItemById(String id);
+
 }

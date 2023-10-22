@@ -112,7 +112,6 @@ export default {
         if (result.data !== null) {
           this.menusOptions = result.data
           this.allMenuList = this.tree2list(this.menusOptions).sort((a, b) => {
-            console.log(b.sort - a.sort)
             return b.sort - a.sort
           })
         }

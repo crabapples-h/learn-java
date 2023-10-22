@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <hello-world/>
+<!--    <hello-world/>-->
 <!--    <qr-code/>-->
 <!--    <face-check-image/>-->
-<!--    <face-check-video/>-->
+    <face-check-video/>
 <!--    <table-demo/>-->
 <!--    <wechat-location/>-->
 <!--    <org-wechat/>-->

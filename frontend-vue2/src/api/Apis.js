@@ -36,7 +36,7 @@ const SysApis = {
   saveDicts: '/api/system/dict/save',
   saveDictItems: '/api/system/dict/item/save',
   dictItemListByCode: '/api/system/dict/item/list/code',
+  dictItemListById: '/api/system/dict/item/list/id',
   delDictItems: '/api/system/dict/item/remove',
-
 }
 export { SysApis }

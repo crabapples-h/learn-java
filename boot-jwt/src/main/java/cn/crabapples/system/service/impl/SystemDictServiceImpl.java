@@ -53,6 +53,12 @@ public class SystemDictServiceImpl implements SystemDictService {
     }
 
     @Override
+    public List<SysDictItem> getDictItemListById(String id) {
+        SysDict sysDict = SysDict.create().setId(id).selectById();
+        return getDictItemListByCode(sysDict.getCode());
+    }
+
+    @Override
     public boolean deleteItemById(String id) {
         return SysDictItem.create().setId(id).deleteById();
     }

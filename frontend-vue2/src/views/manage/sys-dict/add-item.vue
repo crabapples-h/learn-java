@@ -32,7 +32,7 @@ export default {
     cancel: {
       type: Function,
     },
-    dictId: {
+    dictCode: {
       type: String,
       default: false
     },
@@ -51,7 +51,7 @@ export default {
       },
       form: {},
       url: {
-        save: SysApis.saveDicts,
+        save: SysApis.saveDictItems,
       }
     }
   },
@@ -67,7 +67,7 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          this.form.dictId = this.dictId
+          this.form.dictCode = this.dictCode
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message)
