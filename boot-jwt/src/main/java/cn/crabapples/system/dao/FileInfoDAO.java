@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FileInfoDAO extends ServiceImpl<FileInfoMapper, FileInfo> {
-    public boolean save(FileInfo fileInfo) {
-        return saveOrUpdate(fileInfo);
-    }
 
     public FileInfo findById(String id) {
         return getById(id);

@@ -3,7 +3,8 @@
 <!--    <hello-world/>-->
 <!--    <qr-code/>-->
 <!--    <face-check-image/>-->
-    <face-check-video/>
+<!--    <face-check-video/>-->
+    <pixi/>
 <!--    <table-demo/>-->
 <!--    <wechat-location/>-->
 <!--    <org-wechat/>-->
@@ -26,6 +27,7 @@ import FaceCheckVideoFile from "@/FaceCheckVideoFile.vue";
 import TableDemo from "@/TableDemo.vue";
 import WechatLocation from "@/WechatLocation.vue";
 import OrgWechat from "@/OrgWechat.vue";
+import Pixi from "@/Pixi.vue";
 
 export default {
   name: 'app',
@@ -38,7 +40,8 @@ export default {
     FaceCheckVideoFile,
     QrCode,
     TableDemo,
-    OrgWechat
+    OrgWechat,
+    Pixi,
   },
   data() {
     return {
