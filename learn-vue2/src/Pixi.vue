@@ -5,6 +5,9 @@
 </template>
 <script>
 // 文档 https://pixijs.huashengweilai.com/guide/start/7.rotation.html#%E6%97%8B%E8%BD%AC
+// https://github.com/AlloyTeam/PhyTouch
+// https://gsap.com/docs/v3/GSAP/Timeline/
+// http://www.greensock.com/gsap-js/
 import * as PIXI from 'pixi.js'
 
 export default {
