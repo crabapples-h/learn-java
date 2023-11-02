@@ -4,9 +4,9 @@
 <!--    <qr-code/>-->
 <!--    <face-check-image/>-->
 <!--    <face-check-video/>-->
-<!--    <pixi/>-->
+    <pixi/>
 <!--    <table-demo/>-->
-    <wechat-location/>
+<!--    <wechat-location/>-->
 <!--    <org-wechat/>-->
 <!--    <face-check-video-file/>-->
 <!--    <div id="nav">-->

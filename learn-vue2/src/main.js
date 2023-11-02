@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 import VueCanvasPoster from 'vue-canvas-poster'
 import VConsole from "vconsole";
 
-new VConsole()
+// new VConsole()
 
 Vue.use(VueCanvasPoster)
 new Vue({

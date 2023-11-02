@@ -31,17 +31,74 @@ export default {
   },
   mounted() {
 
-    this.timeLineDemo1()
+    this.moveTimeLineDemo()
+    // this.timeLineDemo1()
     // this.timeLineDemo()
     // this.touchDemo()
     // this.loadImg()
-
     // this.loadBackgroundImg()
     // this.loadProgress()
     // this.createPixi()
     // this.sayHello()
   },
   methods: {
+    moveTimeLineDemo() {
+      const changeImg = (progress) => {
+        let start = 0.4
+        if (progress >= start) {
+          let length = imgs.length - 1
+          let step = (1 - start) / length
+          let index = Math.abs(Math.floor((progress - start) / step))
+          console.log((progress - start).toFixed(6), step.toFixed(6), index)
+          sprite.texture = PIXI.utils.TextureCache[imgs[index]]
+        }
+      }
+      let maxLong = -(2000 - this.deviceHeight)
+      let imgs = []
+      let sprite = null
+      let showLine = null
+      for (let i = 0; i < 24; i++) {
+        imgs.push(require(`@/assets/images/${i + 1}.png`))
+      }
+      let app = new PIXI.Application({
+        width: this.deviceWeight,
+        height: this.deviceHeight,
+      })
+      this.$refs.pixi.appendChild(app.view)
+      app.loader
+        .add(imgs)
+        .load(() => {
+          let texture = PIXI.utils.TextureCache[imgs[0]]
+          sprite = new PIXI.Sprite(texture)
+          sprite.alpha = 0
+          app.stage.addChild(sprite)
+          showLine = gsap.timeline().to(sprite,
+            {
+              alpha: 1,
+              delay: 0.4,
+              duration: 0.1
+            }).paused(true)
+        })
+
+      new PhyTouch({
+        touch: 'body',//反馈触摸的dom
+        vertical: true,//不必需，默认是true代表监听竖直方向touch
+        min: maxLong, //不必需,运动属性的最小值
+        max: 0, //不必需,滚动属性的最大值
+        bindSelf: false,
+        value: 0,
+        change(value) {
+          let progress = value / maxLong
+          let step = 1 / (imgs.length - 1)
+          let index = Math.abs(Math.floor(progress / step))
+          showLine.seek(progress)
+
+          changeImg(progress)
+          // console.log(index, progress)
+          // timeLine
+        }
+      })
+    },
     timeLineDemo1() {
       let maxLong = -(2000 - this.deviceHeight)
       let app = new PIXI.Application({
@@ -69,7 +126,7 @@ export default {
           sprite.animationSpeed = 0.5
           // sprite.play()
           app.stage.addChild(sprite)
-          hiddenTimeLine.to(sprite,{
+          hiddenTimeLine.to(sprite, {
             alpha: 0,
             delay: 0.9,
             duration: 0.1
