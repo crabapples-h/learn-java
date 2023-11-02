@@ -12,9 +12,13 @@ Vue.use(Antd);
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 import VueCanvasPoster from 'vue-canvas-poster'
+import VConsole from "vconsole";
+
+new VConsole()
+
 Vue.use(VueCanvasPoster)
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
