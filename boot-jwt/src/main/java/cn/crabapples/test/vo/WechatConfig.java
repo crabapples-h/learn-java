@@ -12,7 +12,7 @@ public class WechatConfig {
     private String appId;
     private String timestamp;
     private String nonceStr;
-    private String sign;
+    private String signture;
 
     @Override
     public String toString() {

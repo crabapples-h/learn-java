@@ -30,26 +30,12 @@ export default {
 					appId: data.appId,
 					timestamp: data.timestamp,
 					nonceStr: data.nonceStr,
-					signature: data.sign,
+					signature: data.signature,
 					jsApiList: ['getLocation']
 				})
 				wx.ready(function () {
 					_this.getLocation()
 				});
-			})
-		},
-		config1() {
-			const _this = this
-			wx.config({
-				debug: true,
-				appId: 'wx0f6e9947ab89a6e3',
-				timestamp: 1698918450,
-				nonceStr: 'aaaaaaaa',
-				signature: '3682a889a76f384d075e92b841136069c07c4f50',
-				jsApiList: ['getLocation']
-			})
-			wx.ready(function () {
-				_this.getLocation()
 			})
 		},
 		getLocation() {
