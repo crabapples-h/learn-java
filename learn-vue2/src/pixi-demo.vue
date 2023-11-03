@@ -58,9 +58,24 @@ export default {
       // sprite.scale.x = a
       // sprite.scale.y =17.8
       sprite.position.set((this.deviceWeight - 200) / 2, (this.deviceHeight - 200) / 2)
+      // 弧度值
+      sprite.rotation = 0.2
+      // console.log(sprite.rotation)
+      // 锚点
+      // anchor.x和anchor.y值表示纹理尺寸的百分比，从0到1(0%到100%)。
+      // 将它设置为0.5，使纹理在点上居中。
+      // 点本身的位置不会改变，只会改变纹理的位置。
+      sprite.anchor.x = 0
+      sprite.anchor.y = 0
+      // 轴心点
+      // sprite.pivot.x = 50
+      // sprite.pivot.y = 50
+      // sprite.anchor.y = 1
+      console.log(sprite.anchor)
+      console.log(sprite.scale)
       // sprite.rotation = 0.5
-      sprite.anchor.x = 0.5
-      sprite.anchor.y = 0.5
+      // sprite.anchor.x = 0.5
+      // sprite.anchor.y = 0.5
       // sprite.width = 51
       this.app.stage.addChild(sprite)
     },
