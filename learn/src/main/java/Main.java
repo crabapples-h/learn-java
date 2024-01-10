@@ -11,13 +11,12 @@ public class Main {
         int[] aArray = a.chars().sorted().toArray();
         int[] bArray = b.chars().sorted().toArray();
         return Arrays.equals(aArray, bArray);
-
-public class Main {
-    public static void main(String[] args) {
-//        moveZeroes(new int[]{0, 0, 1});
-//        moveZeroes(new int[]{0, 1, 0});
-        moveZeroes(new int[]{0, 1, 0, 3, 12});
     }
+//    public static void main(String[] args) {
+////        moveZeroes(new int[]{0, 0, 1});
+////        moveZeroes(new int[]{0, 1, 0});
+//        moveZeroes(new int[]{0, 1, 0, 3, 12});
+//    }
 
     public static void moveZeroes(int[] nums) {
         int count = 0;
