@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Year Timer</title>
+    <style>
+        @font-face {
+            font-family: myFont;
+            src: url("font1.ttf");
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .content {
+            /*display: flex;*/
+            /*justify-content: center;*/
+            height: 99.8vh;
+            width: 100%;
+            background-image: url("bg-01.jpg");
+            /*color: #c9e7b5;*/
+            color: #ecff68;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            font-family: myFont, serif;
+        }
+
+        #text {
+            /*margin-top: 4%;*/
+        }
+
+        .num {
+            font-size: 120px;
+        }
+
+        .text {
+            font-size: 80px;
+            width: 100%;
+        }
+
+        .text-01 {
+            font-size: 80px;
+            position: absolute;
+            top: 2%;
+            right: 22%;
+        }
+
+        .text-02 {
+            font-size: 80px;
+            position: absolute;
+            top: 11%;
+            right: 15%;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <div id="text">
+        <div class="text-01">
+            <span>狂欢倒计时</span>
+        </div>
+        <div class="text-02">
+            <!--            <span class="text">还剩下</span>-->
+            <span id="second" class="num"></span>
+            <!--            <span class="text">秒</span>-->
+        </div>
+    </div>
+</div>
+<script>
+    // let now = (new Date('2023-12-31 23:59:00').getTime() / 1000).toFixed(0)
+    let now = (new Date().getTime() / 1000).toFixed(0)
+    let target = (new Date('2024-01-01 00:00:00').getTime() / 1000).toFixed(0)
+    let dom = document.querySelector('#second')
+    let second = null
+    const computeSecond = setInterval(() => {
+        second = now - target
+        dom.innerText = Math.abs(second)
+        now++
+        if (second >= 0) {
+            console.log('2024')
+            clearInterval(computeSecond)
+        }
+    }, 1000)
+</script>
+</body>
+</html>
