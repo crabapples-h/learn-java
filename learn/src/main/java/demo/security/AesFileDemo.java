@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.Key;
 import java.security.SecureRandom;
+import java.util.Objects;
 
 /**
  * TODO AES加密文件演示
@@ -125,10 +126,10 @@ public class AesFileDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        File source = new File("");
-        String target = "/2";
-        for (File file : source.listFiles()) {
-            doFinal("", file, target, Cipher.ENCRYPT_MODE);
+        File source = new File("g:/1");
+        String target = "g:/2";
+        for (File file : Objects.requireNonNull(source.listFiles())) {
+            doFinal("8174254", file, target, Cipher.DECRYPT_MODE);
         }
     }
 }
