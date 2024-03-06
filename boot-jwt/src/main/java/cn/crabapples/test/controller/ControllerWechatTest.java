@@ -5,23 +5,14 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.test.service.WechatTestService;
 import cn.crabapples.test.vo.WechatConfig;
-import cn.hutool.core.net.URLEncoder;
-import cn.hutool.core.util.RandomUtil;
-import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import java.nio.charset.Charset;
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * TODO 一个演示的controller
@@ -49,6 +40,7 @@ public class ControllerWechatTest extends BaseController {
     @GetMapping("/get/config")
     @JwtIgnore
     public ResponseDTO sign(@RequestParam String url) {
+        log.info("获取微信sdk配置,url:[{}]", url);
         WechatConfig config = service.sign(url);
         return ResponseDTO.returnSuccess(config);
     }

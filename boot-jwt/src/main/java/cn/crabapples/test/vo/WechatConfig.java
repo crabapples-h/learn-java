@@ -9,10 +9,11 @@ import lombok.Setter;
 @Setter
 @Builder
 public class WechatConfig {
+    private boolean debug;
     private String appId;
     private String timestamp;
     private String nonceStr;
-    private String signture;
+    private String signature;
 
     @Override
     public String toString() {
