@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>安信可AirKiss公众号配网</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
+</head>
+
+<style type="text/css">
+    html,
+    body {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #allmap {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+
+    #scan {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        z-index: 99;
+        transform: translateX(-50%);
+        padding: 3%;
+        font-size: 18px;
+        text-align: center;
+        opacity: 0.9;
+    }
+
+
+    .img-click {
+        width: 70px;
+        height: 70px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    #title-show {
+        position: absolute;
+        left: 25%;
+        z-index: 99;
+        transform: translateX(-25%);
+        padding: 8%;
+    }
+
+    #img-airkiss {
+        width: 60%;
+        text-align: center;
+    }
+
+
+    #div-full-wight {
+        position: absolute;
+        width: 100%;
+        top: 90px;
+        text-align: center;
+    }
+
+
+    .tips {
+        margin: 20px auto;
+        line-height: 30px;
+        text-align: center;
+    }
+
+    .tips2 {
+        text-align: center;
+        color: #f00;
+    }
+
+</style>
+
+<body>
+
+
+<div id="div-full-wight">
+    <img id="img-airkiss" src="../../../../static/wifi_airkiss.png" alt="">
+    <div class="tips">
+        <ul>
+            <li>1. 确定手机已连接Wi-Fi网络</li>
+            <li>2. 确定手机已开启定位权限</li>
+            <li>3. 请长按设备上的配置按钮</li>
+            <li>4. 请等待WiFi配置指示灯闪烁后松开</li>
+        </ul>
+        <div class="tips2"></div>
+    </div>
+</div>
+
+
+<div id="scan">
+    <div class="ui-btn-wrap ui-btn-wrap-middle" style="margin-top: 80px" id="btnStart">
+        <button class="ui-btn-lg-nowhole ui-btn-primary">
+            开始配置
+        </button>
+    </div>
+</div>
+
+<!--<div class="ui-tooltips ui-tooltips-guide" id="title-show">-->
+<!--    <div class="ui-tooltips-cnt" id="text-status">-->
+<!--        <i class="ui-icon-talk"></i>本网页仅做测试验证，请勿用于正式环境。-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div id="tip-load" class="demo-block">
+    <div class="ui-loading-block show">
+        <div class="ui-loading-cnt">
+            <i class="ui-loading-bright"></i>
+            <p id="show_msg">正在加载中...</p>
+        </div>
+    </div>
+</div>
+
+
+<div id="windows-load" class="ui-dialog ui-dialog-operate show">
+    <div class="ui-dialog-cnt">
+        <div class="ui-dialog-bd">
+            <h3>使用声明</h3>
+            <p>本页面仅适用于安信可科技官方产品，请认准官方旗舰店 anxinke.taobao.com </p>
+        </div>
+        <div class="ui-dialog-ft">
+            <button class="ui-btn-lg" onclick="btn_close_tips()">我已知晓</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="windows-load-config" class="ui-dialog ui-dialog-operate show">
+    <div class="ui-dialog-cnt">
+        <div class="ui-dialog-bd">
+            <h3>配网结果</h3>
+            <p>恭喜，配网成功。 </p>
+        </div>
+        <div class="ui-dialog-ft">
+            <button class="ui-btn-lg" onclick="btn_close_tips()">好的</button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+<script type="text/javascript">
+    //base64解密方法
+    function Base64() {
+        // private property
+        _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+        // public method for encoding
+        this.encode = function (input) {
+            var output = "";
+            var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+            var i = 0;
+            input = _utf8_encode(input);
+            while (i < input.length) {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
+                output = output +
+                    _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+                    _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+            }
+            return output;
+        }
+        // public method for decoding
+        this.decode = function (input) {
+            var output = "";
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
+            var i = 0;
+            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+            while (i < input.length) {
+                enc1 = _keyStr.indexOf(input.charAt(i++));
+                enc2 = _keyStr.indexOf(input.charAt(i++));
+                enc3 = _keyStr.indexOf(input.charAt(i++));
+                enc4 = _keyStr.indexOf(input.charAt(i++));
+                chr1 = (enc1 << 2) | (enc2 >> 4);
+                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                chr3 = ((enc3 & 3) << 6) | enc4;
+                output = output + String.fromCharCode(chr1);
+                if (enc3 != 64) {
+                    output = output + String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output = output + String.fromCharCode(chr3);
+                }
+            }
+            output = _utf8_decode(output);
+            return output;
+        }
+        // private method for UTF-8 encoding
+        _utf8_encode = function (string) {
+            string = string.replace(/\r\n/g, "\n");
+            var utftext = "";
+            for (var n = 0; n < string.length; n++) {
+                var c = string.charCodeAt(n);
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                } else if ((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                } else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+
+            }
+            return utftext;
+        }
+        // private method for UTF-8 decoding
+        _utf8_decode = function (utftext) {
+            var string = "";
+            var i = 0;
+            var c = c1 = c2 = 0;
+            while (i < utftext.length) {
+                c = utftext.charCodeAt(i);
+                if (c < 128) {
+                    string += String.fromCharCode(c);
+                    i++;
+                } else if ((c > 191) && (c < 224)) {
+                    c2 = utftext.charCodeAt(i + 1);
+                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                    i += 2;
+                } else {
+                    c2 = utftext.charCodeAt(i + 1);
+                    c3 = utftext.charCodeAt(i + 2);
+                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                    i += 3;
+                }
+            }
+            return string;
+        }
+    }
+
+    // 对浏览器的UserAgent进行正则匹配，不含有微信独有标识的则为其他浏览器
+    var useragent = navigator.userAgent;
+    if (useragent.match(/WindowsWechat/) == 'WindowsWechat' || useragent.match(/MicroMessenger/i) != 'MicroMessenger') {
+        // 这里警告框会阻塞当前页面继续加载
+        //alert('已禁止本次访问：您必须使用微信内置浏览器访问本页面！');
+        document.head.innerHTML = '<title>抱歉，出错了</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0"><link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/open/libs/weui/0.4.1/weui.css">';
+        document.body.innerHTML = '<div class="weui_msg"><div class="weui_icon_area"><i class="weui_icon_info weui_icon_msg"></i></div><div class="weui_text_area"><h4 class="weui_msg_title">请在微信客户端打开链接</h4></div></div>';
+    }
+
+    $('#windows-load').hide()
+    $('#windows-load-config').hide()
+    let jsConfig = {
+        "debug": false,
+        "appId": "wx11f098dfa812b8c5",
+        "timestamp": "1709688881",
+        "nonceStr": "r2yfriqnved",
+        "signature": "8c917738b2ae6a41fdb24efb9dc7783ec72c25d0",
+        "jsApiList": ["openWXDeviceLib", "closeWXDeviceLib", "getWXDeviceInfos", "sendDataToWXDevice", "startScanWXDevice", "stopScanWXDevice", "connectWXDevice", "disconnectWXDevice", "getWXDeviceTicket", "onWXDeviceBindStateChange", "onWXDeviceStateChange", "onReceiveDataFromWXDevice", "onScanWXDeviceResult", "onWXDeviceBluetoothStateChange", "configWXDeviceWiFi"]
+    }
+    console.log(jsConfig);
+    wx.error((res) => {
+        console.log(res);
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+    });
+
+
+    wx.ready((res) => {
+
+        console.log("ready...");
+
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，
+        // 所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。
+        // 对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+
+        // 在这里调用 API
+        wx.checkJsApi({
+            jsApiList: [
+                'configWXDeviceWiFi',
+                'openWXDeviceLib',
+                'startScanWXDevice',
+                'onScanWXDeviceResult'
+            ],
+            //成功初始化之后，隐藏加载
+            success: function (res) {
+                $('#tip-load').hide();
+                $('#windows-load').show();
+            },
+        });
+
+    })
+
+    wx.config(jsConfig)
+
+    function hide_tip_load() {
+        $('#tip-load').hide()
+    }
+
+
+    function btn_close_tips() {
+        $('#windows-load').hide()
+        $('#tip-load').hide()
+        $('#windows-load-config').hide()
+    }
+
+
+    $("#btnStart").click(function () {
+        wx.invoke('configWXDeviceWiFi', {}, function (res) {
+            var err_msg = res.err_msg;
+            if (err_msg === 'configWXDeviceWiFi:ok') {
+
+                $('#windows-load-config').show()
+                //关闭这个窗口，返回微信公众号主页
+                //wx.closeWindow();
+
+                //配置成功,获取本地广播
+                wx.invoke('openWXDeviceLib', {
+                    'connType': 'lan',
+                    'brandUserName': 'gh_4248324a4d02'
+                }, function (res) {
+                    //alert(res.err_msg);
+                    //alert("openWXDeviceLib：" + JSON.stringify(res));
+                });
+                wx.invoke('startScanWXDevice', {'connType': 'lan'}, function (res) {
+                    console.log('startScanWXDevice', res);
+                    //alert("开始扫描：" + JSON.stringify(res));
+                });
+                wx.on('onScanWXDeviceResult', function (res) {
+                    //alert("get Data");
+                    //alert("扫描到1个设备，自定义消息是：" + JSON.stringify(res.devices[0]));
+                    //自己解析一下res，里面会有deviceid,扫描设备的目的就是为了得到这个
+                    var base = new Base64();
+                    var info = base.decode(res.devices[0].deviceId);
+                    var bindInfo = JSON.parse(info);
+
+                });
+            } else if (err_msg === 'configWXDeviceWiFi:cancle') {
+                //配置失败
+                alert('配置失败!' + err_msg);
+            }
+        });
+
+    })
+
+
+</script>
+
+</html>
