@@ -39,9 +39,9 @@ public class ControllerWechatTest extends BaseController {
 
     @GetMapping("/get/config")
     @JwtIgnore
-    public ResponseDTO sign(@RequestParam String url) {
+    public ResponseDTO<WechatConfig> sign(@RequestParam String url) {
         log.info("获取微信sdk配置,url:[{}]", url);
         WechatConfig config = service.sign(url);
-        return ResponseDTO.returnSuccess(config);
+        return new ResponseDTO<>(config);
     }
 }

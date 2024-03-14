@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 public class FlexController extends BaseController {
     @GetMapping("/get/list")
     @JwtIgnore
-    public Mono<ResponseDTO> getList() {
-        return Mono.create((monoSink) -> monoSink.success(ResponseDTO.returnSuccess()));
+    public Mono<ResponseDTO<Object>> getList() {
+        return Mono.create((monoSink) -> monoSink.success(new ResponseDTO<>()));
     }
 }

@@ -48,12 +48,12 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-    public ResponseDTO login(@RequestBody UserForm form) {
+    public ResponseDTO<String> login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);
         String token = sysService.login(form);
         log.info("返回结果->登录成功->token:[{}]", token);
-        return ResponseDTO.returnSuccess("登录成功", token);
+        return new ResponseDTO<>("登录成功", token);
     }
 
     /**
@@ -62,12 +62,12 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping("/logout")
     @ApiOperation(value = "注销登录", notes = "注销登录接口")
-    public ResponseDTO logout() {
-        return ResponseDTO.returnSuccess("注销成功");
+    public ResponseDTO<String> logout() {
+        return new ResponseDTO<>("注销成功");
     }
 
     @GetMapping("/permissions")
-    public ResponseDTO getUserPermissions() {
+    public ResponseDTO<List<String>> getUserPermissions() {
         log.info("收到请求->获取用户权限列表");
         List<String> list = sysService.getUserPermissions();
         log.debug("返回结果->获取用户权限列表成功:[{}]", list);
