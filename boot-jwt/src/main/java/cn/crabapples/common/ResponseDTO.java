@@ -38,6 +38,7 @@ public class ResponseDTO<T> implements Serializable {
         this.message = message;
         this.time = System.currentTimeMillis();
     }
+
     public ResponseDTO(String message, T data) {
         this.status = ResponseCode.SUCCESS.getCode();
         this.message = message;
@@ -85,13 +86,12 @@ public class ResponseDTO<T> implements Serializable {
 
 
     /*---------------- ERROR -----------------*/
-    public ResponseDTO<T> returnError(String message) {
+    public static ResponseDTO returnError(String message) {
         return new ResponseDTO<>(ResponseCode.ERROR, message);
     }
 
     /*---------------- AUTH_FAIL -------------*/
-
-    public ResponseDTO<T> returnAuthFail(String message) {
+    public static ResponseDTO returnAuthFail(String message) {
         return new ResponseDTO<>(ResponseCode.AUTH_FAIL, message);
     }
 

@@ -28,10 +28,10 @@ public class FileInfoController extends BaseController {
 
     @PostMapping("/uploadFile")
     @JwtIgnore
-    public ResponseDTO uploadFile(HttpServletRequest request) {
+    public ResponseDTO<FileInfo> uploadFile(HttpServletRequest request) {
         log.info("收到请求->上传文件");
         FileInfo fileInfo = fileInfoService.uploadFile(request);
         log.info("返回结果->上传文件结束:[{}]", fileInfo);
-        return ResponseDTO.returnSuccess("上传成功", fileInfo);
+        return new ResponseDTO<>("上传成功", fileInfo);
     }
 }

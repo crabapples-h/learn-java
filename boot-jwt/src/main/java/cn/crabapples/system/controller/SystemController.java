@@ -71,24 +71,24 @@ public class SystemController extends BaseController {
         log.info("收到请求->获取用户权限列表");
         List<String> list = sysService.getUserPermissions();
         log.debug("返回结果->获取用户权限列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     @GetMapping("/userInfo")
     @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
-    public ResponseDTO getUserInfo() {
+    public ResponseDTO<SysUser> getUserInfo() {
         log.info("收到请求->获取当前用户信息");
         SysUser entity = userService.getUserInfo();
         log.info("返回结果->获取当前用户信息结束:[{}]", entity);
-        return ResponseDTO.returnSuccess(entity);
+        return new ResponseDTO<>(entity);
     }
 
     @GetMapping("/checkUsername/{username}")
     @ApiOperation(value = "检测用户名是否被使用", notes = "检测用户名是否被使用接口")
-    public ResponseDTO checkUsername(@PathVariable String username) {
+    public ResponseDTO<Boolean> checkUsername(@PathVariable String username) {
         log.info("收到请求->检测用户名是否被使用:[{}]", username);
         boolean exist = sysService.checkUsername(username);
         log.info("返回结果->检测用户名是否被使用:[{}]", exist);
-        return ResponseDTO.returnSuccess("用户名未被使用", exist);
+        return new ResponseDTO<>("用户名未被使用", exist);
     }
 }

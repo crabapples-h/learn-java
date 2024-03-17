@@ -38,69 +38,69 @@ public class SystemRoleController extends BaseController {
      * 获取[当前用户]角色列表
      */
     @GetMapping("/user")
-    public ResponseDTO getUserRoles() {
+    public ResponseDTO<List<SysRolesDTO>> getUserRoles() {
         log.info("收到请求->获取[当前用户]角色列表");
         List<SysRolesDTO> list = rolesService.getUserRolesDTO();
         log.debug("返回结果->获取[当前用户]角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 获取[当前用户]角色列表
      */
     @GetMapping("/user/{id}")
-    public ResponseDTO getUserRolesById(@PathVariable String id) {
+    public ResponseDTO<List<SysRolesDTO>> getUserRolesById(@PathVariable String id) {
         log.info("收到请求->获取用户角色列表:[{}]", id);
         List<SysRolesDTO> list = rolesService.getUserRolesById(id);
         log.debug("返回结果->获取[当前用户]角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 获取角色列表
      */
     @GetMapping("/page")
-    public ResponseDTO getRolesPage(
+    public ResponseDTO<IPage<SysRole>> getRolesPage(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             RolesForm form) {
         log.info("收到请求->获取角色列表");
         IPage<SysRole> list = rolesService.getRolesPage(pageIndex, pageSize, form);
         log.debug("返回结果->获取角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 获取角色列表
      */
     @GetMapping("/list")
-    public ResponseDTO getRolesList(RolesForm form) {
+    public ResponseDTO<List<SysRole>> getRolesList(RolesForm form) {
         log.info("收到请求->获取角色列表");
-        List<SysRole> list = rolesService.getRolesList( form);
+        List<SysRole> list = rolesService.getRolesList(form);
         log.debug("返回结果->获取角色列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 保存角色
      */
     @PostMapping("/save")
-    public ResponseDTO saveRoles(@RequestBody RolesForm form) {
+    public ResponseDTO<Object> saveRoles(@RequestBody RolesForm form) {
         log.info("收到请求->保存角色:[{}]", form);
         rolesService.saveRoles(form);
         log.info("返回结果->保存角色成功");
-        return ResponseDTO.returnSuccess();
+        return new ResponseDTO<>();
     }
 
     /**
      * 删除角色
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO removeRoles(@PathVariable String id) {
+    public ResponseDTO<Object> removeRoles(@PathVariable String id) {
         log.info("收到请求->删除角色:[{}]", id);
         rolesService.removeRoles(id);
         log.info("返回结果->删除角色成功");
-        return ResponseDTO.returnSuccess();
+        return new ResponseDTO<>();
     }
 
 }

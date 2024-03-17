@@ -42,35 +42,35 @@ public class SystemMenuController extends BaseController {
      * 获取[当前用户]菜单树
      */
     @GetMapping("/user")
-    public ResponseDTO getUserMenus() {
+    public ResponseDTO<List<SysMenu>> getUserMenus() {
         log.info("收到请求->获取[当前用户]菜单树");
         List<SysMenu> menus = menusService.getUserMenusTree();
         log.debug("返回结果->获取[当前用户]菜单树:[{}]", menus);
-        return ResponseDTO.returnSuccess(menus);
+        return new ResponseDTO<>(menus);
     }
 
     /**
      * 获取[所有]菜单列表
      */
     @GetMapping("/list")
-    public ResponseDTO getMenusList() {
+    public ResponseDTO<List<SysMenu>> getMenusList() {
         log.info("收到请求->获取[所有]菜单列表");
         List<SysMenu> list = menusService.getMenusList();
         log.debug("返回结果->获取[所有]菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 获取[所有]菜单列表
      */
     @GetMapping("/page")
-    public ResponseDTO getMenuPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+    public ResponseDTO<IPage<SysMenu>> getMenuPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
                                    @RequestParam(required = false, defaultValue = "10") Integer pageSize,
                                    MenusForm form) {
         log.info("收到请求->获取菜单列表");
         IPage<SysMenu> list = menusService.getMenuPage(pageIndex,pageSize,form);
         log.debug("返回结果->获取菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
 
@@ -78,34 +78,34 @@ public class SystemMenuController extends BaseController {
      * 获取[角色]菜单列表
      */
     @GetMapping("/role/{id}")
-    public ResponseDTO getRoleMenus(@PathVariable String id) {
+    public ResponseDTO<List<SysMenu>> getRoleMenus(@PathVariable String id) {
         log.info("收到请求->获取[角色]菜单列表:[{}]", id);
         List<SysMenu> list = roleMenusService.getRoleMenusList(id);
         log.debug("返回结果->获取[角色]菜单列表成功:[{}]", list);
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     /**
      * 保存菜单
      */
     @PostMapping("/save")
-    public ResponseDTO saveMenus(@RequestBody MenusForm form) {
+    public ResponseDTO<Boolean> saveMenus(@RequestBody MenusForm form) {
         super.validator(form, Groups.IsAdd.class, Groups.IsEdit.class);
         log.info("收到请求->保存菜单:[{}]", form);
         boolean status = menusService.saveMenus(form);
         log.debug("返回结果->保存菜单成功:[{}]", status);
-        return ResponseDTO.returnSuccess();
+        return new ResponseDTO<>(status);
     }
 
     /**
      * 删除菜单
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO removeMenus(@PathVariable String id) {
+    public ResponseDTO<Boolean> removeMenus(@PathVariable String id) {
         log.info("收到请求->删除菜单:[{}]", id);
         boolean status = menusService.removeMenus(id);
         log.debug("返回结果->删除菜单成功:[{}]", status);
-        return ResponseDTO.returnSuccess();
+        return new ResponseDTO<>(status);
     }
 
 }
