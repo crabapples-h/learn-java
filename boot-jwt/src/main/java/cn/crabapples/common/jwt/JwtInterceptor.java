@@ -6,10 +6,11 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * TODO 配置jwt拦截器(不拦截@JwtIgnore标记的url)
@@ -22,19 +23,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @Component
-public class JwtInterceptor extends HandlerInterceptorAdapter {
+public class JwtInterceptor implements HandlerInterceptor {
 
-    private final JwtConfigure jwtConfigure;
+    private final JwtTokenUtils jwtTokenUtils;
 
-    public JwtInterceptor(JwtConfigure jwtConfigure) {
-        this.jwtConfigure = jwtConfigure;
+    public JwtInterceptor(JwtTokenUtils jwtTokenUtils) {
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (1 == 1) {
-            return true;
-        }
         // 忽略带JwtIgnore注解的请求, 不做后续token认证校验
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -47,13 +45,14 @@ public class JwtInterceptor extends HandlerInterceptorAdapter {
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
         }
-        final String authHeader = request.getHeader(jwtConfigure.getAuthKey());
-        log.debug("授权Token:[{}]", authHeader);
-        if (StringUtils.isBlank(authHeader)) {
+        String token = request.getHeader(jwtTokenUtils.getAuthKey());
+        log.debug("授权Token:[{}]", token);
+        if (StringUtils.isBlank(token)) {
             log.debug("token认证失败");
             throw new ApplicationException("登录信息异常", 401);
         }
-        JwtTokenUtils.parseJWT(authHeader, jwtConfigure.getBase64Secret());
+        String userId = jwtTokenUtils.parseToken(token);
+        log.debug("token所属用户:[{}]", userId);
         return true;
     }
 

@@ -75,7 +75,7 @@
         <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
         <!--安全-->
-        <jjwt.version>0.9.0</jjwt.version>
+            <jjwt.version>0.9.0</jjwt.version>
         <java-jwt.version>3.2.0</java-jwt.version>
         <shiro.version>1.4.0</shiro.version>
         <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
