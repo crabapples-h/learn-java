@@ -107,7 +107,7 @@ function forestToList(forest) {
   const result = []
 
   function traverse(node) {
-    if (node.hasOwnProperty('path')) {
+    if (node.hasOwnProperty('path') && node.path) {
       if (node.menusType !== 2) {
         result.push({
           path: node.path,

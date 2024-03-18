@@ -2,7 +2,6 @@ package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.dic.DIC;
-import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.entity.SysMenu;
@@ -45,16 +44,16 @@ public class SystemServiceImpl implements SystemService {
     private final SystemUserService userService;
     private final SystemRolesService rolesService;
     private final SystemRoleMenusService roleMenusService;
-    private final JwtConfigure jwtConfigure;
+    private final JwtTokenUtils jwtTokenUtils;
 
 
     public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
                              SystemRoleMenusService roleMenusService,
-                             JwtConfigure jwtConfigure) {
+                             JwtTokenUtils jwtTokenUtils) {
         this.userService = userService;
         this.rolesService = rolesService;
         this.roleMenusService = roleMenusService;
-        this.jwtConfigure = jwtConfigure;
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
 
@@ -86,7 +85,7 @@ public class SystemServiceImpl implements SystemService {
             throw new ApplicationException("账户已被锁定，请联系管理员");
         }
         if (sysUser.getPassword().equals(password)) {
-            return JwtTokenUtils.createJWT(sysUser.getId(), sysUser.getUsername(), jwtConfigure);
+            return jwtTokenUtils.createToken(sysUser.getId());
         }
         throw new ApplicationException("密码错误");
     }

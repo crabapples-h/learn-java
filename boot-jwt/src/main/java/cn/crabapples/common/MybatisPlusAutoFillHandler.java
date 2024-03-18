@@ -1,10 +1,8 @@
 package cn.crabapples.common;
 
-import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.system.entity.SysUser;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -16,11 +14,11 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class MybatisPlusAutoFillHandler implements MetaObjectHandler {
-    private final JwtConfigure configure;
+    private final JwtTokenUtils jwtTokenUtils;
     private final HttpServletRequest request;
 
-    public MybatisPlusAutoFillHandler(JwtConfigure configure, HttpServletRequest request) {
-        this.configure = configure;
+    public MybatisPlusAutoFillHandler(JwtTokenUtils jwtTokenUtils, HttpServletRequest request) {
+        this.jwtTokenUtils = jwtTokenUtils;
         this.request = request;
     }
 
@@ -42,9 +40,7 @@ public class MybatisPlusAutoFillHandler implements MetaObjectHandler {
     }
 
     private SysUser getUserInfo() {
-        String authHeader = request.getHeader(configure.getAuthKey());
-        Claims claims = JwtTokenUtils.parseJWT(authHeader, configure.getBase64Secret());
-        String userId = String.valueOf(claims.get("userId"));
+        String userId = jwtTokenUtils.getUserId();
         return SysUser.create().selectById(userId);
     }
 }

@@ -1,7 +1,6 @@
 package cn.crabapples.system.service.impl;
 
 import cn.crabapples.common.ApplicationException;
-import cn.crabapples.common.jwt.JwtConfigure;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.dao.UserDAO;
@@ -12,7 +11,6 @@ import cn.crabapples.system.service.SystemUserRoleService;
 import cn.crabapples.system.service.SystemUserService;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,15 +38,15 @@ public class SystemUserServiceImpl implements SystemUserService {
     private final UserDAO userDAO;
     @Value("${isDebug}")
     private boolean isDebug;
-    private final JwtConfigure jwtConfigure;
+    private final JwtTokenUtils jwtTokenUtils;
     private final HttpServletRequest request;
     private final SystemUserRoleService userRoleService;
 
 
-    public SystemUserServiceImpl(UserDAO userDAO, JwtConfigure jwtConfigure,
+    public SystemUserServiceImpl(UserDAO userDAO, JwtTokenUtils jwtTokenUtils,
                                  HttpServletRequest request, SystemUserRoleService userRoleService) {
         this.userDAO = userDAO;
-        this.jwtConfigure = jwtConfigure;
+        this.jwtTokenUtils = jwtTokenUtils;
         this.request = request;
         this.userRoleService = userRoleService;
     }
@@ -176,12 +174,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     public SysUser getUserInfo() {
         String userId = "001";
         if (!isDebug) {
-            String token = request.getHeader(jwtConfigure.getAuthKey());
-            if (StringUtils.isEmpty(token)) {
-                throw new ApplicationException("token为空");
-            }
-            Claims claims = JwtTokenUtils.parseJWT(token, jwtConfigure.getBase64Secret());
-            userId = String.valueOf(claims.get("userId"));
+            userId = jwtTokenUtils.getUserId();
         }
 //        Object user = cacheUtils.get(userId);
         return userDAO.findById(userId);
