@@ -1,4 +1,4 @@
-package demo.gui;//package demo.gui;
+package demo.gui;
 //
 //import javafx.application.Application;
 //import javafx.event.ActionEvent;
