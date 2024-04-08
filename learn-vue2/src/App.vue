@@ -5,7 +5,8 @@
     <!--    <face-check-image/>-->
     <!--    <face-check-video/>-->
 <!--    <pixi-learn/>-->
-    <pixi-demo/>
+<!--    <pixi-demo/>-->
+    <pixi-learn/>
     <!--    <table-demo/>-->
     <!--    <wechat-location/>-->
     <!--    <org-wechat/>-->
