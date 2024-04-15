@@ -1,3 +1,6 @@
+<!--
+  富文本编辑器 wang-editor
+-->
 <template>
   <div style="border: 1px solid #ccc;">
     <Toolbar
