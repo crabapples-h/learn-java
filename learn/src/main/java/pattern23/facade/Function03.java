@@ -1,6 +1,6 @@
 package pattern23.facade;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 /**
  * TODO 门面模式
@@ -11,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
  * qq 294046317
  * pc-name mrhe
  */
-@Slf4j
 public class Function03 {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Function03.class);
+
     public void func() {
         log.info("[{}]", this);
     }

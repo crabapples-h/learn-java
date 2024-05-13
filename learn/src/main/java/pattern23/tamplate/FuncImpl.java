@@ -1,9 +1,10 @@
 package pattern23.tamplate;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public class FuncImpl extends Func {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(FuncImpl.class);
+
     @Override
     void func() {
         log.info("FuncImpl : func");

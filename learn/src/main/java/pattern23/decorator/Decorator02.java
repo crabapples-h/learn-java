@@ -1,9 +1,9 @@
 package pattern23.decorator;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public class Decorator02 extends Camera {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Decorator02.class);
     Camera camera;
 
     public Decorator02(Camera camera) {

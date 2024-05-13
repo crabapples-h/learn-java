@@ -3,6 +3,8 @@ package demo.quartz;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO Quartz
@@ -15,8 +17,10 @@ import org.quartz.JobExecutionContext;
  */
 @Slf4j
 public class JobDemo implements Job {
+    private final static Logger logger = LoggerFactory.getLogger(JobDemo.class);
+
     @Override
     public void execute(JobExecutionContext context) {
-        log.info("任务类型:[{}]", context.getJobDetail().getJobDataMap().get("type"));
+        logger.info("任务类型:[{}]", context.getJobDetail().getJobDataMap().get("type"));
     }
 }

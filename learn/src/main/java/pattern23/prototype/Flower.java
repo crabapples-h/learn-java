@@ -1,7 +1,5 @@
 package pattern23.prototype;
 
-import lombok.*;
-
 import java.io.*;
 
 /**
@@ -13,14 +11,17 @@ import java.io.*;
  * qq 294046317
  * pc-name crabapples
  */
-@ToString
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Flower implements Cloneable, Serializable {
     private String name;
     private Color color;
+
+    public Flower(String name, Color color) {
+        this.name = name;
+        this.color = color;
+    }
+
+    public Flower() {
+    }
 
     /**
      * 浅克隆
@@ -53,5 +54,25 @@ public class Flower implements Cloneable, Serializable {
         objectOutputStream.close();
         objectInputStream.close();
         return obj;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public String toString() {
+        return "Flower(name=" + this.getName() + ", color=" + this.getColor() + ")";
     }
 }

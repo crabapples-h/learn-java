@@ -1,9 +1,17 @@
 package demo.net;
 
-import com.jcraft.jsch.*;
-import lombok.Getter;
+import com.jcraft.jsch.ChannelShell;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import pattern23.adapter_class.PowerAdapter;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -11,13 +19,34 @@ import java.util.List;
  * @date 2019/4/25 17:24
  */
 public class SshUtils {
-    @Getter
+    private final static Logger logger = LoggerFactory.getLogger(PowerAdapter.class);
+
     class DestHost {
         private String username;
         private String password;
         private String host;
         private Integer port;
         private Integer timeout;
+
+        public String getUsername() {
+            return this.username;
+        }
+
+        public String getPassword() {
+            return this.password;
+        }
+
+        public String getHost() {
+            return this.host;
+        }
+
+        public Integer getPort() {
+            return this.port;
+        }
+
+        public Integer getTimeout() {
+            return this.timeout;
+        }
     }
 
     public static Session getSession(DestHost destHost) throws JSchException {

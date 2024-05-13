@@ -1,7 +1,5 @@
 package pattern23.prototype;
 
-import lombok.*;
-
 import java.io.Serializable;
 
 /**
@@ -13,16 +11,30 @@ import java.io.Serializable;
  * qq 294046317
  * pc-name crabapples
  */
-@ToString
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Color implements Cloneable, Serializable {
     private String color;
+
+    public Color(String color) {
+        this.color = color;
+    }
+
+    public Color() {
+    }
 
     @Override
     protected Color clone() throws CloneNotSupportedException {
         return (Color) super.clone();
+    }
+
+    public String getColor() {
+        return this.color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String toString() {
+        return "Color(color=" + this.getColor() + ")";
     }
 }

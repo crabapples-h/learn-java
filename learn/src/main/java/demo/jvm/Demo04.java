@@ -1,10 +1,6 @@
 package demo.jvm;
 
 import com.alibaba.fastjson.JSONObject;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +27,58 @@ public class Demo04 {
         System.out.println(JSONObject.toJSONString(school));
     }
 
-    @Getter
-    @Setter
-    @ToString
     static class School {
         private String name;
         private List<Person> people;
+
+        public String getName() {
+            return this.name;
+        }
+
+        public List<Person> getPeople() {
+            return this.people;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setPeople(List<Person> people) {
+            this.people = people;
+        }
+
+        public String toString() {
+            return "Demo04.School(name=" + this.getName() + ", people=" + this.getPeople() + ")";
+        }
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @ToString
     static class Person {
         private String name;
         private School school;
+
+        public Person(String name, School school) {
+            this.name = name;
+            this.school = school;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public School getSchool() {
+            return this.school;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setSchool(School school) {
+            this.school = school;
+        }
+
+        public String toString() {
+            return "Demo04.Person(name=" + this.getName() + ", school=" + this.getSchool() + ")";
+        }
     }
 }

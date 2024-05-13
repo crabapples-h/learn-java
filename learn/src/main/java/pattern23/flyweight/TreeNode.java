@@ -1,8 +1,5 @@
 package pattern23.flyweight;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 /**
  * TODO 享元模式
  *
@@ -12,10 +9,26 @@ import lombok.Getter;
  * qq 294046317
  * pc-name mrhe
  */
-@Getter
-@AllArgsConstructor
 public class TreeNode {
     private final Integer x;
     private final Integer y;
     private final Tree tree;
+
+    public TreeNode(Integer x, Integer y, Tree tree) {
+        this.x = x;
+        this.y = y;
+        this.tree = tree;
+    }
+
+    public Integer getX() {
+        return x;
+    }
+
+    public Integer getY() {
+        return y;
+    }
+
+    public Tree getTree() {
+        return tree;
+    }
 }

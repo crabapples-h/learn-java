@@ -1,11 +1,11 @@
 package demo.mybatis;
 
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Slf4j
 public class MyBatis {
     private static final String URL1 = "jdbc:mysql://localhost:3306/id_card_2000w";
     private static final String SQL = "select * from id_card_simple";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(MyBatis.class);
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");

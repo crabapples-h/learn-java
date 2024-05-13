@@ -1,9 +1,10 @@
 package pattern23.decorator;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
 public class Camera {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Camera.class);
+
     void func() {
         log.info("拍照");
     }

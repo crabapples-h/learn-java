@@ -1,6 +1,6 @@
 package demo.file;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 import java.io.*;
 
@@ -13,9 +13,9 @@ import java.io.*;
  * qq 294046317
  * pc-name mrhe
  */
-@Slf4j
 public class ReadMaxFile {
     private static final String PATH = "D:/developer/IdeaWorkspace/JavaProject/learning/logs/learn.log";
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(ReadMaxFile.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         File file = new File(PATH);

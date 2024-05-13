@@ -15,13 +15,13 @@ public class Demo07 {
 
     public static void main(String[] args) throws InterruptedException {
         String str = "hello";
-        int i =0;
+        int i = 0;
         List<String> list = new ArrayList<>();
-        while (true){
+        while (true) {
             i++;
             TimeUnit.SECONDS.sleep(3);
             list.add(str);
-            str +=str;
+            str += str;
             System.err.println(i);
         }
     }

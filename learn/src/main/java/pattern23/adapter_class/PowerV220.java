@@ -1,18 +1,17 @@
 package pattern23.adapter_class;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
-@Slf4j
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 public class PowerV220 {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(PowerV220.class);
     private int value;
+
+    public PowerV220(int value) {
+        this.value = value;
+    }
+
+    public PowerV220() {
+    }
 
     public String use220() {
         if (value == 0) {
@@ -20,5 +19,13 @@ public class PowerV220 {
         }
         log.info("220V电压:[{}]", value);
         return "220V电压:" + value;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

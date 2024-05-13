@@ -1,11 +1,11 @@
 package demo.file;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.slf4j.Logger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -22,9 +22,9 @@ import java.util.concurrent.CountDownLatch;
  * qq 294046317
  * pc-name mrhe
  */
-@Slf4j
 public class FileDownloadDemo {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(FileDownloadDemo.class);
     private int THREAD_COUNT;
     private final int SUCCESS_CODE = 206;
     private final String DEFAULT_NAME;
@@ -63,7 +63,6 @@ public class FileDownloadDemo {
         reader.close();
         return data.toString();
     }
-
 
 
     /**

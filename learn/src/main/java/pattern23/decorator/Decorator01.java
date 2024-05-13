@@ -1,9 +1,11 @@
 package pattern23.decorator;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class Decorator01 extends Camera {
+    private final static Logger logger = LoggerFactory.getLogger(Decorator01.class);
+
     private Camera camera;
 
     public Decorator01(Camera camera) {
@@ -12,7 +14,7 @@ public class Decorator01 extends Camera {
 
     @Override
     public void func() {
-        log.info("开启美颜");
+        logger.info("开启美颜");
         camera.func();
     }
 }

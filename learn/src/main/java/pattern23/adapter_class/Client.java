@@ -1,6 +1,6 @@
 package pattern23.adapter_class;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 /**
  * TODO 适配器模式(类适配器)
@@ -11,8 +11,9 @@ import lombok.extern.slf4j.Slf4j;
  * qq 294046317
  * pc-name mrhe
  */
-@Slf4j
 public class Client {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Client.class);
+
     public static void main(String[] args) {
         PowerV220 v220 = new PowerV220(220);
         PowerV5 v5 = new PowerAdapter(v220);

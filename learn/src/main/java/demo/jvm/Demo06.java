@@ -16,7 +16,7 @@ public class Demo06 {
             synchronized (a) {
                 System.out.println("线程【1】锁住了：【a】");
                 try {
-                   Thread.sleep(2000L);
+                    Thread.sleep(2000L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

@@ -1,21 +1,23 @@
 package pattern23.strategy;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 
 public interface Interest {
     void show();
 }
 
-@Slf4j
 class Eat implements Interest {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Eat.class);
+
     @Override
     public void show() {
         log.info("eat()");
     }
 }
 
-@Slf4j
 class Sing implements Interest {
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Sing.class);
+
     @Override
     public void show() {
         log.info("sing()");

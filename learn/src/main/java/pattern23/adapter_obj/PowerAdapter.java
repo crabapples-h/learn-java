@@ -1,10 +1,12 @@
 package pattern23.adapter_obj;
 
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class PowerAdapter implements PowerV5 {
+    private final static Logger logger = LoggerFactory.getLogger(PowerAdapter.class);
+
     private PowerV220 v220;
     private int value;
 
@@ -14,9 +16,9 @@ public class PowerAdapter implements PowerV5 {
 
     @Override
     public String use5() {
-        v220.use220();
+        String s = v220.use220();
         this.value = 5;
-        log.info("5V电压:[{}]", value);
+        logger.info("5V电压:[{}]", value);
         return "5V电压:" + value;
     }
 }

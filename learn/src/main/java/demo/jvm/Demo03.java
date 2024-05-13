@@ -2,6 +2,7 @@ package demo.jvm;
 
 /**
  * 内存溢出演示
+ *
  * @author Mr.He
  * 2022/5/28 19:14
  * pc-name mrhe
@@ -9,6 +10,7 @@ package demo.jvm;
  */
 public class Demo03 {
     static int i = 0;
+
     public static void main(String[] args) throws InterruptedException {
         try {
             method01();
