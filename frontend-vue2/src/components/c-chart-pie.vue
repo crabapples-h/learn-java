@@ -1,16 +1,5 @@
 <!--
-  自定义组件，带确认提升的按钮
-  color：按钮颜色
-  click：点击触发的事件
-  title：确认信息提示
-  okText：确认按钮文字
-  text：按钮文字
-  cancelText：取消按钮文字
-  size：按钮大小
-  icon：提示信息icon
-  buttonIcon：按钮icon
-  type：按钮类型
-  loading：loading状态
+  自定义组件，echarts饼图
 -->
 <template>
   <div id="c-chart" style="width: 100%;height: 100%"></div>

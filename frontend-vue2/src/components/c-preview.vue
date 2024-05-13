@@ -1,8 +1,5 @@
 <!--
   多图片预览组件
-  author:Ms.He
-  date:2024-01-27
-  email:crabapples.cn@gmail.com
 -->
 <template>
   <ul>
@@ -25,7 +22,8 @@ export default {
       default: ""
     },
     src: {
-      type: String,
+      // 按理说应该是字符串，为了兼容不报错暂时多几种数据类型，后期修改
+      type: [String,Object,Array],
       default: ""
     },
     size: {
@@ -36,8 +34,10 @@ export default {
   watch: {
     src: {
       handler: function(val, oldVal) {
-        this.imageList = val.split(",");
-        this.image = this.imageList.length ? this.imageList[0] : "";
+        if(typeof(val)=== 'string'){
+          this.imageList = val.split(",");
+          this.image = this.imageList.length ? this.imageList[0] : "";
+        }
       },
       immediate: true
     }
@@ -77,6 +77,6 @@ export default {
 }
 
 .images > img:first-child {
-  display: block;
+  display: inline-block;
 }
 </style>

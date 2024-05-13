@@ -1,3 +1,6 @@
+<!--
+  富文本编辑器
+-->
 <template>
   <div style="border: 1px solid #ccc;">
     <Toolbar

@@ -1,107 +1,180 @@
+<!--
+  自定义组件，文件上传组件(返回文件对象数组，需要自行处理，如不想处理可使用V2版本)
+  list-type：显示类型(text, picture, picture-card)
+  action：上传图片地址
+  multiple：是否支持多选文件
+  text：按钮文字
+  accept：接受上传的文件类型
+-->
 <template>
   <div>
-    <froala id="edit" :config="config" v-model="content"></froala>
+    <a-upload ref="fileUpload" name="file"
+              :action="uploadUrl"
+              :multiple="multiple"
+              :accept="accept"
+              :headers="headers"
+              @change="handleChange"
+              @preview="handlePreview"
+              @beforeUpload="beforeUpload"
+              :file-list="fileList"
+              :list-type="listType">
+      <div v-if="fileList.length < max">
+        <template v-if="listType==='picture-card'">
+          <a-icon type="plus"/>
+          <div class="ant-upload-text">
+            {{ text }}
+          </div>
+        </template>
+        <template v-else>
+          <a-button>
+            <a-icon type="upload"/>
+            <span>{{ text }}</span>
+          </a-button>
+        </template>
+      </div>
+
+    </a-upload>
+    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+      <img alt="预览" style="width: 100%" :src="previewImage"/>
+    </a-modal>
   </div>
 </template>
 
 <script>
-//Import Froala Editor
-import 'froala-editor/js/plugins.pkgd.min.js';
-//Import third party plugins
-import 'froala-editor/js/languages/zh_cn';
-import 'froala-editor/js/third_party/embedly.min';
-import 'froala-editor/js/third_party/font_awesome.min';
-import 'froala-editor/js/third_party/spell_checker.min';
-import 'froala-editor/js/third_party/image_tui.min';
-// Import Froala Editor css files.
-import 'froala-editor/css/froala_editor.pkgd.min.css';
+import system, {getBase64} from "@/mixins/system";
 
 
 export default {
+  name: 'c-file-upload',
+  mixins: [system],
   props: {
-    maxLength: {
-      type: Number,
-    },
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-    autoFocus: {
-      type: Boolean,
-      default: false
-    },
-    height: {
-      type: String,
-      default: '300px'
-    },
-    mode: {
-      type: String,
-      default: 'simple'// 'default' or 'simple'
-    },
     value: {
-      type: String,
-      default: ''
+      type: [Array, String],
     },
-    placeholder: {
+    max: {
+      type: Number,
+      default: 2,
+    },
+    beforeUpload: {
+      type: Function,
+      default: function () {
+      },
+    },
+    multiple: {
+      type: Boolean,
+      default: true,
+    },
+    accept: {
       type: String,
-      default: '请输入内容...'
+      default: '',
+    },
+    text: {
+      type: String,
+      default: '上传',
+    },
+    listType: {
+      type: String,
+      default: 'text',
+    },
+    name: {
+      type: String,
+      default: 'file',
     },
   },
   watch: {
     value: {
       handler: function (val, oldVal) {
-        this.content = val
+        if (typeof val === 'string') {
+          console.log('is  String--->')
+          this.fileList = val.split(',').map(e => {
+            return {
+              id: Math.random(),
+              key: Math.random(),
+              uid: Math.random(),
+              name: e,
+              status: 'done',
+              url: e
+            }
+          })
+        } else if (val instanceof Array) {
+          this.fileList = val.map(e => {
+            e.uid = e.id ? e.id : Math.random()
+            e.name = e.oldName || e.name
+            e.status = e.status ? e.status : 'done'
+            e.url = e.virtualPath || e.url
+            return e
+          })
+        }
+        console.log('valueHandler--->', this.fileList)
       },
       immediate: true
+    }
+  },
+  data() {
+    return {
+      // innerText: this.$slots.default[0].text
+      fileList: [],
+      previewVisible: false,
+      previewImage: '',
     }
   },
   model: {
     prop: "value",
     event: "change",
   },
-  data() {
-    return {
-      editor: null,
-      content: '',
-      config: {
-        // toolbarButtons:
-        // ['undo', 'redo', 'clearFormatting', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', '|', 'print', 'spellChecker', 'help', '|', 'fullscreen'],
-        // ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],//显示可操作项
-        theme: "dark",//主题
-        placeholder: "请填写内容",
-        language: "zh_cn",//国际化
-        imageUploadURL: "http://i.froala.com/upload",//上传url
-        fileUploadURL: "http://i.froala.com/upload",//上传url 更多上传介绍 请访问https://www.froala.com/wysiwyg-editor/docs/options
-        quickInsertButtons: ['image', 'table', 'ul', 'ol', 'hr'],//快速插入项
-        // toolbarVisibleWithoutSelection: true,//是否开启 不选中模式
-        // disableRightClick: true,//是否屏蔽右击
-        colorsHEXInput: false,//关闭16进制色值
-        toolbarSticky: true,//操作栏是否自动吸顶
-        zIndex: 99999,
-        events: {
-          'initialized': function () {
-            console.log('initialized')
-          },
-          'input': function (inputEvent) {
-            // 在这里做一些事情。
-            // 这是编辑器实例。
-
-            console.log(this.html.get(true));
-            console.log(this);
+  methods: {
+    handleChange(info) {
+      // debugger
+      console.log('change', info)
+      if (info.file.status === "uploading") {
+        let exist = false
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].uid === info.file.uid) {
+            exist = true
+            break
           }
-        },
-
-      },
-    }
-  },
-  computed: {},
-  mounted() {
-  },
-  methods: {},
-
-  beforeDestroy() {
+        }
+        if (!exist) {
+          this.fileList.push({
+            id: info.file.uid,
+            oldName: info.file.name,
+            status: info.file.status,
+            virtualPath: 'temp',
+          })
+        }
+      }
+      if (info.file.status === "done") {
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].id === info.file.uid) {
+            this.fileList[i] = info.file.response.data
+            break
+          }
+        }
+      }
+      if (info.file.status === "removed") {
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].id === info.file.id) {
+            this.fileList.splice(i, 1)
+            break
+          }
+        }
+      }
+      this.$emit("change", this.fileList)
+    },
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      this.previewImage = file.url || file.preview;
+      this.previewVisible = true;
+    },
   }
+
 }
 </script>
-<style>
+
+<style scoped>
 </style>

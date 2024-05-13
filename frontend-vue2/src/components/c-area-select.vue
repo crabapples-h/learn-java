@@ -1,3 +1,6 @@
+<!--
+    自定义组件，省市区选择组件
+-->
 <template>
   <div>
     <a-cascader v-model="selected" :options="options" :show-search="true" :placeholder="placeholder"
