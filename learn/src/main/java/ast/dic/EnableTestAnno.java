@@ -1,7 +1,9 @@
 package ast.dic;
 
 import javassist.*;
+import lombok.Setter;
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.annotation.AnnotationDescription;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -12,6 +14,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.LinkedHashSet;
@@ -65,13 +68,13 @@ public class EnableTestAnno extends AbstractProcessor {
                 e.printStackTrace();
             }
         }
-        return true;
+        return false;
     }
 
     private void createByNative(String className, Element element) throws IOException {
         int lastIndex = className.lastIndexOf(".");
         String simpleClassName = className.substring(lastIndex + 1);
-        String newFileName = simpleClassName + "Controller";
+        String newFileName = simpleClassName;
         JavaFileObject sourceFile = filer.createSourceFile(newFileName);
         System.err.println(className);
         System.err.println(sourceFile);
@@ -111,13 +114,16 @@ public class EnableTestAnno extends AbstractProcessor {
     private void createByByteBuddy(String className) throws ClassNotFoundException, IOException {
         String newFileName = className + "Controller";
         new ByteBuddy()
-                .redefine(Class.forName(className))
+                .rebase(Class.forName(className))
                 .name(newFileName)
+                .annotateType(
+                        AnnotationDescription.Builder.ofType(RestController.class)
+                                .build())
                 .method(ElementMatchers.named("hello"))
-                .intercept(FixedValue.value("Hello, world,ByteBuddy"))
+                .intercept(FixedValue.value("Hello, world,ByteBuddy1"))
                 .make()
-                .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.INJECTION);
-//                .saveIn(new File("src/main/java/"));
+                .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.CHILD_FIRST)
+                .saveIn(new File("src/main/java/"));
 //                .saveIn(new File("target/classes/"));
     }
 

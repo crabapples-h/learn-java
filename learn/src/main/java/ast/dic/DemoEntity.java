@@ -1,7 +1,7 @@
 package ast.dic;
 
 
-@TestAnno
+//@TestAnno
 public class DemoEntity {
     @TestMethodAnno
     private String name;
