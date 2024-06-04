@@ -1,10 +1,8 @@
 package ast.dic;
 
 import javassist.*;
-import lombok.Setter;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.matcher.ElementMatchers;
 
@@ -117,12 +115,13 @@ public class EnableTestAnno extends AbstractProcessor {
                 .rebase(Class.forName(className))
                 .name(newFileName)
                 .annotateType(
-                        AnnotationDescription.Builder.ofType(RestController.class)
+                        AnnotationDescription.Builder.ofType(TestAnno.class)
+                                .define("name","张三")
                                 .build())
                 .method(ElementMatchers.named("hello"))
                 .intercept(FixedValue.value("Hello, world,ByteBuddy1"))
                 .make()
-                .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.CHILD_FIRST)
+//                .load(ClassLoader.getSystemClassLoader(), ClassLoadingStrategy.Default.CHILD_FIRST)
                 .saveIn(new File("src/main/java/"));
 //                .saveIn(new File("target/classes/"));
     }
