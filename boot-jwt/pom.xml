@@ -13,18 +13,18 @@
         <!--        <crabapples-base-project.version>1.0.3</crabapples-base-project.version>-->
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>cn.crabapples</groupId>
-            <artifactId>base-project</artifactId>
-            <version>${crabapples-base-project.version}</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-jpa</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>cn.crabapples</groupId>-->
+        <!--            <artifactId>base-project</artifactId>-->
+        <!--            <version>${crabapples-base-project.version}</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>org.springframework.boot</groupId>-->
+        <!--                    <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.mybatis.generator</groupId>

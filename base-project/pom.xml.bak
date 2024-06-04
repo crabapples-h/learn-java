@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.crabapples</groupId>
     <artifactId>base-project</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -17,7 +17,6 @@
         <javax.mail.version>1.4.7</javax.mail.version>
         <jdom.version>2.0.2</jdom.version>
         <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <zxing-core.version>3.3.0</zxing-core.version>
         <zxing-javase.version>3.3.0</zxing-javase.version>
         <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
@@ -26,42 +25,7 @@
         <commons-codec.version>1.10</commons-codec.version>
         <fastjson.version>1.2.47</fastjson.version>
         <lombok.version>1.18.18</lombok.version>
-        <spring-boot-starter.version>2.2.5.RELEASE</spring-boot-starter.version>
     </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-websocket</artifactId>
-                <version>${spring-boot-starter.version}</version>
-            </dependency>
-            <!-- SpringAop依赖 -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-            </dependency>
-            <!-- springboot单元测试 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-                <version>${spring-boot-starter.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>com.github.kstyrc</groupId>
@@ -121,11 +85,11 @@
             <version>${maven-resources-plugin.version}</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba</groupId>-->
-        <!--            <artifactId>druid</artifactId>-->
-        <!--            <version>${druid.version}</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
 
         <!--springboot热部署工具(使用@Cacheable时会报cannot case exception)-->
         <!--        <dependency>-->
@@ -134,13 +98,26 @@
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- SpringAop依赖 -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
 
         <!-- 属性配置依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
-            <version>${spring-boot-starter.version}</version>
         </dependency>
 
         <dependency>
@@ -153,27 +130,35 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot-starter.version}</version>
         </dependency>
 
         <!-- springbootWeb -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot-starter.version}</version>
-
         </dependency>
 
-
-        <!-- junit单元测试依赖 -->
-        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <!-- mysql -->
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!--    <version>5.1.47</version>-->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- springboot单元测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+        <!-- junit单元测试依赖 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- fastJson -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -186,6 +171,7 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>commons-io</groupId>
