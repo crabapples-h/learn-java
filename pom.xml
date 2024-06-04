@@ -5,7 +5,6 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>base-project</module>
         <module>boot-jwt</module>
         <module>learn</module>
         <module>learn-document</module>
@@ -75,7 +74,7 @@
         <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
         <!--安全-->
-            <jjwt.version>0.9.0</jjwt.version>
+        <jjwt.version>0.9.0</jjwt.version>
         <java-jwt.version>3.2.0</java-jwt.version>
         <shiro.version>1.4.0</shiro.version>
         <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>
@@ -88,8 +87,9 @@
         </spring-cloud-starter-alibaba-nacos-discovery.version>
         <nacos-config-spring-boot-starter.version>0.2.3</nacos-config-spring-boot-starter.version>
         <nacos-client.version>1.0.1</nacos-client.version>
-        <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
-        <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
+        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
         <mybatis-plus-starter.version>3.5.2</mybatis-plus-starter.version>
         <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
@@ -108,7 +108,6 @@
         <javax.mail.version>1.4.7</javax.mail.version>
         <ganymed-ssh2.version>262</ganymed-ssh2.version>
         <javax.mail.version>1.4.7</javax.mail.version>
-        <ganymed-ssh2.version>262</ganymed-ssh2.version>
         <!--二维码-->
         <zxing-core.version>3.3.0</zxing-core.version>
         <zxing-javase.version>3.3.0</zxing-javase.version>
