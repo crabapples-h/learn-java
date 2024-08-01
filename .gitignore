@@ -3,6 +3,7 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 *.MP4
 *.mp4
+rebel.xml
 ### STS ###
 .apt_generated
 .classpath

@@ -11,8 +11,8 @@ import lombok.Getter;
  * qq 294046317
  * pc-name 29404
  */
-@Getter
 public class ApplicationException extends RuntimeException{
+    @Getter
     private int code;
     public ApplicationException() {
     }

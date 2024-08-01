@@ -5,8 +5,8 @@
     <!--    <face-check-image/>-->
     <!--    <face-check-video/>-->
 <!--    <pixi-learn/>-->
-<!--    <pixi-demo/>-->
-    <pixi-learn/>
+    <pixi-demo/>
+<!--    <pixi-learn/>-->
     <!--    <table-demo/>-->
     <!--    <wechat-location/>-->
     <!--    <org-wechat/>-->
@@ -23,14 +23,14 @@
 <script>
 import HelloWorld from '@/hello-world.vue'
 import QrCode from '@/qrcode.vue'
-import FaceCheckImage from '@/face-check-image.vue'
-import FaceCheckVideo from '@/face-check-video.vue'
-import FaceCheckVideoFile from '@/face-check-image.vue'
+import FaceCheckImage from '@/views/face-api/face-check-image.vue'
+import FaceCheckVideoFile from '@/views/face-api/face-check-image.vue'
+import FaceCheckVideo from '@/views/face-api/face-check-video.vue'
 import TableDemo from '@/table-demo.vue'
-import WechatLocation from '@/WechatLocation.vue'
-import OrgWechat from '@/org-wechat.vue'
-import PixiLearn from '@/pixi-learn.vue'
-import PixiDemo from '@/pixi-demo.vue'
+import WechatLocation from '@/views/wechat/WechatLocation.vue'
+import OrgWechat from '@/views/wechat/org-wechat.vue'
+import PixiLearn from '@/views/pixi/pixi-learn.vue'
+import PixiDemo from '@/views/pixi/pixi-demo.vue'
 
 export default {
   name: 'app',
