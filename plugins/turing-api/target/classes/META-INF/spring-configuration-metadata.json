@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "crabapples.application",
+      "type": "cn.crabapples.common.config.ApplicationConfigure",
+      "sourceType": "cn.crabapples.common.config.ApplicationConfigure"
+    },
+    {
+      "name": "crabapples.turing",
+      "type": "cn.crabapples.common.utils.turing.TuringConfigure",
+      "sourceType": "cn.crabapples.common.utils.turing.TuringConfigure"
+    }
+  ],
+  "properties": [
+    {
+      "name": "crabapples.application.aes-key",
+      "type": "java.lang.String",
+      "sourceType": "cn.crabapples.common.config.ApplicationConfigure"
+    },
+    {
+      "name": "crabapples.application.redis-prefix",
+      "type": "java.lang.String",
+      "sourceType": "cn.crabapples.common.config.ApplicationConfigure"
+    },
+    {
+      "name": "crabapples.application.salt",
+      "type": "java.lang.String",
+      "sourceType": "cn.crabapples.common.config.ApplicationConfigure"
+    },
+    {
+      "name": "crabapples.application.token-cache-time",
+      "type": "java.lang.Long",
+      "sourceType": "cn.crabapples.common.config.ApplicationConfigure"
+    },
+    {
+      "name": "crabapples.turing.app-key",
+      "type": "java.lang.String",
+      "sourceType": "cn.crabapples.common.utils.turing.TuringConfigure"
+    },
+    {
+      "name": "crabapples.turing.url",
+      "type": "java.lang.String",
+      "sourceType": "cn.crabapples.common.utils.turing.TuringConfigure"
+    }
+  ],
+  "hints": []
+}

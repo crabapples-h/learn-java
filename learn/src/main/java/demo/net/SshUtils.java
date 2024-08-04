@@ -6,7 +6,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pattern23.adapter_class.PowerAdapter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +18,7 @@ import java.util.List;
  * @date 2019/4/25 17:24
  */
 public class SshUtils {
-    private final static Logger logger = LoggerFactory.getLogger(PowerAdapter.class);
+    private final static Logger logger = LoggerFactory.getLogger(SshUtils.class);
 
     class DestHost {
         private String username;

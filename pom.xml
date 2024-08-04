@@ -27,7 +27,7 @@
         <!--基础工具-->
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <crabapples-base-project.version>1.0.3</crabapples-base-project.version>
+        <crabapples-base-project.version>1.0.4</crabapples-base-project.version>
         <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.4</commons-lang.version>
