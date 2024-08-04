@@ -16,7 +16,7 @@ mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/da
 mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # nacos配置
-nacos.config.server-addr: @nacos.server-addr@
+#nacos.config.server-addr: @nacos.server-addr@
 # 日志配置
 logging.file.name: logs/springboot-jwt/
 # 邮件配置
