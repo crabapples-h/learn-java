@@ -1,8 +1,4 @@
-package pattern23.builder.director;
-
-import pattern23.factory.simplefactory.Apple;
-import pattern23.factory.simplefactory.FoodFactory.Orange;
-import pattern23.factory.simplefactory.FoodFactory.Peach;
+package builder.director;
 
 /**
  * TODO 建造者模式-建造器

@@ -1,4 +1,4 @@
-package pattern23.factory.simplefactory;
+package factory.simplefactory;
 
 /**
  * TODO 工厂模式-简单工厂模式(静态工厂模式)

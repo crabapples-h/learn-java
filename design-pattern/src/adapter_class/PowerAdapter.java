@@ -1,4 +1,4 @@
-package pattern23.adapter_class;
+package adapter_class;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

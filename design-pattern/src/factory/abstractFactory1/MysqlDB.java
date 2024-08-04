@@ -1,4 +1,4 @@
-package pattern23.factory.abstractFactory1;
+package factory.abstractFactory1;
 
 
 /**

@@ -1,4 +1,4 @@
-package pattern23.strategy;
+package strategy;
 
 import org.slf4j.Logger;
 

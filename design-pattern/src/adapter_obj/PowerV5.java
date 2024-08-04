@@ -1,4 +1,4 @@
-package pattern23.adapter_obj;
+package adapter_obj;
 
 public interface PowerV5 {
     int value = 0;

@@ -1,4 +1,4 @@
-package pattern23.flyweight;
+package flyweight;
 
 import lombok.Getter;
 import lombok.Setter;

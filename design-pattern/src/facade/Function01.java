@@ -1,4 +1,4 @@
-package pattern23.facade;
+package facade;
 
 import org.slf4j.Logger;
 

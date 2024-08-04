@@ -1,4 +1,4 @@
-package pattern23.observer;
+package observer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;

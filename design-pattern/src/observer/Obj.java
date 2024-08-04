@@ -1,9 +1,8 @@
-package pattern23.observer;
+package observer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pattern23.adapter_obj.Client;
 
 import java.util.ArrayList;
 import java.util.List;

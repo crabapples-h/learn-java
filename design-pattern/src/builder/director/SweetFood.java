@@ -1,4 +1,4 @@
-package pattern23.builder.director;
+package builder.director;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package pattern23.builder.build;
+package builder.build;
 
 import pattern23.factory.simplefactory.Apple;
 import pattern23.factory.simplefactory.FoodFactory.Orange;

@@ -1,4 +1,4 @@
-package pattern23.flyweight;
+package flyweight;
 /**
  * TODO 享元模式(多用于不可变对象的共享，防止获取到对象之后对对象进行修改操作)
  * 通过共享技术有效的支持大量细粒度的对象

@@ -1,4 +1,4 @@
-package pattern23.facade;
+package facade;
 
 /**
  * TODO 门面模式

@@ -1,4 +1,4 @@
-package pattern23.strategy;
+package strategy;
 
 public interface Person {
     void showInterest();

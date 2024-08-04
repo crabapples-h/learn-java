@@ -1,4 +1,4 @@
-package pattern23.strategy;
+package strategy;
 
 /**
  * TODO 策略模式

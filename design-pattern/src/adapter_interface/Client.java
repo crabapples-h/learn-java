@@ -1,4 +1,4 @@
-package pattern23.adapter_interface;
+package adapter_interface;
 
 import org.slf4j.Logger;
 

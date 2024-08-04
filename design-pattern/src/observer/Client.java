@@ -1,4 +1,4 @@
-package pattern23.observer;
+package observer;
 
 /**
  * TODO 观察者模式(Observer)

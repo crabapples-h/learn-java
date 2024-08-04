@@ -1,4 +1,4 @@
-package pattern23.singleton;
+package singleton;
 
 
 import org.slf4j.Logger;

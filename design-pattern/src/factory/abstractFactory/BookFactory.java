@@ -1,4 +1,4 @@
-package pattern23.factory.abstractFactory;
+package factory.abstractFactory;
 
 import pattern23.factory.abstractFactory.Book.*;
 

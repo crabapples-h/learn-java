@@ -1,4 +1,4 @@
-package pattern23.factory.factorymethod;
+package factory.factorymethod;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

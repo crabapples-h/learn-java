@@ -1,4 +1,4 @@
-package pattern23.builder;
+package builder;
 
 /**
  * TODO 建造者模式

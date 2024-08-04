@@ -1,4 +1,4 @@
-package pattern23.decorator;
+package decorator;
 
 import org.slf4j.Logger;
 

@@ -1,4 +1,4 @@
-package pattern23.tamplate;
+package tamplate;
 
 import org.slf4j.Logger;
 

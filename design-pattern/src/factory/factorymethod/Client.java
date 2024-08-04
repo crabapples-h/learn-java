@@ -1,4 +1,4 @@
-package pattern23.factory.factorymethod;
+package factory.factorymethod;
 
 /**
  * TODO 工厂模式-工厂方法模式

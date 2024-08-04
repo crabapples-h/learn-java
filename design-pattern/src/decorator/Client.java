@@ -1,4 +1,4 @@
-package pattern23.decorator;
+package decorator;
 
 /**
  * TODO 装饰器模式

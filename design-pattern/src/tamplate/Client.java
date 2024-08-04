@@ -1,4 +1,4 @@
-package pattern23.tamplate;
+package tamplate;
 
 /**
  * TODO 模板模式(Template)

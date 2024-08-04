@@ -1,4 +1,4 @@
-package pattern23.adapter_interface;
+package adapter_interface;
 
 public abstract class AdapterListener implements Listener {
     @Override

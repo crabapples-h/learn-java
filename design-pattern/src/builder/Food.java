@@ -1,4 +1,4 @@
-package pattern23.builder;
+package builder;
 
 public interface Food {
     void eat();

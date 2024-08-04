@@ -1,4 +1,4 @@
-package pattern23.flyweight;
+package flyweight;
 
 /**
  * TODO 享元模式
