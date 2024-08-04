@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>learn-java</artifactId>
+        <groupId>cn.crabapples</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>frontend</artifactId>
+    <properties>
+        <backend>boot-jpa-jwt</backend>
+    </properties>
+    <modules>
+        <module>frontend-vue2</module>
+        <module>frontend-vue3</module>
+        <module>frontend-react</module>
+        <module>frontend-mpvue</module>
+        <module>frontend-hbuildx</module>
+        <module>frontend-electron</module>
+    </modules>
+</project>
