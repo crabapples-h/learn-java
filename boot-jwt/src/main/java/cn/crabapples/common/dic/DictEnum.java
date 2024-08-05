@@ -2,8 +2,8 @@ package cn.crabapples.common.dic;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.utils.ReflectUtils;
-import cn.crabapples.system.entity.SysDictItem;
-import cn.crabapples.system.service.SystemDictService;
+import cn.crabapples.system.sysDict.entity.SysDictItem;
+import cn.crabapples.system.sysDict.service.SystemDictService;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Getter;

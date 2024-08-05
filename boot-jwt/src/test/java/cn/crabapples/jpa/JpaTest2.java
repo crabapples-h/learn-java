@@ -1,8 +1,8 @@
 //package cn.crabapples.datasource;
 //
-//import cn.crabapples.system.dao.MenusDAO;
-//import cn.crabapples.system.entity.SysUser;
-//import cn.crabapples.system.service.SystemUserService;
+//import cn.crabapples.system.sysMenu.dao.MenusDAO;
+//import cn.crabapples.system.sysUser.entity.SysUser;
+//import cn.crabapples.system.sysUser.service.SystemUserService;
 //import cn.crabapples.test.service.UserServiceTest;
 //import lombok.extern.slf4j.Slf4j;
 //import org.junit.Before;

@@ -5,7 +5,7 @@
 //import cn.crabapples.common.ResponseDTO;
 //import cn.crabapples.common.Groups;
 //import cn.crabapples.common.jwt.JwtIgnore;
-//import cn.crabapples.system.entity.SysUser;
+//import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.test.form.DemoPostForm1;
 //import cn.crabapples.test.form.DemoPostForm2;
 //import cn.crabapples.test.service.ServiceTest;

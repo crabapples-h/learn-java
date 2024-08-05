@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.crabapples.system.sysRoleMenu.dao.mybatis.mapper.RoleMenusMapper">
+    <insert id="saveRoleMenus">
+        insert into sys_role_menus
+        values (#{roleId}, #{menuId})
+    </insert>
+    <delete id="deleteRoleMenus">
+        delete
+        from sys_role_menus
+        where role_id = #{roleId};
+    </delete>
+    <delete id="delByMenuId">
+        delete
+        from sys_role_menus
+        where menu_id = #{menuId};
+    </delete>
+
+    <select id="getRoleMenusList" resultType="cn.crabapples.system.sysMenu.entity.SysMenu">
+        select sys_menu.*
+        from sys_role_menus
+                 left join sys_menu on sys_role_menus.menu_id = sys_menu.id
+        where sys_role_menus.role_id = #{roleId}
+    </select>
+
+    <select id="getRoleListMenusList" resultType="cn.crabapples.system.sysMenu.entity.SysMenu">
+        select sm.*
+        from sys_role as role
+        inner join sys_role_menus srm on role.id = srm.role_id
+        inner join sys_menu sm on srm.menu_id = sm.id
+        where role.id in
+        <foreach collection="roleIds" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

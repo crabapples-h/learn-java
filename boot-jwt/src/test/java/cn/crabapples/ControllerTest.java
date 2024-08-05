@@ -4,8 +4,8 @@
 //import cn.crabapples.common.base.BaseController;
 //import cn.crabapples.common.config.ApplicationConfigure;
 //import cn.crabapples.common.jwt.JwtIgnore;
-//import cn.crabapples.system.entity.WebsocketMessage;
-//import cn.crabapples.system.service.websocket.MessageService;
+//import cn.crabapples.system.websocket.entity.WebsocketMessage;
+//import cn.crabapples.system.websocket.service.MessageService;
 //import cn.crabapples.test.form.DemoPostForm1;
 //import cn.crabapples.test.form.DemoPostForm2;
 //import lombok.extern.slf4j.Slf4j;

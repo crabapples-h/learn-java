@@ -5,7 +5,6 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.test.service.WechatTestService;
 import cn.crabapples.test.vo.WechatConfig;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * qq 294046317
  * pc-name 29404
  */
-@Api("测试接口")
+//@Api("测试接口")
 @RestController
 @RequestMapping(value = "/api/wechat")
 @Slf4j

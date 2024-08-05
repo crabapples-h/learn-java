@@ -1,6 +1,6 @@
 //package cn.crabapples.test.service;
 //
-//import cn.crabapples.system.entity.SysUser;
+//import cn.crabapples.system.sysUser.entity.SysUser;
 //import org.springframework.data.domain.Example;
 //import org.springframework.data.jpa.domain.Specification;
 //

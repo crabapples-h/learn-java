@@ -1,1 +1,4 @@
-org\example\generator\JwtIgnore.class
+cn\crabapples\generator\CrabapplesControllerProcessor$DynamicBehavior.class
+cn\crabapples\generator\CrabapplesControllerProcessor.class
+cn\crabapples\generator\ControllerTemplate.class
+cn\crabapples\generator\CrabapplesController.class

@@ -1,6 +1,6 @@
 //package cn.crabapples.test.service.impl;
 //
-//import cn.crabapples.system.entity.SysUser;
+//import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.test.dao.UserDAOTest;
 //import cn.crabapples.test.service.UserServiceTest;
 //import org.springframework.data.domain.Example;

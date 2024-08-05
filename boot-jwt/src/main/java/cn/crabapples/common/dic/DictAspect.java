@@ -1,7 +1,7 @@
 package cn.crabapples.common.dic;
 
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.system.service.impl.SystemDictServiceImpl;
+import cn.crabapples.system.sysDict.service.impl.SystemDictServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

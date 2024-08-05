@@ -1,7 +1,7 @@
 package cn.crabapples.common;
 
 import cn.crabapples.common.jwt.JwtTokenUtils;
-import cn.crabapples.system.entity.SysUser;
+import cn.crabapples.system.sysUser.entity.SysUser;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;

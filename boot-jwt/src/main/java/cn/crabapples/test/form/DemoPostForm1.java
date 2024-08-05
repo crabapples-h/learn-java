@@ -1,8 +1,6 @@
 package cn.crabapples.test.form;
 
 import com.alibaba.fastjson.JSONObject;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,45 +35,45 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@ApiModel
+//@ApiModel
 public class DemoPostForm1 {
     /**
      * 必须为空
      */
     @Null(message = "ID必须为空")
-    @ApiModelProperty(value = "说明", example = "id001", dataType = "String")
+//    @ApiModelProperty(value = "说明", example = "id001", dataType = "String")
     private String id;
     /**
      * 不能为空
      */
     @NotBlank(message = "名字不能为空")
-    @ApiModelProperty(value = "姓名", example = "张三", dataType = "String")
+//    @ApiModelProperty(value = "姓名", example = "张三", dataType = "String")
     private String name;
     /**
      * 大于等于0
      */
     @PositiveOrZero(message = "年龄有误")
-    @ApiModelProperty(value = "年龄", example = "20", dataType = "String")
+//    @ApiModelProperty(value = "年龄", example = "20", dataType = "String")
     private int age;
     /**
      * 小于等于0
      */
     @NegativeOrZero(message = "存款有误")
-    @ApiModelProperty(value = "存款", example = "999", dataType = "String")
+//    @ApiModelProperty(value = "存款", example = "999", dataType = "String")
     private int money;
 
     /**
      * 当前时间之后
      */
     @FutureOrPresent(message = "时间有误")
-    @ApiModelProperty(value = "创建时间", example = "2020-01-01", dataType = "String")
+//    @ApiModelProperty(value = "创建时间", example = "2020-01-01", dataType = "String")
     private Date createTime;
 
     /**
      * 当前时间之前
      */
     @PastOrPresent(message = "时间有误")
-    @ApiModelProperty(value = "更新时间", example = "2020-01-19", dataType = "java.lang.String")
+//    @ApiModelProperty(value = "更新时间", example = "2020-01-19", dataType = "java.lang.String")
     private Calendar updateTime;
 
     @Override

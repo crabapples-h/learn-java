@@ -28,16 +28,16 @@ public class AopLog {
     }
 
 
-    /**
-     * Object[] getArgs()：返回此连接点处（目标方法）的参数
-     * Signature getSignature()：返回连接点处的签名。
+     /**
+     * Object[] getArgs()：返回此切点处（目标方法）的参数
+     * Signature getSignature()：返回切点处的签名。
      * Object getTarget()：返回目标对象
      * Object getThis()：返回当前正在执行的对象
-     * StaticPart getStaticPart()：返回一个封装此连接点的静态部分的对象。
-     * SourceLocation getSourceLocation()：返回与连接点对应的源位置
-     * String toLongString()：返回连接点的扩展字符串表示形式。
-     * String toShortString()：返回连接点的缩写字符串表示形式。
-     * String getKind()：返回表示连接点类型的字符串
+     * StaticPart getStaticPart()：返回一个封装此切点的静态部分的对象。
+     * SourceLocation getSourceLocation()：返回与切点对应的源位置
+     * String toLongString()：返回切点的扩展字符串表示形式。
+     * String toShortString()：返回切点的缩写字符串表示形式。
+     * String getKind()：返回表示切点类型的字符串
      */
     public void before(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();

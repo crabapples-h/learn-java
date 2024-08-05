@@ -1,7 +1,7 @@
 package cn.crabapples.common.base;
 
 import cn.crabapples.common.dic.DIC;
-import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.sysMenu.entity.SysMenu;
 
 import java.util.List;
 import java.util.stream.Collectors;

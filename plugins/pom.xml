@@ -16,6 +16,7 @@
     <modules>
         <module>turing-api</module>
         <module>mail-sender</module>
+        <module>code-generator</module>
     </modules>
 
 </project>
