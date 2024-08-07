@@ -10,6 +10,7 @@
         <module>design-pattern</module>
         <module>frontend</module>
         <module>plugins</module>
+        <module>learn-byte-buddy</module>
     </modules>
 
     <parent>

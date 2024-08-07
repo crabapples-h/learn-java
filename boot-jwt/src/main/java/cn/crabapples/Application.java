@@ -51,7 +51,9 @@ import org.springframework.web.client.RestTemplate;
 //mybatis扫描路径(如果使用注解的方式可不用配置)
 @MapperScans({
 //        @MapperScan("cn.crabapples.custom.dao"),
-        @MapperScan("cn.crabapples.system.*.dao.mybatis.mapper")
+        @MapperScan("cn.crabapples.system.*.dao.mybatis.mapper"),
+        @MapperScan("cn.crabapples.custom.*.dao.mybatis.mapper")
+
 })
 @ComponentScan(basePackages = {"cn.crabapples"}, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
