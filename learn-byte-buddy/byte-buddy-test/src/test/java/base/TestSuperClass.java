@@ -1,6 +1,9 @@
 package base;
 
 public class TestSuperClass {
+    public TestSuperClass() {
+        System.err.println("构造方法：TestSuperClass()");
+    }
 
     public String selectUserName(String id) {
         return String.format("用户Id:[%s]", id);
@@ -16,6 +19,10 @@ public class TestSuperClass {
 
     public Object testMethod() {
         return "source Method";
+    }
+
+    public Object testMethod1(int number) {
+        return "source Method1:" + number;
     }
 
 }
