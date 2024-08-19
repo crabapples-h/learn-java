@@ -126,8 +126,8 @@ public class AesFileDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        File source = new File("g:/1");
-        String target = "g:/2";
+        File source = new File("d:/photo");
+        String target = "d:/2";
         for (File file : Objects.requireNonNull(source.listFiles())) {
             doFinal("8174254", file, target, Cipher.DECRYPT_MODE);
         }

@@ -25,4 +25,8 @@ public class TestSuperClass {
         return "source Method1:" + number;
     }
 
+    public static void testStaticMethod() {
+        System.err.println("这是一个静态方法");
+    }
+
 }

@@ -230,7 +230,7 @@ public class ByteBuddyTest {
                 .subclass(TestSuperClass.class)
                 .name("cn.crabapples.TestSubClass")
                 .method(named("testMethod"))
-                // 把处理逻辑委托给MethodIntercept3中与被拦截方法同签名的实例方法
+                // 把处理逻辑委托给MethodIntercept3中带有@RuntimeType的方法
                 .intercept(to(new MethodIntercept3()))
                 .make();
         DynamicType.Loaded<TestSuperClass> load = unloaded.load(getClass().getClassLoader());
@@ -253,7 +253,7 @@ public class ByteBuddyTest {
                 .subclass(TestSuperClass.class)
                 .name("cn.crabapples.TestSubClass")
                 .method(named("testMethod1"))
-                // 把处理逻辑委托给MethodIntercept4中与被拦截方法同签名的实例方法
+                // 把处理逻辑委托给MethodIntercept4中带有@RuntimeType的方法
                 .intercept(MethodDelegation.withDefaultConfiguration()
                         // 在MethodIntercept4使用MyCallable之前需要告诉ByteBuddy参数类型是MyCallable
                         .withBinders(Morph.Binder.install(MyCallable.class))
@@ -277,7 +277,7 @@ public class ByteBuddyTest {
                 .name("cn.crabapples.TestSubClass")
                 // 拦截构造方法
                 .constructor(any())
-                // 把处理逻辑委托给MethodIntercept2中与被拦截方法同签名的实例方法
+                // 把处理逻辑委托给MethodIntercept5中带有@RuntimeType的方法
                 .intercept(
                         // 指定在构造方法在完成之后再委托给拦截器
                         SuperMethodCall.INSTANCE.andThen(MethodDelegation.to(new MethodIntercept5()))
@@ -290,4 +290,26 @@ public class ByteBuddyTest {
         System.err.println(o);
         load.saveIn(new File(path));
     }
+
+    /**
+     * 对静态方法插桩
+     */
+    @Test
+    public void caseTest13() throws IOException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        DynamicType.Unloaded<TestSuperClass> unloaded = new ByteBuddy()
+                .rebase(TestSuperClass.class)
+                .name("cn.crabapples.TestSubClass")
+                // 拦截静态方法
+                .method(named("testStaticMethod").and(isStatic()))
+                // 把处理逻辑委托给MethodIntercept6中带有@RuntimeType的方法
+                .intercept(MethodDelegation.to(new MethodIntercept6()))
+                .make();
+
+        DynamicType.Loaded<TestSuperClass> load = unloaded.load(getClass().getClassLoader());
+        Class<? extends TestSuperClass> loaded = load.getLoaded();
+        loaded.getMethod("testStaticMethod").invoke(loaded);
+        load.saveIn(new File(path));
+    }
+
+
 }
