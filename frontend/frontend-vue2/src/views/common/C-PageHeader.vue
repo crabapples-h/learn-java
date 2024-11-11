@@ -124,7 +124,11 @@ export default {
       })
     },
     logout() {
-      CommonApi.logout()
+      CommonApi.logout().then(res=> {
+        if(res.status===200){
+          window.location.reload()
+        }
+      })
     },
   }
 }

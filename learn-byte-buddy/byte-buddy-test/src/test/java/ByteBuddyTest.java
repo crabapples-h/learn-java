@@ -111,7 +111,9 @@ public class ByteBuddyTest {
         DynamicType.Loaded<TestSuperClass> loaded = unloaded.load(getClass().getClassLoader());
         ClassLoader classLoader = loaded.getClass().getClassLoader();
         System.err.println(classLoader);
-        System.out.println(loaded.getLoaded().newInstance().selectUserName("123"));
+        TestSuperClass instance = loaded.getLoaded().newInstance();
+        System.out.println(instance.selectUserName("123"));
+        System.out.println(instance.selectAge(123));
         unloaded.saveIn(new File(path));
     }
 
@@ -134,7 +136,7 @@ public class ByteBuddyTest {
 
     /**
      * 动态增强的三种方式
-     * redefine 变基。原方法不再保留，新方法为拦截后的逻辑
+     * redefine 重定义。原方法不再保留，新方法为拦截后的逻辑
      */
     @Test
     public void caseTest5() throws IOException {
@@ -162,7 +164,8 @@ public class ByteBuddyTest {
                         TypeDescription.ForLoadedType.of(String.class),
                         Modifier.PUBLIC + Modifier.STATIC)
                 // 指定方法参数 参数类型,参数名
-                .withParameter(TypeDescription.ForLoadedType.of(String.class), "arg")
+                .withParameter(TypeDescription.ForLoadedType.of(String.class), "arg1")
+                .withParameter(TypeDescription.ForLoadedType.of(String.class), "arg2")
                 // 返回值
                 .intercept(FixedValue.value("新方法"))
                 .make();
@@ -290,7 +293,6 @@ public class ByteBuddyTest {
         System.err.println(o);
         load.saveIn(new File(path));
     }
-
     /**
      * 对静态方法插桩
      */
@@ -311,5 +313,5 @@ public class ByteBuddyTest {
         load.saveIn(new File(path));
     }
 
-
+    
 }

@@ -1,5 +1,5 @@
 <template>
-  <a-drawer title="添加角色" width="50%" :visible="visible" @close="closeForm">
+  <a-drawer title="编辑" width="50%" :visible="visible" @close="closeForm">
     <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol"
                   ref="roleForm">
       <a-form-model-item label="ID" style="display: none">
@@ -56,6 +56,7 @@ export default {
   },
   watch: {
     isEdit(nowValue, oldValue) {
+      console.log('watch',nowValue)
       if (nowValue) {
         this.loadRoleMenus()
       }
@@ -95,11 +96,14 @@ export default {
   },
   methods: {
     loadRoleMenus() {
+      console.log("form",this.form)
       this.$http.get(`${this.url.roleMenus}/${this.form.id}`).then(result => {
         let hasMenusIds = []
         result.data.forEach(e => {
+          console.log(e.name)
           hasMenusIds.push(e.id)
         })
+        console.log(this.allMenuList.map(e=>e.name))
         this.form.menuList = hasMenusIds
       })
     },
@@ -140,6 +144,8 @@ export default {
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message)
+            }else{
+              this.$message.success(result.message)
             }
           }).catch(function (error) {
             console.error('出现错误:', error)

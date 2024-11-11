@@ -51,14 +51,14 @@ public class AesFileDemo {
     }
 
     /**
-     * @param keyString  密钥
+     * @param key  密钥
      * @param sourceFile 需要加/解密的文件
      * @param targetPath 文件输出路径
      * @param type       需要执行的操作(加/解密)
      * @return 输出的文件
      * @throws Exception 运行过程中可能出现的异常
      */
-    public static String doFinal(@NotNull String keyString, File sourceFile, String targetPath, int type) throws Exception {
+    public static String doFinal(@NotNull Key key, File sourceFile, String targetPath, int type) throws Exception {
         /*
          * 初始化加密方式
          */
@@ -89,7 +89,7 @@ public class AesFileDemo {
             /*
              * 初始化Cipher为加密
              */
-            cipher.init(Cipher.ENCRYPT_MODE, createKey(keyString));
+            cipher.init(Cipher.ENCRYPT_MODE, key);
             /*
              * 创建加密流读入文件
              */
@@ -103,7 +103,7 @@ public class AesFileDemo {
             /*
              * 初始化Cipher为解密
              */
-            cipher.init(Cipher.DECRYPT_MODE, createKey(keyString));
+            cipher.init(Cipher.DECRYPT_MODE, key);
             /*
              * 创建解密流输出文件
              */
@@ -126,10 +126,11 @@ public class AesFileDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        File source = new File("d:/photo");
-        String target = "d:/2";
+        File source = new File("F:/IdCard");
+        String target = "f:/2";
+        Key key = createKey("8174254");
         for (File file : Objects.requireNonNull(source.listFiles())) {
-            doFinal("8174254", file, target, Cipher.DECRYPT_MODE);
+            doFinal(key, file, target, Cipher.DECRYPT_MODE);
         }
     }
 }

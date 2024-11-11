@@ -15,7 +15,7 @@ const commonApi = {
     localStorage.clear()
     return instance({
       url: SysApis.logout,
-      method: 'get',
+      method: 'post',
     })
   },
   //获取用户信息

@@ -60,12 +60,12 @@ module.exports = {
             less: {
                 //If you are using less-loader@5 please spread the lessOptions to options directly
                 javascriptEnabled: true,
-                modifyVars: {
-                    /* less 变量覆盖，用于自定义 ant design 主题 */
-                    'primary-color': '#2daef6',
-                    'link-color': '#2daef6',
-                    'border-radius-base': '4px',
-                },
+                // modifyVars: {
+                //     /* less 变量覆盖，用于自定义 ant design 主题 */
+                //     'primary-color': '#2daef6',
+                //     'link-color': '#2daef6',
+                //     'border-radius-base': '4px',
+                // },
             }
         }
     },
