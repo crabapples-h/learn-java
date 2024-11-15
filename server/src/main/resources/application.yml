@@ -25,4 +25,8 @@ logging.file.name: logs/springboot-jwt/
 #不要为我们工程中的资源文件建立映射
 #spring.web.resources.add-mappings: false
 
+### turingApi config ###
+crabapples.turing.url: http://openapi.tuling123.com/openapi/api/v2
+crabapples.turing.appKey: 67e51f0bc2864cdc8256f24dadf218f8
+
 

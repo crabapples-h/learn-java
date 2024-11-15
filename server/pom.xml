@@ -12,6 +12,16 @@
     <properties>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>cn.crabapples</groupId>
+            <artifactId>turing-api</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
           <!--jwt-->
         <dependency>
             <groupId>com.auth0</groupId>

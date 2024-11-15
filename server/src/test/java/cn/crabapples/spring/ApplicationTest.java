@@ -1,8 +1,8 @@
 package cn.crabapples.spring;
 
-import cn.crabapples.common.ResponseDTO;
+import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.system.sysRole.entity.SysRole;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
 import com.mysql.cj.jdbc.JdbcConnection;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -60,7 +60,7 @@ public class ApplicationTest {
             stringBuilder.append(line);
         }
         log.info("---end");
-        List<SysRole> data = JSONObject.parseArray(stringBuilder.toString(), SysRole.class);
+        List<SysRole> data = JSONArray.parseArray(stringBuilder.toString(), SysRole.class);
         System.err.println(data);
         return data;
     }
