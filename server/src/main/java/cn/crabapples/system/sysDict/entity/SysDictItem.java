@@ -2,8 +2,9 @@ package cn.crabapples.system.sysDict.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,7 +26,7 @@ public class SysDictItem extends BaseEntity<SysDictItem> {
     private String id;
 
     // 名称
-    private String code;
+    private String text;
     // 值
     private String value;
     // 字典编码

@@ -1,7 +1,9 @@
 package cn.crabapples.test.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 

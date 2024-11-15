@@ -1,6 +1,6 @@
 package cn.crabapples.system.dto;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 

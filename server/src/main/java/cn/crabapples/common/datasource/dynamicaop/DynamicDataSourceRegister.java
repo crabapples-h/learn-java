@@ -1,6 +1,6 @@
 package cn.crabapples.common.datasource.dynamicaop;
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;

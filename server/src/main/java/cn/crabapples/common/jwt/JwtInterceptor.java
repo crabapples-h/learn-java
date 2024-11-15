@@ -1,9 +1,10 @@
 package cn.crabapples.common.jwt;
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -42,16 +43,16 @@ public class JwtInterceptor implements HandlerInterceptor {
             }
         }
         if (HttpMethod.OPTIONS.equals(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
+            response.setStatus(HttpStatus.OK.value());
             return true;
         }
         String token = request.getHeader(jwtTokenUtils.getAuthKey());
         log.debug("授权Token:[{}]", token);
         if (StringUtils.isBlank(token)) {
-            log.debug("token认证失败");
+            log.warn("token认证失败");
             throw new ApplicationException("登录信息异常", 401);
         }
-        String userId = jwtTokenUtils.parseToken(token);
+        String userId = jwtTokenUtils.getUserId(token);
         log.debug("token所属用户:[{}]", userId);
         return true;
     }

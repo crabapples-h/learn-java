@@ -1,12 +1,15 @@
 package cn.crabapples.system.sse.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,30 +21,38 @@ import java.util.concurrent.TimeUnit;
  * qq 294046317
  * pc-name admin
  */
-@Controller
-@RequestMapping("/sse/")
+@RestController
+@RequestMapping("/api/sse")
 @Slf4j
 public class ServerSentEventController {
+    private static final Map<String, SseEmitter> SSE_CLENT_MAP = new ConcurrentHashMap<>();
 
-    //    @ResponseBody
-    @RequestMapping(value = "/demo")
-    public SseEmitter demo(HttpServletRequest request) throws IOException, InterruptedException {
-        SseEmitter sseEmitter = new SseEmitter(1000L * 60 * 60);
-        new Thread(() -> {
-            try {
-                for (int i = 0; i < 100; i++) {
-                    String message = "hello" + i;
-                    sseEmitter.send(message);
-                    log.info(message);
-                    TimeUnit.SECONDS.sleep(1);
-                }
-                sseEmitter.complete();
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
+    @RequestMapping(value = "/connect/{id}")
+//    @JwtIgnore
+    public SseEmitter connectSse(@PathVariable String id) {
+        log.info("收到sse请求,id:[{}]", id);
+        SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
+        if (Objects.isNull(sseEmitter)) {
+            sseEmitter = new SseEmitter(1000 * 60 * 30L);
+            sseEmitter.onTimeout(() -> SSE_CLENT_MAP.remove(id));
+            sseEmitter.onError((e) -> SSE_CLENT_MAP.remove(id));
+            sseEmitter.onCompletion(() -> SSE_CLENT_MAP.remove(id));
+            SSE_CLENT_MAP.put(id, sseEmitter);
+        }
         return sseEmitter;
     }
 
+    @RequestMapping("/send/{id}")
+    public void sseTestSend(@PathVariable String id) throws IOException, InterruptedException {
+        SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
+        log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);
+        for (int i = 0; i < 10; i++) {
+            SseEmitter.SseEventBuilder sseEventBuilder = SseEmitter.event();
+            TimeUnit.SECONDS.sleep(1);
+            sseEventBuilder
+                    .name("log")
+                    .data(String.format("第[%d]次消息推送", i));
+            sseEmitter.send(sseEventBuilder);
+        }
+    }
 }

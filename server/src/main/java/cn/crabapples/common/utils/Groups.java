@@ -1,4 +1,4 @@
-package cn.crabapples.common;
+package cn.crabapples.common.utils;
 
 /**
  * TODO 用于属性校验的校验组 必须为空

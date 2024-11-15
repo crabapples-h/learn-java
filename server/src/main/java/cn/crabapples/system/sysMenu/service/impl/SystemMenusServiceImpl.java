@@ -1,6 +1,6 @@
 package cn.crabapples.system.sysMenu.service.impl;
 
-import cn.crabapples.system.sysMenu.dao.MenusDAO;
+import cn.crabapples.system.sysMenu.dao.SystemMenusDAO;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
 import cn.crabapples.system.sysMenu.service.SystemMenusService;
@@ -34,12 +34,12 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     private final HttpServletRequest request;
     private final SystemUserService userService;
     private final SystemRoleMenusService roleMenusService;
-    private final MenusDAO menusDAO;
+    private final SystemMenusDAO systemMenusDAO;
 
-    public SystemMenusServiceImpl(HttpServletRequest request, MenusDAO menusDAO,
+    public SystemMenusServiceImpl(HttpServletRequest request, SystemMenusDAO systemMenusDAO,
                                   SystemUserService userService, SystemRoleMenusService roleMenusService) {
         this.request = request;
-        this.menusDAO = menusDAO;
+        this.systemMenusDAO = systemMenusDAO;
         this.userService = userService;
         this.roleMenusService = roleMenusService;
     }
@@ -56,19 +56,21 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     public List<SysMenu> getUserMenusTree() {
         log.debug("获取用户拥有的所有菜单");
         SysUser user = userService.getUserInfo();
-        List<SysMenu> userMenus = menusDAO.getUserMenus(user.getId());
+        List<SysMenu> userMenus = systemMenusDAO.getUserMenus(user.getId());
         List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
-        List<SysMenu> allRootMenuTree = menusDAO.findMenusTree();
+        List<SysMenu> allRootMenuTree = systemMenusDAO.findMenusTree();
 //        Utils.saveObj(allRootMenuTree, "allRootMenuTree");
         List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
         log.debug("用户拥有的所有菜单[{}]", list);
         return list;
     }
 
+
+
     @Override
     public boolean removeMenus(String id) {
-        return menusDAO.remove(id);
+        return systemMenusDAO.remove(id);
     }
 
     /**
@@ -78,11 +80,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public boolean saveMenus(MenusForm form) {
-        if(!StringUtils.isEmpty(form.getPid())){
+        if (!StringUtils.isEmpty(form.getPid())) {
             // 当添加子菜单时，将其父级菜单从已拥有的权限中移除，避免角色直接拥有新添加的菜单的权限
-//            roleMenusService.delByMenuId(form.getPid());
+            roleMenusService.delByMenuId(form.getPid());
         }
-        return menusDAO.saveOrUpdate(form.toEntity());
+        return systemMenusDAO.saveOrUpdate(form.toEntity());
     }
 
     /**
@@ -90,11 +92,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public List<SysMenu> getMenusList() {
-        return menusDAO.findMenusTree();
+        return systemMenusDAO.findMenusTree();
     }
 
     @Override
     public IPage<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form) {
-        return menusDAO.getMenuPage(Page.of(pageIndex,pageSize));
+        return systemMenusDAO.getMenuPage(Page.of(pageIndex, pageSize));
     }
 }

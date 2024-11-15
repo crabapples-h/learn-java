@@ -3,6 +3,8 @@ package cn.crabapples.system.sysUser.service;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
+import cn.crabapples.system.sysUser.form.ResetPasswordForm;
+import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -32,15 +34,15 @@ public interface SystemUserService extends BaseService {
 
     List<SysUserDTO> findAll(UserForm form);
 
-    boolean delUser(String id);
+    boolean removeUser(String id);
 
     boolean lockUser(String id);
 
     boolean unlockUser(String id);
 
-    boolean updatePassword(UserForm.UpdatePassword form);
+    boolean updatePassword(UpdatePasswordForm form);
 
-    boolean resetPassword(UserForm.ResetPassword form);
+    boolean resetPassword(ResetPasswordForm form);
 
     SysUser getUserInfo();
 

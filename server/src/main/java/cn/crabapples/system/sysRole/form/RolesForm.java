@@ -2,7 +2,7 @@ package cn.crabapples.system.sysRole.form;
 
 import cn.crabapples.common.base.BaseForm;
 import cn.crabapples.system.sysRole.entity.SysRole;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;

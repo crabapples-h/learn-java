@@ -1,6 +1,6 @@
 package cn.crabapples.test.vo;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

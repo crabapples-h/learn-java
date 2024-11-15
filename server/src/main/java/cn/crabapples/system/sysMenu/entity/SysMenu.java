@@ -1,16 +1,13 @@
 package cn.crabapples.system.sysMenu.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
@@ -29,6 +26,7 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
 public class SysMenu extends BaseEntity<SysMenu> {
+
     @TableId(type = ASSIGN_UUID)
     private String id;
 
@@ -61,24 +59,24 @@ public class SysMenu extends BaseEntity<SysMenu> {
     private Integer showFlag;
 
     //创建人
-    @CreatedBy
     @JSONField(serialize = false)
     private String createBy;
 
     // 创建时间
-    @CreatedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss", serialize = false)
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     // 更新时间
-    @LastModifiedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss", serialize = false)
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
     @TableLogic
     @JSONField(serialize = false)
     private Integer delFlag;
+
+
+
 }

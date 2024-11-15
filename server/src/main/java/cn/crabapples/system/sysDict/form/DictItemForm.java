@@ -22,7 +22,7 @@ import org.springframework.beans.BeanUtils;
 public class DictItemForm extends BaseForm<SysDictItem> {
     private String id;
     private String dictCode;
-    private String code;
+    private String text;
     private String value;
 
     @Override

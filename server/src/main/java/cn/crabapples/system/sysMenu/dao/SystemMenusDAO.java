@@ -21,10 +21,11 @@ import java.util.List;
  * pc-name mrhe
  */
 @Component
-public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
+public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
     public boolean remove(String id) {
-        return removeById(id);
+//        return baseMapper.removeById(id);
+        return baseMapper.deleteById(id) > 0;
     }
 
     public List<SysMenu> findButtonsByIds(List<String> ids) {
@@ -49,7 +50,7 @@ public class MenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
     }
 
     public IPage<SysMenu> getMenuPage(Page<SysMenu> page) {
-        return baseMapper.findMenusTreePage(page,null);
+        return baseMapper.findMenusTreePage(page, null);
 
     }
 }

@@ -1,6 +1,6 @@
 package cn.crabapples.common.config;
 
-import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.alibaba.fastjson2.support.spring.data.redis.FastJsonRedisSerializer;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CachingConfigurerSupport;

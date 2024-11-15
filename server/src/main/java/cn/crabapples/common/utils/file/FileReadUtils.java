@@ -1,7 +1,7 @@
 package cn.crabapples.common.utils.file;
 
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 
 import java.io.BufferedReader;
 import java.io.IOException;

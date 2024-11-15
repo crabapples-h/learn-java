@@ -1,4 +1,4 @@
-package cn.crabapples.common;
+package cn.crabapples.common.base;
 
 import lombok.Getter;
 

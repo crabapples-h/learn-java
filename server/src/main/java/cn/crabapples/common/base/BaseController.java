@@ -2,6 +2,10 @@ package cn.crabapples.common.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.Set;
+
 
 /**
  * TODO 基础Controller，其他controller请继承此类

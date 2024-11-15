@@ -1,13 +1,13 @@
 package cn.crabapples.test.service.impl;
 
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 import cn.crabapples.test.service.WechatTestService;
 import cn.crabapples.test.vo.TokenResult;
 import cn.crabapples.test.vo.WechatConfig;
 import cn.hutool.core.net.URLDecoder;
 import cn.hutool.core.util.RandomUtil;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;

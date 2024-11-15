@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysMenu.form;
 
-import cn.crabapples.common.Groups;
 import cn.crabapples.common.base.BaseForm;
+import cn.crabapples.common.utils.Groups;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import lombok.Getter;
 import lombok.Setter;

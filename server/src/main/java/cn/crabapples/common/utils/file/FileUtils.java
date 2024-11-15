@@ -1,6 +1,6 @@
 package cn.crabapples.common.utils.file;
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;

@@ -2,17 +2,13 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
@@ -43,14 +39,16 @@ public class SysUser extends BaseEntity<SysUser> {
     private String mail;
     // 电话
     private String phone;
+    // 头像
+    private String avatar;
     // 年龄
     private Integer age;
     // 年龄
     @Dict(dictCode = "gender")
     private Integer gender;
+
     // 最后操作用户
-    @LastModifiedBy
-    private String lastModifiedBy;
+    private String updateBy;
 
     @TableField(exist = false)
     private List<String> roleList;
@@ -59,22 +57,19 @@ public class SysUser extends BaseEntity<SysUser> {
     private Integer status;
 
     // 创建时间
-    @CreatedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     // 更新时间
-    @LastModifiedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
     @TableLogic
     private Integer delFlag;
 
     //创建人
-    @CreatedBy
     private String createBy;
 }

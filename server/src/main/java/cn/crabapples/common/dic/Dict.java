@@ -17,10 +17,28 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dict {
+    /*
+     * 1.当为字典表时，留空
+     * 2.当为其他表时，填写表名
+     */
+    String dictTable() default "";
 
+    /*
+     * 1.当为字典表时，留空
+     * 2.当为其他表时，填写其他表的映射的字段名
+     *
+     * 如
+     * @Dict(dictCode = "id",dictField = "name",dictTable = "sys_gander")
+     * Integer gender;
+     * 表示使用sys_gander表中id=gander的数据中的name来翻译
+     */
+    String dictField() default "";
+
+    /*
+     * 1.当为字典表时，填写字典表code
+     * 2.当为其他表时，填写其他表的关联的字段名
+     */
     String dictCode();
 
-    String dictText() default "";
 
-    String dictTable() default "";
 }

@@ -1,9 +1,10 @@
 package cn.crabapples.test.form;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.*;
 import java.util.Calendar;
 import java.util.Date;
 

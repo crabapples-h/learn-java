@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysRole.service.impl;
 
 import cn.crabapples.system.dto.SysRolesDTO;
-import cn.crabapples.system.sysMenu.dao.MenusDAO;
+import cn.crabapples.system.sysMenu.dao.SystemMenusDAO;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysRole.dao.RolesDAO;
 import cn.crabapples.system.sysRole.entity.SysRole;
@@ -36,14 +36,14 @@ public class SystemRolesServiceImpl implements SystemRolesService {
 
     private final HttpServletRequest request;
     private final RolesDAO rolesDAO;
-    private final MenusDAO menusDAO;
+    private final SystemMenusDAO systemMenusDAO;
     private final SystemUserService userService;
     private final SystemRoleMenusService roleMenusService;
 
-    public SystemRolesServiceImpl(RolesDAO rolesDAO, MenusDAO menusDAO, StringRedisTemplate redisTemplate,
+    public SystemRolesServiceImpl(RolesDAO rolesDAO, SystemMenusDAO systemMenusDAO, StringRedisTemplate redisTemplate,
                                   HttpServletRequest request, SystemUserService userService, SystemRoleMenusService roleMenusService) {
         this.rolesDAO = rolesDAO;
-        this.menusDAO = menusDAO;
+        this.systemMenusDAO = systemMenusDAO;
         this.request = request;
         this.userService = userService;
         this.roleMenusService = roleMenusService;
@@ -105,7 +105,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
      */
     private List<String> getPermissionList(List<String> menusIds) {
         log.info("获取角色权限:[{}]", menusIds);
-        List<SysMenu> buttonsByIds = menusDAO.findButtonsByIds(menusIds);
+        List<SysMenu> buttonsByIds = systemMenusDAO.findButtonsByIds(menusIds);
         List<String> permissions = buttonsByIds.stream().map(SysMenu::getPermission).collect(Collectors.toList());
         log.info("角色权限:[{}]", permissions);
         return permissions;

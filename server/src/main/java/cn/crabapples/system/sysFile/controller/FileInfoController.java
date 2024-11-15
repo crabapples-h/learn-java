@@ -1,8 +1,7 @@
 package cn.crabapples.system.sysFile.controller;
 
-import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +26,18 @@ public class FileInfoController extends BaseController {
     }
 
     @PostMapping("/uploadFile")
-    @JwtIgnore
     public ResponseDTO<FileInfo> uploadFile(HttpServletRequest request) {
         log.info("收到请求->上传文件");
         FileInfo entity = fileInfoService.uploadFile(request);
         log.info("返回结果->上传文件结束:[{}]", entity);
         return new ResponseDTO<>(entity);
+    }
+
+    @PostMapping("/uploadFileV2")
+    public ResponseDTO<String> uploadFileV2(HttpServletRequest request) {
+        log.info("收到请求->上传文件");
+        FileInfo entity = fileInfoService.uploadFile(request);
+        log.info("返回结果->上传文件结束:[{}]", entity);
+        return new ResponseDTO<>(entity.getVirtualPath());
     }
 }

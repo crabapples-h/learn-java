@@ -1,8 +1,10 @@
 package cn.crabapples.test.form;
 
 import cn.crabapples.common.Groups;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Setter;
+
+import javax.validation.constraints.*;
 
 /**
  * TODO 测试参数验证的DTO

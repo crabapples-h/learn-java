@@ -11,8 +11,6 @@ import java.util.List;
 
 @Mapper
 public interface MenusMapper extends BaseMapper<SysMenu> {
-
-
     List<SysMenu> getUserMenus(@Param("userId") String id);
 
     List<SysMenu> findMenusTree(@Param("id") String id);

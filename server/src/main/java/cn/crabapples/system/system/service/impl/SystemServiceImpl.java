@@ -1,6 +1,6 @@
 package cn.crabapples.system.system.service.impl;
 
-import cn.crabapples.common.ApplicationException;
+import cn.crabapples.common.base.ApplicationException;
 import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
@@ -85,7 +85,7 @@ public class SystemServiceImpl implements SystemService {
             throw new ApplicationException("账户已被锁定，请联系管理员");
         }
         if (sysUser.getPassword().equals(password)) {
-            return jwtTokenUtils.createToken(sysUser.getId());
+            return jwtTokenUtils.createToken(sysUser.getId(), sysUser.getUsername());
         }
         throw new ApplicationException("密码错误");
     }

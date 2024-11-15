@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * qq 294046317
  * pc-name mshe
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.SOURCE)
 public @interface EnableDict {
 }

@@ -1,5 +1,6 @@
 package cn.crabapples.system.sysRoleMenu.service.impl;
 
+import cn.crabapples.system.sysMenu.dao.SystemMenusDAO;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysRoleMenu.dao.RoleMenusDAO;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
@@ -7,16 +8,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @Slf4j
 public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
     private final RoleMenusDAO roleMenusDAO;
+    private final SystemMenusDAO menusDAO;
 
 
-    public SystemRolesMenusServiceImpl(RoleMenusDAO roleMenusDAO) {
+    public SystemRolesMenusServiceImpl(RoleMenusDAO roleMenusDAO, SystemMenusDAO menusDAO) {
         this.roleMenusDAO = roleMenusDAO;
+        this.menusDAO = menusDAO;
     }
 
     /**
@@ -27,14 +31,30 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
      */
     @Override
     public List<SysMenu> getRoleMenusList(String roleId) {
-        return listToTree(roleMenusDAO.getRoleMenusList(roleId));
+        return roleMenusDAO.getRoleMenusList(roleId);
     }
 
-    private List<SysMenu> listToTree(List<SysMenu> list) {
-        for (SysMenu sysMenu : list) {
+    public List<SysMenu> getRoleMenusTree(String roleId) {
+        // 查找所有菜单树
+        List<SysMenu> menusTree = menusDAO.findMenusTree();
+        // 获取当前角色拥有的菜单
+        List<SysMenu> hasMenus = roleMenusDAO.getRoleMenusList(roleId);
+        List<String> hasMenuIds = hasMenus.stream().map(SysMenu::getId).collect(Collectors.toList());
+        // 过滤掉没有权限的菜单
+        List<SysMenu> sysMenus = filterRootMenusTree(hasMenuIds, menusTree);
+//         把菜单树转换为列表
+//        List<SysMenu> menus = tree2List(sysMenus, new ArrayList<>());
+//         过滤掉没有权限的菜单
+//        return menus.stream().filter(e -> hasMenuIds.contains(e.getId())).collect(Collectors.toList());
+        return sysMenus;
+    }
 
+    private List<SysMenu> tree2List(List<SysMenu> source, List<SysMenu> target) {
+        for (SysMenu sysMenu : source) {
+            target.add(sysMenu);
+            tree2List(sysMenu.getChildren(), target);
         }
-        return list;
+        return target;
     }
 
     @Override

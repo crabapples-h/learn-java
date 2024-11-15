@@ -1,6 +1,6 @@
 package cn.crabapples.common;
 
-import cn.crabapples.common.utils.FileReadUtils;
+import cn.crabapples.common.utils.file.FileReadUtils;
 import cn.crabapples.common.utils.security.RsaUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.codec.binary.Base64;

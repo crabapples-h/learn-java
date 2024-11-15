@@ -1,10 +1,8 @@
 package cn.crabapples.common.utils;
 
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.WriterException;
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
@@ -19,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.Hashtable;
 
 /**
@@ -31,9 +31,50 @@ import java.util.Hashtable;
  * pc-name 29404
  */
 public class QRCodeUtils {
+    // 生成二维码的模板，使用草料二维码(无美化)
+    public static final String QRCODE_TEMPLATE = "https://api.cl2wm.cn/api/qrcode/code?text=%s";
+    // 生成二维码的模板，使用草料二维码(模板美化)
+    public static final String QRCODE_TEMPLATE_BEAUTIFUL = "https://api.cl2wm.cn/api/qrcode/code?text=%s&mhid=5kLFC1rvkskhMHYpKtFUO6s";
     private static final Logger logger = LoggerFactory.getLogger(QRCodeUtils.class);
+
+    public static void main(String[] args) {
+        String text = "Hello, World!"; // 二维码内容
+        printQrcode(20, 20, "Hello, World!");
+    }
+
     /**
-     * @param outputStream 文件输出流路径
+     * 打印二维码到控制台
+     *
+     * @param width   二维码宽度
+     * @param height  二维码高度
+     * @param content 二维码内容
+     */
+    public static void printQrcode(int width, int height, String content) {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height);
+            Path tempDir = FileSystems.getDefault().getPath(".");
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", tempDir.resolve("qrcode.png"));
+            // 打印二维码到控制台
+            System.out.println(bitMatrix);
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 在线生成二维码
+     *
+     * @param content 二维码内容
+     * @return 访问地址
+     */
+    public static String createOnlineQrcode(String content) {
+        return String.format(QRCODE_TEMPLATE, content);
+    }
+
+    /**
+     * @param outputStream 文件输出流
      * @param content      二维码携带信息
      * @param qrCodeSize   二维码图片大小
      * @param imageFormat  二维码的格式
@@ -42,7 +83,7 @@ public class QRCodeUtils {
      * @throws IOException
      */
     public static boolean createQrCode(OutputStream outputStream, String content, int qrCodeSize, String imageFormat) throws WriterException, IOException {
-        logger.info("开始生成二维码,内容[{}]",content);
+        logger.info("开始生成二维码,内容[{}]", content);
         //设置二维码纠错级别ＭＡＰ
         Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<EncodeHintType, ErrorCorrectionLevel>();
         hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);  // 矫错级别
@@ -66,12 +107,13 @@ public class QRCodeUtils {
             }
         }
         boolean status = ImageIO.write(image, imageFormat, outputStream);
-        logger.info("二维码生成结束,状态[{}]",status);
+        logger.info("二维码生成结束,状态[{}]", status);
         return status;
     }
 
     /**
      * 识别二维码并输出携带的信息
+     *
      * @param inputStream 输入流
      * @return
      * @throws IOException
@@ -90,10 +132,10 @@ public class QRCodeUtils {
         Result result = null;
         try {
             result = reader.decode(bitmap);
-            logger.info("识别二维码结束:[{}]",result.getText());
+            logger.info("识别二维码结束:[{}]", result.getText());
             return result.getText();
         } catch (ReaderException e) {
-            logger.error("识别二维码时出现异常:[]",e);
+            logger.error("识别二维码时出现异常:[]", e);
             throw e;
         }
     }

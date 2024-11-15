@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysDict.contoller;
 
-import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.system.sysDict.entity.SysDict;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.form.DictForm;
@@ -46,7 +46,7 @@ public class SystemDictController extends BaseController {
         return new ResponseDTO<>(status);
     }
 
-    @PostMapping("/remove/{id}")
+    @DeleteMapping("/remove/{id}")
 //    @ApiOperation(value = "系统字典", notes = "删除系统字典接口")
     public ResponseDTO<Boolean> deleteById(@PathVariable String id) {
         log.info("收到请求->删除系统字典:[{}]", id);
@@ -83,7 +83,7 @@ public class SystemDictController extends BaseController {
         return new ResponseDTO<>(list);
     }
 
-    @PostMapping("/item/remove/{id}")
+    @DeleteMapping("/item/remove/{id}")
 //    @ApiOperation(value = "系统字典", notes = "删除系统字典接口")
     public ResponseDTO<Boolean> deleteItemById(@PathVariable String id) {
         log.info("收到请求->删除系统字典项:[{}]", id);

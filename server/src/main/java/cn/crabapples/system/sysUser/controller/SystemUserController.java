@@ -1,9 +1,12 @@
 package cn.crabapples.system.sysUser.controller;
 
-import cn.crabapples.common.Groups;
-import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.common.base.ResponseDTO;
+import cn.crabapples.common.dic.EnableDict;
+import cn.crabapples.common.utils.Groups;
 import cn.crabapples.system.dto.SysUserDTO;
+import cn.crabapples.system.sysUser.form.ResetPasswordForm;
+import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -37,11 +40,12 @@ public class SystemUserController extends BaseController {
      */
     @GetMapping("/page")
 //    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    @EnableDict
     public ResponseDTO<IPage<SysUserDTO>> getUserPage(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             UserForm form) {
-        log.info("收到请求->获取用户列表:[{}]", form);
+        log.info("收到请求->获取用户[分页]列表:[{}]", form);
         IPage<SysUserDTO> list = userService.findAll(pageIndex, pageSize, form);
         log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
         return new ResponseDTO<>(list);
@@ -53,9 +57,9 @@ public class SystemUserController extends BaseController {
     @GetMapping("/list")
 //    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
     public ResponseDTO<List<SysUserDTO>> getUserList(UserForm form) {
-        log.info("收到请求->获取用户列表:[{}]", form);
+        log.info("收到请求->获取用户[不分页]列表:[{}]", form);
         List<SysUserDTO> list = userService.findAll(form);
-        log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
+        log.debug("返回结果->获取[不分页]用户列表->完成:[{}]", list);
         return new ResponseDTO<>(list);
     }
 
@@ -66,14 +70,14 @@ public class SystemUserController extends BaseController {
         super.validator(form, Groups.IsAdd.class);
         boolean status = userService.saveUser(form);
         log.debug("返回结果->添加用户->完成:[{}]", status);
-        return new ResponseDTO<>(status);
+        return new ResponseDTO<>(status).returnSuccess("操作成功");
     }
 
-    @PostMapping("/del/{id}")
+    @DeleteMapping("/remove/{id}")
 //    @ApiOperation(value = "删除用户", notes = "删除用户接口")
-    public ResponseDTO<Boolean> delUser(@PathVariable String id) {
+    public ResponseDTO<Boolean> removeUser(@PathVariable String id) {
         log.info("收到请求->删除用户:[{}]", id);
-        boolean status = userService.delUser(id);
+        boolean status = userService.removeUser(id);
         log.info("返回结果->用户删除完成");
         return new ResponseDTO<>(status);
     }
@@ -89,16 +93,16 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/unlock/{id}")
 //    @ApiOperation(value = "解锁用户", notes = "锁定用户接口")
-    public ResponseDTO<Object> unlockUser(@PathVariable String id) {
+    public ResponseDTO<Boolean> unlockUser(@PathVariable String id) {
         log.info("收到请求->解锁用户,id:[{}]", id);
-        userService.unlockUser(id);
+        boolean status = userService.unlockUser(id);
         log.info("返回结果->解锁用户完成");
-        return new ResponseDTO<>();
+        return new ResponseDTO<>(status);
     }
 
     @PostMapping("/password/reset")
 //    @ApiOperation(value = "重置密码", notes = "重置密码接口")
-    public ResponseDTO<Boolean> resetPassword(@RequestBody UserForm.ResetPassword form) {
+    public ResponseDTO<Boolean> resetPassword(@RequestBody ResetPasswordForm form) {
         log.info("收到请求->重置密码:[{}]", form);
         super.validator(form, Groups.IsResetPassword.class);
         boolean status = userService.resetPassword(form);
@@ -108,7 +112,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/password/update")
 //    @ApiOperation(value = "修改密码", notes = "修改密码接口")
-    public ResponseDTO<Boolean> updatePassword(@RequestBody UserForm.UpdatePassword form) {
+    public ResponseDTO<Boolean> updatePassword(@RequestBody UpdatePasswordForm form) {
         log.info("收到请求->修改密码:[{}]", form);
         super.validator(form, Groups.IsUpdatePassword.class);
         boolean status = userService.updatePassword(form);

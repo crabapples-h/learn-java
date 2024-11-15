@@ -6,7 +6,8 @@ import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
 /**
- * TODO
+ * TODO 用于在编译时期插桩需要翻译的字段
+ * 业务逻辑后续补充
  *
  * @author Mr.He
  * 2023/8/30 20:31
