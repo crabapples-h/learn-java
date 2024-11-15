@@ -9,14 +9,14 @@
 <template>
   <div>
     <a-upload ref="fileUpload" name="file"
-              :action="uploadUrlV2"
+              :action="uploadUrl"
               :multiple="multiple"
               :accept="accept"
               :headers="headers"
               @change="handleChange"
               @preview="handlePreview"
+              @beforeUpload="beforeUpload"
               :file-list="fileList"
-              :remove="removeImage"
               :list-type="listType">
       <div v-if="fileList.length < max">
         <template v-if="listType==='picture-card'">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import system, { getBase64 } from '@/mixins/system'
+import system, { getBase64 } from '@/minixs/SystemMinix'
 
 export default {
   name: 'c-file-upload',
@@ -83,7 +83,8 @@ export default {
   watch: {
     value: {
       handler: function (val, oldVal) {
-        if (val) {
+        if (this.listener && val) {
+          // console.log('is  String--->', val)
           this.fileList = val.split(',').map(e => {
             return {
               id: Math.random(),
@@ -94,10 +95,11 @@ export default {
               url: e
             }
           })
+          console.log('valueHandler--->', this.fileList.map(e => e.url).join(','))
         }
       },
       immediate: true
-    },
+    }
   },
   data() {
     return {
@@ -105,6 +107,7 @@ export default {
       fileList: [],
       previewVisible: false,
       previewImage: '',
+      listener: true
     }
   },
   model: {
@@ -113,14 +116,42 @@ export default {
   },
   methods: {
     handleChange(info) {
-      this.fileList = info.fileList;
-      let status = info.file.status
-      if (status === "done" || status === "removed") {
-        this.$emit("change", this.fileList.map(e => e.response?.data || e.url).join(','))
+      if (info.file.status === "uploading") {
+        let exist = false
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].uid === info.file.uid) {
+            exist = true
+            break
+          }
+        }
+        if (!exist) {
+          this.fileList.push(info.file)
+        }
       }
-    },
-    removeImage(file) {
-      this.fileList = this.fileList.filter(e => e.uid !== file.uid)
+      if (info.file.status === "done") {
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].uid === info.file.uid) {
+            this.fileList[i].currentData = info.file.response.data
+            break
+          }
+        }
+      }
+      if (info.file.status === "removed") {
+        for (let i = 0; i < this.fileList.length; i++) {
+          if (this.fileList[i].uid === info.file.uid) {
+            this.fileList.splice(i, 1)
+            break
+          }
+        }
+      }
+
+      let images = this.fileList.filter(e => {
+        return !!e.currentData
+      }).map(e => {
+        return e.currentData.virtualPath
+      }).join(',')
+      this.listener = false
+      this.$emit("change", images)
     },
     handleCancel() {
       this.previewVisible = false;

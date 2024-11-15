@@ -14,7 +14,9 @@
 -->
 <template>
   <a-popconfirm :title="title" @confirm="confirm" :okText="okText" :cancelText="cancelText" :icon="icon">
-    <a-button :type="type" :size="size" :style="color" :icon="buttonIcon" :loading="loading"> {{ text }}</a-button>
+    <a-button :type="type" :size="size" :style="color" :icon="buttonIcon" :loading="loading" :ghost="ghost">
+      {{ text }}
+    </a-button>
   </a-popconfirm>
 </template>
 
@@ -27,6 +29,10 @@ export default {
     },
     click: {
       type: Function,
+    },
+    ghost: {
+      type: Boolean,
+      default: false,
     },
     title: {
       type: String,
