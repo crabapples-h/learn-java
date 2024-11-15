@@ -1,6 +1,6 @@
-package cn.crabapple;
+package cn.crabapples;
 
-import cn.crabapple.turing.TuringApiProperties;
+import cn.crabapples.turing.TuringApiProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,11 +15,10 @@ import org.springframework.context.annotation.Configuration;
         matchIfMissing = true//缺失检查
 )
 public class TuringConfiguration {
-    // 这里如果再次注入bean的话会导致存在两个Bean，spring启动时会无法识别使用哪一个bean
 //    @Bean
 //    @ConditionalOnMissingBean
-//    public TuringApiProperties configProperties(TuringApiProperties properties) {
-//        System.err.println(123);
+//    public TuringApiService initService(TuringApiService properties) {
+//
 //        return properties;
 //    }
 }

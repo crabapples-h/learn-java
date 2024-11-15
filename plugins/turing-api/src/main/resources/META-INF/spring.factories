@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    cn.crabapple.TuringConfiguration
+    cn.crabapples.TuringConfiguration

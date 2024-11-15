@@ -1,4 +1,4 @@
-package cn.crabapple.turing;
+package cn.crabapples.turing;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;

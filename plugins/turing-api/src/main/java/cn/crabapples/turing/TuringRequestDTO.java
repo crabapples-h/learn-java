@@ -1,4 +1,4 @@
-package cn.crabapple.turing;
+package cn.crabapples.turing;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TuringRequestDTO {
-    private String reqType;
+    private int reqType;
     private Perception perception;
     private UserInfo userInfo;
 
