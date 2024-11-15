@@ -1,9 +1,7 @@
-isDebug: true
+isDebug: false
 isCrypt: true
 
 dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
-virtualPath: '/file/'
-uploadPath: 'd:/uploadPath/'
 ### log config ###
 logging:
   level:

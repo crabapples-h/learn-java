@@ -4,7 +4,7 @@
 		<a-divider/>
 
 		<a-table :data-source="dataSource" key="id" bordered>
-			<a-table-column key="code" title="字典项代码" data-index="code"/>
+			<a-table-column key="code" title="字典项文字" data-index="text"/>
 			<a-table-column key="value" title="字典项值" data-index="value"/>
 			<a-table-column key="id" title="操作" data-index="id">
 				<template slot-scope="text, record">
@@ -22,13 +22,13 @@
 <script>
 
 import { SysApis } from '@/api/Apis'
-import SystemMinix from '@/minixs/SystemMinix'
+import system from '@/mixins/system'
 import AddDictItem from '@/views/manage/sys-dict/add-item.vue'
 
 export default {
 	name: 'dict-add',
 	components: {AddDictItem},
-	mixins: [SystemMinix],
+	mixins: [system],
 	props: {
 		visible: {
 			type: Boolean,

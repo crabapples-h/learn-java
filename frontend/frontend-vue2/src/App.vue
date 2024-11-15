@@ -32,7 +32,7 @@ export default {
         localStorage.setItem('LAST_PAGE', _this.$route.path)
       }
       // 刷新时做一个标记
-      localStorage.setItem('RELOAD_PAGE', 1)
+      localStorage.setItem('RELOAD_PAGE', '1')
       // event.returnValue = '确定要离开页面吗？'
     })
   },
@@ -62,9 +62,47 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+@import "~@public/color.less";
+
 #app {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
 }
+
+/*iconfont 全局样式*/
+.iconfont {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/*滚动条整体样式*/
+*::-webkit-scrollbar {
+  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  opacity: 0.2;
+}
+
+/*滚动条里面小方块(滑块 )*/
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 1px @primary-color;
+  background: fade(@blue-5, 80%);
+  //opacity: 0.2;
+}
+
+/*滚动条里面轨道(背景)*/
+//*::-webkit-scrollbar-track {
+//  -webkit-box-shadow: inset 0 0 2px @pink-5;
+//  border-radius: 10px;
+//  background: fade(@pink-5, 10%);
+//  //opacity: 0.2;
+//}
 </style>

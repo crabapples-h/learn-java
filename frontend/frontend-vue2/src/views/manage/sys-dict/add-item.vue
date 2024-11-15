@@ -1,10 +1,10 @@
 <template>
   <a-modal :visible="visible" width="50%" ok-text="确认" cancel-text="取消" @ok="submit" @cancel="closeForm">
-    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="form">
-      <a-form-model-item label="字典项代码" prop="code">
-        <a-input v-model="form.code"/>
+    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="ruleForm">
+      <a-form-model-item label="字典项文字" prop="text">
+        <a-input v-model="form.text"/>
       </a-form-model-item>
-      <a-form-model-item label="字典项值" prop="value">
+      <a-form-model-item label="字典项代码" prop="value">
         <a-input v-model="form.value"/>
       </a-form-model-item>
     </a-form-model>
@@ -19,11 +19,11 @@
 <script>
 
 import { SysApis } from '@/api/Apis'
-import SystemMinix from '@/minixs/SystemMinix'
+import system from '@/mixins/system'
 
 export default {
   name: 'dict-item-add',
-  mixins: [SystemMinix],
+  mixins: [system],
   props: {
     visible: {
       type: Boolean,
@@ -40,13 +40,13 @@ export default {
   data() {
     return {
       rules: {
-        value: [
-          { required: true, message: '请输入字典项值', trigger: 'change' },
-          { whitespace: true, message: '请输入字典项值', trigger: 'change' }
+        text: [
+          {required: true, message: '字典项文字', trigger: 'change'},
+          {whitespace: true, message: '字典项文字', trigger: 'change'}
         ],
-        code: [
-          { required: true, message: '请输入代码', trigger: 'change' },
-          { whitespace: true, message: '请输入代码', trigger: 'change' }
+        value: [
+          {required: true, message: '请输入代码', trigger: 'change'},
+          {whitespace: true, message: '请输入代码', trigger: 'change'}
         ],
       },
       form: {},
@@ -65,7 +65,7 @@ export default {
       this.$emit('cancel')
     },
     submit() {
-      this.$refs.form.validate(valid => {
+      this.$refs.ruleForm.validate(valid => {
         if (valid) {
           this.form.dictCode = this.dictCode
           this.$http.post(this.url.save, this.form).then(result => {
@@ -86,14 +86,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

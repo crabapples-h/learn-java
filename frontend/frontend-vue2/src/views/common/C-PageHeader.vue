@@ -1,31 +1,40 @@
 <template>
-  <div>
-    <a-layout-header>
-      <a-row>
-        <a-col :span="4">
+  <a-layout-header theme="light">
+    <a-row style="display: flex;align-items: center;height: 100%;">
+      <a-col :span="8">
+        <a-space align="center">
+          <img style="width: 100px" :src="userInfo.avatar"/>
           <span class="title">{{ title }}</span>
-        </a-col>
-        <a-col :span="3" :offset="17">
-          <a-dropdown placement="topCenter">
+        </a-space>
+      </a-col>
+      <a-col :span="8"></a-col>
+      <a-col :span="8" style="text-align: right">
+        <a-dropdown placement="bottomCenter">
+          <a-space>
+            <a-avatar size="small" icon="user" :src="userInfo.avatar"/>
+            <span>{{ userInfo.name }}</span>
             <a-icon type="setting"/>
-            <a-menu slot="overlay">
-              <a-menu-item key="1" @click="showUpdatePassword">
-                <a-icon type="user"/>
-                修改密码
-              </a-menu-item>
-              <a-menu-item key="2" @click="logout">
-                <a-icon type="close"/>
-                退出登录
-              </a-menu-item>
-            </a-menu>
-            <a-button style="margin-left: 8px"> Button
-              <a-icon type="down"/>
-            </a-button>
-          </a-dropdown>
-          <span>{{ userInfo.name }}</span>
-        </a-col>
-      </a-row>
-    </a-layout-header>
+          </a-space>
+          <a-menu slot="overlay">
+            <a-menu-item key="3" @click="showUpdatePassword">
+              <a-icon type="user"/>
+              个人资料
+            </a-menu-item>
+            <a-menu-item key="1" @click="showUpdatePassword">
+              <a-icon type="lock"/>
+              修改密码
+            </a-menu-item>
+            <a-menu-item key="2" @click="logout">
+              <a-icon type="logout"/>
+              退出登录
+            </a-menu-item>
+          </a-menu>
+          <a-button style="margin-left: 8px"> Button
+            <a-icon type="down"/>
+          </a-button>
+        </a-dropdown>
+      </a-col>
+    </a-row>
     <a-modal title="修改密码" :visible.sync="show.updatePassword" width="25%" ok-text="确认" cancel-text="取消"
              @ok="submitUpdatePassword" @cancel="closeUpdatePassword">
       <a-form-model ref="ruleForm" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
@@ -40,7 +49,7 @@
         </a-form-model-item>
       </a-form-model>
     </a-modal>
-  </div>
+  </a-layout-header>
 </template>
 
 <script>
@@ -50,10 +59,17 @@ import { SysApis } from '@/api/Apis'
 export default {
   name: "C-PageHeader",
   props: {
+    theme: {
+      type: String,
+    },
     title: {
       type: String,
       default: '管理系统'
-    }
+    },
+    userInfo: {
+      type: Object,
+      default: {}
+    },
   },
   data() {
     return {
@@ -81,14 +97,12 @@ export default {
       show: {
         updatePassword: false
       },
-      userInfo: {
-        name: ''
-      },
     };
   },
   activated() {
   },
   mounted() {
+    // console.log('mounted',this.userInfo)
     // this.$router.push({name: 'welcome'})
   },
   methods: {
@@ -124,8 +138,8 @@ export default {
       })
     },
     logout() {
-      CommonApi.logout().then(res=> {
-        if(res.status===200){
+      CommonApi.logout().then(res => {
+        if (res.status === 200) {
           window.location.reload()
         }
       })
@@ -138,61 +152,13 @@ export default {
 @import "~@public/color.less";
 
 .title {
-  font-size: 20px;
+  font-size: 28px;
   color: #fff;
   font-weight: 700;
 }
 
 .ant-layout-header {
-  background: @primary-color;
+  background: @primary-color !important;
   color: #fff;
-  height: 7vh;
-  line-height: 7vh;
-}
-
-.ant-layout-footer {
-  background: @primary-color;
-  color: #fff;
-  height: 10vh;
-  line-height: 7vh;
-}
-
-.ant-layout-sider {
-  width: 100%;
-  height: 83vh;
-  background: #fff;
-}
-
-.ant-layout-content {
-  box-shadow: inset 0 0 5px fade(@primary-color, 20%);
-  padding: 12px;
-  background: #fff;
-  min-height: 120px;
-  height: 83vh;
-  overflow: auto;
-}
-
-/*滚动条整体样式*/
-.ant-layout-content::-webkit-scrollbar {
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 1px;
-  margin-right: 10px;
-  opacity: 0.2;
-}
-
-/*滚动条里面小方块(滑块 )*/
-.ant-layout-content::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
-}
-
-/*滚动条里面轨道(背景)*/
-.ant-layout-content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  border-radius: 10px;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
 }
 </style>

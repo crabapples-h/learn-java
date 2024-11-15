@@ -39,12 +39,11 @@ const permissions = {
                 return {}
               }
               if (e.menusType !== 2) {
-                let icon = e.icon.substring(e.icon.indexOf('"') + 1, e.icon.lastIndexOf('"'))
                 let menus = {
                   id: e.id,
                   pid: e.pid,
                   name: e.name,
-                  icon: icon,
+                  icon: e.icon,
                   path: e.path,
                   sort: e.sort,
                   link: e.link,

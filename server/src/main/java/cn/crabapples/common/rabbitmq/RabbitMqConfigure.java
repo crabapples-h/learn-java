@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;
+package cn.crabapples.common.rabbitmq;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

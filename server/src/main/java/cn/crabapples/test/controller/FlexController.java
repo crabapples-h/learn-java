@@ -1,7 +1,7 @@
 package cn.crabapples.test.controller;
 
-import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.common.jwt.JwtIgnore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

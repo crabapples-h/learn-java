@@ -16,9 +16,11 @@ import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 
 /**
@@ -42,7 +44,8 @@ import org.springframework.web.client.RestTemplate;
 //@SpringBootApplication
 @SpringBootConfiguration
 @EnableAutoConfiguration
-
+@EnableAspectJAutoProxy
+@EnableWebSocket
 //--------start-------
 // 动态数据源，使用@DataSourceChange(name="xxx")切换
 //@Import({DynamicDataSourceRegister.class})
@@ -55,6 +58,7 @@ import org.springframework.web.client.RestTemplate;
         @MapperScan("cn.crabapples.custom.*.dao.mybatis.mapper")
 
 })
+
 @ComponentScan(basePackages = {"cn.crabapples"}, excludeFilters = {
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
                 classes = {DynamicDataSourceRegister.class}),
@@ -85,10 +89,10 @@ public class Application {
         return interceptor;
     }
 
-    @Bean
-    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-        return factory -> factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
-    }
+//    @Bean
+//    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
+//        return factory -> factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
+//    }
 
     //    @Bean
     public WebServerFactoryCustomizer containerCustomizer() {

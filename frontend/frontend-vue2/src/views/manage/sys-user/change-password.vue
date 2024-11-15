@@ -15,11 +15,11 @@
 <script>
 
 import { SysApis } from '@/api/Apis'
-import SystemMinix from '@/minixs/SystemMinix'
+import system from '@/mixins/system'
 
 export default {
   name: 'user-change-password',
-  mixins: [SystemMinix],
+  mixins: [system],
   props: {
     visible: {
       type: Boolean,

@@ -10,6 +10,12 @@ import '@public/color.less'
 import '@/utils/permission'
 import storage from '@/store/storage'
 import VueCanvasPoster from 'vue-canvas-poster'
+// antd图标库
+import '@public/iconfont/icon-antd'
+// lolita图标库
+import '@public/iconfont/icon-lolita'
+// 可爱图标库
+import '@public/iconfont/icon-cute'
 
 Vue.use(VueCanvasPoster)
 

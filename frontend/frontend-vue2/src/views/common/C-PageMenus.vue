@@ -1,38 +1,78 @@
 <template>
-  <div>
-    <a-layout-sider>
-      <a-menu style="width: 200px;height: 100%" mode="inline"
-              :default-open-keys="OPEN_MENU_IDS"
-              :defaultSelectedKeys="SELECT_MENU_IDS">
-        <a-sub-menu :key="item.id" v-for="item in menus" v-if="item.children && item.children.length">
-          <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-          <a-sub-menu :key="item.id" v-if="item.children && item.children.length" v-for="item in item.children">
-            <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.id" v-for="item in item.children" @click="click(item)">
-              <a-icon :type="item.icon" v-if="item.icon"/>
-              <span>{{ item.name }}</span>
-              <span>{{ item.icon }}</span>
-            </a-menu-item>
-          </a-sub-menu>
-          <a-menu-item :key="item.id" v-else @click="click(item)">
-            <a-icon :type="item.icon" v-if="item.icon"/>
-            <span>{{ item.name }}</span>
-          </a-menu-item>
-        </a-sub-menu>
-        <a-menu-item :key="item.id" v-else @click="click(item)">
-          <a-icon :type="item.icon" v-if="item.icon"/>
+  <a-layout-sider theme="light">
+    <a-menu mode="inline" :theme="theme" style="height: 100%"
+            :default-open-keys="openMenuIds"
+            :defaultSelectedKeys="selectMenuIds">
+      <template v-for="item in menus">
+        <a-menu-item v-if="!item.children" :key="item.key" @click="click(item)">
+          <svg class="iconfont" aria-hidden="true">
+            <use :xlink:href="'#icon-'+item.icon"></use>
+          </svg>
           <span>{{ item.name }}</span>
         </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
-  </div>
+        <sub-menu v-else :key="item.id" :menu-item="item" @clickMenu="click"/>
+      </template>
+    </a-menu>
+  </a-layout-sider>
 </template>
 
 <script>
+import { Menu } from 'ant-design-vue'
+
+const SubMenu = {
+  template: `
+    <a-sub-menu :key="menuItem.id" v-bind="$props" v-on="$listeners">
+        <span slot="title">
+            <svg class="iconfont" aria-hidden="true">
+            <use :xlink:href="'#icon-'+menuItem.icon"></use>
+          </svg>
+          <span>{{ menuItem.name }}</span>
+        </span>
+      <template v-for="item in menuItem.children">
+        <a-menu-item v-if="!item.children" :key="item.id" @click="click(item)">
+          <svg class="iconfont" aria-hidden="true">
+            <use :xlink:href="'#icon-'+item.icon"></use>
+          </svg>
+          <span>{{ item.name }}</span>
+        </a-menu-item>
+        <sub-menu v-else :key="item.id" :menu-item="item"/>
+      </template>
+    </a-sub-menu>
+  `,
+  name: 'SubMenu',
+  // must add isSubMenu: true
+  isSubMenu: true,
+  props: {
+    ...Menu.SubMenu.props,
+    clickMenu: {
+      type: Function
+    },
+    // Cannot overlap with properties within Menu.SubMenu.props
+    menuItem: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  mounted() {
+  },
+  methods: {
+    click(e) {
+      localStorage.setItem('OPEN_MENU_IDS', e.pid)
+      localStorage.setItem('SELECT_MENU_IDS', e.id)
+      this.$emit('clickMenu', e)
+    },
+  }
+};
 
 export default {
-  name: 'C-PageMenus',
+  components: {
+    'sub-menu': SubMenu,
+  },
+  isRootMenu: false,
   props: {
+    theme: {
+      type: String,
+    },
     menus: {
       type: Array,
       required: true,
@@ -44,88 +84,33 @@ export default {
       type: Function,
     },
   },
-  data() {
-    return {
-      OPEN_MENU_IDS: [localStorage.getItem('OPEN_MENU_IDS')],
-      SELECT_MENU_IDS: [localStorage.getItem('SELECT_MENU_IDS')],
+  computed: {
+    selectMenuIds() {
+      let SELECT_MENU_IDS = [localStorage.getItem('SELECT_MENU_IDS')]
+      SELECT_MENU_IDS = SELECT_MENU_IDS.filter(e => e != null)
+      console.debug('selectMenuIds', SELECT_MENU_IDS)
+      return SELECT_MENU_IDS
+    },
+    openMenuIds() {
+      let OPEN_MENU_IDS = [localStorage.getItem('OPEN_MENU_IDS')]
+      OPEN_MENU_IDS = OPEN_MENU_IDS.filter(e => e != null)
+      console.debug('openMenuIds', OPEN_MENU_IDS)
+      return OPEN_MENU_IDS
     }
   },
-  beforeCreate() {
-  },
-  activated() {
-  },
-  mounted() {
-    console.log(this.OPEN_MENU_IDS)
+  data() {
+    return {
+    };
   },
   methods: {
     click(e) {
+      console.log('内部点击菜单', e)
       localStorage.setItem('OPEN_MENU_IDS', e.pid)
       localStorage.setItem('SELECT_MENU_IDS', e.id)
       this.$emit('clickMenu', e)
     },
+  },
+  mounted() {
   }
-}
+};
 </script>
-
-<style scoped lang="less">
-@import "~@public/color.less";
-
-.title {
-  font-size: 20px;
-  color: #fff;
-  font-weight: 700;
-}
-
-.ant-layout-header {
-  background: @primary-color;
-  color: #fff;
-  height: 7vh;
-  line-height: 7vh;
-}
-
-.ant-layout-footer {
-  background: @primary-color;
-  color: #fff;
-  height: 10vh;
-  line-height: 7vh;
-}
-
-.ant-layout-sider {
-  width: 100%;
-  height: 83vh;
-  background: #fff;
-}
-
-.ant-layout-content {
-  box-shadow: inset 0 0 5px fade(@primary-color, 20%);
-  padding: 12px;
-  background: #fff;
-  min-height: 120px;
-  height: 83vh;
-  overflow: auto;
-}
-
-/*滚动条整体样式*/
-.ant-layout-content::-webkit-scrollbar {
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 1px;
-  margin-right: 10px;
-  opacity: 0.2;
-}
-
-/*滚动条里面小方块(滑块 )*/
-.ant-layout-content::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
-}
-
-/*滚动条里面轨道(背景)*/
-.ant-layout-content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  border-radius: 10px;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
-}
-</style>

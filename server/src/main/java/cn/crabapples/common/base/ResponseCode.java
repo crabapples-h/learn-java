@@ -11,11 +11,11 @@ import lombok.Getter;
  * qq 294046317
  * pc-name root
  */
+@Getter
 public enum ResponseCode {
     SUCCESS(200),
     ERROR(500),
     AUTH_FAIL(401);
-    @Getter
     private final int code;
 
     ResponseCode(int code) {

@@ -91,7 +91,7 @@ public class JwtTokenUtils {
             return JWT.require(Algorithm.HMAC256(base64Secret)).build().verify(token);
         } catch (Exception e) {
             log.warn("Token验证失败", e);
-            throw new ApplicationException("token验证失败");
+            throw new ApplicationException("token验证失败",401);
         }
     }
 

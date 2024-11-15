@@ -30,28 +30,27 @@ public interface BaseService {
     /**
      * 生成菜单树(思路为:从所有菜单中逐级递归过滤出角色没有权限的菜单，保留角色拥有的菜单)
      * （角色表里存的菜单是字符串的形式，将字符串转换为数组然后分别把每个角色的菜单用递归的方法过滤出来）
-     * 递归遍历所有菜单，判断菜单ID是否为角色所拥有，从最后一级菜单开始逐级返回子菜单中角色所拥有的菜单
-     * 如果菜单被标记删除则直接将该菜单及其子菜单移除
+     * 1. 过滤掉被标记删除的菜单
+     * 2. 递归遍历过滤用户没有的菜单，最后的得到的是角色拥有的菜单树
+     * 3. 如果角色没有父级菜单但是有子菜单，则保留该父级菜单，但是不显示其他的子菜单
      *
-     * @param userMenuList 当前角色所拥有的菜单的ID
-     * @param allMenuTree  所有菜单树
+     * @param userHasMenuIds 当前角色所拥有的菜单的ID
+     * @param allMenuTree    所有菜单树
      * @return 角色拥有的菜单树
      */
-    default List<SysMenu> filterRootMenusTree(List<String> userMenuList, List<SysMenu> allMenuTree) {
-        return allMenuTree.stream().filter(e -> {
-            // 判断当前菜单是否被标记删除
-            if (DIC.IS_DEL == e.getDelFlag()) {
-                return false;
-            }
-            // children可能为null
-            List<SysMenu> children = e.getChildren();
-            e.setChildren(filterRootMenusTree(userMenuList, children));
-            // 判断用户拥有的菜单中是否包含当前菜单
-            boolean exist = userMenuList.contains(e.getId());
-            // 判断用户拥有的菜单中是否包含当前菜单的子菜单
-            boolean sizeZero = e.getChildren().size() > 0;
-            return exist || sizeZero;
-        }).collect(Collectors.toList());
+    default List<SysMenu> filterRootMenusTree(List<String> userHasMenuIds, List<SysMenu> allMenuTree) {
+        return allMenuTree.stream()
+                .filter(e -> DIC.NOT_DEL == e.getDelFlag())
+                .filter(e -> {
+                    // children可能为null
+                    List<SysMenu> children = e.getChildren();
+                    e.setChildren(filterRootMenusTree(userHasMenuIds, children));
+                    // 判断用户拥有的菜单中是否包含当前菜单
+                    boolean exist = userHasMenuIds.contains(e.getId());
+                    // 判断用户拥有的菜单中是否包含当前菜单的子菜单,如果包含子菜单则需要将当前菜单一起返回
+                    boolean sizeZero = !e.getChildren().isEmpty();
+                    return exist || sizeZero;
+                })
+                .collect(Collectors.toList());
     }
-
 }

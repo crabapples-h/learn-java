@@ -1,5 +1,5 @@
 {
-  "name": "frontendV2",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,11 @@
     "ant-design-vue": "1.7.8",
     "axios": "1.5.0",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.2",
+    "event-source-polyfill": "^1.0.31",
     "jsencrypt": "^3.1.0",
     "jsrsasign": "10.5.25",
     "nprogress": "^0.2.0",
-    "echarts": "^5.0.2",
     "style-resources-loader": "^1.4.1",
     "vue": "2.6.11",
     "vue-axios": "^2.1.5",

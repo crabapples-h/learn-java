@@ -1,17 +1,27 @@
 <template>
   <div>
-    <a-button @click="showAdd" v-auth:sys:roles:add>添加角色</a-button>
+    <a-form layout="inline" @keyup.enter.native="getList">
+      <a-space align="center" style="flex-wrap: wrap">
+        <a-form-item label="角色">
+          <a-input placeholder="请输入角色" v-model="queryParam.name" :allow-clear="true"/>
+        </a-form-item>
+        <a-button type="default" @click="getList" icon="search">查询</a-button>
+        <a-button type="default" @click="resetSearch" icon="reload">重置</a-button>
+        <a-button type="primary" @click="showAdd" icon="plus" v-auth:sys:roles:add ghost>添加</a-button>
+      </a-space>
+    </a-form>
     <a-divider/>
-    <add-role :visible="show.add" @cancel="closeForm" :is-edit="show.edit" ref="addMenu"/>
-    <role-detail :visible="show.detail" @cancel="closeDetail"  :role-id="detailId"  ref="detail"/>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
+    <add-role :visible="show.add" @cancel="closeForm" title="添加"/>
+    <add-role :visible="show.edit" @cancel="closeForm" :is-edit="show.edit" ref="editForm" title="编辑"/>
+    <role-detail :visible="show.detail" @cancel="closeDetail" :role-id="detailId" ref="detail"/>
+    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination" bordered>
         <span slot="action" slot-scope="text, record">
+      <a-space align="center" style="flex-wrap: wrap">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="remove(record)"
                       v-auth:sys:roles:del/>
-        <a-divider type="vertical" v-auth:sys:roles:del/>
         <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:roles:edit>编辑</a-button>
-        <a-divider type="vertical" v-auth:sys:roles:edit/>
         <a-button type="primary" size="small" @click="showDetail(record)">查看菜单</a-button>
+        </a-space>
       </span>
     </a-table>
   </div>
@@ -20,14 +30,14 @@
 <script>
 import commonApi from '@/api/CommonApi'
 import { SysApis } from '@/api/Apis'
-import SystemMinix from '@/minixs/SystemMinix'
+import system from '@/mixins/system'
 import AddRole from '@/views/manage/sys-role/add.vue'
 import RoleDetail from '@/views/manage/sys-role/detail.vue'
 
 export default {
   name: 'role-list',
-  mixins: [SystemMinix],
-  components: { AddRole, RoleDetail },
+  mixins: [system],
+  components: {AddRole, RoleDetail},
   data() {
     return {
       columns: [
@@ -40,7 +50,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          scopedSlots: { customRender: 'action' },
+          scopedSlots: {customRender: 'action'},
           width: '50%'
         },
       ],
@@ -51,9 +61,10 @@ export default {
       },
       url: {
         list: SysApis.rolePage,
-        delete: SysApis.delRoles,
+        remove: SysApis.delRoles,
       },
-      detailId: ''
+      detailId: '',
+      title: '标题',
     }
   },
   activated() {
@@ -61,42 +72,31 @@ export default {
   mounted() {
   },
   methods: {
-    showAdd() {
-      this.show.add = true
-    },
+
     closeForm() {
       this.show.add = false
       this.show.edit = false
       this.refreshData()
       commonApi.refreshSysData()
     },
-    showEdit(e) {
-      this.$refs.addMenu.form = e
-      this.show.add = true
-      this.show.edit = true
-    },
     showDetail(e) {
       this.detailId = e.id
       this.show.detail = true
     },
-    closeDetail() {
-      this.show.detail = false
-    },
-
   }
 }
 </script>
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

@@ -12,6 +12,7 @@
 export function buildTree(flatList, parentId = null, parentKey = 'pid') {
     const tree = [];
     flatList.forEach(item => {
+        console.log(item);
         if (item[parentKey] === parentId) {
             const children = buildTree(flatList, item.id);
             if (children.length) {

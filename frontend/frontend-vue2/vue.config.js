@@ -9,6 +9,7 @@ function resolve(dir) {
 }
 
 module.exports = {
+    runtimeCompiler: true,
     /** 区分打包环境与开发环境
      * process.env.NODE_ENV==='production'  (打包环境)
      * process.env.NODE_ENV==='development' (开发环境)
@@ -25,6 +26,8 @@ module.exports = {
     // 构建好的文件输出到哪里
     outputDir: "dist",
     // where to put static assets (js/css/img/font/...)
+    // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
+    assetsDir: "",
     // 是否在保存时使用‘eslint-loader’进行检查
     // 有效值: true | false | 'error',当设置为‘error’时，检查出的错误会触发编译失败
     lintOnSave: false,
@@ -86,13 +89,37 @@ module.exports = {
         }
     },
     devServer: {
-        open: process.platform === "darwin",
+        // 让浏览器 overlay 同时显示警告和错误
+        overlay: {
+            warnings: false,
+            errors: false
+        },
+        // open: process.platform === "darwin",
         disableHostCheck: false,
         host: "0.0.0.0",
         port: 8080,
         https: false,
         hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
+            '/videoability': {
+                target: 'http://localhost:9999/', // 接口的域名
+                // secure: false,  // 如果是https接口，需要配置这个参数
+                changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+                // pathRewrite: {
+                // 把 /api 开头的路径替换为 ''
+                //     '^/api': ''
+                // }
+            },
+            '/ws': {
+                target: 'http://localhost:9093/', // 接口的域名
+                ws: true,
+                // secure: false,  // 如果是https接口，需要配置这个参数
+                changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+                // pathRewrite: {
+                // 把 /api 开头的路径替换为 ''
+                //     '^/api': ''
+                // }
+            },
             '/api': {
                 target: 'http://localhost:9093/', // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
@@ -112,7 +139,7 @@ module.exports = {
                 }
             },
             '/file': {
-                target: 'http://localhost:80/', // 接口的域名
+                target: 'http://localhost:9093/', // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
             }

@@ -1,5 +1,5 @@
 <template>
-  <a-drawer title="编辑" width="50%" :visible="visible" @close="closeForm">
+  <a-drawer :title="title" width="50%" :visible="visible" @close="closeForm" :destroy-on-close="true">
     <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol"
                   ref="roleForm">
       <a-form-model-item label="ID" style="display: none">
@@ -9,22 +9,13 @@
         <a-input v-model="form.name"/>
       </a-form-model-item>
       <a-form-model-item label="菜单">
-        <a-tree-select
-          :tree-data="menusOptions"
-          v-model="form.hasMenusIds"
-          tree-checkable
-          :show-checked-strategy="SHOW_TYPE"
-          :show-line="show.treeLine"
-          :checkStrictly="false"
-          :replace-fields="replaceFields"
-          v-if="false"/>
         <a-tree
-          v-model="form.menuList"
-          :checkable="true"
-          :default-expand-all="true"
-          :check-strictly="false"
-          :tree-data="menusOptions"
-          :replace-fields="replaceFields"/>
+            v-model="form.menuList"
+            :checkable="true"
+            :default-expand-all="true"
+            :check-strictly="false"
+            :tree-data="menusOptions"
+            :replace-fields="replaceFields"/>
       </a-form-model-item>
     </a-form-model>
     <div class="drawer-bottom-button">
@@ -36,15 +27,18 @@
 
 <script>
 import { SysApis } from '@/api/Apis'
-import SystemMinix from '@/minixs/SystemMinix'
+import system from '@/mixins/system'
 
 export default {
   name: 'add-role',
-  mixins: [SystemMinix],
+  mixins: [system],
   props: {
     visible: {
       type: Boolean,
       default: false
+    },
+    title: {
+      type: String,
     },
     cancel: {
       type: Function,
@@ -56,7 +50,7 @@ export default {
   },
   watch: {
     isEdit(nowValue, oldValue) {
-      console.log('watch',nowValue)
+      console.log('watch', nowValue)
       if (nowValue) {
         this.loadRoleMenus()
       }
@@ -69,9 +63,9 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
-          { whitespace: true, message: '请输入名称', trigger: 'change' }
+          {required: true, message: '请输入名称', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入名称', trigger: 'change'}
         ],
       },
       show: {
@@ -86,7 +80,6 @@ export default {
       form: {
         menuList: []
       },
-      allMenuList: [],
     }
   },
   activated() {
@@ -96,14 +89,12 @@ export default {
   },
   methods: {
     loadRoleMenus() {
-      console.log("form",this.form)
+      console.log("form", this.form)
       this.$http.get(`${this.url.roleMenus}/${this.form.id}`).then(result => {
         let hasMenusIds = []
         result.data.forEach(e => {
-          console.log(e.name)
           hasMenusIds.push(e.id)
         })
-        console.log(this.allMenuList.map(e=>e.name))
         this.form.menuList = hasMenusIds
       })
     },
@@ -114,9 +105,11 @@ export default {
           return
         }
         if (result.data !== null) {
-          this.menusOptions = result.data
-          this.allMenuList = this.tree2list(this.menusOptions).sort((a, b) => {
-            return b.sort - a.sort
+          // this.menusOptions = this.tree2list(result.data).sort((a, b) => {
+          //   return b.sort - a.sort
+          // })
+          this.menusOptions = result.data.sort((a, b) => {
+            return a.sort - b.sort
           })
         }
       }).catch(function (error) {
@@ -127,7 +120,7 @@ export default {
     },
     tree2list(list, data = []) {
       list.forEach(r => {
-        data.push({ id: r.id, name: r.name, pid: r.pid, sort: r.sort })
+        data.push({id: r.id, name: r.name, pid: r.pid, sort: r.sort})
         this.tree2list(r.children, data)
       })
       return data
@@ -144,7 +137,7 @@ export default {
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
               this.$message.error(result.message)
-            }else{
+            } else {
               this.$message.success(result.message)
             }
           }).catch(function (error) {
@@ -161,14 +154,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

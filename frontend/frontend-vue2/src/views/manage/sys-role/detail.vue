@@ -1,5 +1,6 @@
 <template>
-  <a-modal title="菜单列表" :visible.sync="visible" width="30%" :footer="null" @cancel="closeDetail">
+  <a-modal title="菜单列表" :visible.sync="visible" width="30%" :footer="null" @cancel="closeDetail"
+           :destroy-on-close="true">
     <div style="height: 60vh;overflow-y: auto">
       <a-table :data-source="dataSource" :columns="columns" :pagination="false" v-if="false">
         <span slot="icon" slot-scope="text, record">
@@ -11,20 +12,23 @@
 	        <a-tag size="small" color="purple" v-if="record.menusType === 3">超链接</a-tag>
         </span>
       </a-table>
-      <a-tree :default-expand-all="true" :check-strictly="false" :tree-data="dataSource"
-              :replace-fields="replaceFields"/>
+      <a-tree :default-expand-all="true"
+              :check-strictly="false"
+              :tree-data="dataSource"
+              :replace-fields="replaceFields"
+              :show-line="true"
+              :show-icon="false"/>
     </div>
   </a-modal>
 </template>
 
 <script>
-import SystemMinix from '@/minixs/SystemMinix'
-import { buildTree } from '@/utils/ListUtils'
+import system from '@/mixins/system'
 import { SysApis } from '@/api/Apis'
 
 export default {
   name: 'role-detail',
-  mixins: [SystemMinix],
+  mixins: [system],
   props: {
     visible: {
       type: Boolean,
@@ -39,8 +43,10 @@ export default {
     },
   },
   watch: {
-    roleId(nowValue, oldValue) {
-      this.loadDetail()
+    visible(value, oldValue) {
+      if (value) {
+        this.loadDetail()
+      }
     }
   },
   data() {
@@ -54,7 +60,7 @@ export default {
         {
           dataIndex: 'icon',
           title: '图标',
-          scopedSlots: { customRender: 'icon' },
+          scopedSlots: {customRender: 'icon'},
           key: 'id'
         },
         {
@@ -66,14 +72,14 @@ export default {
         {
           dataIndex: 'type',
           title: '类型',
-          scopedSlots: { customRender: 'type' },
+          scopedSlots: {customRender: 'type'},
         },
       ],
       replaceFields: {
         children: 'children', title: 'name', key: 'id'
       },
       url: {
-        roleMenus: SysApis.roleMenus,
+        roleMenusTree: SysApis.roleMenusTree,
       },
     }
   },
@@ -83,8 +89,10 @@ export default {
   },
   methods: {
     loadDetail() {
-      this.$http.get(`${this.url.roleMenus}/${this.roleId}`).then(result => {
-        this.dataSource = buildTree(result.data, '')
+      this.$http.get(`${this.url.roleMenusTree}/${this.roleId}`).then(result => {
+        this.dataSource = result.data.sort((a, b) => {
+          return a.sort - b.sort
+        })
       })
     },
     closeDetail() {
@@ -96,14 +104,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

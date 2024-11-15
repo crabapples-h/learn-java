@@ -1,6 +1,6 @@
 package cn.crabapples.test.form;
 
-import cn.crabapples.common.Groups;
+import cn.crabapples.common.utils.Groups;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Setter;
 
