@@ -1,6 +1,5 @@
 package factory.abstractFactory;
 
-import pattern23.factory.abstractFactory.Pen.*;
 
 /**
  * TODO 工厂模式-抽象工厂
@@ -14,10 +13,10 @@ import pattern23.factory.abstractFactory.Pen.*;
 public class PenFactory {
 
     static Pen buyChinesePen() {
-        return new ChinesePen();
+        return new Pen.ChinesePen();
     }
 
     static Pen buyMathPen() {
-        return new MathPen();
+        return new Pen.MathPen();
     }
 }

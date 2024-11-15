@@ -1,9 +1,9 @@
 package builder;
 
+import factory.simplefactory.Apple;
+import factory.simplefactory.FoodFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pattern23.factory.simplefactory.Apple;
-import pattern23.factory.simplefactory.FoodFactory.*;
 
 /**
  * TODO 建造者模式-实体类
@@ -18,8 +18,8 @@ public class SweetFood implements Food {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Apple apple;
-    private Orange orange;
-    private Peach peach;
+    private FoodFactory.Orange orange;
+    private FoodFactory.Peach peach;
 
     public Apple getApple() {
         return apple;
@@ -29,19 +29,19 @@ public class SweetFood implements Food {
         this.apple = apple;
     }
 
-    public Orange getOrange() {
+    public FoodFactory.Orange getOrange() {
         return orange;
     }
 
-    public void setOrange(Orange orange) {
+    public void setOrange(FoodFactory.Orange orange) {
         this.orange = orange;
     }
 
-    public Peach getPeach() {
+    public FoodFactory.Peach getPeach() {
         return peach;
     }
 
-    public void setPeach(Peach peach) {
+    public void setPeach(FoodFactory.Peach peach) {
         this.peach = peach;
     }
 

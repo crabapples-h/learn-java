@@ -1,7 +1,8 @@
 package builder.build;
 
-import pattern23.factory.simplefactory.Apple;
-import pattern23.factory.simplefactory.FoodFactory;
+
+import factory.simplefactory.Apple;
+import factory.simplefactory.FoodFactory;
 
 /**
  * TODO 建造者模式-建造器(实现类)

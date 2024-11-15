@@ -1,6 +1,5 @@
 package factory.abstractFactory;
 
-import pattern23.factory.abstractFactory.Book.*;
 
 /**
  * TODO 工厂模式-抽象工厂
@@ -13,10 +12,10 @@ import pattern23.factory.abstractFactory.Book.*;
  */
 public class BookFactory {
     static Book buyChineseBook() {
-        return new ChineseBook();
+        return new Book.ChineseBook();
     }
 
     static Book buyMathBook() {
-        return new MathBook();
+        return new Book.MathBook();
     }
 }

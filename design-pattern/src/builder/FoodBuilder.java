@@ -1,8 +1,8 @@
 package builder;
 
-import pattern23.factory.simplefactory.Apple;
-import pattern23.factory.simplefactory.FoodFactory.Orange;
-import pattern23.factory.simplefactory.FoodFactory.Peach;
+import factory.simplefactory.Apple;
+import factory.simplefactory.FoodFactory;
+
 /**
  * TODO 建造者模式-建造器
  *
@@ -15,7 +15,7 @@ import pattern23.factory.simplefactory.FoodFactory.Peach;
 public interface FoodBuilder {
     Apple builderApple();
 
-    Orange builderOrange();
+    FoodFactory.Orange builderOrange();
 
-    Peach builderPeach();
+    FoodFactory.Peach builderPeach();
 }

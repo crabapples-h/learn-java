@@ -1,7 +1,8 @@
 package builder;
 
-import pattern23.factory.simplefactory.Apple;
-import pattern23.factory.simplefactory.FoodFactory.*;
+
+import factory.simplefactory.Apple;
+import factory.simplefactory.FoodFactory;
 
 /**
  * TODO 建造者模式-装配器(实现类)
@@ -22,8 +23,8 @@ public class SweetFoodDirector implements FoodDirector {
     public SweetFood director() {
         SweetFood sweetFood = new SweetFood();
         Apple apple = sweetFoodBuilder.builderApple();
-        Orange orange = sweetFoodBuilder.builderOrange();
-        Peach peach = sweetFoodBuilder.builderPeach();
+        FoodFactory.Orange orange = sweetFoodBuilder.builderOrange();
+        FoodFactory.Peach peach = sweetFoodBuilder.builderPeach();
         sweetFood.setApple(apple);
         sweetFood.setOrange(orange);
         sweetFood.setPeach(peach);
