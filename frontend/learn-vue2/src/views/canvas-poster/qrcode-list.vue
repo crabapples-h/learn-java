@@ -11,7 +11,7 @@
 <script>
 
 export default {
-  name: 'qr-code',
+  name: 'qr-code-list',
   mixins: [],
   components: {},
   data() {

@@ -6,12 +6,12 @@
     <!--    <face-check-image />-->
     <!--    <face-check-video />-->
     <!--    <face-check-video-file />-->
-    <!--    <qr-code />-->
+    <!--    <qr-code/>-->
+    <!--    <qr-code-list/>-->
     <!--    <table-demo />-->
     <!--    <pixi-demo />-->
 
-    <pixi-learn />
-    <!--    <pixi-learn/>-->
+    <pixi-learn/>
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->
     <!--      |-->
@@ -23,7 +23,8 @@
 </template>
 <script>
 import HelloWorld from '@/hello-world.vue'
-import QrCode from '@/qrcode.vue'
+import QrCode from '@/views/canvas-poster/qrcode.vue'
+import QrCodeList from '@/views/canvas-poster/qrcode-list.vue'
 import FaceCheckImage from '@/views/face-api/face-check-image.vue'
 import FaceCheckVideo from '@/views/face-api/face-check-video.vue'
 import FaceCheckVideoFile from '@/views/face-api/face-check-videoFile.vue'
@@ -44,6 +45,7 @@ export default {
     FaceCheckVideo,//摄像头检测人脸
     FaceCheckVideoFile,//本地视频检测人脸
     QrCode,//生成二维码并下载(使用vue-canvas-poster)
+    QrCodeList,//生成二维码列表并下载(使用vue-canvas-poster)
     TableDemo,//antd复杂表头
     PixiDemo,//pixi加载数据并渲染(旋转)
     PixiLearn//pixi学习(多种使用方式)
@@ -71,7 +73,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  //text-align: center;
   color: #2c3e50;
 }
 
