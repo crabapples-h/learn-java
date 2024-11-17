@@ -23,13 +23,14 @@ export default {
   mounted() {
     this.init()
     setTimeout(() => {
-      this.drawRect()// 绘制矩形
+      this.drawSprite()// 绘制矩形
     }, 100)
 
   },
   methods: {
     // 初始化
     async init() {
+      PIXI.sayHello()
       // 创建PIXI一个对象
       // 文档地址 https://pixijs.download/release/docs/app.ApplicationOptions.html
       const app = await new PIXI.Application()
@@ -46,25 +47,23 @@ export default {
       this.$refs.pixi.appendChild(app.canvas)
     },
     // 绘制矩形 x,y,width,height
-    async drawRect() {
+    async drawSprite() {
       const app = this.app
-      // const graphics = new PIXI.Texture.from(this.img)
-      let img = require('@/assets/logo.png')
+      let logo = require('@/assets/logo.png')
+      const texture = await PIXI.Assets.load(logo)
+      let sprite = new PIXI.Sprite(texture)
 
-      // const graphics = new PIXI.Texture.from('/logo.png')
-      let graphics = new PIXI.Texture(img)
-      // const graphics = new PIXI.Texture.from(img)
-      let sprite = new PIXI.Sprite(graphics)
-      sprite.position.set(100, 100)
-      // 旋转动画
-      // app.ticker.add((time) => {
-      //   graphics.rotation += 0.1 * time.deltaTime
-      // })
 
-      app.stage.addChild(sprite)
+      const container = new PIXI.Container()
+      container.position.set(200, 200)
+      container.pivot.set(100, 100)
+      app.ticker.add((time) => {
+        container.rotation += 0.01 * time.deltaTime
+      })
+
+      container.addChild(sprite)
+      app.stage.addChild(container)
       app.stage.addChild(new PIXI.Graphics()
-        // .moveTo(200, 200)
-        // .lineTo(600, 200)
         .moveTo(0, 200)
         .lineTo(600, 200)
         .stroke({ width: 1, color: '#f00' })
