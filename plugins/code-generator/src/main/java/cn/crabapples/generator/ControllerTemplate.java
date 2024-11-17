@@ -1,7 +1,5 @@
 package cn.crabapples.generator;
 
-import org.example.base.BaseController;
-import org.example.base.ResponseDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 

@@ -10,8 +10,8 @@
     <!--    <qr-code-list/>-->
     <!--    <table-demo />-->
     <!--    <pixi-demo />-->
-
-    <pixi-learn/>
+    <!--    <pixi-learn />-->
+    <pixi-one-end />
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->
     <!--      |-->
@@ -31,8 +31,9 @@ import FaceCheckVideoFile from '@/views/face-api/face-check-videoFile.vue'
 import TableDemo from '@/table-demo.vue'
 import WechatLocation from '@/views/wechat/WechatLocation.vue'
 import OrgWechat from '@/views/wechat/org-wechat.vue'
-import PixiLearn from '@/views/pixi/pixi-learn.vue'
 import PixiDemo from '@/views/pixi/pixi-demo.vue'
+import PixiLearn from '@/views/pixi/pixi-learn.vue'
+import PixiOneEnd from '@/views/pixi/pixi-one-end.vue'
 
 export default {
   name: 'app',
@@ -48,7 +49,8 @@ export default {
     QrCodeList,//生成二维码列表并下载(使用vue-canvas-poster)
     TableDemo,//antd复杂表头
     PixiDemo,//pixi加载数据并渲染(旋转)
-    PixiLearn//pixi学习(多种使用方式)
+    PixiLearn,//pixi学习(多种使用方式)
+    PixiOneEnd//pixi一镜到底
   },
   // 文档 https://pixijs.huashengweilai.com/guide/start/7.rotation.html#%E6%97%8B%E8%BD%AC
 // https://github.com/AlloyTeam/PhyTouch
@@ -68,25 +70,16 @@ export default {
 </script>
 
 
-<style>
+<style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   //text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

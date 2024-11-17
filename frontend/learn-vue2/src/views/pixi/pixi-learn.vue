@@ -1,7 +1,7 @@
 <template>
-  <div style="border:1px solid red;width: 100%" ref="parent">
-<!--    <div ref="pixi"></div>-->
-    <img ref="img" :src="logo" alt="" style="border:1px solid blue;width: 100px">
+  <div style="" ref="parent" class="parent">
+        <div ref="pixi"></div>
+<!--    <img ref="img" :src="logo" alt="" style="border:1px solid blue;width: 100px;height:100px" class="img">-->
   </div>
 </template>
 <script>
@@ -12,10 +12,15 @@
 // https://www.gsap.com/archived-docs/
 import * as PIXI from 'pixi.js'
 import PhyTouch from 'phy-touch'
-import {gsap} from 'gsap'
-import {PixiPlugin} from 'gsap/PixiPlugin'
+import { gsap } from 'gsap'
+import { PixiPlugin } from 'gsap/PixiPlugin'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+// import  ScrollTrigger  from 'scrolltrigger'
+
+// var Scrolltrigger = require('scrolltrigger')
 
 gsap.registerPlugin(PixiPlugin)
+gsap.registerPlugin(ScrollTrigger)
 
 export default {
   data() {
@@ -34,10 +39,12 @@ export default {
   mounted() {
     window.addEventListener('resize', () => {
       console.log('resize')
-      this.gsapDemo()
+      setTimeout(() => {
+        this.gsapDemo()
+      }, 500)
     })
-    this.gsapDemo()
-    // this.moveTimeLineDemo()
+    // this.gsapDemo() // gsap 滚动动画演示
+    this.moveTimeLineDemo()
     // this.timeLineDemo1() ////时间线演示->滑动隐藏图片
     // this.timeLineDemo() //时间线演示->滑动隐藏图片
     // this.touchDemo() // 获取滑动距离
@@ -57,20 +64,51 @@ export default {
       console.log('parentWidth:', parentWidth)
       console.log('imageWidth:', imageWidth)
       console.log('imageX:', imgPos)
-      gsap.fromTo(this.$refs.img, {
-            x: 0
-          }, {
-            x: function (index, target) {
-              // console.log(index)
-              // console.log(target.width)
-              // console.log(target.offsetWidth)
-              // console.log(document.documentElement.clientWidth)
-              // console.log(window.innerWidth)
-              // return window.innerWidth-target.offsetWidth
-              // return window.clientWidth-target.offsetWidth
-              // return parentWidth - imageWidth - imgPos.x
-            }
-          }
+      console.log('结束位置:', parentWidth - imageWidth - imgPos.x)
+      // 动画元素(可以是element对象也可以是className或id，也可以是数组)
+      gsap.fromTo(this.$refs.img,
+        // 开始位置
+        {
+          x: 0
+        },
+        // 结束位置
+        {
+          x: function(index, target) {
+            return parentWidth - imageWidth - imgPos.x
+          },
+          // 旋转角度
+          rotation:360,
+          // 动画总时长
+          duration: 2,
+          // 动画函数 https://gsap.com/docs/v3/Eases/
+          ease: 'none',
+          // 滚动条触发 https://gsap.com/docs/v3/Plugins/ScrollTrigger/?page=1
+          // scrollTrigger: {
+          //   trigger: _this.$refs.img,
+          //   // 平滑滚动，需要1秒才能“赶上”滚动 number | boolean
+          //   scrub: true,
+          //   // 在触发元件处于活动状态时将其固定
+          //   pin: true,
+          //   // 触发动画的位置
+          //   start:'center center'
+          // }
+          // onComplete: () => {
+          //   // console.log('complete')
+          // },
+          // onUpdate: () => {
+          //   // console.log('update')
+          // },
+          // onStart: () => {
+          //   // console.log('start')
+          // },
+          // onRepeat: () => {
+          //   // console.log('repeat')
+          // },
+          // onReverseComplete: () => {
+          //   // console.log('reverseComplete')
+          // }
+
+        }
       )
     },
     moveTimeLineDemo() {
@@ -97,19 +135,19 @@ export default {
       })
       this.$refs.pixi.appendChild(app.view)
       app.loader
-          .add(imgs)
-          .load(() => {
-            let texture = PIXI.utils.TextureCache[imgs[0]]
-            sprite = new PIXI.Sprite(texture)
-            sprite.alpha = 0
-            app.stage.addChild(sprite)
-            showLine = gsap.timeline().to(sprite,
-                {
-                  alpha: 1,
-                  delay: 0.4,
-                  duration: 0.1
-                }).paused(true)
-          })
+        .add(imgs)
+        .load(() => {
+          let texture = PIXI.utils.TextureCache[imgs[0]]
+          sprite = new PIXI.Sprite(texture)
+          sprite.alpha = 0
+          app.stage.addChild(sprite)
+          showLine = gsap.timeline().to(sprite,
+            {
+              alpha: 1,
+              delay: 0.4,
+              duration: 0.1
+            }).paused(true)
+        })
 
       new PhyTouch({
         touch: 'body',//反馈触摸的dom
@@ -147,23 +185,23 @@ export default {
       let animatedTimeLine = gsap.timeline()
 
       app.loader
-          .add(imgs)
-          .load(() => {
-            imgs.forEach(e => {
-              let texture = PIXI.utils.TextureCache[e]
-              textures.push(texture)
-            })
-            let sprite = new PIXI.AnimatedSprite(textures)
-            sprite.animationSpeed = 0.5
-            sprite.play()
-            app.stage.addChild(sprite)
-            hiddenTimeLine.to(sprite, {
-              alpha: 0,
-              delay: 0.5,
-              duration: 0.1
-            }).pause()
-            globalTimeline.add(hiddenTimeLine)
+        .add(imgs)
+        .load(() => {
+          imgs.forEach(e => {
+            let texture = PIXI.utils.TextureCache[e]
+            textures.push(texture)
           })
+          let sprite = new PIXI.AnimatedSprite(textures)
+          sprite.animationSpeed = 0.5
+          sprite.play()
+          app.stage.addChild(sprite)
+          hiddenTimeLine.to(sprite, {
+            alpha: 0,
+            delay: 0.5,
+            duration: 0.1
+          }).pause()
+          globalTimeline.add(hiddenTimeLine)
+        })
 
       new PhyTouch({
         touch: 'body',//反馈触摸的dom
@@ -172,7 +210,7 @@ export default {
         max: 0, //不必需,滚动属性的最大值
         bindSelf: false,
         value: 0,
-        change: function (value) {
+        change: function(value) {
           let progress = value / maxLong
           let step = 1 / (textures.length - 1)
           let index = Math.abs(Math.floor(progress / step))
@@ -198,7 +236,7 @@ export default {
       let maxLong = -(2000 - this.deviceHeight)
       let bgSprite = null
       let sencesTimeLine = null
-      let baseTimeLine = gsap.timeline({paused: true})
+      let baseTimeLine = gsap.timeline({ paused: true })
 
       let img = [require('@/assets/logo.png')]
       let app = new PIXI.Application({
@@ -207,20 +245,20 @@ export default {
       })
       this.$refs.pixi.appendChild(app.view)
       app.loader
-          .add(img)
-          .load(() => {
-            let texture = PIXI.utils.TextureCache[img]
-            bgSprite = new PIXI.Sprite(texture)
-            bgSprite.alpha = 0
-            // bgSprite.position.set(0, 0)
-            app.stage.addChild(bgSprite)
-            // 创建基本时间线
-            sencesTimeLine = gsap.to(bgSprite, {
-              alpha: 1,
-              duration: 1
-            })
-            baseTimeLine.add(sencesTimeLine, 0) //0 不基于上个动画执行 (一定要加,否则可能没效果)
+        .add(img)
+        .load(() => {
+          let texture = PIXI.utils.TextureCache[img]
+          bgSprite = new PIXI.Sprite(texture)
+          bgSprite.alpha = 0
+          // bgSprite.position.set(0, 0)
+          app.stage.addChild(bgSprite)
+          // 创建基本时间线
+          sencesTimeLine = gsap.to(bgSprite, {
+            alpha: 1,
+            duration: 1
           })
+          baseTimeLine.add(sencesTimeLine, 0) //0 不基于上个动画执行 (一定要加,否则可能没效果)
+        })
 
       let touch = new PhyTouch({
         touch: 'body',//反馈触摸的dom
@@ -232,7 +270,7 @@ export default {
         deceleration: 0.006,
         bindSelf: false,
         value: 0,
-        change: function (value) {
+        change: function(value) {
           let progress = value / maxLong
           console.log(progress)
           baseTimeLine.seek(progress)
@@ -247,7 +285,7 @@ export default {
       })
       this.$refs.pixi.appendChild(app.view)
       app.loader
-          .add(img).load(() => {
+        .add(img).load(() => {
         console.log(app.loader.resources[img])
         let sprite = new PIXI.Sprite(app.loader.resources[img].texture)
         sprite.position.set((this.deviceWeight - 200) / 2, (this.deviceHeight - 200) / 2)
@@ -272,22 +310,22 @@ export default {
         bindSelf: false,
         // maxSpeed: 2, //不必需，触摸反馈的最大速度限制
         value: 0,
-        change: function (value) {
+        change: function(value) {
           console.log(value)
           // target.style.transform = "translate(0," + value + "px)"
           // target.style.webkitTransform = "translate(0," + value + "px)"
         },
-        touchStart: function (evt, value) {
+        touchStart: function(evt, value) {
         },
-        touchMove: function (evt, value) {
+        touchMove: function(evt, value) {
         },
-        touchEnd: function (evt, value) {
+        touchEnd: function(evt, value) {
         },
-        tap: function (evt, value) {
+        tap: function(evt, value) {
         },
-        pressMove: function (evt, value) {
+        pressMove: function(evt, value) {
         },
-        animationEnd: function (value) {
+        animationEnd: function(value) {
         } //运动结束
       })
     },
@@ -318,26 +356,26 @@ export default {
       })
       let sprites = []
       app.loader
-          // .add(images)
-          // .add(images)
-          .load(() => {
-            images.forEach(e => {
-              let image = PIXI.Texture.from(e) //纹理精灵
-              // console.log('11', image)
-              // 截取图片的坐标 x,y,weight,height
-              let rectangle = new PIXI.Rectangle(0, 0, 657, 367)
-              let animatedItem = new PIXI.Texture(image, rectangle)
-              sprites.push(animatedItem)
-            })
-            let animatedSprite = new PIXI.AnimatedSprite(sprites)
-            animatedSprite.position.set(333.5, 187.5)//动画精灵位置
-            // animatedSprite.scale.set(1)//动画精灵位置
-            // animatedSprite.rotation = 1.7
-            animatedSprite.anchor.set(0.5, 0.5)
-            animatedSprite.animationSpeed = 0.5 //动画速度
-            animatedSprite.play()
-            app.stage.addChild(animatedSprite)
+        // .add(images)
+        // .add(images)
+        .load(() => {
+          images.forEach(e => {
+            let image = PIXI.Texture.from(e) //纹理精灵
+            // console.log('11', image)
+            // 截取图片的坐标 x,y,weight,height
+            let rectangle = new PIXI.Rectangle(0, 0, 657, 367)
+            let animatedItem = new PIXI.Texture(image, rectangle)
+            sprites.push(animatedItem)
           })
+          let animatedSprite = new PIXI.AnimatedSprite(sprites)
+          animatedSprite.position.set(333.5, 187.5)//动画精灵位置
+          // animatedSprite.scale.set(1)//动画精灵位置
+          // animatedSprite.rotation = 1.7
+          animatedSprite.anchor.set(0.5, 0.5)
+          animatedSprite.animationSpeed = 0.5 //动画速度
+          animatedSprite.play()
+          app.stage.addChild(animatedSprite)
+        })
     },
     loadBackgroundImg() {
       // 创建一个舞台
@@ -352,18 +390,18 @@ export default {
       let bgi = [require('@/assets/img.jpg')]
       this.$refs.pixi.appendChild(app.view)
       app.loader
-          .add(bgi)
-          .load(() => {
-            // 创建一个精灵
-            let sprite = new PIXI.Sprite(app.loader.resources[bgi].texture)
+        .add(bgi)
+        .load(() => {
+          // 创建一个精灵
+          let sprite = new PIXI.Sprite(app.loader.resources[bgi].texture)
 
-            // sprite.width = app.view.width
-            // sprite.height = app.view.height
-            sprite.scale.set(30, 30) //缩放
-            sprite.position.set(0, 0) //位置
-            sprite.anchor.set(0, 0) //锚点
-            app.stage.addChild(sprite)
-          })
+          // sprite.width = app.view.width
+          // sprite.height = app.view.height
+          sprite.scale.set(30, 30) //缩放
+          sprite.position.set(0, 0) //位置
+          sprite.anchor.set(0, 0) //锚点
+          app.stage.addChild(sprite)
+        })
     },
     // 文件加载进度演示
     loadProgress() {
@@ -382,9 +420,9 @@ export default {
         console.log('加载进度:', parseFloat(loader.progress.toFixed(2)))
       })
       app.loader
-          .add(images)
-          .load(() => {
-          })
+        .add(images)
+        .load(() => {
+        })
     },
     // 创建舞台演示
     createPixi() {
@@ -406,9 +444,19 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style scoped lang="less">
 * {
   padding: 0;
   margin: 0
 }
+
+.parent {
+  border: 1px solid red;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  //justify-content: flex-start;
+  align-items: center;
+}
 </style>
+
