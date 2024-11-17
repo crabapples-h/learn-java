@@ -1,19 +1,21 @@
 <template>
-  <div style="" class="parent">
+  <div style="" class="parent" ref="parent">
     <div ref="pixi"></div>
   </div>
 </template>
+
+
 <script>
 // 文档 https://pixijs.huashengweilai.com/guide/start/7.rotation.html#%E6%97%8B%E8%BD%AC
 // https://github.com/AlloyTeam/PhyTouch
 // https://gsap.com/docs/v3/GSAP/Timeline/
 // http://www.greensock.com/gsap-js/
 // https://www.gsap.com/archived-docs/
-import { gsap } from 'gsap'
-import { PixiPlugin } from 'gsap/PixiPlugin'
 import { p1Images, p2Images, p3Images, p4Images, p5Images } from '@/views/pixi/resource'
-
-gsap.registerPlugin(PixiPlugin)
+// import * as PIXI from 'pixi.js'
+// import { Application } from 'pixi.js'
+// import  PIXI from 'pixi.js';
+// gsap.registerPlugin(PixiPlugin)
 
 export default {
   data() {
@@ -35,12 +37,42 @@ export default {
   },
   methods: {
     // 1. 加载动画素材
-    loadResources() {
-      // const app = new PIXI.Application({
-      //   width: this.deviceWeight,
-      //   height: this.deviceHeight
-      // })
-      // this.$refs.pixi.appendChild(app.view)
+    async loadResources() {
+      // 创建PIXI一个对象
+      const app = await new PIXI.Application()
+      // 初始化PIXI对象
+      await app.init({
+        width: this.deviceWeight,
+        height: this.deviceHeight
+      })
+      // 将PIXI对象挂载到dom节点上
+      this.$refs.pixi.appendChild(app.canvas)
+      // const a = new PIXI.Graphics().beginFill(0xFF0000).drawRect(0, 0, 100, 100).endFill()
+      const graphics = new PIXI.Graphics()
+      // graphics.circle(50,50, 50) // 绘制圆形 left,top,半径
+      // graphics.rect(50, 50, 50, 50) // 绘制矩形 left,top,宽度,高度
+      // graphics.ellipse(100, 100, 50, 30)// 绘制椭圆 left,top,宽度,高度
+
+      // graphics.moveTo(60, 50)// 绘制线条，起点
+      // graphics.lineTo(15, 80)// 绘制线条，第二个点
+      // graphics.lineTo(100, 100)// 绘制线条，第三个点
+      // graphics.lineTo(60, 50)// 绘制线条，第四个点
+
+      // graphics.roundRect(50, 50, 100, 100, 5); // 绘制圆角矩形 left,top,宽度,高度,圆角值
+      // graphics.star(100, 100, 5, 100, 40);// 绘制星形 left,top,星形点数,外半径,内半径
+
+      graphics.poly([50, 50, 150, 50, 100, 100])// 绘制多边形[顶点x1,顶点y1,顶点x2,顶点y2...]
+      graphics.fill(0x3500fa)
+
+      // graphics.fill('#999', 1) // 填充颜色,透明度
+      // graphics.stroke({ width: 4, color: '#f1f1f1' }) // 线条宽度，颜色
+
+      // graphics.stroke({  color: 0xFFFFFF })
+
+      // graphics.rect(50, 50, 100, 100)
+      // graphics.fill(0xde3249)
+
+      app.stage.addChild(graphics)
       // app.loader
       //   .add(this.p1Images)
       //   // .add(this.p2Images)

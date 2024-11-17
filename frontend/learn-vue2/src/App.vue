@@ -11,7 +11,9 @@
     <!--    <table-demo />-->
     <!--    <pixi-demo />-->
     <!--    <pixi-learn />-->
-    <pixi-one-end />
+    <!--    <pixi-base />-->
+    <pixi-anima />
+    <!--    <pixi-one-end />-->
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->
     <!--      |-->
@@ -31,8 +33,10 @@ import FaceCheckVideoFile from '@/views/face-api/face-check-videoFile.vue'
 import TableDemo from '@/table-demo.vue'
 import WechatLocation from '@/views/wechat/WechatLocation.vue'
 import OrgWechat from '@/views/wechat/org-wechat.vue'
-import PixiDemo from '@/views/pixi/pixi-demo.vue'
-import PixiLearn from '@/views/pixi/pixi-learn.vue'
+// import PixiDemo from '@/views/pixi/pixi-demo.vue'
+// import PixiLearn from '@/views/pixi/pixi-learn.vue'
+import PixiBase from '@/views/pixi/pixi-base.vue'
+import PixiAnima from '@/views/pixi/pixi-anima.vue'
 import PixiOneEnd from '@/views/pixi/pixi-one-end.vue'
 
 export default {
@@ -48,8 +52,10 @@ export default {
     QrCode,//生成二维码并下载(使用vue-canvas-poster)
     QrCodeList,//生成二维码列表并下载(使用vue-canvas-poster)
     TableDemo,//antd复杂表头
-    PixiDemo,//pixi加载数据并渲染(旋转)
-    PixiLearn,//pixi学习(多种使用方式)
+    // PixiDemo,//pixi加载数据并渲染(旋转)
+    // PixiLearn,//pixi学习(多种使用方式)
+    PixiBase,//pixi 基本图像绘制
+    PixiAnima,//pixi 纹理和动画
     PixiOneEnd//pixi一镜到底
   },
   // 文档 https://pixijs.huashengweilai.com/guide/start/7.rotation.html#%E6%97%8B%E8%BD%AC

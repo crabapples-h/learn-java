@@ -1,18 +1,18 @@
 <template>
   <div>
-    <!--    <p>666</p>-->
-    <a-layout>
-      <c-page-header :title="title"/>
-      <a-layout>
-        <c-page-menus :menus="menus"/>
-        <a-layout-content class="content">
-          <keep-alive>
-            <router-view name="innerView"></router-view>
-          </keep-alive>
-        </a-layout-content>
-      </a-layout>
-      <c-page-footer/>
-    </a-layout>
+        <p>666</p>
+<!--    <a-layout>-->
+<!--      <c-page-header :title="title"/>-->
+<!--      <a-layout>-->
+<!--        <c-page-menus :menus="menus"/>-->
+<!--        <a-layout-content class="content">-->
+<!--          <keep-alive>-->
+<!--            <router-view name="innerView"></router-view>-->
+<!--          </keep-alive>-->
+<!--        </a-layout-content>-->
+<!--      </a-layout>-->
+<!--      <c-page-footer/>-->
+<!--    </a-layout>-->
   </div>
 </template>
 
@@ -20,6 +20,13 @@
 import CPageHeader from '@/views/common/C-PageHeader'
 import CPageMenus from '@/views/common/C-PageMenus'
 import CPageFooter from '@/views/common/C-PageFooter'
+import * as PIXI from 'pixi.js'
+
+const app = new PIXI.Application({
+    background: '#1099bb',
+    resizeTo: window,
+});
+
 
 export default {
   name: "Index",
