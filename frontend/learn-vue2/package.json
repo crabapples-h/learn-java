@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.7.8",
+    "any-touch": "^2.2.0",
     "axios": "^1.4.0",
     "core-js": "^3.6.5",
     "face-api.js": "^0.22.2",

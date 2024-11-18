@@ -12,7 +12,8 @@
     <!--    <pixi-demo />-->
     <!--    <pixi-learn />-->
     <!--    <pixi-base />-->
-    <pixi-anima />
+<!--    <pixi-anima/>-->
+    <phy-touch-base/>
     <!--    <pixi-one-end />-->
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->
@@ -38,6 +39,7 @@ import OrgWechat from '@/views/wechat/org-wechat.vue'
 import PixiBase from '@/views/pixi/pixi-base.vue'
 import PixiAnima from '@/views/pixi/pixi-anima.vue'
 import PixiOneEnd from '@/views/pixi/pixi-one-end.vue'
+import PhyTouchBase from '@/views/phy-touch/phyTouch-base.vue'
 
 export default {
   name: 'app',
@@ -56,7 +58,8 @@ export default {
     // PixiLearn,//pixi学习(多种使用方式)
     PixiBase,//pixi 基本图像绘制
     PixiAnima,//pixi 纹理和动画
-    PixiOneEnd//pixi一镜到底
+    PixiOneEnd,//pixi一镜到底
+    PhyTouchBase,//触摸基础演示
   },
   // 文档 https://pixijs.huashengweilai.com/guide/start/7.rotation.html#%E6%97%8B%E8%BD%AC
 // https://github.com/AlloyTeam/PhyTouch

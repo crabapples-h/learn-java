@@ -5,16 +5,16 @@ import axios from 'axios'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import App from './App.vue'
+import VueCanvasPoster from 'vue-canvas-poster'
+import VConsole from "vconsole";
 
 Vue.config.productionTip = false;
 
 Vue.use(Antd);
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
-import VueCanvasPoster from 'vue-canvas-poster'
-import VConsole from "vconsole";
 
-// new VConsole()
+new VConsole()
 
 Vue.use(VueCanvasPoster)
 new Vue({
