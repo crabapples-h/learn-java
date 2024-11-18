@@ -14,43 +14,14 @@
         <module>nacos</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.14</version>
-        <relativePath/>
-    </parent>
-
     <groupId>cn.crabapples</groupId>
     <artifactId>learn-java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!--基础工具-->
-        <!--        <java.version>1.8</java.version>-->
-        <!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-        <!--        <crabapples-base-project.version>1.0.4</crabapples-base-project.version>-->
-        <!--        <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>-->
-        <commons-io.version>2.4</commons-io.version>
-        <commons-lang.version>2.4</commons-lang.version>
-        <!--        <commons-codec.version>1.10</commons-codec.version>-->
-        <hutool-all.version>5.5.7</hutool-all.version>
-        <fastjson2.version>2.0.53</fastjson2.version>
-        <fastjson2-extension-spring5.version>2.0.53</fastjson2-extension-spring5.version>
-        <mybatis-generator.version>1.3.7</mybatis-generator.version>
-        <!--        <rendersnake.version>1.8</rendersnake.version>-->
-        <!--        <jdom.version>2.0.2</jdom.version>-->
-        <!--        <quartz.version>2.3.0</quartz.version>-->
-        <!--        <lombok.version>1.18.18</lombok.version>-->
-        <!--日志-->
-        <!--        <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>-->
-        <!--        <slf4j-api.version>1.7.21</slf4j-api.version>-->
-        <!--安全-->
-        <jwt.version>3.2.0</jwt.version>
-        <!--        <java-jwt.version>3.2.0</java-jwt.version>-->
-        <!--        <shiro.version>1.4.0</shiro.version>-->
-        <!--        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>-->
-        <!--        <googleauth.version>1.2.0</googleauth.version>-->
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--spring-->
         <!--        <spring-boot-starter-security.version>2.1.6.RELEASE</spring-boot-starter-security.version>-->
         <!--        <spring-cloud-starter-alibaba-nacos-config.version>2.2.0.RELEASE-->
@@ -62,6 +33,33 @@
         <!--        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>-->
         <!--        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>-->
         <!--        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>-->
+        <spring-boot.version>2.6.13</spring-boot.version>
+        <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
+        <!--基础工具-->
+        <!--        <crabapples-base-project.version>1.0.4</crabapples-base-project.version>-->
+        <!--        <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>-->
+        <commons-io.version>2.4</commons-io.version>
+        <commons-lang.version>2.4</commons-lang.version>
+        <commons-codec.version>1.10</commons-codec.version>
+        <hutool-all.version>5.5.7</hutool-all.version>
+        <fastjson2.version>2.0.53</fastjson2.version>
+        <fastjson2-extension-spring5.version>2.0.53</fastjson2-extension-spring5.version>
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <mybatis-generator-plugins.version>1.4.1</mybatis-generator-plugins.version>
+        <!--        <rendersnake.version>1.8</rendersnake.version>-->
+        <!--        <jdom.version>2.0.2</jdom.version>-->
+        <!--        <quartz.version>2.3.0</quartz.version>-->
+        <lombok.version>1.18.18</lombok.version>
+        <!--日志-->
+        <!--        <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>-->
+        <!--        <slf4j-api.version>1.7.21</slf4j-api.version>-->
+        <!--安全-->
+        <jwt.version>3.2.0</jwt.version>
+        <!--        <java-jwt.version>3.2.0</java-jwt.version>-->
+        <!--        <shiro.version>1.4.0</shiro.version>-->
+        <!--        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>-->
+        <!--        <googleauth.version>1.2.0</googleauth.version>-->
+
         <druid-spring-boot-starter.version>1.2.16</druid-spring-boot-starter.version>
         <mybatis-plus-starter.version>3.5.2</mybatis-plus-starter.version>
         <!--        <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>-->
@@ -74,7 +72,7 @@
         <!--        <druid.version>1.1.20</druid.version>-->
         <!--        <embedded-redis.version>0.6</embedded-redis.version>-->
         <!--        <amqp-client.version>5.7.3</amqp-client.version>-->
-        <!--        <mysql.version>8.4.0</mysqlConnector.version>-->
+        <mysql.version>8.4.0</mysql.version>
         <!--网络-->
         <!--        <okhttp.version>4.7.2</okhttp.version>-->
         <!--        <javax.mail.version>1.4.7</javax.mail.version>-->
@@ -88,9 +86,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2021.0.5.0</version>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
