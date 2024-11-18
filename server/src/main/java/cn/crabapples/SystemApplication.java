@@ -69,11 +69,11 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 //        @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = true),
 //        @PropertySource(value = "common.properties", ignoreResourceNotFound = true)
 //})
-public class Application {
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+public class SystemApplication {
+    private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SystemApplication.class, args);
         logger.info(">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>");
     }
 

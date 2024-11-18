@@ -71,6 +71,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>copy-assets-tmp</id>
@@ -89,7 +90,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <version>3.2.0</version>
             </plugin>
         </plugins>
     </build>

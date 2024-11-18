@@ -1,4 +1,4 @@
-package cn.crabapples;
+package cn.crabapples.spring;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
 //@WebAppConfiguration
-public class SpringBootApplicationTest {
+public class SpringBootSystemApplicationTest {
     @Test
     public void case1() {
         System.err.println(1);

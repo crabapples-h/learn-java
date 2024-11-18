@@ -1,6 +1,6 @@
 package demo.net;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 /**
  * TODO 邮件配置类

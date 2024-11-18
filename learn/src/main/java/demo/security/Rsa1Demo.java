@@ -1,6 +1,6 @@
 package demo.security;
 
-import org.apache.commons.codec.binary.Base64;
+import cn.hutool.core.codec.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +86,7 @@ public class Rsa1Demo {
     }
 
     private static <T extends Key> String keyToString(T key) {
-        return new String(Base64.encodeBase64(key.getEncoded()));
+        return new String(Base64.encode(key.getEncoded()));
     }
 
     /**
@@ -99,12 +99,12 @@ public class Rsa1Demo {
      */
     private static String encrypt(String content, String publicKey) throws Exception {
         //base64编码的公钥
-        byte[] decoded = Base64.decodeBase64(publicKey);
+        byte[] decoded = Base64.decode(content.getBytes(publicKey));
         RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
         //RSA加密
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
-        return Base64.encodeBase64String(cipher.doFinal(content.getBytes(StandardCharsets.UTF_8)));
+        return Base64.encodeWithoutPadding(cipher.doFinal(content.getBytes(StandardCharsets.UTF_8)));
     }
 
     /**
@@ -117,9 +117,9 @@ public class Rsa1Demo {
      */
     private static String decrypt(String content, String privateKey) throws Exception {
         //64位解码加密后的字符串
-        byte[] inputByte = Base64.decodeBase64(content.getBytes(StandardCharsets.UTF_8));
+        byte[] inputByte = Base64.decode(content.getBytes(StandardCharsets.UTF_8));
         //base64编码的私钥
-        byte[] decoded = Base64.decodeBase64(privateKey);
+        byte[] decoded = Base64.decode(privateKey);
         RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
         //RSA解密
         Cipher cipher = Cipher.getInstance("RSA");

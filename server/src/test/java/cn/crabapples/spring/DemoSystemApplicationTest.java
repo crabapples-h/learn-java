@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
 //@WebAppConfiguration
-public class  DemoApplicationTest{
+public class DemoSystemApplicationTest {
     @Test
     public void case1() {
         System.err.println(1);

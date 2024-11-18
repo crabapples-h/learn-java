@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Slf4j
-public class ApplicationTest {
+public class SystemApplicationTest {
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/learn?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";

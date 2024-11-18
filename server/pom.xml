@@ -13,6 +13,10 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>turing-api</artifactId>
             <version>1.0.4</version>
@@ -153,6 +157,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
 
         <!--nacos config-->
         <!--        <dependency>-->

@@ -20,7 +20,7 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-<!--                    <outputDirectory>${project.build.directory}/classes</outputDirectory>-->
+                    <!--                    <outputDirectory>${project.build.directory}/classes</outputDirectory>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -93,6 +93,16 @@
             <artifactId>jsch</artifactId>
             <version>0.1.54</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version> <!-- 请使用最新的稳定版本 -->
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.rendersnake</groupId>
@@ -126,16 +136,9 @@
             <version>${lombok.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.warrenstrange</groupId>
-            <artifactId>googleauth</artifactId>
-            <version>${googleauth.version}</version>
-            <scope>compile</scope>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
         <dependency>
             <groupId>com.rabbitmq</groupId>
@@ -156,7 +159,7 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.5.9</version>
+            <version>${mybatis.version}</version>
             <scope>compile</scope>
         </dependency>
 
