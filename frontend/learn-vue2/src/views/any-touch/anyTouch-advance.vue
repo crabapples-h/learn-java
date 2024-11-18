@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     async test() {
+      // https://github.com/any86/any-touch/blob/master/README.CN.md
       // 绘制一个矩形,并使其旋转
       const pixi = new PIXI.Application();
       await pixi.init({

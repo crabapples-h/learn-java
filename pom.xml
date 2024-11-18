@@ -10,6 +10,7 @@
         <module>frontend</module>
         <module>plugins</module>
         <module>learn-byte-buddy</module>
+        <module>gateway</module>
     </modules>
 
     <parent>
