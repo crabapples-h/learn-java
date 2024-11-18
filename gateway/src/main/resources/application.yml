@@ -1,0 +1,13 @@
+server.port: 9092
+spring.application.name: api-gateway
+spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+#spring.cloud.nacos.discovery.username: ''
+#spring.cloud.nacos.discovery.password: ''
+spring.cloud.gateway.routes:
+  - id: system_api # 路由的唯一标识
+    uri: lb://localhost:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
+    predicates: # 断言，用于路由规则匹配
+      - Path=/system/api/system/**
+    filters:
+      # 过滤器，转发之前去掉第一段前缀，即/system
+      - StripPrefix=1
