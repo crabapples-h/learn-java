@@ -5,7 +5,7 @@ spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
 #spring.cloud.nacos.discovery.password: ''
 spring.cloud.gateway.routes:
   - id: system_api # 路由的唯一标识
-    uri: lb://localhost:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
+    uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
     predicates: # 断言，用于路由规则匹配
       - Path=/system/api/system/**
     filters:
