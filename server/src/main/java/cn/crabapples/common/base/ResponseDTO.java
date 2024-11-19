@@ -24,6 +24,7 @@ public class ResponseDTO<T> implements Serializable {
     private String message;
     private Object data;
     private Long time;
+    private String serverName = System.getenv("HOSTNAME");
 
     public ResponseDTO() {
         this.returnSuccess();

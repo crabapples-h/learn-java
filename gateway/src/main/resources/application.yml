@@ -3,6 +3,34 @@ spring.application.name: api-gateway
 spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''
+# 临时实例(false),非临时实例(true)即使宕机也不会删除只能手动删除
+spring.cloud.nacos.discovery.ephemeral: true
+# 注册到nacos的服务名称,不配置则默认为${spring.application.name}
+spring.cloud.nacos.discovery.service: api-gateway
+# nacos命名空间
+#spring.cloud.nacos.discovery.namespace:
+# 服务分组
+spring.cloud.nacos.discovery.group: hq
+# 负载均衡权重
+#spring.cloud.nacos.discovery.weight: 1
+# 注册到nacos的网卡,当IP未配置时,默认取第一块网卡的IP
+#spring.cloud.nacos.discovery.network-interface:
+# 注册到nacos的IP
+#spring.cloud.nacos.discovery.ip:
+# 注册到nacos的端口
+#spring.cloud.nacos.discovery.port:
+# 注册到nacos的元数据,Map格式
+#spring.cloud.nacos.discovery.metadata:
+# 日志输出文件
+#spring.cloud.nacos.discovery.log-name:
+# nacos集群名称
+#spring.cloud.nacos.discovery.cluster-name:
+# 某个服务的入口域名,通过此域名可以动态的获取服务端地址
+#spring.cloud.nacos.discovery.endpoint:
+# 是否开启健康等状态监听
+#spring.cloud.nacos.discovery.watch.enabled:
+# 是否集成Ribbon的负载均衡功能
+#ribbon.nacos.enable:
 spring.cloud.gateway.routes:
   - id: system_api # 路由的唯一标识
     uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
