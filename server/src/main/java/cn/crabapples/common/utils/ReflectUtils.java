@@ -1,5 +1,7 @@
 package cn.crabapples.common.utils;
 
+import cn.crabapples.common.base.BaseEntity;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
@@ -10,7 +12,10 @@ public class ReflectUtils {
      * @param clazz 需要获取属性的class文件
      * @return class文件中所有的属性
      */
-    public static Field[] getAllFields(Class clazz) {
+    public static Field[] getAllFields(Class<?> clazz) {
+        if (clazz != BaseEntity.class) {
+            return new Field[0];
+        }
         Field[] superFields = null;
         // 获取class的父类
         Class<?> superclass = clazz.getSuperclass();

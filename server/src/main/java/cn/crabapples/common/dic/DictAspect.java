@@ -116,7 +116,10 @@ public class DictAspect {
         return result;
     }
 
-    public JSONObject fillDictText(Object data, Field[] fields) {
+    public Object fillDictText(Object data, Field[] fields) {
+        if (fields.length == 0) {
+            return data;
+        }
         // fastjson不过滤null
         String jsonString = JSONObject.toJSONString(data, JSONWriter.Feature.WriteNulls);
         JSONObject itemJson = JSONObject.parseObject(jsonString);
