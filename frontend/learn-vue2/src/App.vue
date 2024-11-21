@@ -4,7 +4,7 @@
     <!--    <org-wechat />-->
     <!--    <wechat-location />-->
     <!--    <face-check-image />-->
-    <!--    <face-check-video />-->
+        <face-check-video />
     <!--    <face-check-video-file />-->
     <!--    <qr-code/>-->
     <!--    <qr-code-list/>-->
@@ -14,7 +14,7 @@
     <!--    <pixi-base />-->
     <!--    <pixi-anima/>-->
     <!--    <any-touch-base/>-->
-    <any-touch-advance/>
+<!--    <any-touch-advance/>-->
     <!--    <pixi-one-end />-->
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->

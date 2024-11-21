@@ -1,0 +1,69 @@
+version: "2.3"
+networks:
+  nacos_host:
+    ipam:
+      driver: default
+      config:
+       - subnet: 172.16.20.0/24
+         gateway: 172.16.20.1
+
+services:
+  # nacos 8849
+  nacos_8849:
+    networks:
+      nacos_host:
+        ipv4_address: 172.16.20.2
+    container_name: nacos_8849
+    image: nacos/nacos-server:latest
+    restart: always
+    ports:
+      - "8849:8848"
+    environment:
+      SPRING_DATASOURCE_PLATFORM: mysql
+      NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
+      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: nacos
+      MYSQL_SERVICE_PASSWORD: nacos
+      MODE: cluster
+  # nacos 8850
+  nacos_8850:
+    networks:
+      nacos_host:
+        ipv4_address: 172.16.20.3
+    container_name: nacos_8850
+    image: nacos/nacos-server:latest
+    restart: always
+    ports:
+      - "8850:8848"
+    environment:
+      SPRING_DATASOURCE_PLATFORM: mysql
+      NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
+      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: nacos
+      MYSQL_SERVICE_PASSWORD: nacos
+      MODE: cluster
+  # nacos 8851
+  nacos_8851:
+    networks:
+      nacos_host:
+        ipv4_address: 172.16.20.4
+    container_name: nacos_8851
+    image: nacos/nacos-server:latest
+    restart: always
+    ports:
+      - "8851:8848"
+    environment:
+      SPRING_DATASOURCE_PLATFORM: mysql
+      NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
+      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_USER: nacos
+      MYSQL_SERVICE_PASSWORD: nacos
+      MODE: cluster
+
+

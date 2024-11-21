@@ -1,6 +1,6 @@
 <template>
 	<div id="content">
-		<video id="video" autoplay controls width="640" height="480" class="media"></video>
+		<video id="video" autoplay controls width="640" height="480" class="media" style="display: none"></video>
 	</div>
 </template>
 <script>
@@ -140,7 +140,7 @@ export default {
 					`性别:${genderText} {${genderProbability.toFixed(1)}}`
 				], result.detection.box.bottomLeft).draw(canvas)
 			})
-			// this.changeImageSize()
+			this.changeImageSize()
 		}
 		,
 		changeImageSize() {
