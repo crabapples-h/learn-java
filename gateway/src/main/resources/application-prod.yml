@@ -1,7 +1,6 @@
 server.port: 9092
 spring.application.name: api-gateway
-spring.profiles.active: ${PROFILE}
-spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+spring.cloud.nacos.discovery.server-addr: ${NACOS_ADDR}
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''
 # 临时实例(false),非临时实例(true)即使宕机也不会删除只能手动删除
@@ -40,4 +39,3 @@ spring.cloud.gateway.routes:
     filters:
       # 过滤器，转发之前去掉第一段前缀，即/system
       - StripPrefix=1
-

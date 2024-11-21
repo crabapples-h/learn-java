@@ -1,0 +1,14 @@
+version: "2.3"
+services:
+  # gateway 9092
+  gateway:
+    build:
+      dockerfile: Dockerfile
+    container_name: gateway
+    restart: always
+    ports:
+      - "9092:9092"
+    environment:
+      # mac版docker需要使用docker.for.mac.host.internal获取宿主机ip
+      NACOS_ADDR: docker.for.mac.host.internal:8849
+  # nacos 8850

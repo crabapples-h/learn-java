@@ -1,12 +1,13 @@
 version: "2.3"
+# 创建网络
 networks:
   nacos_host:
     ipam:
       driver: default
       config:
-       - subnet: 172.16.20.0/24
-         gateway: 172.16.20.1
-
+        - subnet: 172.16.20.0/24
+          gateway: 172.16.20.1
+# 创建服务
 services:
   # nacos 8849
   nacos_8849:
