@@ -21,7 +21,8 @@ mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/
 # nacos配置
 #nacos.config.server-addr: @nacos.server-addr@
 spring.application.name: api-system
-spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+#spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''
 

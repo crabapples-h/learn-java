@@ -1,7 +1,8 @@
 server.port: 9092
 spring.application.name: api-gateway
 spring.profiles.active: ${PROFILE}
-spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+#spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
+spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''
 # 临时实例(false),非临时实例(true)即使宕机也不会删除只能手动删除
@@ -11,7 +12,7 @@ spring.cloud.nacos.discovery.service: api-gateway
 # nacos命名空间
 #spring.cloud.nacos.discovery.namespace:
 # 服务分组
-spring.cloud.nacos.discovery.group: hq
+#spring.cloud.nacos.discovery.group: hq
 # 负载均衡权重
 #spring.cloud.nacos.discovery.weight: 1
 # 注册到nacos的网卡,当IP未配置时,默认取第一块网卡的IP

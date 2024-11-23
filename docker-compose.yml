@@ -22,8 +22,9 @@ services:
     environment:
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
-      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_PORT: 3306
+#      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_HOST: 47.108.54.90
+      MYSQL_SERVICE_PORT: 30001
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -41,8 +42,9 @@ services:
     environment:
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
-      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_PORT: 3306
+#      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_HOST: 47.108.54.90
+      MYSQL_SERVICE_PORT: 30001
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -60,8 +62,9 @@ services:
     environment:
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
-      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_PORT: 3306
+#      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
+      MYSQL_SERVICE_HOST: 47.108.54.90
+      MYSQL_SERVICE_PORT: 30001
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
