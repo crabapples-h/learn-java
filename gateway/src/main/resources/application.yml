@@ -3,42 +3,26 @@ spring.application.name: api-gateway
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
 spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
-#spring.cloud.nacos.discovery.username: ''
-#spring.cloud.nacos.discovery.password: ''
-# 临时实例(false),非临时实例(true)即使宕机也不会删除只能手动删除
-spring.cloud.nacos.discovery.ephemeral: true
 # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
 spring.cloud.nacos.discovery.service: api-gateway
-# nacos命名空间
-#spring.cloud.nacos.discovery.namespace:
-# 服务分组
-#spring.cloud.nacos.discovery.group: hq
-# 负载均衡权重
-#spring.cloud.nacos.discovery.weight: 1
-# 注册到nacos的网卡,当IP未配置时,默认取第一块网卡的IP
-#spring.cloud.nacos.discovery.network-interface:
-# 注册到nacos的IP
-#spring.cloud.nacos.discovery.ip:
-# 注册到nacos的端口
-#spring.cloud.nacos.discovery.port:
-# 注册到nacos的元数据,Map格式
-#spring.cloud.nacos.discovery.metadata:
-# 日志输出文件
-#spring.cloud.nacos.discovery.log-name:
-# nacos集群名称
-#spring.cloud.nacos.discovery.cluster-name:
-# 某个服务的入口域名,通过此域名可以动态的获取服务端地址
-#spring.cloud.nacos.discovery.endpoint:
-# 是否开启健康等状态监听
-#spring.cloud.nacos.discovery.watch.enabled:
-# 是否集成Ribbon的负载均衡功能
-#ribbon.nacos.enable:
+# 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
+#spring.cloud.gateway.discovery.locator.enabled: true
 spring.cloud.gateway.routes:
   - id: system_api # 路由的唯一标识
     uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
     predicates: # 断言，用于路由规则匹配
-      - Path=/system/api/system/**
+#      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
+#      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
+#      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
+#      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
+#      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
+#      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
+      - Method=GET,POST # 请求方式
+      - Path=/system/api/system/** # 请求路径
+#      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
+#      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
+      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
+      - Custom=custom_filter_name,12323,66666 # 自定义过滤器
     filters:
       # 过滤器，转发之前去掉第一段前缀，即/system
       - StripPrefix=1
-
