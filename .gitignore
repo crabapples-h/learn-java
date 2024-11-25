@@ -6,6 +6,8 @@ target/
 *.MP4
 *.mp4
 rebel.xml
+logs/
+
 ### STS ###
 .apt_generated
 .classpath
