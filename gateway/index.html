@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>跨域测试</title>
+</head>
+<body>
+<script>
+  function sendRequest() {
+    let xhr = new XMLHttpRequest()
+    xhr.open('POST', 'http://localhost:9092/system/api/system/login?name=zhangsan', false)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.send(JSON.stringify({ 'username': 'admin', 'password': 'admin' }))
+    if (xhr.status === 200) {
+      let result = JSON.parse(xhr.response)
+      console.log(result)
+      let p = document.createElement('p')
+      p.innerText = result.data
+      document.body.appendChild(p)
+    }
+  }
+</script>
+<input type="button" value="发送请求" onclick="sendRequest()">
+</body>
+</html>
