@@ -9,8 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>server</artifactId>
-    <properties>
-    </properties>
     <dependencies>
         <!-- nacos服务注册发现 -->
         <dependency>

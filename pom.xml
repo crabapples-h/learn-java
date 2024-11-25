@@ -17,6 +17,32 @@
         <module>learn-byte-buddy</module>
         <module>gateway</module>
     </modules>
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <yarn>yarn</yarn>
+                <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <yarn>yarn</yarn>
+                <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
+            </properties>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <properties>
+                <yarn>yarn</yarn>
+                <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
     <groupId>cn.crabapples</groupId>
     <artifactId>learn-java</artifactId>

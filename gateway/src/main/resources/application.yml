@@ -2,7 +2,9 @@ server.port: 9092
 spring.application.name: api-gateway
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
-spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
+#spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
+spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
+spring.cloud.nacos.discovery.group: hq
 # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
 spring.cloud.nacos.discovery.service: api-gateway
 # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
@@ -11,16 +13,16 @@ spring.cloud.gateway.routes:
   - id: system_api # 路由的唯一标识
     uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
     predicates: # 断言，用于路由规则匹配
-#      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
-#      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
-#      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
-#      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
-#      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
-#      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
+      #      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
+      #      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
+      #      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
+      #      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
+      #      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
+      #      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
       - Method=GET,POST # 请求方式
       - Path=/system/api/system/** # 请求路径
-#      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
-#      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
+      #      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
+      #      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
       - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
       - Custom=custom_filter_name,12323,66666 # 自定义过滤器
     filters:

@@ -1,15 +1,14 @@
 dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
 #上传文件配置
 virtualPath: '/file/'
-uploadPath: 'd:/uploadPath/'
-#uploadPath: '/Users/mshe/developer/uploadPath'
+#uploadPath: 'd:/uploadPath/'
+uploadPath: '/Users/mshe/developer/uploadPath'
 # 设置最大文件大小
 spring.servlet.multipart.max-file-size: 100MB
 # 设置最大请求大小
 spring.servlet.multipart.max-request-size: 100MB
 ###
 server.port: 9093
-server.application.name: learn
 
 spring.profiles.active: dev
 # mybatis
@@ -19,10 +18,13 @@ mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/
 # mybatis-flex
 mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # nacos配置
-#nacos.config.server-addr: @nacos.server-addr@
+nacos.config.server-addr: @nacos.server-addr@
 spring.application.name: api-system
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
-spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
+#spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
+spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
+spring.cloud.nacos.discovery.group: hq
+
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''
 

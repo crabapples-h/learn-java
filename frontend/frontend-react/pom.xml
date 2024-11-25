@@ -12,29 +12,6 @@
     <properties>
         <backend>boot-jpa-jwt</backend>
     </properties>
-    <profiles>
-        <profile>
-            <id>window</id>
-            <properties>
-                <yarn>yarn.cmd</yarn>
-            </properties>
-        </profile>
-        <profile>
-            <id>linux</id>
-            <properties>
-                <yarn>yarn</yarn>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>mac</id>
-            <properties>
-                <yarn>yarn</yarn>
-            </properties>
-        </profile>
-    </profiles>
     <build>
         <plugins>
             <plugin>
