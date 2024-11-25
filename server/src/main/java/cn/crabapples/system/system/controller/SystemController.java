@@ -46,8 +46,7 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping(value = "/login")
 //    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
-    public ResponseDTO<String> login(@RequestBody UserForm form, @RequestHeader String name) {
-        System.err.println(name);
+    public ResponseDTO<String> login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);
         String token = sysService.login(form);

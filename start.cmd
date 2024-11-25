@@ -1,1 +1,1 @@
-java -jar -Dserver.port=8858 -Dcsp.sentinel.dashboard.server=127.0.0.1:8858 -Dproject.name=sentinel-dashboard -Dsentinel.dashboard.auth.username=crabapples -Dsentinel.dashboard.auth.password=crabapples -Dauth.enabled=false -Dcsp.sentinel.log.dir=./logs/csp ./sentinel-dashboard-1.8.8.jar
+java -jar -Dserver.port=8858 -Dcsp.sentinel.dashboard.server=127.0.0.1:8858 -Dproject.name=sentinel-dashboard -Dsentinel.dashboard.auth.username=crabapples -Dsentinel.dashboard.auth.password=crabapples -Dauth.enabled=true -Dcsp.sentinel.log.dir=./logs/csp ./sentinel-dashboard-1.8.8.jar

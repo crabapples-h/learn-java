@@ -9,44 +9,43 @@ spring.cloud.nacos.discovery.group: hq
 spring.cloud.nacos.discovery.service: api-gateway
 # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
 #spring.cloud.gateway.discovery.locator.enabled: true
-#spring.cloud.gateway.routes:
-#  - id: system_api # 路由的唯一标识
-#    uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
-#    predicates: # 断言，用于路由规则匹配
-#      #      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
-#      #      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
-#      #      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
-#      #      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
-#      #      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
-#      #      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
-#      - Method=GET,POST # 请求方式
-#      - Path=/system/api/system/** # 请求路径
-#      #      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
-#      #      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
-#      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
-#      - Custom=custom_filter_name,12323,66666 # 自定义过滤器
-#    filters:
-#      # 过滤器，转发之前去掉第一段前缀，即/system
-#      - StripPrefix=1
-#      - AddRequestHeader=name,test
-#      - Custom=name,test,666,777
-##      - RedirectTo=301,http://www.baidu.com
-#spring.cloud.gateway.globalcors: # 全局跨域处理
-#  # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
-#  add-to-simple-url-handler-mapping: true
-#  corsConfigurations:
-#    '[/**]': # 允许跨域访问的资源
-#      allowedOrigins: # 允许哪些网站的跨域请求
-#        - "http://localhost:63342"
-#      allowedMethods: # 允许的跨域的请求方式
-#        - "GET"
-#        - "POST"
-#        - "DELETE"
-#        - "PUT"
-#        - "OPTIONS"
-#      allowedHeaders: "*" # 允许在请求中携带的头信息
-#      allowCredentials: true # 允许携带cookie
-#      maxAge: 3600 # 跨域检测的有效期(单位:秒)
-#spring.cloud.sentinel.transport.dashboard: 127.0.0.1:8850
+spring.cloud.gateway.routes:
+  - id: system_api # 路由的唯一标识
+    uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
+    predicates: # 断言，用于路由规则匹配
+      #      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
+      #      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
+      #      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
+      #      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
+      #      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
+      #      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
+      - Method=GET,POST # 请求方式
+      - Path=/system/api/system/** # 请求路径
+      #      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
+      #      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
+      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
+      - Custom=custom_filter_name,12323,66666 # 自定义过滤器
+    filters:
+      # 过滤器，转发之前去掉第一段前缀，即/system
+      - StripPrefix=1
+      - AddRequestHeader=name,test
+      - Custom=name,test,666,777
+#      - RedirectTo=301,http://www.baidu.com
+spring.cloud.gateway.globalcors: # 全局跨域处理
+  # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
+  add-to-simple-url-handler-mapping: true
+  corsConfigurations:
+    '[/**]': # 允许跨域访问的资源
+      allowedOrigins: # 允许哪些网站的跨域请求
+        - "http://localhost:63342"
+      allowedMethods: # 允许的跨域的请求方式
+        - "GET"
+        - "POST"
+        - "DELETE"
+        - "PUT"
+        - "OPTIONS"
+      allowedHeaders: "*" # 允许在请求中携带的头信息
+      allowCredentials: true # 允许携带cookie
+      maxAge: 3600 # 跨域检测的有效期(单位:秒)
 spring.cloud.sentinel.transport.dashboard: 127.0.0.1:8858
-spring.cloud.sentinel.transport.log-dir: ./logs/csp/sentinel-dashboard.log
+spring.cloud.sentinel.log.dir: ./logs/csp
