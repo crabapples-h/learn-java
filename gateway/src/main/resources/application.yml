@@ -28,3 +28,6 @@ spring.cloud.gateway.routes:
     filters:
       # 过滤器，转发之前去掉第一段前缀，即/system
       - StripPrefix=1
+      - AddRequestHeader=name,test
+      - Custom=name,test,666,777
+#      - RedirectTo=301,http://www.baidu.com
