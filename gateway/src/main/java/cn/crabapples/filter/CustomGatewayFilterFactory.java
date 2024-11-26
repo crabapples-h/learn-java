@@ -56,7 +56,6 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
                 System.err.println(sourceRequest);
 //            ServerHttpRequest request = sourceRequest.mutate()
 //                    .headers(httpHeaders -> httpHeaders.add(config.getName(), value)).build();
-
                 return chain.filter(exchange.mutate().build());
             }
         };
