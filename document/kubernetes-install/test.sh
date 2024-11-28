@@ -1,6 +1,6 @@
 source ./conf/config_base.sh
 echo "当前cpu架构: $cpu"
-
+./create_cert.sh --cpu arm64 --os mac
 exit
 ./create_cert.sh --cpu arm64 --os mac
 ./install_etcd.sh --cpu arm64
