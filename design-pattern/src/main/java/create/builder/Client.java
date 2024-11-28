@@ -11,7 +11,7 @@ package create.builder;
  */
 public class Client {
     public static void main(String[] args) {
-        Food sweetFood = new SweetFoodDirector(new SweetFoodBuilder()).director();
+        SweetFood sweetFood = new SweetFoodDirector(new SweetFoodBuilder()).director();
         sweetFood.eat();
     }
 }

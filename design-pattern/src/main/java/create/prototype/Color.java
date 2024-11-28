@@ -1,9 +1,14 @@
 package create.prototype;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 /**
- * TODO 原型模式-浅克隆
+ * 原型模式-浅克隆
  *
  * @author Mr.He
  * 2020/7/14 15:55
@@ -11,27 +16,16 @@ import java.io.Serializable;
  * qq 294046317
  * pc-name crabapples
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Color implements Cloneable, Serializable {
     private String color;
-
-    public Color(String color) {
-        this.color = color;
-    }
-
-    public Color() {
-    }
 
     @Override
     protected Color clone() throws CloneNotSupportedException {
         return (Color) super.clone();
-    }
-
-    public String getColor() {
-        return this.color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public String toString() {

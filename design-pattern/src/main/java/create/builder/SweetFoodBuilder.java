@@ -1,6 +1,6 @@
 package create.builder;
 
-import create.factory.simplefactory.Apple;
+import create.factory.simplefactory.Food;
 import create.factory.simplefactory.FoodFactory;
 
 /**
@@ -14,17 +14,17 @@ import create.factory.simplefactory.FoodFactory;
  */
 public class SweetFoodBuilder implements FoodBuilder {
     @Override
-    public Apple builderApple() {
+    public Food.Apple builderApple() {
         return FoodFactory.getApple();
     }
 
     @Override
-    public FoodFactory.Orange builderOrange() {
+    public Food.Orange builderOrange() {
         return FoodFactory.getOrange();
     }
 
     @Override
-    public FoodFactory.Peach builderPeach() {
+    public Food.Peach builderPeach() {
         return FoodFactory.getPeach();
     }
 }

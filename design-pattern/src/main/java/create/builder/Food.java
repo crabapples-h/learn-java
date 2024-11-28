@@ -1,5 +1,5 @@
 package create.builder;
 
-public interface Food {
-    void eat();
-}
+//public interface Food {
+//    void eat();
+//}

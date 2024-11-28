@@ -1,7 +1,6 @@
 package create.builder;
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.Food;
 
 /**
  * TODO 建造者模式-建造器
@@ -13,9 +12,9 @@ import create.factory.simplefactory.FoodFactory;
  * pc-name crabapples
  */
 public interface FoodBuilder {
-    Apple builderApple();
+    Food.Apple builderApple();
 
-    FoodFactory.Orange builderOrange();
+    Food.Orange builderOrange();
 
-    FoodFactory.Peach builderPeach();
+    Food.Peach builderPeach();
 }

@@ -28,13 +28,11 @@ public class Client {
      */
     static void test1() throws CloneNotSupportedException {
         Color color = new Color("red");
-        Flower source = new Flower("rose", color);
-        Flower target = source.clone();
+        FlowerDeepClone source = new FlowerDeepClone("rose", color);
+        FlowerDeepClone target = source.clone();
         color.setColor("pink");
-        logger.info("source:[{}]", source);
-        logger.info("target:[{}]", target);
-        System.out.println(source.hashCode());
-        System.out.println(target.hashCode());
+        logger.info("原对象:[{}],hashCode:[{}]", source, source.hashCode());
+        logger.info("新对象:[{}],hashCode:[{}]", target, target.hashCode());
     }
 
     /**
@@ -42,13 +40,11 @@ public class Client {
      */
     static void test2() throws CloneNotSupportedException {
         Color color = new Color("red");
-        Flower source = new Flower("rose", color);
-        Flower target = source.deepClone();
+        FlowerDeepClone source = new FlowerDeepClone("rose", color);
+        FlowerDeepClone target = source.deepClone();
         color.setColor("pink");
-        logger.info("source:[{}]", source);
-        logger.info("target:[{}]", target);
-        System.out.println(source.hashCode());
-        System.out.println(target.hashCode());
+        logger.info("原对象:[{}],hashCode:[{}]", source, source.hashCode());
+        logger.info("新对象:[{}],hashCode:[{}]", target, target.hashCode());
     }
 
     /**
@@ -56,19 +52,16 @@ public class Client {
      */
     static void test3() throws IOException, ClassNotFoundException {
         Color color = new Color("red");
-        Flower source = new Flower("rose", color);
+        FlowerDeepClone source = new FlowerDeepClone("rose", color);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(source);
-        byte [] sourceByte = byteArrayOutputStream.toByteArray();
+        byte[] sourceByte = byteArrayOutputStream.toByteArray();
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(sourceByte);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        Flower target = (Flower) objectInputStream.readObject();
+        FlowerDeepClone target = (FlowerDeepClone) objectInputStream.readObject();
         color.setColor("pink");
-        logger.info("source:[{}]", source);
-        logger.info("target:[{}]", target);
-        System.out.println(source.hashCode());
-        System.out.println(target.hashCode());
-
+        logger.info("原对象:[{}],hashCode:[{}]", source, source.hashCode());
+        logger.info("新对象:[{}],hashCode:[{}]", target, target.hashCode());
     }
 }
