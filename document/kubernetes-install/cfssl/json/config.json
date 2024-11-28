@@ -1,0 +1,33 @@
+{
+  "signing": {
+    "default": {
+      "usages": [
+        "signing",
+        "key encipherment",
+        "server auth",
+        "client auth"
+      ],
+      "expiry": "87600h"
+    },
+    "profiles": {
+     "kubernetes": {
+        "usages": [
+          "signing",
+          "key encipherment",
+          "server auth",
+          "client auth"
+        ],
+        "expiry": "8760h"
+      },
+      "etcd": {
+      	"usages": [
+          "signing",
+          "key encipherment",
+          "server auth",
+          "client auth"
+        ],
+        "expiry": "87600h"
+      }
+    }
+  }
+}

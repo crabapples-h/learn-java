@@ -1,0 +1,39 @@
+{
+    "CN": "kube-apiserver",
+    "hosts": [
+        "127.0.0.1",
+        "172.16.8.191",
+        "172.16.8.192",
+        "172.16.8.193",
+        "172.16.8.194",
+        "172.16.8.195",
+        "172.16.27.191",
+        "172.16.27.192",
+        "172.16.27.193",
+        "172.16.27.194",
+        "172.16.27.195",
+        "172.16.8.10",
+        "10.10.10.1",
+        "192.168.99.1",
+        "10.244.0.0.1",
+        "k8s-master-01",
+        "k8s-master-02",
+        "k8s-master-03",
+        "kubernetes",
+        "kubernetes.default",
+        "kubernetes.default.svc",
+        "kubernetes.default.svc.cluster",
+        "kubernetes.default.svc.cluster.local"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "CN",
+            "ST": "GuiZhou",
+            "L": "LiuPanShui"
+        }
+    ]
+}
