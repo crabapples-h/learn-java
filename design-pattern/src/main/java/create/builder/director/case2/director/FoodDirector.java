@@ -1,6 +1,6 @@
-package create.builder;
+package create.builder.director.case2.director;
 
-import create.factory.simplefactory.Food;
+import create.builder.director.case2.Food;
 
 /**
  * TODO 建造者模式-装配器

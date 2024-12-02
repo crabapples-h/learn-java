@@ -1,4 +1,4 @@
-package create.builder;
+package create.builder.director.case2.builder;
 
 import create.factory.simplefactory.FoodFactory;
 import create.factory.simplefactory.food.Apple;

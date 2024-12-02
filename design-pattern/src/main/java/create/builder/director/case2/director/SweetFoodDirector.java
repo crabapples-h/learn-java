@@ -1,6 +1,9 @@
-package create.builder;
+package create.builder.director.case2.director;
 
 
+import create.builder.director.case2.Food;
+import create.builder.director.case2.SweetFood;
+import create.builder.director.case2.builder.SweetFoodBuilder;
 import create.factory.simplefactory.food.Apple;
 import create.factory.simplefactory.food.Orange;
 import create.factory.simplefactory.food.Peach;
@@ -21,7 +24,7 @@ public class SweetFoodDirector implements FoodDirector {
         this.sweetFoodBuilder = sweetFoodBuilder;
     }
 
-    public SweetFood director() {
+    public Food director() {
         SweetFood sweetFood = new SweetFood();
         Apple apple = sweetFoodBuilder.builderApple();
         Orange orange = sweetFoodBuilder.builderOrange();

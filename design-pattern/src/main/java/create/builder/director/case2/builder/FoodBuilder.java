@@ -1,5 +1,4 @@
-package create.builder.director;
-
+package create.builder.director.case2.builder;
 
 import create.factory.simplefactory.food.Apple;
 import create.factory.simplefactory.food.Orange;
@@ -15,12 +14,9 @@ import create.factory.simplefactory.food.Peach;
  * pc-name crabapples
  */
 public interface FoodBuilder {
+    Apple builderApple();
 
-    void builderApple(Apple apple);
+    Orange builderOrange();
 
-    void builderOrange(Orange orange);
-
-    void builderPeach(Peach peach);
-
-    Food build();
+    Peach builderPeach();
 }

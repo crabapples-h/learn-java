@@ -1,12 +1,14 @@
-package create.builder.director;
+package create.builder.director.case1;
 
 
+import create.builder.director.case1.builder.SweetFoodBuilder;
+import create.builder.director.case1.director.SweetFoodDirector;
 import create.factory.simplefactory.food.Apple;
 import create.factory.simplefactory.food.Orange;
 import create.factory.simplefactory.food.Peach;
 
 /**
- * TODO 建造者模式
+ * 建造者模式-标准式
  *
  * @author Mr.He
  * 2020/7/13 13:27

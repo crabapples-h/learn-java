@@ -1,8 +1,10 @@
-package create.builder.director;
+package create.builder.director.case2;
 
 import create.factory.simplefactory.food.Apple;
 import create.factory.simplefactory.food.Orange;
 import create.factory.simplefactory.food.Peach;
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,20 +17,19 @@ import org.slf4j.LoggerFactory;
  * qq 294046317
  * pc-name crabapples
  */
+@Getter
+@Setter
 public class SweetFood implements Food {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final Apple apple;
-    private final Orange orange;
-    private final Peach peach;
 
-    public SweetFood(Apple apple, Orange orange, Peach peach) {
-        this.apple = apple;
-        this.orange = orange;
-        this.peach = peach;
-    }
+    private Apple apple;
+    private Orange orange;
+    private Peach peach;
 
     @Override
     public void eat() {
-        logger.info("eat:[{}][{}][{}]", apple, orange, peach);
+        apple.eat();
+        orange.eat();
+        peach.eat();
     }
 }

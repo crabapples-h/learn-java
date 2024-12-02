@@ -1,6 +1,7 @@
-package create.builder.director;
+package create.builder.director.case1.builder;
 
 
+import create.builder.director.case1.SweetFood;
 import create.factory.simplefactory.food.Apple;
 import create.factory.simplefactory.food.Orange;
 import create.factory.simplefactory.food.Peach;
