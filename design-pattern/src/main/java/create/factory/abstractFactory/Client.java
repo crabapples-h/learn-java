@@ -1,7 +1,11 @@
 package create.factory.abstractFactory;
 
+import create.factory.abstractFactory.chinese.ChineseFactory;
+import create.factory.abstractFactory.math.MathFactory;
+
 /**
- * TODO 工厂模式-抽象工厂
+ * 工厂模式-抽象工厂
+ * 提供一个创建一系列相关或互相依赖对象的接口，而无需指定他们具体的类
  *
  * @author Mr.He
  * 12/26/19
@@ -12,9 +16,9 @@ package create.factory.abstractFactory;
 public class Client {
     public static void main(String[] args) {
         Book chineseBook = ChineseFactory.buyBook();
-        Pen chinesePen = ChineseFactory.buyPen();
-
         Book mathBook = MathFactory.buyBook();
+
+        Pen chinesePen = ChineseFactory.buyPen();
         Pen mathPen = MathFactory.buyPen();
 
         chineseBook.read();

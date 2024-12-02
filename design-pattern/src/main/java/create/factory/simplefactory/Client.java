@@ -1,7 +1,8 @@
 package create.factory.simplefactory;
 
 /**
- * TODO 工厂模式-简单工厂模式(静态工厂模式)
+ * 工厂模式-简单工厂模式(静态工厂模式)
+ * 简单工厂严格意义上并不是一种设计模式，只是一种思想习惯
  *
  * @author Mr.He
  * 12/20/19
@@ -11,6 +12,7 @@ package create.factory.simplefactory;
  */
 public class Client {
     public static void main(String[] args) {
+        // 新建工厂，使用工厂方法创建对象
         Food apple = FoodFactory.getApple();
         Food orange = FoodFactory.getOrange();
         Food peach = FoodFactory.getPeach();
@@ -18,4 +20,5 @@ public class Client {
         orange.eat();
         peach.eat();
     }
+
 }

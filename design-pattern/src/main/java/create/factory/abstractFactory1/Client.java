@@ -1,5 +1,7 @@
 package create.factory.abstractFactory1;
 
+import create.factory.abstractFactory1.mysql.MysqlDB;
+
 /**
  * TODO 工厂模式-抽象工厂
  *
@@ -13,8 +15,8 @@ public class Client {
     public static void main(String[] args) {
         DataBase mysqlDB = new MysqlDB();
         Connect connect = mysqlDB.getConnect();
-        connect.connect();
         Command command = mysqlDB.getCommand();
+        connect.connect();
         command.command();
     }
 }

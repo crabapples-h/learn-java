@@ -1,6 +1,7 @@
-package create.factory.abstractFactory1;
+package create.factory.abstractFactory1.mysql;
 
 
+import create.factory.abstractFactory1.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ public class MysqlCommand implements Command {
 
     @Override
     public void command() {
-        logger.info("mysql:[{}]", "command");
+        logger.info("mysql:[{}]", "执行命令");
 
     }
 }

@@ -1,6 +1,7 @@
-package create.factory.abstractFactory1;
+package create.factory.abstractFactory1.mysql;
 
 
+import create.factory.abstractFactory1.Connect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,6 @@ public class MysqlConnect implements Connect {
 
     @Override
     public void connect() {
-        logger.info("mysql:[{}]", "connect");
+        logger.info("mysql:[{}]", "开始连接");
     }
 }

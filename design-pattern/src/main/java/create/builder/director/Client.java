@@ -1,7 +1,6 @@
 package create.builder.director;
 
 
-import create.factory.simplefactory.Apple;
 import create.factory.simplefactory.FoodFactory;
 
 /**
@@ -16,7 +15,7 @@ import create.factory.simplefactory.FoodFactory;
 public class Client {
     public static void main(String[] args) {
         SweetFoodBuilder builder = new SweetFoodBuilder();
-        Apple apple = new Apple();
+        Food.Apple apple = new Apple();
         FoodFactory.Orange orange = new FoodFactory.Orange();
         FoodFactory.Peach peach = new FoodFactory.Peach();
         Food sweetFood = new SweetFoodDirector(builder).director(apple, orange, peach);

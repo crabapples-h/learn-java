@@ -10,13 +10,12 @@ package create.factory.abstractFactory;
  * qq 294046317
  * pc-name root
  */
-public class PenFactory {
-
-    static Pen buyChinesePen() {
-        return new Pen.ChinesePen();
-    }
-
-    static Pen buyMathPen() {
-        return new Pen.MathPen();
-    }
-}
+//public class PenFactory {
+//    public static Pen buyChinesePen() {
+//        return new ChinesePen();
+//    }
+//
+//    public static Pen buyMathPen() {
+//        return new athPen();
+//    }
+//}

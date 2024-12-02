@@ -1,7 +1,8 @@
 package create.factory.factorymethod;
 
 /**
- * TODO 工厂模式-工厂方法模式
+ * 工厂模式-工厂方法模式
+ * 鲜花对象
  *
  * @author Mr.He
  * 12/20/19
