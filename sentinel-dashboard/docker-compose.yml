@@ -9,14 +9,17 @@ services:
       - "8858:8858"
     command:
       - "java"
-      - "jar"
-      - "Dserver.port=8858"
-      - "Dcsp.sentinel.dashboard.server=127.0.0.1:8858"
-      - "Dproject.name=sentinel-dashboard"
-      - "Dsentinel.dashboard.auth.username=crabapples"
-      - "Dsentinel.dashboard.auth.password=crabapples"
-      - "Dauth.enabled=true"
-      - "Dcsp.sentinel.log.dir=/logs/csp"
+      - "-jar"
+      - "-Dserver.port=8858"
+      - "-Dcsp.sentinel.dashboard.server=127.0.0.1:8858"
+      - "-Dproject.name=sentinel-dashboard"
+      - "-Dsentinel.dashboard.auth.username=crabapples"
+      - "-Dsentinel.dashboard.auth.password=crabapples"
+      - "-Dauth.enabled=true"
+      - "-Dcsp.sentinel.log.dir=/logs/csp"
       - "/opt/app.jar"
-
-
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8858" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,6 +1,6 @@
-FROM dockette/openjdk8
+# FROM dockette/openjdk8
 #FROM dockette/openjdk8
-#FROM harbor.crabapples.cn/jdk/jdk11
+FROM harbor.crabapples.cn/jdk/jdk11
 #FROM harbor.crabapples.cn/jdk/jdk8
 VOLUME /logs/csp
 EXPOSE 8858
