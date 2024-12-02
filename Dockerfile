@@ -1,4 +1,7 @@
 FROM dockette/openjdk8
+#FROM dockette/openjdk8
+#FROM harbor.crabapples.cn/jdk/jdk11
+#FROM harbor.crabapples.cn/jdk/jdk8
 ENV MYSQL_IP=127.0.0.1
 ENV MYSQL_PORT=3306
 ENV MYSQL_USERNAME=root
