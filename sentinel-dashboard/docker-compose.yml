@@ -1,0 +1,22 @@
+version: "3"
+services:
+  sentinel-dashboard:
+    build:
+      dockerfile: Dockerfile
+    container_name: sentinel-dashboard
+    restart: always
+    ports:
+      - "8858:8858"
+    command:
+      - "java"
+      - "jar"
+      - "Dserver.port=8858"
+      - "Dcsp.sentinel.dashboard.server=127.0.0.1:8858"
+      - "Dproject.name=sentinel-dashboard"
+      - "Dsentinel.dashboard.auth.username=crabapples"
+      - "Dsentinel.dashboard.auth.password=crabapples"
+      - "Dauth.enabled=true"
+      - "Dcsp.sentinel.log.dir=/logs/csp"
+      - "/opt/app.jar"
+
+
