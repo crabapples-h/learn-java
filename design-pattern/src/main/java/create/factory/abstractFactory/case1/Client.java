@@ -1,7 +1,7 @@
-package create.factory.abstractFactory;
+package create.factory.abstractFactory.case1;
 
-import create.factory.abstractFactory.chinese.ChineseFactory;
-import create.factory.abstractFactory.math.MathFactory;
+import create.factory.abstractFactory.case1.chinese.ChineseFactory;
+import create.factory.abstractFactory.case1.math.MathFactory;
 
 /**
  * 工厂模式-抽象工厂
@@ -13,12 +13,13 @@ import create.factory.abstractFactory.math.MathFactory;
  * qq 294046317
  * pc-name root
  */
+// 抽象工厂类型一
 public class Client {
     public static void main(String[] args) {
         Book chineseBook = ChineseFactory.buyBook();
-        Book mathBook = MathFactory.buyBook();
-
         Pen chinesePen = ChineseFactory.buyPen();
+
+        Book mathBook = MathFactory.buyBook();
         Pen mathPen = MathFactory.buyPen();
 
         chineseBook.read();

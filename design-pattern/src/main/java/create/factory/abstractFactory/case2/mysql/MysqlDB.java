@@ -1,9 +1,9 @@
-package create.factory.abstractFactory1.mysql;
+package create.factory.abstractFactory.case2.mysql;
 
 
-import create.factory.abstractFactory1.Command;
-import create.factory.abstractFactory1.Connect;
-import create.factory.abstractFactory1.DataBase;
+import create.factory.abstractFactory.case2.Command;
+import create.factory.abstractFactory.case2.Connect;
+import create.factory.abstractFactory.case2.DataBase;
 
 /**
  * TODO 工厂模式-抽象工厂

@@ -1,9 +1,9 @@
-package create.factory.abstractFactory.chinese;
+package create.factory.abstractFactory.case1.chinese;
 
-import create.factory.abstractFactory.Book;
-import create.factory.abstractFactory.BookFactory;
-import create.factory.abstractFactory.Pen;
-import create.factory.abstractFactory.PenFactory;
+import create.factory.abstractFactory.case1.Book;
+import create.factory.abstractFactory.case1.Pen;
+import create.factory.abstractFactory.case1.factory.BookFactory;
+import create.factory.abstractFactory.case1.factory.PenFactory;
 
 /**
  * 工厂模式-抽象工厂

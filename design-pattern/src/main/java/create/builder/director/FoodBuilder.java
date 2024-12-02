@@ -1,8 +1,9 @@
 package create.builder.director;
 
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式-建造器
@@ -17,9 +18,9 @@ public interface FoodBuilder {
 
     void builderApple(Apple apple);
 
-    void builderOrange(FoodFactory.Orange orange);
+    void builderOrange(Orange orange);
 
-    void builderPeach(FoodFactory.Peach peach);
+    void builderPeach(Peach peach);
 
     Food build();
 }

@@ -1,4 +1,4 @@
-package create.factory.abstractFactory;
+package create.factory.abstractFactory.case1;
 
 /**
  * 工厂模式-抽象工厂

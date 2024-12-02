@@ -1,8 +1,9 @@
 package create.builder.build;
 
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式-建造器
@@ -17,9 +18,9 @@ public interface FoodBuilder {
 
     FoodBuilder builderApple(Apple apple);
 
-    FoodBuilder builderOrange(FoodFactory.Orange orange);
+    FoodBuilder builderOrange(Orange orange);
 
-    FoodBuilder builderPeach(FoodFactory.Peach peach);
+    FoodBuilder builderPeach(Peach peach);
 
     Food build();
 }

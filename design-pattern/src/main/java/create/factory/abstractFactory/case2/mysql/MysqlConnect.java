@@ -1,7 +1,7 @@
-package create.factory.abstractFactory1.mysql;
+package create.factory.abstractFactory.case2.mysql;
 
 
-import create.factory.abstractFactory1.Command;
+import create.factory.abstractFactory.case2.Connect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
  * qq 294046317
  * pc-name root
  */
-public class MysqlCommand implements Command {
+public class MysqlConnect implements Connect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public void command() {
-        logger.info("mysql:[{}]", "执行命令");
-
+    public void connect() {
+        logger.info("mysql:[{}]", "开始连接");
     }
 }

@@ -1,7 +1,9 @@
 package create.builder.director;
 
 
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式
@@ -15,9 +17,9 @@ import create.factory.simplefactory.FoodFactory;
 public class Client {
     public static void main(String[] args) {
         SweetFoodBuilder builder = new SweetFoodBuilder();
-        Food.Apple apple = new Apple();
-        FoodFactory.Orange orange = new FoodFactory.Orange();
-        FoodFactory.Peach peach = new FoodFactory.Peach();
+        Apple apple = new Apple();
+        Orange orange = new Orange();
+        Peach peach = new Peach();
         Food sweetFood = new SweetFoodDirector(builder).director(apple, orange, peach);
         sweetFood.eat();
     }

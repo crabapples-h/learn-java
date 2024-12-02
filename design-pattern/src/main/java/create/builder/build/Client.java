@@ -1,8 +1,9 @@
 package create.builder.build;
 
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式
@@ -16,8 +17,8 @@ import create.factory.simplefactory.FoodFactory;
 public class Client {
     public static void main(String[] args) {
         Apple apple = new Apple();
-        FoodFactory.Orange orange = new FoodFactory.Orange();
-        FoodFactory.Peach peach = new FoodFactory.Peach();
+        Orange orange = new Orange();
+        Peach peach = new Peach();
         SweetFoodBuilder builder = new SweetFoodBuilder();
         SweetFood food = builder.builderApple(apple).builderOrange(orange).builderPeach(peach).build();
         food.eat();

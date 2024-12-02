@@ -1,8 +1,9 @@
 package create.builder.director;
 
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式-建造器(实现类)
@@ -15,8 +16,8 @@ import create.factory.simplefactory.FoodFactory;
  */
 public class SweetFoodBuilder implements FoodBuilder {
     private Apple apple;
-    private FoodFactory.Orange orange;
-    private FoodFactory.Peach peach;
+    private Orange orange;
+    private Peach peach;
 
     @Override
     public void builderApple(Apple apple) {
@@ -24,12 +25,12 @@ public class SweetFoodBuilder implements FoodBuilder {
     }
 
     @Override
-    public void builderOrange(FoodFactory.Orange orange) {
+    public void builderOrange(Orange orange) {
         this.orange = orange;
     }
 
     @Override
-    public void builderPeach(FoodFactory.Peach peach) {
+    public void builderPeach(Peach peach) {
         this.peach = peach;
     }
 

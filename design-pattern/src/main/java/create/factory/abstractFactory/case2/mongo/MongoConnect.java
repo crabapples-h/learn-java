@@ -1,7 +1,7 @@
-package create.factory.abstractFactory1.mysql;
+package create.factory.abstractFactory.case2.mongo;
 
 
-import create.factory.abstractFactory1.Connect;
+import create.factory.abstractFactory.case2.Connect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
  * qq 294046317
  * pc-name root
  */
-public class MysqlConnect implements Connect {
+public class MongoConnect implements Connect {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void connect() {
-        logger.info("mysql:[{}]", "开始连接");
+        logger.info("Mongo:[{}]", "开始连接");
     }
 }

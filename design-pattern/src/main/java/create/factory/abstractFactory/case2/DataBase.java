@@ -1,4 +1,4 @@
-package create.factory.abstractFactory1;
+package create.factory.abstractFactory.case2;
 
 /**
  * TODO 工厂模式-抽象工厂
@@ -9,6 +9,9 @@ package create.factory.abstractFactory1;
  * qq 294046317
  * pc-name root
  */
-public interface Command {
-    void command();
+public interface DataBase {
+    Connect getConnect();
+
+    Command getCommand();
 }
+

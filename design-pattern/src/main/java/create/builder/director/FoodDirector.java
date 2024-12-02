@@ -1,8 +1,9 @@
 package create.builder.director;
 
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 
 /**
  * TODO 建造者模式-装配器
@@ -14,5 +15,5 @@ import create.factory.simplefactory.FoodFactory;
  * pc-name crabapples
  */
 public interface FoodDirector {
-    SweetFood director(Apple apple, FoodFactory.Orange orange, FoodFactory.Peach peach);
+    SweetFood director(Apple apple, Orange orange, Peach peach);
 }

@@ -1,7 +1,8 @@
 package create.builder.director;
 
-import create.factory.simplefactory.Apple;
-import create.factory.simplefactory.FoodFactory;
+import create.factory.simplefactory.food.Apple;
+import create.factory.simplefactory.food.Orange;
+import create.factory.simplefactory.food.Peach;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +18,10 @@ import org.slf4j.LoggerFactory;
 public class SweetFood implements Food {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final Apple apple;
-    private final FoodFactory.Orange orange;
-    private final FoodFactory.Peach peach;
+    private final Orange orange;
+    private final Peach peach;
 
-    public SweetFood(Apple apple, FoodFactory.Orange orange, FoodFactory.Peach peach) {
+    public SweetFood(Apple apple, Orange orange, Peach peach) {
         this.apple = apple;
         this.orange = orange;
         this.peach = peach;
