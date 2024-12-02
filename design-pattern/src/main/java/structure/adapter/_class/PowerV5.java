@@ -3,5 +3,5 @@ package structure.adapter._class;
 public interface PowerV5 {
     int value = 0;
 
-    String use5();
+    int use5();
 }

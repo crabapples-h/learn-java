@@ -1,5 +1,8 @@
 package structure.flyweight;
 
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * TODO 享元模式
  *
@@ -9,6 +12,8 @@ package structure.flyweight;
  * qq 294046317
  * pc-name mrhe
  */
+@Getter
+@ToString
 public class TreeNode {
     private final Integer x;
     private final Integer y;
@@ -20,15 +25,4 @@ public class TreeNode {
         this.tree = tree;
     }
 
-    public Integer getX() {
-        return x;
-    }
-
-    public Integer getY() {
-        return y;
-    }
-
-    public Tree getTree() {
-        return tree;
-    }
 }

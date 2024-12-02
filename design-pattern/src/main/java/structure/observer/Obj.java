@@ -9,11 +9,11 @@ import java.util.List;
 
 @Slf4j
 public class Obj {
-    private final static Logger logger = LoggerFactory.getLogger(Client.class);
-    private List<Observer> observers = new ArrayList<>();
+    private final static Logger logger = LoggerFactory.getLogger(Obj.class);
+    private final List<Observer> observers = new ArrayList<>();
 
     public void update() {
-        logger.info("update");
+        logger.info("Obj对象被更新了");
         notifyObj();
     }
 

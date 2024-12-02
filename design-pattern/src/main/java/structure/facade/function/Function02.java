@@ -1,4 +1,4 @@
-package structure.facade;
+package structure.facade.function;
 
 
 import org.slf4j.Logger;
@@ -16,6 +16,6 @@ public class Function02 {
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(Function02.class);
 
     public void func() {
-        log.info("[{}]", this);
+        log.info("Function02执行了[{}]", this);
     }
 }

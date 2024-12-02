@@ -15,10 +15,10 @@ public class PowerAdapter implements PowerV5 {
     }
 
     @Override
-    public String use5() {
+    public int use5() {
         v220.use220();
+        logger.info("正在转换电压");
         this.value = 5;
-        logger.info("5V电压:[{}]", value);
-        return "5V电压:" + value;
+        return this.value;
     }
 }

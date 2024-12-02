@@ -9,17 +9,9 @@ import org.slf4j.LoggerFactory;
 @Setter
 public class PowerV220 {
     private final static Logger logger = LoggerFactory.getLogger(PowerV220.class);
-
-    private int value;
+    private final int value = 220;
 
     public void use220() {
-        if (0 == value) {
-            throw new RuntimeException("电压异常");
-        }
         logger.info("220V电压:[{}]", value);
-    }
-
-    public PowerV220(int value) {
-        this.value = value;
     }
 }

@@ -1,5 +1,9 @@
 package structure.facade;
 
+import structure.facade.function.Function01;
+import structure.facade.function.Function02;
+import structure.facade.function.Function03;
+
 /**
  * TODO 门面模式
  *

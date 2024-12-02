@@ -1,5 +1,8 @@
 package structure.flyweight;
 
+import lombok.Getter;
+import lombok.ToString;
+
 /**
  * TODO 享元模式
  *
@@ -9,6 +12,8 @@ package structure.flyweight;
  * qq 294046317
  * pc-name mrhe
  */
+@Getter
+@ToString
 public class Tree {
     private final String name;
     private final String Data;
@@ -18,11 +23,4 @@ public class Tree {
         this.Data = Data;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public String getData() {
-        return this.Data;
-    }
 }
