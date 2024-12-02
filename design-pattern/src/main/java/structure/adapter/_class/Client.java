@@ -1,6 +1,8 @@
-package structure.adapter_class;
+package structure.adapter._class;
+
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO 适配器模式(类适配器)
@@ -12,15 +14,15 @@ import org.slf4j.Logger;
  * pc-name mrhe
  */
 public class Client {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Client.class);
+    private static final Logger logger = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) {
         PowerV220 v220 = new PowerV220(220);
         PowerV5 v5 = new PowerAdapter(v220);
-        phone(v5);
+        startPower(v5);
     }
 
-    public static void phone(PowerV5 powerV5) {
-        log.info("手机开始充电:[{}]", powerV5.use5());
+    public static void startPower(PowerV5 powerV5) {
+        logger.info("手机开始充电:[{}]", powerV5.use5());
     }
 }

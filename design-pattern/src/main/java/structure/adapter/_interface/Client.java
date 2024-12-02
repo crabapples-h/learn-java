@@ -1,6 +1,7 @@
-package structure.adapter_interface;
+package structure.adapter._interface;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO 适配器模式(接口适配器)
@@ -12,19 +13,19 @@ import org.slf4j.Logger;
  * pc-name mrhe
  */
 public class Client {
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(Client.class);
+    private static final Logger log = LoggerFactory.getLogger(Client.class);
 
     public static void main(String[] args) {
         addListener(new AdapterListener() {
             @Override
             public void onStart() {
-                log.info("回调:[{}]", "onStart");
+                log.info("onStart回调:[{}]", "onStart");
             }
         });
         addListener(new AdapterListener() {
             @Override
             public void onPause() {
-                log.info("回调:[{}]", "onPause");
+                log.info("onPause回调:[{}]", "onPause");
             }
         });
     }

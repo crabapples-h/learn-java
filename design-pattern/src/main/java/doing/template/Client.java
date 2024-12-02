@@ -1,4 +1,4 @@
-package doing.tamplate;
+package doing.template;
 
 /**
  * TODO 模板模式(Template)
@@ -13,6 +13,7 @@ package doing.tamplate;
  */
 public class Client {
     public static void main(String[] args) {
+         // 在Func中定义好模板，并定义一个抽象方法，让子类去实现抽象方法
          Func func = new FuncImpl();
          func.run();
     }

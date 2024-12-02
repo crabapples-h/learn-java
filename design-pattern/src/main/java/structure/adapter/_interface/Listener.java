@@ -1,4 +1,4 @@
-package structure.adapter_interface;
+package structure.adapter._interface;
 
 public interface Listener {
     void onStart();

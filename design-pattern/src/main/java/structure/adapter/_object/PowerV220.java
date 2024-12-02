@@ -1,4 +1,4 @@
-package structure.adapter_obj;
+package structure.adapter._object;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +12,11 @@ public class PowerV220 {
 
     private int value;
 
-    public String use220() {
+    public void use220() {
         if (0 == value) {
             throw new RuntimeException("电压异常");
         }
         logger.info("220V电压:[{}]", value);
-        return "220V电压:" + value;
     }
 
     public PowerV220(int value) {
