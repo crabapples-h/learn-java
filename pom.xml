@@ -16,6 +16,8 @@
         <module>plugins</module>
         <module>learn-byte-buddy</module>
         <module>gateway</module>
+        <module>server</module>
+        <module>server-flux</module>
     </modules>
     <profiles>
         <profile>

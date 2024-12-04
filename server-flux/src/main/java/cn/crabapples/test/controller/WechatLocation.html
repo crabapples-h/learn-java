@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<p>hello</p>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.3.4/vconsole.min.js"></script>
+<!--    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/vConsole/3.3.4/vconsole.min.css">-->
+<script>
+    function getLocation() {
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+                let latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                let longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                let speed = res.speed; // 速度，以米/每秒计
+                let accuracy = res.accuracy; // 位置精度
+                console.group()
+                console.log("经度:", latitude)
+                console.log("维度:", longitude,)
+                console.log("速度(m/s):", speed,)
+                console.log("位置精度:", accuracy)
+                console.groupEnd()
+            }
+        })
+    }
+
+    const vConsole = new VConsole();
+    let url = window.location.href.split('#')[0]
+    window.onload = () => {
+        console.log('window.onload()')
+        let xhr = new XMLHttpRequest()
+        console.log(xhr)
+        xhr.open('get', `/api/wechat/get/config?url=${url}`)
+        xhr.send()
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                let result = JSON.parse(xhr.response)
+                let data = result.data
+                console.log(result)
+                console.log(data)
+                console.log(window)
+                wx.config({
+                    debug: true,
+                    appId: data.appId,
+                    timestamp: data.timestamp,
+                    nonceStr: data.nonceStr,
+                    signature: data.sign,
+                    jsApiList: ['getLocation']
+                })
+                wx.ready(function () {
+                    getLocation()
+                })
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

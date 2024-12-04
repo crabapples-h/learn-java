@@ -1,0 +1,129 @@
+body, html {
+    color: #5e6166;
+    font-size: 16px;
+    font-family: \\5FAE\8F6F\96C5\9ED1, Microsoft Yahei, arial;
+    background: #fff;
+    cursor: default;
+    user-select: none;
+    -moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    overflow-scrolling: touch;
+    tap-highlight-color: transparent;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+}
+
+
+.body {
+    position: fixed;
+    background: url(/images/login-02/background.png) no-repeat 50%;
+    height: 461px;
+    width: 1318px;
+    top: 50%;
+    left: 50%;
+    margin-top: -230.5px;
+    margin-left: -659px
+}
+
+.form {
+    position: relative;
+    margin: 0 auto;
+    width: 410px;
+    padding: 50px;
+    box-shadow: 0 0 20px #ecf4f8;
+    background-color: #fff
+}
+
+.form .title {
+    font-size: 30px;
+    color: #5e6166;
+    text-align: center;
+    margin-bottom: 10px
+}
+
+.form .base-div {
+    width: 100%;
+    margin-top: 30px;
+    position: relative
+}
+
+/*.form .base-div > div {*/
+/*    -webkit-border-radius: 10px;*/
+/*    -moz-border-radius: 10px;*/
+/*    position: relative*/
+/*}*/
+
+.form .base-div > div .error-tips {
+    color: #de1c1c;
+    position: absolute;
+    font-size: 16px;
+    padding-left: 78px;
+    bottom: -20px
+}
+
+.form .base-div > div .mobileIcon {
+    background: url(/images/login-02/phone.png) no-repeat 50%;
+    height: 100%;
+    width: 78px;
+    position: absolute;
+    z-index: 100
+}
+
+.form .base-div > div .passwordIcon {
+    background: url(/images/login-02/password.png) no-repeat 50%;
+    height: 100%;
+    width: 78px;
+    position: absolute;
+    z-index: 100
+}
+
+.form .base-div > div input {
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+    vertical-align: middle;
+    font-size: 20px;
+    height: 58px;
+    line-height: 58px;
+    border: 1px solid #64dcdc;
+    border-radius: 10px;
+    background-color: #fff;
+    padding-left: 78px
+}
+/*登录按钮*/
+.form .base-div .login-button {
+    height: 60px;
+    line-height: 60px;
+    background-color: #64dcdc;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    border-radius: 10px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer
+}
+
+.form .base-div .register {
+    display: inline-block
+}
+
+.form .base-div .register > a {
+    color: #64dcdc;
+    font-size: 20px
+}
+
+/*忘记密码*/
+.form .base-div .find-password {
+    float: right;
+    font-size: 20px;
+    color: #64dcdc
+}
+

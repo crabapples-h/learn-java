@@ -1,0 +1,77 @@
+isDebug: false
+isCrypt: true
+
+dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
+### log config ###
+logging:
+  level:
+    root: info
+    druid.sql: warn
+spring:
+  #----- jpa config -----
+  jpa.show-sql: false
+  jpa.hibernate.ddl-auto: update
+  jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
+  #----- database base config -----
+  datasource.druid.driverClassName: 'com.mysql.cj.jdbc.Driver'
+  datasource.druid.url: jdbc:mysql://127.0.0.1:3306/learn?useSSL=false&${dataBaseParam}
+  datasource.druid.username: root
+  datasource.druid.password: root
+  #----- database more config -----
+  datasource.druid.connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  datasource.druid.filters: stat,wall,slf4j
+  datasource.druid.use-global-data-source-stat: true
+  datasource.druid.reset-stat-enable: false
+  # pool init,max,min
+  datasource.druid.initial-size: 5
+  datasource.druid.max-active: 20
+  datasource.druid.min-idle: 5
+  # pool count < minIdle, on free time > minEvictableIdleTimeMillis auto run keepAlive
+  datasource.druid.keep-alive: true
+  # timeout max time(unit:ms)
+  datasource.druid.max-wait: 60000
+  # live min time(unit:ms)
+  datasource.druid.min-evictable-idle-time-millis: 30000
+  # cache preparedStatement,alias is PSCache,PSCache max performance ,for example : oracle
+  datasource.druid.pool-prepared-statements: true
+  # if use PSCache,this must > 0 , if this > 0 the PSCache auto set true
+  # in Druid,not as Oracle PSCache money use max bug
+  # you can set this max ,example:100
+  datasource.druid.max-pool-prepared-statement-per-connection-size: 20
+  # at application get connect,the pool check that connect is open or close
+  datasource.druid.test-on-borrow: false
+  # at application return connect,the pool check that connect is open or close
+  datasource.druid.test-on-return: false
+  # at application get connect,and testOnBorrow ==  true,
+  # the pool check that connect is use or free
+  # if this connect is free, pool check that connect is open or close
+  datasource.druid.test-while-idle: true
+  # test sql limit time (unit:ms)
+  datasource.druid.time-between-eviction-runs-millis: 60000
+  # test sql
+  datasource.druid.validation-query: select 'x'
+  #----- druid filter config -----
+  datasource.druid.filter.stat.enabled: true
+  datasource.druid.filter.slf4j.enabled: false
+  datasource.druid.filter.slf4j.connection-log-enabled: false
+  datasource.druid.filter.slf4j.result-set-log-enabled: true
+  datasource.druid.filter.slf4j.statement-executable-sql-log-enable: true
+  datasource.druid.filter.slf4j.statement-log-enabled: false
+  #----- druid web filter config -----
+  datasource.druid.web-stat-filter.enabled: true
+  datasource.druid.web-stat-filter.url-pattern: /*
+  datasource.druid.web-stat-filter.exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+  datasource.druid.web-stat-filter.session-stat-enable: true
+  datasource.druid.web-stat-filter.session-stat-max-count: 1000
+  #----- druid web page config -----
+  datasource.druid.stat-view-servlet.enabled: true
+  datasource.druid.stat-view-servlet.login-username: admin
+  datasource.druid.stat-view-servlet.login-password: admin
+  datasource.druid.stat-view-servlet.url-pattern: /druid/*
+  # can't reset data
+  datasource.druid.stat-view-servlet.reset-enable: false
+  # white list
+  datasource.druid.stat-view-servlet.allow: 127.0.0.1
+  # black list
+  datasource.druid.stat-view-servlet.deny:
+
