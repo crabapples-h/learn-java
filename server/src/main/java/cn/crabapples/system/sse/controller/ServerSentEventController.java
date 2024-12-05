@@ -1,5 +1,6 @@
 package cn.crabapples.system.sse.controller;
 
+import cn.crabapples.common.jwt.JwtIgnore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class ServerSentEventController {
     private static final Map<String, SseEmitter> SSE_CLENT_MAP = new ConcurrentHashMap<>();
 
     @RequestMapping(value = "/connect/{id}")
-//    @JwtIgnore
+    @JwtIgnore
     public SseEmitter connectSse(@PathVariable String id) {
         log.info("收到sse请求,id:[{}]", id);
         SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
@@ -43,16 +44,23 @@ public class ServerSentEventController {
     }
 
     @RequestMapping("/send/{id}")
+    @JwtIgnore
     public void sseTestSend(@PathVariable String id) throws IOException, InterruptedException {
-        SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
-        log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);
-        for (int i = 0; i < 10; i++) {
-            SseEmitter.SseEventBuilder sseEventBuilder = SseEmitter.event();
-            TimeUnit.SECONDS.sleep(1);
-            sseEventBuilder
-                    .name("log")
-                    .data(String.format("第[%d]次消息推送", i));
-            sseEmitter.send(sseEventBuilder);
-        }
+        new Thread(() -> {
+            SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
+            log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    SseEmitter.SseEventBuilder sseEventBuilder = SseEmitter.event();
+                    TimeUnit.SECONDS.sleep(1);
+                    sseEventBuilder
+                            .name("log")
+                            .data(String.format("第[%d]次消息推送", i));
+                    sseEmitter.send(sseEventBuilder);
+                } catch (InterruptedException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
     }
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="/js/axios.min.js"></script>
+<script>
+    axios.create({
+        baseURL: 'http://localhost:8080',
+        timeout: 1000,
+        responseType: 'stream', // default
+        onDownloadProgress: function (progressEvent) {
+            console.log(progressEvent);
+            // 处理原生进度事件
+        },
+
+    })
+    console.log(axios)
+    axios.get('/api/sse/connect/123',
+        // {responseType: 'stream',}
+    ).then(res => {
+        console.log(res);
+    })
+    axios.get('/api/sse/send/123', {}).then(res => {
+        console.log(res);
+    })
+</script>
+</body>
+</html>
