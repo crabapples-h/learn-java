@@ -1,0 +1,63 @@
+version: "3"
+#version: "3.9"
+#version: "2.3"
+# 创建网络
+networks:
+  redis_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.21.0/24
+#          gateway: 172.16.21.1
+# 创建服务
+services:
+  redis_6380:
+    networks:
+      redis_network:
+        ipv4_address: 172.16.21.2
+    container_name: redis_6380
+    image: harbor.crabapples.cn/redis/redis:latest
+    restart: always
+#    volumes:
+#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: "redis-cli ping"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  redis_6381:
+    networks:
+      redis_network:
+        ipv4_address: 172.16.21.3
+    container_name: redis_6381
+    image: harbor.crabapples.cn/redis/redis:latest
+    restart: always
+#    volumes:
+#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6381:6379"
+    healthcheck:
+      test: "redis-cli ping"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  redis_6382:
+    networks:
+      redis_network:
+        ipv4_address: 172.16.21.4
+    container_name: redis_6382
+    image: harbor.crabapples.cn/redis/redis:latest
+    restart: always
+#    volumes:
+#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6382:6379"
+    healthcheck:
+      test: "redis-cli ping"
+      interval: 10s
+      timeout: 5s
+      retries: 3
