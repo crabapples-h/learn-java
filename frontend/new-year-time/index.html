@@ -19,13 +19,14 @@
             /*justify-content: center;*/
             height: 99.8vh;
             width: 100%;
-            background-image: url("bg-01.jpg");
+            background-image: url("bg.jpg");
             /*color: #c9e7b5;*/
             color: #ecff68;
             background-repeat: no-repeat;
             background-size: 100% 100%;
             background-attachment: fixed;
-            font-family: myFont, serif;
+            /*font-family: myFont, serif;*/
+            /*font-family: myFont, serif;*/
         }
 
         #text {
@@ -44,15 +45,15 @@
         .text-01 {
             font-size: 80px;
             position: absolute;
-            top: 2%;
-            right: 22%;
+            top: 25%;
+            left: 40%;
         }
 
         .text-02 {
             font-size: 80px;
             position: absolute;
-            top: 11%;
-            right: 15%;
+            top: 35%;
+            left: 40%;
         }
     </style>
 </head>
@@ -72,7 +73,7 @@
 <script>
     // let now = (new Date('2023-12-31 23:59:00').getTime() / 1000).toFixed(0)
     let now = (new Date().getTime() / 1000).toFixed(0)
-    let target = (new Date('2024-01-01 00:00:00').getTime() / 1000).toFixed(0)
+    let target = (new Date('2025-01-01 00:00:00').getTime() / 1000).toFixed(0)
     let dom = document.querySelector('#second')
     let second = null
     const computeSecond = setInterval(() => {
@@ -80,7 +81,7 @@
         dom.innerText = Math.abs(second)
         now++
         if (second >= 0) {
-            console.log('2024')
+            console.log('2025')
             clearInterval(computeSecond)
         }
     }, 1000)
