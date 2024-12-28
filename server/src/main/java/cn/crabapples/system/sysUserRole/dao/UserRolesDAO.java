@@ -1,6 +1,7 @@
 package cn.crabapples.system.sysUserRole.dao;
 
 import cn.crabapples.system.sysUserRole.dao.mybatis.mapper.UserRolesMapper;
+import cn.hutool.core.collection.CollectionUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class UserRolesDAO {
 
     public void saveUserRoles(String userId, List<String> roleList) {
         mapper.deleteUserRoles(userId);
-        if (roleList != null && !roleList.isEmpty()) {
+        if (!CollectionUtil.isEmpty(roleList)) {
             roleList.forEach(e -> mapper.saveUserRoles(userId, e));
         }
     }
