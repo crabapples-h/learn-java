@@ -1,0 +1,11 @@
+package org.example.application.custom.[(${packageName})];
+
+
+import org.example.application.common.base.BaseService;
+
+import java.util.List;
+
+public interface [(${moduleName})]Service extends BaseService<[(${moduleName})]> {
+
+    List<[(${moduleName})]> queryList();
+}

@@ -38,7 +38,6 @@ public class Main {
 //        String output = templateEngine.process("DAO", context);
         String output = templateEngine.process("Mapper", context);
 
-        // 输出结果
         System.out.println(output);
 
     }
