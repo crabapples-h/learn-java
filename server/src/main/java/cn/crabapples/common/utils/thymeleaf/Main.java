@@ -1,4 +1,4 @@
-package thymeleaf;
+package cn.crabapples.common.utils.thymeleaf;
 
 import com.alibaba.fastjson2.JSONObject;
 import org.thymeleaf.TemplateEngine;
@@ -40,7 +40,7 @@ public class Main {
         String separator = FileSystems.getDefault().getSeparator();
         String packageName = "user";
         String moduleName = "SysUser";
-        String basePackage = "SysUser";
+        String basePackage = "cn.crabapples";
 
 
         Context context = new Context();
@@ -48,20 +48,20 @@ public class Main {
         field.put("name", "test");
         field.put("type", "Integer");
 
-        context.setVariable("basePackage", packageName);
+        context.setVariable("basePackage", basePackage);
         context.setVariable("packageName", packageName);
         context.setVariable("url", "Test");
         context.setVariable("moduleName", moduleName);
         context.setVariable("fields", Collections.singletonList(field));
 
 
-        String path = "learn" + separator +
+        String path = "server" + separator +
                 "src" + separator +
                 "main" + separator +
                 "java" + separator +
-//                "org" + separator +
-//                "example" + separator +
-//                "custom" + separator +
+                "cn" + separator +
+                "crabapples" + separator +
+                "custom" + separator +
                 packageName + separator;
         File directory = new File(path);
         if (!directory.exists()) {
@@ -70,17 +70,14 @@ public class Main {
         for (String item : TEMPLATE_LIST) {
             String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, item);
             File file = new File(filePath);
+            System.err.println(file.getAbsolutePath());
             OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file));
 
             ENGINE.process(item, context, writer);
-//            String output = ENGINE.process(item, context);
-//            System.out.println(output);
 
         }
 
 
-        File file = Path.of(path + separator).toFile();
-        System.err.println(file.getAbsolutePath());
 //        String output = templateEngine.process("Controller", context);
 //        URL systemResource = ClassLoader.getSystemResource("aaa.java");
 //        System.err.println(systemResource);

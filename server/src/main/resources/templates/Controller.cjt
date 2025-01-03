@@ -1,8 +1,12 @@
-package [(${basePackage}})]n.custom.[(${packageName})];
+package [(${basePackage})].custom.[(${packageName})];
 
 import lombok.extern.slf4j.Slf4j;
-import [(${basePackage}})].common.ResponseDTO;
-import [(${basePackage}})].common.utils.jwt.JwtIgnore;
+import [(${basePackage})].common.base.ResponseDTO;
+import [(${basePackage})].common.jwt.JwtIgnore;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

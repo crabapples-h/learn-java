@@ -1,0 +1,7 @@
+Hello, [(${name})]!
+
+Your account balance is: [(${balance})].
+Thank you for using our service.
+
+Best regards,
+The Team
