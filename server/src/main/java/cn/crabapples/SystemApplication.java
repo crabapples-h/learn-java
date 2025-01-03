@@ -1,6 +1,7 @@
 package cn.crabapples;
 
 import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
+import cn.hutool.extra.template.engine.thymeleaf.ThymeleafEngine;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -22,6 +23,8 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+
+import java.util.Collections;
 
 
 /**
@@ -76,6 +79,19 @@ public class SystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(SystemApplication.class, args);
         logger.info(">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>");
+
+//        ThymeleafEngine engine = new ThymeleafEngine();
+//        String render = engine.getTemplate("code-template/ControllerTemplate.html")
+//                .render(Collections.singletonMap("hello", "你好"));
+//        System.err.println(render);
+//
+//
+//        Context context = new Context();
+//        context.setVariable("username","LQZ_DJY");
+//        context.setVariable("position","java工程师");
+//        context.setVariable("slaray","30000");
+//        String mail = engine.process("mail", context);
+//        System.out.println(mail);
     }
 
     @Bean

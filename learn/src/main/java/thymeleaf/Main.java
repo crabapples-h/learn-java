@@ -1,5 +1,6 @@
 package thymeleaf;
 
+import com.alibaba.fastjson2.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -7,31 +8,38 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        // 创建模板解析器
-
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setPrefix("/templates/"); // 模板文件路径
-        templateResolver.setSuffix(".txt");       // 模板文件后缀
-        templateResolver.setTemplateMode("TEXT"); // 模板模式：TEXT
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setSuffix(".cjt");
+        templateResolver.setTemplateMode("TEXT");
 
-        // 创建模板引擎
         TemplateEngine templateEngine = new TemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
 
-        // 创建上下文并传递数据
+        templateEngine.setTemplateResolver(templateResolver);
         Context context = new Context();
-        context.setVariable("name", "John Doe");
-        context.setVariable("balance", "$1234.56");
+        JSONObject field = new JSONObject();
+        field.put("name", "test");
+        field.put("type", "Integer");
+
+        context.setVariable("packageName", "test");
+        context.setVariable("url", "Test");
+        context.setVariable("moduleName", "Test");
+        context.setVariable("fields", Collections.singletonList(field));
 
         // 渲染模板
-        String output = templateEngine.process("template", context);
+//        String output = templateEngine.process("Controller", context);
+//        String output = templateEngine.process("Service", context);
+//        String output = templateEngine.process("ServiceImpl", context);
+//        String output = templateEngine.process("Entity", context);
+//        String output = templateEngine.process("DAO", context);
+        String output = templateEngine.process("Mapper", context);
 
         // 输出结果
         System.out.println(output);
-        System.out.println(templateResolver.getPrefix());
 
     }
 }

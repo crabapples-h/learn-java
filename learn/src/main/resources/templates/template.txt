@@ -1,6 +1,6 @@
-Hello, ${name}!
+Hello, [(${name})]!
 
-Your account balance is: {th:balance}.
+Your account balance is: [(${balance})].
 Thank you for using our service.
 
 Best regards,

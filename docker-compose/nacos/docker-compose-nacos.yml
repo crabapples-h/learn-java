@@ -3,7 +3,7 @@ version: "3"
 #version: "2.3"
 # 创建网络
 networks:
-  host:
+  nacos_network:
     ipam:
       driver: default
       config:
@@ -14,7 +14,7 @@ services:
   # nacos 8849
   nacos_8849:
     networks:
-      host:
+      nacos_network:
         ipv4_address: 172.16.20.2
     container_name: nacos_8849
     image: harbor.crabapples.cn/nacos/nacos-server:latest
@@ -39,7 +39,7 @@ services:
   # nacos 8850
   nacos_8850:
     networks:
-      host:
+      nacos_network:
         ipv4_address: 172.16.20.3
     container_name: nacos_8850
     image: harbor.crabapples.cn/nacos/nacos-server:latest
@@ -64,7 +64,7 @@ services:
   # nacos 8851
   nacos_8851:
     networks:
-      host:
+      nacos_network:
         ipv4_address: 172.16.20.4
     container_name: nacos_8851
     image: harbor.crabapples.cn/nacos/nacos-server:latest

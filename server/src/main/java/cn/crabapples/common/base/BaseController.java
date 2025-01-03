@@ -1,9 +1,17 @@
 package cn.crabapples.common.base;
 
+import cn.idev.excel.FastExcel;
+import cn.idev.excel.support.ExcelTypeEnum;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 
@@ -17,8 +25,11 @@ import java.util.Set;
  * pc-name 29404
  */
 public abstract class BaseController {
-    @Autowired
+    @Resource
     private Validator validator;
+
+    @Resource
+    private HttpServletResponse response;
 
     /**
      * 属性校验的方法
@@ -27,8 +38,20 @@ public abstract class BaseController {
      */
     protected final void validator(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
-        for (ConstraintViolation constraintViolation : constraintViolations) {
+        for (ConstraintViolation<Object> constraintViolation : constraintViolations) {
             throw new ApplicationException(constraintViolation.getMessageTemplate());
         }
+    }
+
+    protected <T extends Model<T>> void exportExcel(String fileName, List<T> list, Class<T> clazz) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
+        ServletOutputStream outputStream = response.getOutputStream();
+        FastExcel.write(outputStream, clazz)
+                .useDefaultStyle(false)
+                .excelType(ExcelTypeEnum.XLSX)
+                .sheet("sheet")
+                .doWrite(list);
     }
 }

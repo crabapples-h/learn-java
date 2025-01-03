@@ -1,0 +1,26 @@
+package org.example.application.custom.[(${packageName})];
+
+import lombok.extern.slf4j.Slf4j;
+import org.example.application.common.ResponseDTO;
+import org.example.application.common.utils.jwt.JwtIgnore;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/api/[(${url})]")
+@Slf4j
+public class [(${moduleName})]Controller {
+    private final [(${moduleName})]Service service;
+
+    public [(${moduleName})]Controller([(${moduleName})]Service service) {
+        this.service = service;
+    }
+
+    @RequestMapping("/list")
+    public ResponseDTO list() {
+        List<[(${moduleName})]> list = service.queryList();
+        return ResponseDTO.returnSuccess(list);
+    }
+}

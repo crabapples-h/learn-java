@@ -1,0 +1,19 @@
+package org.example.application.custom.[(${packageName})];
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class [(${moduleName})]ServiceImpl implements [(${moduleName})]Service {
+    private final [(${moduleName})]DAO dao;
+
+    public [(${moduleName})]ServiceImpl([(${moduleName})]DAO dao) {
+        this.dao = dao;
+    }
+
+    @Override
+    public List<[(${moduleName})]> queryList( ) {
+        return dao.queryList();
+    }
+}

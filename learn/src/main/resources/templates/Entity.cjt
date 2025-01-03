@@ -1,0 +1,19 @@
+package org.example.application.custom.[(${packageName})];
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class [(${moduleName})] {
+[# th:block th:each="item : ${fields}" ]
+    private [# th:utext="${item.type}" /]  [# th:utext="${item.name}" /]
+[/]
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
+}
+

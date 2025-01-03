@@ -17,7 +17,7 @@
         <module>learn-byte-buddy</module>
         <module>gateway</module>
         <module>server</module>
-<!--        <module>server-flux</module>-->
+        <!--        <module>server-flux</module>-->
     </modules>
     <profiles>
         <profile>
@@ -87,6 +87,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--spring-->
+        <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
         <!--        <spring-boot-starter-security.version>2.1.6.RELEASE</spring-boot-starter-security.version>-->
         <!--        <spring-cloud-starter-alibaba-nacos-config.version>2.2.0.RELEASE-->
         <!--        </spring-cloud-starter-alibaba-nacos-config.version>-->
@@ -94,9 +95,6 @@
         <!--        </spring-cloud-starter-alibaba-nacos-discovery.version>-->
         <!--        <nacos-config-spring-boot-starter.version>0.2.3</nacos-config-spring-boot-starter.version>-->
         <!--        <nacos-client.version>1.0.1</nacos-client.version>-->
-        <!--        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>-->
-        <!--        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>-->
-        <!--        <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>-->
         <spring-boot.version>2.6.13</spring-boot.version>
         <spring-cloud.version>2021.0.3</spring-cloud.version>
         <!--        <spring-cloud.version>Hoxton.SR10</spring-cloud.version>-->
