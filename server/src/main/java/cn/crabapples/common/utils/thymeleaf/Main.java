@@ -1,6 +1,7 @@
 package cn.crabapples.common.utils.thymeleaf;
 
 import com.alibaba.fastjson2.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -10,12 +11,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 public class Main {
     private final static List<String> TEMPLATE_LIST = new ArrayList<>();
     private final static ClassLoaderTemplateResolver TEMPLATE_RESOLVER = new ClassLoaderTemplateResolver();
@@ -67,15 +70,21 @@ public class Main {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        for (String item : TEMPLATE_LIST) {
-            String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, item);
-            File file = new File(filePath);
-            System.err.println(file.getAbsolutePath());
-            OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(file));
-
-            ENGINE.process(item, context, writer);
-
-        }
+        generatorController(path, moduleName, "Controller", context);
+        generatorService(path, moduleName, "Service", context);
+        generatorServiceImpl(path, moduleName, "ServiceImpl", context);
+        generatorMapper(path, moduleName, "Mapper", context);
+        generatorDao(path, moduleName, "DAO", context);
+        generatorEntity(path, moduleName, "Mapper", context);
+//        for (String item : TEMPLATE_LIST) {
+//            String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, item);
+//            log.info("生成文件:[{}]", filePath);
+////            File file = new File(filePath);
+////            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+////
+////            ENGINE.process(item, context, writer);
+//
+//        }
 
 
 //        String output = templateEngine.process("Controller", context);
@@ -91,5 +100,45 @@ public class Main {
 
 //        System.out.println(output);
 
+    }
+
+    private static void generatorController(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        log.info("生成文件:[{}]", filePath);
+        File file = new File(filePath);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    private static void generatorService(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        log.info("生成文件:[{}]", filePath);
+        File file = new File(filePath);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    private static void generatorServiceImpl(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        log.info("生成文件:[{}]", filePath);
+        File file = new File(filePath);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    private static void generatorMapper(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        log.info("生成文件:[{}]", filePath);
+        File file = new File(filePath);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
     }
 }

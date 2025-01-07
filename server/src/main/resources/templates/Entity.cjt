@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class [(${moduleName})] {
 [# th:block th:each="item : ${fields}" ]
-    private [# th:utext="${item.type}" /]  [# th:utext="${item.name}" /];
+    private [# th:utext="${item.type}" /] [# th:utext="${item.name}" /];
 [/]
     @Override
     public String toString() {
