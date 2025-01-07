@@ -10,7 +10,7 @@ import java.util.List;
 public class SysUserDAO extends BaseDAO {
     private final SysUserMapper mapping;
 
-    public SysUserDAO(ClassRoomMapper mapping) {
+    public SysUserDAO(SysUserMapper mapping) {
         this.mapping = mapping;
     }
 

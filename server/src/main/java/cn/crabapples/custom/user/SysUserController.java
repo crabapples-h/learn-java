@@ -5,9 +5,8 @@ import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.common.jwt.JwtIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class SysUserController {
     @RequestMapping("/list")
     public ResponseDTO list() {
         List<SysUser> list = service.queryList();
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     @PostMapping("/save")

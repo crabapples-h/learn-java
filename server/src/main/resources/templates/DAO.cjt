@@ -10,7 +10,7 @@ import java.util.List;
 public class [(${moduleName})]DAO extends BaseDAO {
     private final [(${moduleName})]Mapper mapping;
 
-    public [(${moduleName})]DAO(ClassRoomMapper mapping) {
+    public [(${moduleName})]DAO([(${moduleName})]Mapper mapping) {
         this.mapping = mapping;
     }
 

@@ -6,9 +6,7 @@ import [(${basePackage})].common.jwt.JwtIgnore;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class [(${moduleName})]Controller {
     @RequestMapping("/list")
     public ResponseDTO list() {
         List<[(${moduleName})]> list = service.queryList();
-        return ResponseDTO.returnSuccess(list);
+        return new ResponseDTO<>(list);
     }
 
     @PostMapping("/save")
