@@ -14,51 +14,56 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class Main {
-    private final static List<String> TEMPLATE_LIST = new ArrayList<>();
-    private final static ClassLoaderTemplateResolver TEMPLATE_RESOLVER = new ClassLoaderTemplateResolver();
-    private final static TemplateEngine ENGINE = new TemplateEngine();
-    private final static String FILE_NAME_TEMPLATE = "{0}/{1}{2}.java";
+    private final static Map<String, String> TEMPLATE_MAP = new HashMap<>();
+    private final static String FILE_NAME_TEMPLATE = "{0}/{1}.java";
     private final static String FILE_PATH_TEMPLATE = "{0}{1}";
 
     static {
-        TEMPLATE_LIST.add("Controller");
-        TEMPLATE_LIST.add("Service");
-        TEMPLATE_LIST.add("ServiceImpl");
-        TEMPLATE_LIST.add("Entity");
-        TEMPLATE_LIST.add("DAO");
-        TEMPLATE_LIST.add("Mapper");
-        TEMPLATE_RESOLVER.setPrefix("/templates/");
-        TEMPLATE_RESOLVER.setSuffix(".cjt");
-        TEMPLATE_RESOLVER.setTemplateMode("TEXT");
-        ENGINE.setTemplateResolver(TEMPLATE_RESOLVER);
+        TEMPLATE_MAP.put("$$Controller", "controller");
+        TEMPLATE_MAP.put("$$Service", "service");
+        TEMPLATE_MAP.put("$$ServiceImpl", "service/impl");
+        TEMPLATE_MAP.put("$$", "entity");
+        TEMPLATE_MAP.put("$$DAO", "dao");
+        TEMPLATE_MAP.put("$$Mapper", "dao/mybatis/mapper");
+
 
     }
 
     public static void main(String[] args) throws IOException {
-        String separator = FileSystems.getDefault().getSeparator();
         String packageName = "user";
         String moduleName = "SysUser";
         String basePackage = "cn.crabapples";
-
-
-        Context context = new Context();
+        String url = "/api/test1";
         JSONObject field = new JSONObject();
-        field.put("name", "test");
+        field.put("name", "String");
         field.put("type", "Integer");
-
+        List<JSONObject> fields = Collections.singletonList(field);
+        Context context = new Context();
         context.setVariable("basePackage", basePackage);
         context.setVariable("packageName", packageName);
-        context.setVariable("url", "Test");
+        context.setVariable("url", url);
         context.setVariable("moduleName", moduleName);
-        context.setVariable("fields", Collections.singletonList(field));
+        context.setVariable("fields", fields);
 
 
+        generatorJavaClass(context, packageName, moduleName);
+        generatorMybatisMapper(context, packageName, moduleName);
+
+    }
+
+    private static void generatorMybatisMapper(Context context, String packageName, String moduleName) throws IOException {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setSuffix(".cxt");
+        templateResolver.setTemplateMode("XML");
+        TemplateEngine engine = new TemplateEngine();
+        engine.setTemplateResolver(templateResolver);
+
+        String separator = FileSystems.getDefault().getSeparator();
         String path = "server" + separator +
                 "src" + separator +
                 "main" + separator +
@@ -67,126 +72,50 @@ public class Main {
                 "crabapples" + separator +
                 "custom" + separator +
                 packageName + separator;
-
-        generatorController(path, moduleName, "Controller", context);
-        generatorService(path, moduleName, "Service", context);
-        generatorServiceImpl(path, moduleName, "ServiceImpl", context);
-        generatorDao(path, moduleName, "DAO", context);
-        generatorMapper(path, moduleName, "Mapper", context);
-        generatorEntity(path, moduleName, "Entity", context);
-//        for (String item : TEMPLATE_LIST) {
-//            String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, item);
-//            log.info("生成文件:[{}]", filePath);
-////            File file = new File(filePath);
-////            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-////
-////            ENGINE.process(item, context, writer);
-//
-//        }
-
-
-//        String output = templateEngine.process("Controller", context);
-//        URL systemResource = ClassLoader.getSystemResource("aaa.java");
-//        System.err.println(systemResource);
-//        OutputStreamWriter output = new OutputStreamWriter("");
-//        ENGINE.process("Controller", context,null);
-//        String output = ENGINE.process("Service", context);
-//        String output = ENGINE.process("ServiceImpl", context);
-//        String output = ENGINE.process("Entity", context);
-//        String output = ENGINE.process("DAO", context);
-//        String output = ENGINE.process("Mapper", context);
-
-//        System.out.println(output);
-
-    }
-
-    private static void generatorController(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/controller");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
+        for (Map.Entry<String, String> item : TEMPLATE_MAP.entrySet()) {
+            String templateName = item.getKey();
+            String subPackageName = item.getValue();
+            String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, subPackageName);
+            File directory = new File(filePath);
             directory.mkdirs();
+            String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, templateName.replace("$$", moduleName));
+            File file = new File(fileName);
+            log.info("生成文件:[{}]", fileName);
+            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+            engine.process(templateName, context, writer);
+
         }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
     }
 
-    private static void generatorService(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/service");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
+    private static void generatorJavaClass(Context context, String packageName, String moduleName) throws IOException {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setSuffix(".cjt");
+        templateResolver.setTemplateMode("TEXT");
+        TemplateEngine engine = new TemplateEngine();
+        engine.setTemplateResolver(templateResolver);
+
+        String separator = FileSystems.getDefault().getSeparator();
+        String path = "server" + separator +
+                "src" + separator +
+                "main" + separator +
+                "java" + separator +
+                "cn" + separator +
+                "crabapples" + separator +
+                "custom" + separator +
+                packageName + separator;
+        for (Map.Entry<String, String> item : TEMPLATE_MAP.entrySet()) {
+            String templateName = item.getKey();
+            String subPackageName = item.getValue();
+            String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, subPackageName);
+            File directory = new File(filePath);
             directory.mkdirs();
+            String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, templateName.replace("$$", moduleName));
+            File file = new File(fileName);
+            log.info("生成文件:[{}]", fileName);
+            OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+            engine.process(templateName, context, writer);
         }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
     }
 
-    private static void generatorServiceImpl(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/service/impl");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
-    }
-
-    private static void generatorDao(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/dao");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
-    }
-
-    private static void generatorMapper(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/dao/mybatis/mapper");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
-    }
-
-    private static void generatorEntity(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/entity");
-        log.info("生成文件:[{}]", filePath);
-        File directory = new File(filePath);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, "");
-        File file = new File(fileName);
-        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
-        ENGINE.process(template, context, writer);
-        writer.flush();
-        writer.close();
-    }
 }

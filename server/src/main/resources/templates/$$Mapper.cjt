@@ -3,10 +3,11 @@ package [(${basePackage})].custom.[(${packageName})].dao.mybatis.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import [(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})];
+
 
 import java.util.List;
 
 @Mapper
 public interface [(${moduleName})]Mapper extends BaseMapper<[(${moduleName})]> {
-    List<[(${moduleName})]> queryList();
 }

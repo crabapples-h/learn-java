@@ -1,0 +1,18 @@
+package [(${basePackage})].custom.[(${packageName})].service;
+
+
+import [(${basePackage})].common.base.BaseService;
+import [(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})];
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
+import java.util.List;
+
+public interface [(${moduleName})]Service extends BaseService<[(${moduleName})]> {
+
+    Page<[(${moduleName})]> page(Integer pageIndex, Integer pageSize, [(${moduleName})] entity);
+    List<[(${moduleName})]> list([(${moduleName})] entity);
+    [(${moduleName})] getById(String id);
+    boolean save([(${moduleName})] entity);
+    boolean remove(String id);
+}

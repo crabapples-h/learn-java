@@ -23,49 +23,34 @@ public class [(${moduleName})]Controller {
         this.service = service;
     }
 
+      @GetMapping("/page")
+        public ResponseDTO<Page<[(${moduleName})]>> page([(${moduleName})] entity,
+                                            @RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex,
+                                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+            log.info("收到请求->获取[(${moduleName})]分页");
+            Page<[(${moduleName})]> data = service.page(pageIndex, pageSize, entity);
+            log.info("返回结果->获取[(${moduleName})]分页完成:[{}]", data);
+            return new ResponseDTO<>(data);
+        }
+
     @RequestMapping("/list")
-    public ResponseDTO list() {
-        List<[(${moduleName})]> list = service.queryList();
+    public ResponseDTO<List<[(${moduleName})]>> list([(${moduleName})] entity) {
+        List<[(${moduleName})]> list = service.list(entity);
         return new ResponseDTO<>(list);
     }
 
     @PostMapping("/save")
     public ResponseDTO<Boolean> save(@RequestBody [(${moduleName})] entity) {
         log.info("收到请求->保存[(${moduleName})]");
-        boolean status = entity.insertOrUpdate();
+        boolean status = service.save(entity);
         log.info("返回结果->保存[(${moduleName})]完成:[{}]", status);
         return new ResponseDTO<>(status);
     }
 
-    @GetMapping("/page")
-    public ResponseDTO<Page<[(${moduleName})]>> page([(${moduleName})] entity,
-                                        @RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex,
-                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        log.info("收到请求->获取[(${moduleName})]分页");
-        QueryWrapper<[(${moduleName})]> wrapper = new QueryWrapper<>(entity).select();
-        wrapper.orderByDesc("create_time");
-        Page<[(${moduleName})]> page = new Page<>(pageIndex, pageSize);
-        Page<[(${moduleName})]> data = service.page(page, wrapper);
-        log.info("返回结果->获取[(${moduleName})]分页完成:[{}]", data);
-        return new ResponseDTO<>(data);
-    }
-
-    @GetMapping("/list")
-    @JwtIgnore
-    public ResponseDTO<List<[(${moduleName})]>> list([(${moduleName})] entity) {
-        log.info("收到请求->获取[(${moduleName})]列表");
-        QueryWrapper<[(${moduleName})]> wrapper = new QueryWrapper<>(entity).select();
-        wrapper.orderByDesc("create_time");
-        List<[(${moduleName})]> data = service.list(wrapper);
-        log.info("返回结果->获取[(${moduleName})]列表完成:[{}]", data);
-        return new ResponseDTO<>(data);
-    }
-
-
     @GetMapping("/get/{id}")
     public ResponseDTO<[(${moduleName})]> info(@PathVariable String id) {
         log.info("收到请求->获取[(${moduleName})]详情");
-        [(${moduleName})] data = [(${moduleName})].create().setId(id).selectById();
+        [(${moduleName})] data = service.getById(id);
         log.info("返回结果->获取[(${moduleName})]详情完成:[{}]", data);
         return new ResponseDTO<>(data);
     }
@@ -73,7 +58,7 @@ public class [(${moduleName})]Controller {
     @DeleteMapping("/remove/{id}")
     public ResponseDTO<Boolean> remove(@PathVariable String id) {
         log.info("收到请求->删除[(${moduleName})]");
-        boolean status = [(${moduleName})].create().setId(id).deleteById();
+        boolean status = service.remove(id);
         log.info("返回结果->删除[(${moduleName})]完成:[{}]", status);
         return new ResponseDTO<>(status);
     }

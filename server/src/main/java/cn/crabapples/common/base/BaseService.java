@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * qq 294046317
  * pc-name mrhe
  */
-public interface BaseService {
+public interface BaseService<BaseEntity> {
     /**
      * 将菜单树中标记为删除的去除
      */

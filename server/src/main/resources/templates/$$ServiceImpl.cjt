@@ -1,0 +1,53 @@
+package [(${basePackage})].custom.[(${packageName})].service.impl;
+
+import org.springframework.stereotype.Service;
+import [(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})];
+import [(${basePackage})].custom.[(${packageName})].dao.[(${moduleName})]DAO;
+import [(${basePackage})].custom.[(${packageName})].service.[(${moduleName})]Service;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+
+import java.util.List;
+
+@Service
+public class [(${moduleName})]ServiceImpl implements [(${moduleName})]Service {
+    private final [(${moduleName})]DAO dao;
+
+    public [(${moduleName})]ServiceImpl([(${moduleName})]DAO dao) {
+        this.dao = dao;
+    }
+
+    @Override
+    public Page<[(${moduleName})]> page(Integer pageIndex, Integer pageSize, [(${moduleName})] entity) {
+        Page<[(${moduleName})]> page = new Page<>(pageIndex, pageSize);
+        LambdaQueryWrapper<[(${moduleName})]> wrapper = new LambdaQueryWrapper<>();
+        // wrapper.eq([(${moduleName})]::getName, entity.getName());
+        wrapper.orderByDesc([(${moduleName})]::getCreateTime);
+        return dao.page(page, wrapper);
+    }
+
+    @Override
+    public List<[(${moduleName})]> list([(${moduleName})] entity) {
+        LambdaQueryWrapper<[(${moduleName})]> wrapper = new LambdaQueryWrapper<>();
+        // wrapper.eq([(${moduleName})]::getName, entity.getName());
+        wrapper.orderByDesc([(${moduleName})]::getCreateTime);
+        return dao.list(wrapper);
+    }
+
+    @Override
+    public SysUser getById(String id) {
+        return dao.getById(id);
+    }
+
+    @Override
+    public boolean save(SysUser entity) {
+        return dao.saveOrUpdate(entity);
+    }
+
+    @Override
+    public boolean remove(String id) {
+        return dao.removeById(id);
+    }
+}
