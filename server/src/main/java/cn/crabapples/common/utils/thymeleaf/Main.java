@@ -34,10 +34,15 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
+        // 包名
         String packageName = "user";
+        // 类名
         String moduleName = "SysUser";
+        // 基础包名
         String basePackage = "cn.crabapples";
+        // api地址
         String url = "/api/test1";
+        // 属性列表
         JSONObject field = new JSONObject();
         field.put("name", "String");
         field.put("type", "Integer");

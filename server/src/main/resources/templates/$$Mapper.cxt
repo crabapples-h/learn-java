@@ -15,6 +15,17 @@
 				<selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
 						SELECT LAST_INSERT_ID()
 				</selectKey>
+				insert into sys_user (
+				[# th:block th:each="item : ${fields}" ]
+                 [# th:utext="${item.name}" /],
+                [/]
+                )
+				values (#{age,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+				#{status,jdbcType=BIT}, #{username,jdbcType=VARCHAR}, #{role,jdbcType=BIT}, #{mail,jdbcType=VARCHAR},
+				#{lastModifiedBy,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{rolesList,jdbcType=LONGVARCHAR}
+				)
+
+
 				insert into sys_user (age, name, password,
 				status, username, role, mail,
 				last_modified_by, phone, roles_list
