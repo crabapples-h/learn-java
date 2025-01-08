@@ -1,6 +1,9 @@
-package cn.crabapples.custom.user;
+package cn.crabapples.custom.user.service.impl;
 
 import org.springframework.stereotype.Service;
+import cn.crabapples.custom.user.entity.SysUser;
+import cn.crabapples.custom.user.dao.SysUserDAO;
+
 
 import java.util.List;
 

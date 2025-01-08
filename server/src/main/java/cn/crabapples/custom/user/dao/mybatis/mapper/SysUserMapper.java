@@ -1,4 +1,4 @@
-package cn.crabapples.custom.user;
+package cn.crabapples.custom.user.dao.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

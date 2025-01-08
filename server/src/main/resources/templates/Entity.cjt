@@ -1,12 +1,11 @@
-package [(${basePackage})].custom.[(${packageName})];
+package [(${basePackage})].custom.[(${packageName})].entity;
 
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class [(${moduleName})] {
 [# th:block th:each="item : ${fields}" ]
     private [# th:utext="${item.type}" /] [# th:utext="${item.name}" /];

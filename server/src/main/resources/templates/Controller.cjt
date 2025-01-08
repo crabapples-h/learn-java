@@ -1,4 +1,4 @@
-package [(${basePackage})].custom.[(${packageName})];
+package [(${basePackage})].custom.[(${packageName})].controller;
 
 import lombok.extern.slf4j.Slf4j;
 import [(${basePackage})].common.base.ResponseDTO;
@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import [(${basePackage})].custom.[(${packageName})].service.[(${moduleName})]Service;
+import [(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})];
+
 
 import java.util.List;
 

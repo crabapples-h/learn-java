@@ -1,7 +1,8 @@
-package [(${basePackage})].custom.[(${packageName})];
+package [(${basePackage})].custom.[(${packageName})].service;
 
 
 import [(${basePackage})].common.base.BaseService;
+import [(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})];
 
 import java.util.List;
 

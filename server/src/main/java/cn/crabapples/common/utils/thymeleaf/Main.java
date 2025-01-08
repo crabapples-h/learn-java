@@ -23,7 +23,8 @@ public class Main {
     private final static List<String> TEMPLATE_LIST = new ArrayList<>();
     private final static ClassLoaderTemplateResolver TEMPLATE_RESOLVER = new ClassLoaderTemplateResolver();
     private final static TemplateEngine ENGINE = new TemplateEngine();
-    private final static String FILE_NAME_TEMPLATE = "{0}{1}{2}.java";
+    private final static String FILE_NAME_TEMPLATE = "{0}/{1}{2}.java";
+    private final static String FILE_PATH_TEMPLATE = "{0}{1}";
 
     static {
         TEMPLATE_LIST.add("Controller");
@@ -66,16 +67,13 @@ public class Main {
                 "crabapples" + separator +
                 "custom" + separator +
                 packageName + separator;
-        File directory = new File(path);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
+
         generatorController(path, moduleName, "Controller", context);
         generatorService(path, moduleName, "Service", context);
         generatorServiceImpl(path, moduleName, "ServiceImpl", context);
-        generatorMapper(path, moduleName, "Mapper", context);
         generatorDao(path, moduleName, "DAO", context);
-        generatorEntity(path, moduleName, "Mapper", context);
+        generatorMapper(path, moduleName, "Mapper", context);
+        generatorEntity(path, moduleName, "Entity", context);
 //        for (String item : TEMPLATE_LIST) {
 //            String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, item);
 //            log.info("生成文件:[{}]", filePath);
@@ -103,9 +101,14 @@ public class Main {
     }
 
     private static void generatorController(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/controller");
         log.info("生成文件:[{}]", filePath);
-        File file = new File(filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
+        File file = new File(fileName);
         OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
         ENGINE.process(template, context, writer);
         writer.flush();
@@ -113,9 +116,14 @@ public class Main {
     }
 
     private static void generatorService(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/service");
         log.info("生成文件:[{}]", filePath);
-        File file = new File(filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
+        File file = new File(fileName);
         OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
         ENGINE.process(template, context, writer);
         writer.flush();
@@ -123,9 +131,29 @@ public class Main {
     }
 
     private static void generatorServiceImpl(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/service/impl");
         log.info("生成文件:[{}]", filePath);
-        File file = new File(filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
+        File file = new File(fileName);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    private static void generatorDao(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/dao");
+        log.info("生成文件:[{}]", filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
+        File file = new File(fileName);
         OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
         ENGINE.process(template, context, writer);
         writer.flush();
@@ -133,9 +161,29 @@ public class Main {
     }
 
     private static void generatorMapper(String path, String moduleName, String template, Context context) throws IOException {
-        String filePath = MessageFormat.format(FILE_NAME_TEMPLATE, path, moduleName, template);
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/dao/mybatis/mapper");
         log.info("生成文件:[{}]", filePath);
-        File file = new File(filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, template);
+        File file = new File(fileName);
+        OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
+        ENGINE.process(template, context, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    private static void generatorEntity(String path, String moduleName, String template, Context context) throws IOException {
+        String filePath = MessageFormat.format(FILE_PATH_TEMPLATE, path, "/entity");
+        log.info("生成文件:[{}]", filePath);
+        File directory = new File(filePath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        String fileName = MessageFormat.format(FILE_NAME_TEMPLATE, filePath, moduleName, "");
+        File file = new File(fileName);
         OutputStreamWriter writer = new OutputStreamWriter(Files.newOutputStream(file.toPath()));
         ENGINE.process(template, context, writer);
         writer.flush();
