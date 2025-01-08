@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="[(${basePackage})].custom.[(${packageName})].dao.mybatis.mapper.[(${moduleName})]Mapper">
+		<select id="selectByExampleWithBLOBs" resultType="[(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})]">
+				select * from
+		</select>
+
+		<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+				delete
+				from sys_user
+				where id = #{id,jdbcType=VARCHAR}
+		</delete>
+
+		<insert id="insert" parameterType="[(${basePackage})].custom.[(${packageName})].entity.[(${moduleName})]">
+				<selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+						SELECT LAST_INSERT_ID()
+				</selectKey>
+				insert into sys_user (age, name, password,
+				status, username, role, mail,
+				last_modified_by, phone, roles_list
+				)
+				values (#{age,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+				#{status,jdbcType=BIT}, #{username,jdbcType=VARCHAR}, #{role,jdbcType=BIT}, #{mail,jdbcType=VARCHAR},
+				#{lastModifiedBy,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{rolesList,jdbcType=LONGVARCHAR}
+				)
+		</insert>
+</mapper>
