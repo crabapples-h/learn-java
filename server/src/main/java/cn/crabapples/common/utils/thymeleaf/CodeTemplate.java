@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 import java.util.*;
 
 @Slf4j
-public class Main {
+public class CodeTemplate {
     private final static Map<String, String> TEMPLATE_MAP = new HashMap<>();
     private final static String CLASS_NAME_TEMPLATE = "{0}/{1}.java";
     private final static String XML_NAME_TEMPLATE = "{0}/{1}.xml";
@@ -62,7 +62,7 @@ public class Main {
 
     private static void generatorMybatisMapper(Context context, String packageName, String moduleName) throws IOException {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setPrefix("/templates/");
+        resolver.setPrefix("/code-template/");
         resolver.setSuffix(".cxt");
         resolver.setTemplateMode("TEXT");
 
@@ -92,7 +92,7 @@ public class Main {
 
     private static void generatorJavaClass(Context context, String packageName, String moduleName) throws IOException {
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setPrefix("/templates/");
+        resolver.setPrefix("/code-template/");
         resolver.setSuffix(".cjt");
         resolver.setTemplateMode("TEXT");
 
