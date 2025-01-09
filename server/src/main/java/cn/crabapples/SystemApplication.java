@@ -1,10 +1,6 @@
 package cn.crabapples;
 
 import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
-import cn.hutool.extra.template.engine.thymeleaf.ThymeleafEngine;
-import com.baomidou.mybatisplus.annotation.DbType;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
@@ -16,14 +12,19 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 
 
@@ -76,9 +77,21 @@ import java.util.Collections;
 public class SystemApplication {
     private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
 
-    public static void main(String[] args) {
-        SpringApplication.run(SystemApplication.class, args);
-        logger.info(">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>");
+    public static void main(String[] args) throws UnknownHostException {
+//        FlexGlobalConfig.getDefaultConfig().setTenantColumn("depart_id");
+        ConfigurableApplicationContext application = SpringApplication.run(SystemApplication.class, args);
+        Environment env = application.getEnvironment();
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        String port = env.getProperty("server.port");
+        String pathProperty = env.getProperty("server.servlet.context-path");
+        String path = StringUtils.hasLength(pathProperty) ? pathProperty : "";
+        logger.info("\n" +
+                "----------------------------------------------------------\n\t" +
+                ">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>:\n\t" +
+                "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
+                "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
+                "Swagger文档: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n" +
+                "----------------------------------------------------------");
 
 //        ThymeleafEngine engine = new ThymeleafEngine();
 //        String render = engine.getTemplate("code-template/ControllerTemplate.html")
@@ -99,12 +112,6 @@ public class SystemApplication {
         return builder.build();
     }
 
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        return interceptor;
-    }
 
 //    @Bean
 //    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {

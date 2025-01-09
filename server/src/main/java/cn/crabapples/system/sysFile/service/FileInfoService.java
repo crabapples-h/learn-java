@@ -2,7 +2,7 @@ package cn.crabapples.system.sysFile.service;
 
 import cn.crabapples.common.utils.file.FileUtils;
 import cn.crabapples.system.sysFile.entity.FileInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

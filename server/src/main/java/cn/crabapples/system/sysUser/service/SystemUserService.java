@@ -6,7 +6,7 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.ResetPasswordForm;
 import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface SystemUserService extends BaseService {
 
     SysUser findByUsername(String username);
 
-    IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form);
+    Page<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form);
 
     List<SysUserDTO> findAll(UserForm form);
 

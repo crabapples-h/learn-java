@@ -9,7 +9,9 @@ import cn.crabapples.system.sysUser.form.ResetPasswordForm;
 import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/api/system/user")
-//@Api("系统接口[用户]")
+@Tag(name = "系统接口[用户]")
 @Slf4j
 public class SystemUserController extends BaseController {
     private final SystemUserService userService;
@@ -39,14 +41,14 @@ public class SystemUserController extends BaseController {
      * 获取[分页]用户列表
      */
     @GetMapping("/page")
-//    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    @Operation(summary = "获取用户列表", description = "获取用户列表接口")
     @EnableDict
-    public ResponseDTO<IPage<SysUserDTO>> getUserPage(
+    public ResponseDTO<Page<SysUserDTO>> getUserPage(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             UserForm form) {
         log.info("收到请求->获取用户[分页]列表:[{}]", form);
-        IPage<SysUserDTO> list = userService.findAll(pageIndex, pageSize, form);
+        Page<SysUserDTO> list = userService.findAll(pageIndex, pageSize, form);
         log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
         return new ResponseDTO<>(list);
     }
@@ -55,7 +57,7 @@ public class SystemUserController extends BaseController {
      * 获取[不分页]用户列表
      */
     @GetMapping("/list")
-//    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
+    @Operation(summary = "获取用户列表", description = "获取用户列表接口")
     public ResponseDTO<List<SysUserDTO>> getUserList(UserForm form) {
         log.info("收到请求->获取用户[不分页]列表:[{}]", form);
         List<SysUserDTO> list = userService.findAll(form);
@@ -64,7 +66,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("/save")
-//    @ApiOperation(value = "保存用户", notes = "保存用户接口")
+    @Operation(summary = "保存用户", description = "保存用户接口")
     public ResponseDTO<Boolean> saveUser(@RequestBody UserForm form) {
         log.info("收到请求->保存用户:[{}]", form);
         super.validator(form, Groups.IsAdd.class);
@@ -74,7 +76,7 @@ public class SystemUserController extends BaseController {
     }
 
     @DeleteMapping("/remove/{id}")
-//    @ApiOperation(value = "删除用户", notes = "删除用户接口")
+    @Operation(summary = "删除用户", description = "删除用户接口")
     public ResponseDTO<Boolean> removeUser(@PathVariable String id) {
         log.info("收到请求->删除用户:[{}]", id);
         boolean status = userService.removeUser(id);
@@ -83,7 +85,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("/lock/{id}")
-//    @ApiOperation(value = "锁定用户", notes = "锁定用户接口")
+    @Operation(summary = "锁定用户", description = "锁定用户接口")
     public ResponseDTO<Boolean> lockUser(@PathVariable String id) {
         log.info("收到请求->锁定用户,id:[{}]", id);
         boolean status = userService.lockUser(id);
@@ -92,7 +94,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("/unlock/{id}")
-//    @ApiOperation(value = "解锁用户", notes = "锁定用户接口")
+    @Operation(summary = "解锁用户", description = "锁定用户接口")
     public ResponseDTO<Boolean> unlockUser(@PathVariable String id) {
         log.info("收到请求->解锁用户,id:[{}]", id);
         boolean status = userService.unlockUser(id);
@@ -101,7 +103,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("/password/reset")
-//    @ApiOperation(value = "重置密码", notes = "重置密码接口")
+    @Operation(summary = "重置密码", description = "重置密码接口")
     public ResponseDTO<Boolean> resetPassword(@RequestBody ResetPasswordForm form) {
         log.info("收到请求->重置密码:[{}]", form);
         super.validator(form, Groups.IsResetPassword.class);
@@ -111,7 +113,7 @@ public class SystemUserController extends BaseController {
     }
 
     @PostMapping("/password/update")
-//    @ApiOperation(value = "修改密码", notes = "修改密码接口")
+    @Operation(summary = "修改密码", description = "修改密码接口")
     public ResponseDTO<Boolean> updatePassword(@RequestBody UpdatePasswordForm form) {
         log.info("收到请求->修改密码:[{}]", form);
         super.validator(form, Groups.IsUpdatePassword.class);
@@ -121,7 +123,7 @@ public class SystemUserController extends BaseController {
     }
 
     @GetMapping("/get/{id}")
-//    @ApiOperation(value = "根据Id获取用户", notes = "根据Id获取用户接口")
+    @Operation(summary = "根据Id获取用户", description = "根据Id获取用户接口")
     public ResponseDTO<SysUserDTO> getById(@PathVariable String id) {
         log.info("收到请求->根据Id获取用户:[{}]", id);
         SysUserDTO entity = userService.getById(id);

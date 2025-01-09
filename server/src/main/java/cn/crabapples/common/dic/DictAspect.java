@@ -6,7 +6,7 @@ import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.service.impl.SystemDictServiceImpl;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONWriter;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -87,14 +87,14 @@ public class DictAspect {
 
             if (result instanceof ResponseDTO) {
                 Object data = ((ResponseDTO<?>) result).getData();
-                if (data instanceof IPage) {
-                    List<?> records = ((IPage<?>) data).getRecords();
+                if (data instanceof Page) {
+                    List<?> records = ((Page<?>) data).getRecords();
                     if (!records.isEmpty()) {
                         log.debug("分页数据开始翻译:[{}]", records);
                         clazz = records.get(0).getClass();
                         allFields = ReflectUtils.getAllFields(clazz);
                         List dataList = fillDictText(records, allFields);
-                        ((IPage<?>) data).setRecords(dataList);
+                        ((Page<?>) data).setRecords(dataList);
                     }
                 } else if (data instanceof List) {
                     if (!((List<?>) data).isEmpty()) {

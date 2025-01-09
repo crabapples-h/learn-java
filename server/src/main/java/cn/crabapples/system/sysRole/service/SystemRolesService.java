@@ -4,7 +4,7 @@ import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface SystemRolesService extends BaseService {
 
     List<SysRole> getRolesList(RolesForm form);
 
-    IPage<SysRole> getRolesPage(Integer pageIndex, Integer pageSize, RolesForm form);
+    Page<SysRole> getRolesPage(Integer pageIndex, Integer pageSize, RolesForm form);
 
 
     boolean saveRoles(RolesForm form);

@@ -4,7 +4,11 @@ import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -15,7 +19,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * TODO 角色实体类
@@ -26,20 +29,20 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
  * qq 294046317
  * pc-name 29404
  */
-@TableName("sys_role")
+@Table("sys_role")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
 public class SysRole extends BaseEntity<SysRole> {
     // id 为自增主键
-    @TableId(type = ASSIGN_UUID)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
 
     // 名称
     private String name;
 
     //角色拥有的菜单列表
-    @TableField(exist = false)
+    @Column(ignore = true)
     private List<SysMenu> menuList;
 
     //角色拥有的权限列表
@@ -48,17 +51,17 @@ public class SysRole extends BaseEntity<SysRole> {
     // 创建时间
     @CreatedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
-    @TableField(fill = FieldFill.INSERT)
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     // 更新时间
     @LastModifiedDate
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
-    @TableLogic
+    @Column(isLogicDelete = true)
     @Dict(dictCode = "delFlag")
     private Integer delFlag;
 

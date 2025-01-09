@@ -10,22 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>server</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>cn.idev.excel</groupId>
-            <artifactId>fastexcel</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/ognl/ognl -->
-        <dependency>
-            <groupId>ognl</groupId>
-            <artifactId>ognl</artifactId>
-            <version>3.3.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>3.1.1.RELEASE</version>
-        </dependency>
 
 
         <!-- sentinel核心依赖 -->
@@ -47,6 +31,23 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- excel工具 -->
+        <dependency>
+            <groupId>cn.idev.excel</groupId>
+            <artifactId>fastexcel</artifactId>
+            <version>${fastexcel.version}</version>
+        </dependency>
+        <!-- thymeleaf模版解析工具 -->
+        <dependency>
+            <groupId>ognl</groupId>
+            <artifactId>ognl</artifactId>
+            <version>${ognl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
         </dependency>
         <!--jwt-->
         <dependency>
@@ -134,18 +135,18 @@
         </dependency>
 
         <!--mybatis-flex-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.mybatis-flex</groupId>-->
-        <!--            <artifactId>mybatis-flex-spring-boot-starter</artifactId>-->
-        <!--            <version>1.6.3</version>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+            <version>${mybatis-flex-starter.version}</version>
+        </dependency>
 
         <!--mybatis-plus-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-starter.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--            <version>${mybatis-plus-starter.version}</version>-->
+<!--        </dependency>-->
 
 
         <!--        <dependency>-->

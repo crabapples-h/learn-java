@@ -1,9 +1,11 @@
 package cn.crabapples.system.sysFile.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.activerecord.Model;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +15,11 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-@TableName("file_info")
+@Table("file_info")
 @Accessors(chain = true)
 public class FileInfo extends Model<FileInfo> {
 
-    @TableId
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
     //原文件名
     private String oldName;
@@ -34,6 +36,6 @@ public class FileInfo extends Model<FileInfo> {
     //文件大小
     private Long fileSize;
 
-    @TableLogic
+    @Column(isLogicDelete = true)
     private byte delFlag;
 }

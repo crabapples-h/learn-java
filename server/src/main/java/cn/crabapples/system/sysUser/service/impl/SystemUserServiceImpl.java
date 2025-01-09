@@ -12,7 +12,7 @@ import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUserRole.service.SystemUserRoleService;
 import cn.hutool.crypto.digest.MD5;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -78,7 +78,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
-    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
+    public Page<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
         return userDAO.findAll(pageIndex, pageSize, form);
     }
 
@@ -92,13 +92,13 @@ public class SystemUserServiceImpl implements SystemUserService {
         SysUser entity = form.toEntity();
         String newPassword = form.getNewPassword();
         String againPassword = form.getAgainPassword();
-        if (!StringUtils.isEmpty(newPassword)) {
+        if (!StringUtils.hasLength(newPassword)) {
             if (!newPassword.equals(againPassword)) {
                 throw new ApplicationException("两次密码不一致");
             }
             entity.setPassword(encryptPassword(newPassword));
         }
-        boolean status = entity.insertOrUpdate();
+        boolean status = entity.saveOrUpdate();
         userRoleService.saveUserRoles(entity.getId(), entity.getRoleList());
         return status;
     }

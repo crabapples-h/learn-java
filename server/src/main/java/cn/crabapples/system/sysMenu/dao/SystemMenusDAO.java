@@ -3,10 +3,9 @@ package cn.crabapples.system.sysMenu.dao;
 import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.sysMenu.dao.mybatis.mapper.MenusMapper;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,11 +24,11 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
     public boolean remove(String id) {
 //        return baseMapper.removeById(id);
-        return baseMapper.deleteById(id) > 0;
+        return mapper.deleteById(id) > 0;
     }
 
     public List<SysMenu> findButtonsByIds(List<String> ids) {
-        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        QueryWrapper wrapper = QueryWrapper.create(SysMenu.class);
         wrapper.in(SysMenu::getId, ids)
                 .eq(SysMenu::getMenusType, DIC.MENUS_TYPE_BUTTON);
         return list(wrapper);
@@ -37,7 +36,7 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
     // 查询用户的菜单列表
     public List<SysMenu> getUserMenus(String id) {
-        return baseMapper.getUserMenus(id);
+        return mapper.getUserMenus(id);
     }
 
     /**
@@ -46,11 +45,11 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      * @return 菜单树
      */
     public List<SysMenu> findMenusTree() {
-        return baseMapper.findMenusTree(null);
+        return mapper.findMenusTree(null);
     }
 
-    public IPage<SysMenu> getMenuPage(Page<SysMenu> page) {
-        return baseMapper.findMenusTreePage(page, null);
+    public Page<SysMenu> getMenuPage(Page<SysMenu> page) {
+        return mapper.findMenusTreePage(page, null);
 
     }
 }

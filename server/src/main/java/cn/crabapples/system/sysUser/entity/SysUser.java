@@ -3,7 +3,11 @@ package cn.crabapples.system.sysUser.entity;
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -11,7 +15,6 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * TODO 用户实体类
@@ -23,11 +26,11 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
  * pc-name 29404
  */
 @Accessors(chain = true)
-@TableName(value = "sys_user")
+@Table(value = "sys_user")
 @Data(staticConstructor = "create")
 @EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity<SysUser> {
-    @TableId(type = ASSIGN_UUID)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
     // 用户名
     private String username;
@@ -50,7 +53,7 @@ public class SysUser extends BaseEntity<SysUser> {
     // 最后操作用户
     private String updateBy;
 
-    @TableField(exist = false)
+    @Column(ignore = true)
     private List<String> roleList;
 
     // 用户状态标记 0:正常 1:禁用
@@ -58,16 +61,16 @@ public class SysUser extends BaseEntity<SysUser> {
 
     // 创建时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT)
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     // 更新时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
-    @TableLogic
+     @Column(isLogicDelete = true)
     private Integer delFlag;
 
     //创建人

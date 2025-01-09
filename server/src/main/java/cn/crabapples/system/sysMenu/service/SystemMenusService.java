@@ -3,7 +3,7 @@ package cn.crabapples.system.sysMenu.service;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface SystemMenusService extends BaseService {
 
     List<SysMenu> getMenusList();
 
-    IPage<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form);
+    Page<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form);
 
     boolean saveMenus(MenusForm form);
 

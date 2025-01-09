@@ -2,15 +2,17 @@ package cn.crabapples.system.sysMenu.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.*;
+import com.mybatisflex.annotation.Column;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 
 /**
  * TODO 系统菜单
@@ -21,13 +23,13 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
  * qq 294046317
  * pc-name root
  */
-@TableName(value = "sys_menu")
+@Table(value = "sys_menu")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
 public class SysMenu extends BaseEntity<SysMenu> {
 
-    @TableId(type = ASSIGN_UUID)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
 
     private String pid;
@@ -53,7 +55,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     // 授权标识
     private String permission;
 
-    @TableField(exist = false)
+    @Column(ignore = true)
     private List<SysMenu> children;
 
     private Integer showFlag;
@@ -64,19 +66,16 @@ public class SysMenu extends BaseEntity<SysMenu> {
 
     // 创建时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss", serialize = false)
-    @TableField(fill = FieldFill.INSERT)
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     // 更新时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss", serialize = false)
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
-    @TableLogic
+    @Column(isLogicDelete = true)
     @JSONField(serialize = false)
     private Integer delFlag;
-
-
-
 }

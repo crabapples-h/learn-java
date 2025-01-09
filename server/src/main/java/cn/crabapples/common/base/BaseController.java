@@ -2,8 +2,7 @@ package cn.crabapples.common.base;
 
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.support.ExcelTypeEnum;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mybatisflex.core.activerecord.Model;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;

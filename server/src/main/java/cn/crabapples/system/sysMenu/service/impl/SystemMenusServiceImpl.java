@@ -7,8 +7,7 @@ import cn.crabapples.system.sysMenu.service.SystemMenusService;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.service.SystemUserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.mybatisflex.core.paginate.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -80,7 +79,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public boolean saveMenus(MenusForm form) {
-        if (!StringUtils.isEmpty(form.getPid())) {
+        if (!StringUtils.hasLength(form.getPid())) {
             // 当添加子菜单时，将其父级菜单从已拥有的权限中移除，避免角色直接拥有新添加的菜单的权限
             roleMenusService.delByMenuId(form.getPid());
         }
@@ -96,7 +95,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     }
 
     @Override
-    public IPage<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form) {
+    public Page<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form) {
         return systemMenusDAO.getMenuPage(Page.of(pageIndex, pageSize));
     }
 }

@@ -6,7 +6,8 @@ import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ import java.util.List;
  * pc-name mrhe
  */
 @RestController
-//@Api("系统接口[角色]")
+@Tag(name = "系统接口[角色]")
 @Slf4j
 @RequestMapping("/api/system/role")
 public class SystemRoleController extends BaseController {
@@ -59,12 +60,12 @@ public class SystemRoleController extends BaseController {
      * 获取角色列表
      */
     @GetMapping("/page")
-    public ResponseDTO<IPage<SysRole>> getRolesPage(
+    public ResponseDTO<Page<SysRole>> getRolesPage(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             RolesForm form) {
         log.info("收到请求->获取角色列表");
-        IPage<SysRole> list = rolesService.getRolesPage(pageIndex, pageSize, form);
+        Page<SysRole> list = rolesService.getRolesPage(pageIndex, pageSize, form);
         log.debug("返回结果->获取角色列表成功:[{}]", list);
         return new ResponseDTO<>(list);
     }

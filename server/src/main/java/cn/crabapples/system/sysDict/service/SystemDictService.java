@@ -5,12 +5,12 @@ import cn.crabapples.system.sysDict.entity.SysDict;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.form.DictForm;
 import cn.crabapples.system.sysDict.form.DictItemForm;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 
 import java.util.List;
 
-public interface SystemDictService extends BaseService {
-    IPage<SysDict> getDictPage(Integer pageIndex, Integer pageSize, DictForm form);
+public interface SystemDictService extends BaseService<SysDictItem> {
+    Page<SysDict> getDictPage(Integer pageIndex, Integer pageSize, DictForm form);
 
     boolean saveDict(DictForm form);
 

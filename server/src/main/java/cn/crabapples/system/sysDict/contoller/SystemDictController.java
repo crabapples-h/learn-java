@@ -7,7 +7,8 @@ import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.form.DictForm;
 import cn.crabapples.system.sysDict.form.DictItemForm;
 import cn.crabapples.system.sysDict.service.SystemDictService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +28,18 @@ public class SystemDictController extends BaseController {
 
 
     @GetMapping("/page")
-//    @ApiOperation(value = "系统字典", notes = "系统字典接口")
-    public ResponseDTO<IPage<SysDict>> getDictPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
-                                                   @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-                                                   DictForm form) {
+    @Operation(summary = "系统字典", description = "系统字典接口")
+    public ResponseDTO<Page<SysDict>> getDictPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+                                                  @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+                                                  DictForm form) {
         log.info("收到请求->获取系统字典:[{}]", form);
-        IPage<SysDict> list = dictService.getDictPage(pageIndex, pageSize, form);
+        Page<SysDict> list = dictService.getDictPage(pageIndex, pageSize, form);
         log.debug("返回结果->获取系统字典完成:[{}]", list);
         return new ResponseDTO<>(list);
     }
 
     @PostMapping("/save")
-//    @ApiOperation(value = "系统字典", notes = "保存系统字典接口")
+    @Operation(summary = "系统字典", description = "保存系统字典接口")
     public ResponseDTO<Boolean> saveDict(@RequestBody DictForm form) {
         log.info("收到请求->保存系统字典:[{}]", form);
         boolean status = dictService.saveDict(form);
@@ -47,7 +48,7 @@ public class SystemDictController extends BaseController {
     }
 
     @DeleteMapping("/remove/{id}")
-//    @ApiOperation(value = "系统字典", notes = "删除系统字典接口")
+    @Operation(summary = "系统字典", description = "删除系统字典接口")
     public ResponseDTO<Boolean> deleteById(@PathVariable String id) {
         log.info("收到请求->删除系统字典:[{}]", id);
         boolean status = dictService.deleteById(id);
@@ -56,7 +57,7 @@ public class SystemDictController extends BaseController {
     }
 
     @PostMapping("/item/save")
-//    @ApiOperation(value = "系统字典", notes = "保存系统字典项接口")
+    @Operation(summary = "系统字典", description = "保存系统字典项接口")
     public ResponseDTO<Boolean> saveDictItem(@RequestBody DictItemForm form) {
         log.info("收到请求->保存系统字典项:[{}]", form);
         boolean status = dictService.saveDictItem(form);
@@ -65,7 +66,7 @@ public class SystemDictController extends BaseController {
     }
 
     @GetMapping("/item/list/code/{code}")
-//    @ApiOperation(value = "系统字典", notes = "获取系统字典项接口{code}")
+    @Operation(summary = "系统字典", description = "获取系统字典项接口{code}")
     public ResponseDTO<List<SysDictItem>> getDictItemListByCode(@PathVariable String code) {
         log.info("收到请求->获取系统字典项,code:[{}]", code);
         List<SysDictItem> list = dictService.getDictItemListByCode(code);
@@ -75,7 +76,7 @@ public class SystemDictController extends BaseController {
 
 
     @GetMapping("/item/list/id/{id}")
-//    @ApiOperation(value = "系统字典", notes = "获取系统字典项接口{id}")
+    @Operation(summary = "系统字典", description = "获取系统字典项接口{id}")
     public ResponseDTO<List<SysDictItem>> getDictItemListById(@PathVariable String id) {
         log.info("收到请求->获取系统字典项,id:[{}]", id);
         List<SysDictItem> list = dictService.getDictItemListById(id);
@@ -84,7 +85,7 @@ public class SystemDictController extends BaseController {
     }
 
     @DeleteMapping("/item/remove/{id}")
-//    @ApiOperation(value = "系统字典", notes = "删除系统字典接口")
+    @Operation(summary = "系统字典", description = "删除系统字典接口")
     public ResponseDTO<Boolean> deleteItemById(@PathVariable String id) {
         log.info("收到请求->删除系统字典项:[{}]", id);
         boolean status = dictService.deleteItemById(id);

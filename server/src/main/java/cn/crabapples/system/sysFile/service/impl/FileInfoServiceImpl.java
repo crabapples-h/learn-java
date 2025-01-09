@@ -4,7 +4,7 @@ import cn.crabapples.common.utils.file.FileUtils;
 import cn.crabapples.system.sysFile.dao.mybatis.mapper.FileInfoMapper;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

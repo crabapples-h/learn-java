@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysUser.dao.mybatis.mapper;
 
 import cn.crabapples.system.sysUser.entity.SysUser;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mybatisflex.core.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

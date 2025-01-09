@@ -4,10 +4,9 @@ import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.dao.mybatis.mapper.RolesMapper;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,19 +31,19 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
         return saveOrUpdate(entity);
     }
 
-    public IPage<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
+    public Page<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
         Page<SysRole> page = Page.of(pageIndex, pageSize);
-        QueryWrapper<SysRole> wrapper = new QueryWrapper<>(form.toEntity());
-        return baseMapper.selectPage(page, wrapper);
+        QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
+        return mapper.paginate(page, wrapper);
     }
 
     public List<SysRole> findAll(RolesForm form) {
-        QueryWrapper<SysRole> wrapper = new QueryWrapper<>(form.toEntity());
-        return baseMapper.selectList(wrapper);
+        QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
+        return mapper.selectListByQuery(wrapper);
     }
 
     public List<SysRole> findByIds(List<String> ids) {
-        return baseMapper.selectBatchIds(ids);
+        return mapper.selectListByIds(ids);
     }
 
 
@@ -61,6 +60,6 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
     }
 
     public List<SysRole> getUserRoles(String id) {
-        return baseMapper.getUserRoles(id);
+        return mapper.getUserRoles(id);
     }
 }

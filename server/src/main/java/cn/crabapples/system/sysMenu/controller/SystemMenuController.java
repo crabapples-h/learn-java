@@ -7,7 +7,7 @@ import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
 import cn.crabapples.system.sysMenu.service.SystemMenusService;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,11 +63,11 @@ public class SystemMenuController extends BaseController {
      * 获取[所有]菜单列表
      */
     @GetMapping("/page")
-    public ResponseDTO<IPage<SysMenu>> getMenuPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
-                                   @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-                                   MenusForm form) {
+    public ResponseDTO<Page<SysMenu>> getMenuPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+                                                  @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+                                                  MenusForm form) {
         log.info("收到请求->获取菜单列表");
-        IPage<SysMenu> list = menusService.getMenuPage(pageIndex,pageSize,form);
+        Page<SysMenu> list = menusService.getMenuPage(pageIndex,pageSize,form);
         log.debug("返回结果->获取菜单列表成功:[{}]", list);
         return new ResponseDTO<>(list);
     }
