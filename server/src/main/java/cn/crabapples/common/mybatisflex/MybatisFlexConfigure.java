@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatisflex.mybatisplus;//package org.example.common.mybatisflex.mybatisplus;
+package cn.crabapples.common.mybatisflex;//package org.example.common.mybatisflex.mybatisplus;
 //
 //import com.mybatisflex.core.tenant.TenantManager;
 //import org.springframework.context.annotation.Configuration;

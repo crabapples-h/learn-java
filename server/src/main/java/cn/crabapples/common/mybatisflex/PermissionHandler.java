@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatisflex.mybatisplus;
+package cn.crabapples.common.mybatisflex;
 //
 //import com.baomidou.mybatisplus.extension.plugins.handler.DataPermissionHandler;
 //import net.sf.jsqlparser.expression.Expression;

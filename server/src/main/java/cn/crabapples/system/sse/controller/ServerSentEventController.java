@@ -1,7 +1,9 @@
 package cn.crabapples.system.sse.controller;
 
 import cn.crabapples.common.jwt.JwtIgnore;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +27,11 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/api/sse")
 @Slf4j
+@Tag(name = "sse接口")
 public class ServerSentEventController {
     private static final Map<String, SseEmitter> SSE_CLENT_MAP = new ConcurrentHashMap<>();
 
-    @RequestMapping(value = "/connect/{id}")
+    @GetMapping(value = "/connect/{id}")
     @JwtIgnore
     public SseEmitter connectSse(@PathVariable String id) {
         log.info("收到sse请求,id:[{}]", id);
@@ -43,7 +46,7 @@ public class ServerSentEventController {
         return sseEmitter;
     }
 
-    @RequestMapping("/send/{id}")
+    @GetMapping("/send/{id}")
     @JwtIgnore
     public void sseTestSend(@PathVariable String id) throws IOException, InterruptedException {
         new Thread(() -> {

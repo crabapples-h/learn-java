@@ -49,7 +49,6 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
     }
 
     public Page<SysMenu> getMenuPage(Page<SysMenu> page) {
-        return mapper.findMenusTreePage(page, null);
-
+        return mapper.xmlPaginate("findMenusTreePage",page, QueryWrapper.create());
     }
 }

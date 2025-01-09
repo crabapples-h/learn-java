@@ -13,9 +13,12 @@ import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUserRole.service.SystemUserRoleService;
 import cn.hutool.crypto.digest.MD5;
 import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.tenant.TenantManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -173,13 +176,12 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 获取当前登录用户的信息
      */
     @Override
+//    @Cacheable(value = "user:info", key = "#userId", unless = "#result == null")
+//    @CacheEvict(value = "user:info", key = "#userId")
     public SysUser getUserInfo() {
-        String userId = "001";
-        if (!isDebug) {
-            userId = jwtTokenUtils.getUserId();
-        }
+        String userId = jwtTokenUtils.getUserId();
 //        Object user = cacheUtils.get(userId);
-        return userDAO.findById(userId);
+        return TenantManager.withoutTenantCondition(() -> userDAO.findById(userId));
     }
     //    /**
 //     * 添加或编辑用户时将填充用户拥有的角色信息

@@ -1,7 +1,11 @@
-package cn.crabapples.common.mybatisflex.mybatisplus;
+package cn.crabapples.common.mybatisflex;
 
 import cn.crabapples.common.jwt.JwtTokenUtils;
+import cn.crabapples.system.sysUser.entity.SysUser;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import com.mybatisflex.core.tenant.TenantFactory;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -17,25 +21,25 @@ import javax.annotation.Resource;
  */
 @Component
 public class TenantHandler implements TenantFactory {
+//    @Resource
+//    private JwtTokenUtils jwtTokenUtils;
     @Resource
-    private JwtTokenUtils jwtTokenUtils;
+    @Lazy
+    private SystemUserService userService;
 
 
     @Override
     public Object[] getTenantIds() {
-//        String tenantId = jwtTokenUtils.getDepartId();
-        return null;
-//        if (tenantId == null) {
-//            return null;
-//        }
-//        return new Object[]{tenantId};
+//        String userId = jwtTokenUtils.getUserId();
+        SysUser userInfo = userService.getUserInfo();
+        String tenantId = userInfo.getTenantId();
+        if (StringUtils.isEmpty(tenantId))
+            return null;
+        else
+            return tenantId.split(",");
     }
 
-//    @Override
-//    public String getTenantIdColumn() {
-//        return "depart_id";
-//    }
-//
+
 //    @Override
 //    public boolean ignoreTable(String tableName) {
 //        LinkedList<String> ignoreTables = new LinkedList<>();

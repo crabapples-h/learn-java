@@ -38,4 +38,7 @@ public class FileInfo extends Model<FileInfo> {
 
     @Column(isLogicDelete = true)
     private byte delFlag;
+
+    // 租户, 多个用逗号隔开
+    private String tenantId;
 }

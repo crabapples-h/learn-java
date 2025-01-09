@@ -8,6 +8,8 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.system.service.SystemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +28,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/system/")
 @Slf4j
-//@Api("系统功能")
+@Tag(name = "系统功能")
 public class SystemController extends BaseController {
 
     private final SystemUserService userService;
@@ -45,7 +47,7 @@ public class SystemController extends BaseController {
      */
     @JwtIgnore
     @PostMapping(value = "/login")
-//    @ApiOperation(value = "用户登陆", notes = "用户登陆接口")
+    @Operation(summary = "用户登陆", description = "用户登陆接口")
     public ResponseDTO<String> login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);
@@ -59,7 +61,7 @@ public class SystemController extends BaseController {
      */
     @JwtIgnore
     @PostMapping("/logout")
-//    @ApiOperation(value = "注销登录", notes = "注销登录接口")
+    @Operation(summary = "注销登录", description = "注销登录接口")
     public ResponseDTO<String> logout() {
         return new ResponseDTO<>("注销成功");
     }
@@ -73,7 +75,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/userInfo")
-//    @ApiOperation(value = "获取当前用户信息", notes = "获取当前用户信息接口")
+    @Operation(summary = "获取当前用户信息", description = "获取当前用户信息接口")
     public ResponseDTO<SysUser> getUserInfo() {
         log.info("收到请求->获取当前用户信息");
         SysUser entity = userService.getUserInfo();
@@ -82,7 +84,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/checkUsername/{username}")
-//    @ApiOperation(value = "检测用户名是否被使用", notes = "检测用户名是否被使用接口")
+    @Operation(summary = "检测用户名是否被使用", description = "检测用户名是否被使用接口")
     public ResponseDTO<Boolean> checkUsername(@PathVariable String username) {
         log.info("收到请求->检测用户名是否被使用:[{}]", username);
         boolean exist = sysService.checkUsername(username);

@@ -70,8 +70,11 @@ public class SysUser extends BaseEntity<SysUser> {
     private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
-     @Column(isLogicDelete = true)
+    @Column(isLogicDelete = true)
     private Integer delFlag;
+
+    // 租户, 多个用逗号隔开
+    private String tenantId;
 
     //创建人
     private String createBy;

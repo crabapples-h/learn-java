@@ -20,7 +20,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
     public Page<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
         Page<SysUser> page = Page.of(pageIndex, pageSize);
-        QueryWrapper wrapper = QueryWrapper.create(SysUser.class)
+        QueryWrapper wrapper = QueryWrapper.create(SysUser.create())
                 .like(SysUser::getUsername, form.getUsername(), !StringUtils.isEmpty(form.getUsername()))
                 .like(SysUser::getName, form.getName(), !StringUtils.isEmpty(form.getName()))
                 .like(SysUser::getMail, form.getMail(), !StringUtils.isEmpty(form.getMail()))
@@ -39,7 +39,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
     public List<SysUserDTO> findAll(UserForm form) {
         return mapper.selectListByQuery(
-                QueryWrapper.create(SysUser.class)
+                QueryWrapper.create(SysUser.create())
                         .like(SysUser::getUsername, form.getUsername(), !StringUtils.isEmpty(form.getUsername()))
                         .like(SysUser::getName, form.getName(), !StringUtils.isEmpty(form.getName()))
                         .like(SysUser::getMail, form.getMail(), !StringUtils.isEmpty(form.getMail()))
@@ -51,7 +51,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
     }
 
     public SysUser findOne(UserForm form) {
-        return getOne( QueryWrapper.create(form.toEntity()));
+        return getOne(QueryWrapper.create(form.toEntity()));
     }
 
     public SysUser findById(String id) {

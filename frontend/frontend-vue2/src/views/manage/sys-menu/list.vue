@@ -41,7 +41,7 @@
 
 <script>
 
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
 import AddMenu from '@/views/manage/sys-menu/add.vue'
 
@@ -119,6 +119,8 @@ export default {
             return data.map(e => {
               if (e.children && e.children.length > 0) {
                 e.children = format(e.children)
+              } else {
+                delete e.children;
               }
               return e
             }).sort((a, b) => {
@@ -126,9 +128,9 @@ export default {
             })
           }
           this.dataSource = format(result.data.records)
-          this.pagination.total = result.data.total
-          this.pagination.current = result.data.current
-          this.pagination.pageSize = result.data.size
+          this.pagination.total = result.data.total || result.data.totalRow
+          this.pagination.current = result.data.current || result.data.pageNumber
+          this.pagination.pageSize = result.data.size || result.data.pageSize
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

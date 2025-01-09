@@ -129,9 +129,9 @@ export default {
                         this.dataSource = this.dataSource.sort((a, b) => {
                             return a.sort - b.sort
                         })
-                        this.pagination.total = result.data.total
-                        this.pagination.current = result.data.current
-                        this.pagination.pageSize = result.data.size
+                        this.pagination.total = result.data.total || result.data.totalRow
+                        this.pagination.current = result.data.current || result.data.pageNumber
+                        this.pagination.pageSize = result.data.size || result.data.pageSize
                     }
                 }).catch(function (error) {
                     console.error('出现错误:', error)

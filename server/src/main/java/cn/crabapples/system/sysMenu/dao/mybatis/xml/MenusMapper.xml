@@ -52,6 +52,20 @@
         </choose>
     </select>
 
+    <select id="findMenusTreePage_COUNT" resultType="long">
+        select count(1)
+        from sys_menu
+        where del_flag = 0
+        <choose>
+            <when test="id == null">
+                and pid is null
+            </when>
+            <otherwise>
+                and pid = #{id}
+            </otherwise>
+        </choose>
+    </select>
+
     <select id="findMenusTree1" resultMap="sysMenus">
         with recursive menusTree as (select *
                                      from sys_menu

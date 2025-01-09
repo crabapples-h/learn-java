@@ -114,6 +114,7 @@
         <mybatis-generator-plugins.version>1.4.1</mybatis-generator-plugins.version>
         <mybatis-plus-starter.version>3.5.2</mybatis-plus-starter.version>
         <mybatis-flex-starter.version>1.10.3</mybatis-flex-starter.version>
+        <flyway-core.version>7.10.0</flyway-core.version>
         <thymeleaf.version>3.1.1.RELEASE</thymeleaf.version>
         <ognl.version>3.3.4</ognl.version>
         <fastexcel.version>1.0.0</fastexcel.version>

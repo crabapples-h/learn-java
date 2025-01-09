@@ -1,6 +1,7 @@
 package cn.crabapples;
 
 import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
+import com.mybatisflex.core.FlexGlobalConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
@@ -78,7 +79,7 @@ public class SystemApplication {
     private static final Logger logger = LoggerFactory.getLogger(SystemApplication.class);
 
     public static void main(String[] args) throws UnknownHostException {
-//        FlexGlobalConfig.getDefaultConfig().setTenantColumn("depart_id");
+        FlexGlobalConfig.getDefaultConfig().setTenantColumn("tenant_id");
         ConfigurableApplicationContext application = SpringApplication.run(SystemApplication.class, args);
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
