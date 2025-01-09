@@ -2,6 +2,7 @@ package cn.crabapples;
 
 import cn.crabapples.common.datasource.dynamicaop.DynamicDataSourceRegister;
 import com.mybatisflex.core.FlexGlobalConfig;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.annotation.MapperScans;
 import org.slf4j.Logger;
@@ -20,7 +21,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
@@ -85,7 +85,7 @@ public class SystemApplication {
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
         String pathProperty = env.getProperty("server.servlet.context-path");
-        String path = StringUtils.hasLength(pathProperty) ? pathProperty : "";
+        String path = StringUtils.isNotBlank(pathProperty) ? pathProperty : "";
         logger.info("\n" +
                 "----------------------------------------------------------\n\t" +
                 ">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>:\n\t" +

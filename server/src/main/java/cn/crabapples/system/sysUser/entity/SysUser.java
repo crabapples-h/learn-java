@@ -2,18 +2,19 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
+import cn.crabapples.system.sysRole.entity.SysRole;
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
+import com.mybatisflex.annotation.*;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -56,6 +57,14 @@ public class SysUser extends BaseEntity<SysUser> {
     @Column(ignore = true)
     private List<String> roleList;
 
+
+    @RelationOneToMany(joinTable = "sys_user_roles",
+            joinSelfColumn = "user_id", joinTargetColumn = "role_id",
+            selfField = "id", targetField = "id")
+    @JSONField(serialize = false)
+    private List<SysRole> roleListObj;
+
+
     // 用户状态标记 0:正常 1:禁用
     private Integer status;
 
@@ -78,4 +87,12 @@ public class SysUser extends BaseEntity<SysUser> {
 
     //创建人
     private String createBy;
+
+
+    public List<String> getRoleList() {
+        if (CollectionUtil.isEmpty(this.roleListObj)) {
+            return Collections.emptyList();
+        }
+        return roleListObj.stream().map(SysRole::getId).collect(Collectors.toList());
+    }
 }

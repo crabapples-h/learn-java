@@ -17,5 +17,5 @@ public interface RoleMenusMapper {
 
     void deleteRoleMenus(@Param("roleId") String id);
 
-    void delByMenuId( @Param("menuId") String menuId);
+    void delByMenuId(@Param("menuId") String menuId);
 }

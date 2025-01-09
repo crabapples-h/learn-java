@@ -63,10 +63,10 @@ public class SysRole extends BaseEntity<SysRole> {
     @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
-    // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
-    @Dict(dictCode = "delFlag")
-    private Integer delFlag;
+//    // 删除标记 (0:正常 1:删除)
+//    @Column(isLogicDelete = true)
+//    @Dict(dictCode = "delFlag")
+//    private Integer delFlag;
 
     //创建人
     @CreatedBy

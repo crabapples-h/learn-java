@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * TODO 用户基本信息DTO
+ * TODO 用户角色基本信息DTO
  *
  * @author Mr.He
  * 2021/4/12 8:26
@@ -18,6 +18,7 @@ import lombok.Setter;
 public class SysRolesDTO{
     private String id;
     private String name;
+    private String code;
 
     @Override
     public String toString() {

@@ -8,6 +8,9 @@
       <a-form-model-item label="名称" prop="name">
         <a-input v-model="form.name"/>
       </a-form-model-item>
+      <a-form-model-item label="代码" prop="code">
+        <a-input v-model="form.code"/>
+      </a-form-model-item>
       <a-form-model-item label="菜单">
         <a-tree
             v-model="form.menuList"
@@ -66,6 +69,11 @@ export default {
           {required: true, message: '请输入名称', trigger: 'change'},
           {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
           {whitespace: true, message: '请输入名称', trigger: 'change'}
+        ],
+        code: [
+          {required: true, message: '请输入角色代码', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入代码', trigger: 'change'}
         ],
       },
       show: {

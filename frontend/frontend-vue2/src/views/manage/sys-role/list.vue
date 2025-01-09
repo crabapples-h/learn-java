@@ -45,13 +45,19 @@ export default {
           dataIndex: 'name',
           title: '角色',
           key: 'name',
-          width: '50%'
+          width: '30%'
+        },
+        {
+          dataIndex: 'code',
+          title: '角色代码',
+          key: 'code',
+          width: '30%'
         },
         {
           title: '操作',
           key: 'action',
           scopedSlots: {customRender: 'action'},
-          width: '50%'
+          width: '40%'
         },
       ],
       show: {

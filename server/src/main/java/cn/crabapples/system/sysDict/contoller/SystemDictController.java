@@ -9,13 +9,14 @@ import cn.crabapples.system.sysDict.form.DictItemForm;
 import cn.crabapples.system.sysDict.service.SystemDictService;
 import com.mybatisflex.core.paginate.Page;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@Api("系统接口[字典]")
+@Tag(name = "系统接口[字典]")
 @Slf4j
 @RequestMapping("/api/system/dict")
 public class SystemDictController extends BaseController {
@@ -70,7 +71,7 @@ public class SystemDictController extends BaseController {
     public ResponseDTO<List<SysDictItem>> getDictItemListByCode(@PathVariable String code) {
         log.info("收到请求->获取系统字典项,code:[{}]", code);
         List<SysDictItem> list = dictService.getDictItemListByCode(code);
-        log.debug("返回结果->获取系统字典项完成:[{}]", list);
+        log.debug("返回结果->获取系统字典项[byCode]完成:[{}]", list);
         return new ResponseDTO<>(list);
     }
 
@@ -80,7 +81,7 @@ public class SystemDictController extends BaseController {
     public ResponseDTO<List<SysDictItem>> getDictItemListById(@PathVariable String id) {
         log.info("收到请求->获取系统字典项,id:[{}]", id);
         List<SysDictItem> list = dictService.getDictItemListById(id);
-        log.debug("返回结果->获取系统字典项完成:[{}]", list);
+        log.debug("返回结果->获取系统字典项[byId]完成:[{}]", list);
         return new ResponseDTO<>(list);
     }
 

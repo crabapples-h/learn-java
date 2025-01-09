@@ -24,7 +24,7 @@
         </a-space>
       </span>
       <span slot="icon" slot-scope="text, record">
-           <svg class="iconfont" aria-hidden="true" style="width: 50px;height: 50px">
+           <svg class="iconfont" aria-hidden="true" style="width: 10px;height: 10px">
             <use :xlink:href="'#icon-'+text"></use>
           </svg>
       </span>

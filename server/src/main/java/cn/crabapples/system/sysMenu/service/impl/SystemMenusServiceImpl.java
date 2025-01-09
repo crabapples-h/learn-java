@@ -9,8 +9,8 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import com.mybatisflex.core.paginate.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -79,7 +79,7 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      */
     @Override
     public boolean saveMenus(MenusForm form) {
-        if (!StringUtils.hasLength(form.getPid())) {
+        if (StringUtils.isNotBlank(form.getPid())) {
             // 当添加子菜单时，将其父级菜单从已拥有的权限中移除，避免角色直接拥有新添加的菜单的权限
             roleMenusService.delByMenuId(form.getPid());
         }

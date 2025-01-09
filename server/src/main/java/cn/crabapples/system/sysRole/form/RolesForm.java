@@ -22,6 +22,7 @@ import java.util.List;
 @Setter
 public class RolesForm extends BaseForm<SysRole> {
     private String name;
+    private String code;
 
     private List<String> menuList;
 
@@ -33,7 +34,7 @@ public class RolesForm extends BaseForm<SysRole> {
 
     @Override
     public SysRole toEntity() {
-        SysRole entity =  SysRole.create();
+        SysRole entity = SysRole.create();
         BeanUtils.copyProperties(this, entity);
         return entity;
     }

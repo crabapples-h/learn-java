@@ -39,5 +39,16 @@ const SysApis = {
     dictItemListByCode: '/api/system/dict/item/list/code',
     dictItemListById: '/api/system/dict/item/list/id',
     delDictItems: '/api/system/dict/item/remove',
+    //租户 tenant
+    tenantList: '/api/system/tenant/list',
+    tenantPage: '/api/system/tenant/page',
+    delTenants: '/api/system/tenant/remove',
+    saveTenants: '/api/system/tenant/save',
+    //部门 depart
+    departList: '/api/system/depart/list',
+    departPage: '/api/system/depart/page',
+    delDeparts: '/api/system/depart/remove',
+    saveDeparts: '/api/system/depart/save',
 }
+
 export {SysApis}

@@ -15,12 +15,10 @@ import cn.hutool.crypto.digest.MD5;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.tenant.TenantManager;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -95,7 +93,7 @@ public class SystemUserServiceImpl implements SystemUserService {
         SysUser entity = form.toEntity();
         String newPassword = form.getNewPassword();
         String againPassword = form.getAgainPassword();
-        if (!StringUtils.hasLength(newPassword)) {
+        if (StringUtils.isNotBlank(newPassword)) {
             if (!newPassword.equals(againPassword)) {
                 throw new ApplicationException("两次密码不一致");
             }
