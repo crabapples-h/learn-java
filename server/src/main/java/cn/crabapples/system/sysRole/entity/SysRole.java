@@ -41,6 +41,9 @@ public class SysRole extends BaseEntity<SysRole> {
     // 名称
     private String name;
 
+    // 角色
+    private String code;
+
     //角色拥有的菜单列表
     @Column(ignore = true)
     private List<SysMenu> menuList;
@@ -70,7 +73,6 @@ public class SysRole extends BaseEntity<SysRole> {
     @JSONField(serialize = false)
     private String createBy;
 
-
-//    @Transient
-//    private List<SysMenus> sysMenus;
+    // 租户, 多个用逗号隔开
+    private String tenantId;
 }

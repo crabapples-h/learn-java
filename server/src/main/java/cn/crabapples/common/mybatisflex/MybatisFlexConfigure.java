@@ -1,19 +1,15 @@
-package cn.crabapples.common.mybatisflex;//package org.example.common.mybatisflex.mybatisplus;
-//
-//import com.mybatisflex.core.tenant.TenantManager;
-//import org.springframework.context.annotation.Configuration;
-//
-//import javax.annotation.PostConstruct;
-//
-//
-//@Configuration
-//public class MybatisFlexConfigure {
-//
-//    @PostConstruct
-//    public void config() {
-//
-//        TenantManager.ignoreTenantCondition();
-//
-/// /        return  TenantManager.ignoreTenantCondition();
-//    }
-//}
+package cn.crabapples.common.mybatisflex;
+
+import com.mybatisflex.core.mybatis.FlexConfiguration;
+import com.mybatisflex.spring.boot.ConfigurationCustomizer;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MybatisFlexConfigure implements ConfigurationCustomizer {
+
+    @Override
+    public void customize(FlexConfiguration configuration) {
+        configuration.setLogImpl(StdOutImpl.class);
+    }
+}

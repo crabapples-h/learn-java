@@ -7,6 +7,8 @@ logging:
   level:
     root: info
     druid.sql: warn
+    com.mybatisflex: debug
+
 spring:
   #----- flyway config -----
   flyway.enabled: true
