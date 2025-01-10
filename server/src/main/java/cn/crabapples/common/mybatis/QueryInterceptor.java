@@ -49,27 +49,21 @@ public class QueryInterceptor implements Interceptor {
 ////        Transaction transaction = executor.getTransaction();
 ////        Object parameterObject = parameterHandler.getParameterObject();
         System.err.println(handler);
+        Object parameterObject = handler.getBoundSql().getParameterObject();
+        System.err.println(parameterObject);
+
         BoundSql boundSql = handler.getBoundSql();
+        String sql = boundSql.getSql() + " and id = -10010";
+
+        Field sqlField = boundSql.getClass().getDeclaredField("sql");
+        sqlField.setAccessible(true);
+        sqlField.set(boundSql, sql);
 
         // 使用反射设置修改后的 SQL
         Field field = handler.getClass().getDeclaredField("boundSql");
         field.setAccessible(true);
-        field.set(handler, new CustomBoundSql(boundSql, modifiedSql));
+        field.set(handler, boundSql);
 
-
-        System.err.println(boundSql);
-        boundSql.setAdditionalParameter("id", "-10010");
-        String sql = boundSql.getSql();
-        System.err.println(sql);
-
-        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-        System.err.println(parameterMappings);
-
-        Object parameterObject = boundSql.getParameterObject();
-        System.err.println(parameterObject);
-
-        Map<String, Object> additionalParameters = boundSql.getAdditionalParameters();
-        System.err.println(additionalParameters);
 //        System.err.println(args);
 //        System.err.println(transaction);
         //第一种，性能高
@@ -97,20 +91,20 @@ public class QueryInterceptor implements Interceptor {
     }
 
 
-    /**
-     * 自定义 BoundSql，替换 SQL 内容
-     */
-    private static class CustomBoundSql extends BoundSql {
-        private final String newSql;
-
-        public CustomBoundSql(BoundSql boundSql, String newSql) {
-            super(boundSql.getConfiguration(), newSql, boundSql.getParameterMappings(), boundSql.getParameterObject());
-            this.newSql = newSql;
-        }
-
-        @Override
-        public String getSql() {
-            return newSql;
-        }
-    }
+//    /**
+//     * 自定义 BoundSql，替换 SQL 内容
+//     */
+//    private static class CustomBoundSql extends BoundSql {
+//        private final String newSql;
+//
+//        public CustomBoundSql(BoundSql boundSql, String newSql) {
+//            super(boundSql.getConfiguration(), newSql, boundSql.getParameterMappings(), boundSql.getParameterObject());
+//            this.newSql = newSql;
+//        }
+//
+//        @Override
+//        public String getSql() {
+//            return newSql;
+//        }
+//    }
 }
