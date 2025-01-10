@@ -2,9 +2,8 @@ package cn.crabapples.system.sysDict.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
-import cn.crabapples.common.mybatisflex.OnInsertListener;
-import cn.crabapples.common.mybatisflex.OnUpdateListener;
-import com.alibaba.fastjson2.annotation.JSONField;
+import cn.crabapples.common.mybatis.flex.OnInsertListener;
+import cn.crabapples.common.mybatis.flex.OnUpdateListener;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -12,11 +11,6 @@ import com.mybatisflex.annotation.Table;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.util.Date;
 
 
 @EqualsAndHashCode(callSuper = true)

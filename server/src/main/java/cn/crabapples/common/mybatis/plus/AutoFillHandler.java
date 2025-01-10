@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatisplus;
+package cn.crabapples.common.mybatis.plus;
 //
 //import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 //import lombok.extern.slf4j.Slf4j;

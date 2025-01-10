@@ -2,8 +2,8 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
-import cn.crabapples.common.mybatisflex.OnInsertListener;
-import cn.crabapples.common.mybatisflex.OnUpdateListener;
+import cn.crabapples.common.mybatis.flex.OnInsertListener;
+import cn.crabapples.common.mybatis.flex.OnUpdateListener;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson2.annotation.JSONField;
@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

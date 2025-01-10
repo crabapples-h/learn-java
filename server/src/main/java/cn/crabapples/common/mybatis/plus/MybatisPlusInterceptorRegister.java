@@ -1,6 +1,4 @@
-package cn.crabapples.common.mybatisplus;
-
-import org.springframework.context.annotation.Bean;//
+package cn.crabapples.common.mybatis.plus;
 
 //import com.baomidou.mybatisplus.annotation.DbType;
 

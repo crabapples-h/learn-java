@@ -1,15 +1,14 @@
-package cn.crabapples.common.mybatisflex;
+package cn.crabapples.common.mybatis.flex;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.jwt.JwtTokenUtils;
-import com.mybatisflex.annotation.UpdateListener;
+import com.mybatisflex.annotation.InsertListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 /**
- * TODO 更新时填充字段
+ * TODO 新建时填充字段
  *
  * @author Ms.He
  * 2025-01-10 09:21
@@ -19,11 +18,13 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Component
-public class OnUpdateListener implements UpdateListener {
+public class OnInsertListener implements InsertListener {
+
     @Override
-    public void onUpdate(Object o) {
+    public void onInsert(Object o) {
         BaseEntity<?> baseEntity = (BaseEntity<?>) o;
+        baseEntity.setCreateTime(LocalDateTime.now());
         baseEntity.setUpdateTime(LocalDateTime.now());
-//        baseEntity.setUpdateBy("");
+//        baseEntity.setCreateBy("");
     }
 }

@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatisflex;
+package cn.crabapples.common.mybatis.flex;
 
 
 import com.mybatisflex.core.dialect.OperateType;
