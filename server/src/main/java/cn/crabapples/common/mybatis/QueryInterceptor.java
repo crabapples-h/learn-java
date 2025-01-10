@@ -2,16 +2,15 @@ package cn.crabapples.common.mybatis;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.executor.parameter.ParameterHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.plugin.*;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.util.List;
-import java.util.Map;
+import java.sql.PreparedStatement;
 import java.util.Properties;
 //  Executor
 //  update	    执行增删改操作
@@ -35,34 +34,39 @@ import java.util.Properties;
 //  handleOutputParameters	处理存储过程的输出参数
 @Component
 //@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
+@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
 @Slf4j
 public class QueryInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        StatementHandler handler = (StatementHandler) invocation.getTarget();
+        ParameterHandler handler = (ParameterHandler) invocation.getTarget();
+
+        System.err.println(handler);
+        PreparedStatement ps = (PreparedStatement) invocation.getArgs()[0];
+        System.err.println(ps);
+//        handler.setParameters(ps);
 //        Object[] args = invocation.getArgs();
 //        MappedStatement mappedStatement = (MappedStatement) args[0];
 //        Object object = args[1];
 //        RowBounds rowBounds = (RowBounds) args[2];
-////        ResultHandler resultHandler = (ResultHandler)args[3];
-////        Transaction transaction = executor.getTransaction();
-////        Object parameterObject = parameterHandler.getParameterObject();
-        System.err.println(handler);
-        Object parameterObject = handler.getBoundSql().getParameterObject();
-        System.err.println(parameterObject);
-
-        BoundSql boundSql = handler.getBoundSql();
-        String sql = boundSql.getSql() + " and id = -10010";
-
-        Field sqlField = boundSql.getClass().getDeclaredField("sql");
-        sqlField.setAccessible(true);
-        sqlField.set(boundSql, sql);
-
-        // 使用反射设置修改后的 SQL
-        Field field = handler.getClass().getDeclaredField("boundSql");
-        field.setAccessible(true);
-        field.set(handler, boundSql);
+//        ResultHandler resultHandler = (ResultHandler)args[3];
+//        Transaction transaction = executor.getTransaction();
+//        Object parameterObject = parameterHandler.getParameterObject();
+//        System.err.println(handler);
+//        Object parameterObject = handler.getBoundSql().getParameterObject();
+//        System.err.println(parameterObject);
+//
+//        BoundSql boundSql = handler.getBoundSql();
+//        String sql = boundSql.getSql() + " and id = -10010";
+//
+//        Field sqlField = boundSql.getClass().getDeclaredField("sql");
+//        sqlField.setAccessible(true);
+//        sqlField.set(boundSql, sql);
+//
+//        // 使用反射设置修改后的 SQL
+//        Field field = handler.getClass().getDeclaredField("boundSql");
+//        field.setAccessible(true);
+//        field.set(handler, boundSql);
 
 //        System.err.println(args);
 //        System.err.println(transaction);
