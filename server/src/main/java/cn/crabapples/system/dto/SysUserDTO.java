@@ -6,6 +6,7 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
+@Accessors(chain = true)
 public class SysUserDTO extends BaseEntity<SysUser> {
     private String id;
     private String username;
@@ -32,12 +34,4 @@ public class SysUserDTO extends BaseEntity<SysUser> {
     private Integer age;
     // 用户状态标记 0:正常 1:禁用
     private Integer status;
-    // 创建时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    private LocalDateTime createTime;
-    // 更新时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    private LocalDateTime updateTime;
-    //创建人
-    private String createBy;
 }

@@ -1,6 +1,5 @@
 package cn.crabapples.common.mybatisflex;
 
-import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import com.mybatisflex.core.tenant.TenantFactory;
@@ -13,11 +12,11 @@ import javax.annotation.Resource;
 /**
  * TODO 多租户插件
  *
- * @author 张三
- * 2024-12-26 10:33
- * e-mail 123456789@qq.com
- * qq 123456789
- * pc-name 张三
+ * @author Ms.He
+ * 2025-01-10 09:45
+ * e-mail crabapples.cn@gmail.com
+ * qq 294046317
+ * pc-name mshe
  */
 @Component
 public class TenantHandler implements TenantFactory {

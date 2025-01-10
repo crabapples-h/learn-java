@@ -2,6 +2,8 @@ package cn.crabapples.system.sysDict.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
+import cn.crabapples.common.mybatisflex.OnInsertListener;
+import cn.crabapples.common.mybatisflex.OnUpdateListener;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-@Table(value = "sys_dict")
+@Table(value = "sys_dict", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
 @ToString
 @Data(staticConstructor = "create")
 @Accessors(chain = true)
@@ -29,22 +31,9 @@ public class SysDict extends BaseEntity<SysDict> {
     private String code;
     private String name;
 
-    // 创建时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onInsertValue = "now()")
-    private LocalDateTime createTime;
-
-    // 更新时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E")
-    @Column(onInsertValue = "now()", onUpdateValue = "now()")
-    private LocalDateTime updateTime;
-
     // 删除标记 (0:正常 1:删除)
     @Column(isLogicDelete = true)
     @Dict(dictCode = "delFlag")
     private Integer delFlag;
-
-    //创建人
-    private String createBy;
 
 }

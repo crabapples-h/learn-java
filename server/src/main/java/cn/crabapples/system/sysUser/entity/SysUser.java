@@ -2,6 +2,8 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
+import cn.crabapples.common.mybatisflex.OnInsertListener;
+import cn.crabapples.common.mybatisflex.OnUpdateListener;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson2.annotation.JSONField;
@@ -27,36 +29,24 @@ import java.util.stream.Collectors;
  * pc-name 29404
  */
 @Accessors(chain = true)
-@Table(value = "sys_user")
+@Table(value = "sys_user", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
 @Data(staticConstructor = "create")
 @EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity<SysUser> {
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
-    // 用户名
-    private String username;
-    // 密码
-    private String password;
-    // 姓名
-    private String name;
-    // 邮箱
-    private String mail;
-    // 电话
-    private String phone;
-    // 头像
-    private String avatar;
-    // 年龄
-    private Integer age;
-    // 年龄
+    private String username; // 用户名
+    private String password; // 密码
+    private String name;// 姓名
+    private String mail;// 邮箱
+    private String phone; // 电话
+    private String avatar;// 头像
+    private Integer age;// 年龄
     @Dict(dictCode = "gender")
-    private Integer gender;
-
-    // 最后操作用户
-    private String updateBy;
+    private Integer gender; // 性别
 
     @Column(ignore = true)
     private List<String> roleList;
-
 
     @RelationOneToMany(joinTable = "sys_user_roles",
             joinSelfColumn = "user_id", joinTargetColumn = "role_id",
@@ -64,19 +54,8 @@ public class SysUser extends BaseEntity<SysUser> {
     @JSONField(serialize = false)
     private List<SysRole> roleListObj;
 
-
     // 用户状态标记 0:正常 1:禁用
     private Integer status;
-
-    // 创建时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @Column(onInsertValue = "now()")
-    private LocalDateTime createTime;
-
-    // 更新时间
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @Column(onInsertValue = "now()", onUpdateValue = "now()")
-    private LocalDateTime updateTime;
 
     // 删除标记 (0:正常 1:删除)
     @Column(isLogicDelete = true)
@@ -84,9 +63,6 @@ public class SysUser extends BaseEntity<SysUser> {
 
     // 租户, 多个用逗号隔开
     private String tenantId;
-
-    //创建人
-    private String createBy;
 
 
     public List<String> getRoleList() {

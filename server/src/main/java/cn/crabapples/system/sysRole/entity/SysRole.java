@@ -37,12 +37,8 @@ public class SysRole extends BaseEntity<SysRole> {
     // id 为自增主键
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
-
-    // 名称
-    private String name;
-
-    // 角色
-    private String code;
+    private String name;// 名称
+    private String code;// 角色
 
     //角色拥有的菜单列表
     @Column(ignore = true)
@@ -50,28 +46,6 @@ public class SysRole extends BaseEntity<SysRole> {
 
     //角色拥有的权限列表
 //    private List<String> permissionList;
-
-    // 创建时间
-    @CreatedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
-    @Column(onInsertValue = "now()")
-    private LocalDateTime createTime;
-
-    // 更新时间
-    @LastModifiedDate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss E", serialize = false)
-    @Column(onInsertValue = "now()", onUpdateValue = "now()")
-    private LocalDateTime updateTime;
-
-//    // 删除标记 (0:正常 1:删除)
-//    @Column(isLogicDelete = true)
-//    @Dict(dictCode = "delFlag")
-//    private Integer delFlag;
-
-    //创建人
-    @CreatedBy
-    @JSONField(serialize = false)
-    private String createBy;
 
     // 租户, 多个用逗号隔开
     private String tenantId;

@@ -21,20 +21,12 @@ public class FileInfo extends Model<FileInfo> {
 
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
-    //原文件名
-    private String oldName;
 
-    //文件虚拟访问路径
-    private String virtualPath;
-
-    //文件真实保存访问路径
-    private String uploadPath;
-
-    // 文件类型
-    private String contentType;
-
-    //文件大小
-    private Long fileSize;
+    private String oldName; // 原文件名
+    private String virtualPath; // 文件虚拟访问路径
+    private String uploadPath; // 文件保存路径
+    private String contentType;// 文件类型
+    private Long fileSize; // 文件大小
 
     @Column(isLogicDelete = true)
     private byte delFlag;
