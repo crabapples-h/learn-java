@@ -4,6 +4,8 @@ import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;
 import cn.crabapples.common.mybatis.flex.OnInsertListener;
 import cn.crabapples.common.mybatis.flex.OnUpdateListener;
+import cn.crabapples.common.mybatis.plugins.CMask;
+import cn.crabapples.common.mybatis.plugins.CMaskEnum;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson2.annotation.JSONField;
@@ -38,6 +40,7 @@ public class SysUser extends BaseEntity<SysUser> {
     private String password; // 密码
     private String name;// 姓名
     private String mail;// 邮箱
+    @CMask(CMaskEnum.PHONE)
     private String phone; // 电话
     private String avatar;// 头像
     private Integer age;// 年龄

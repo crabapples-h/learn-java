@@ -2,10 +2,15 @@
 //
 //
 //import lombok.extern.slf4j.Slf4j;
+//import org.apache.ibatis.cache.CacheKey;
+//import org.apache.ibatis.executor.Executor;
 //import org.apache.ibatis.executor.statement.StatementHandler;
 //import org.apache.ibatis.mapping.BoundSql;
+//import org.apache.ibatis.mapping.MappedStatement;
 //import org.apache.ibatis.mapping.ParameterMapping;
 //import org.apache.ibatis.plugin.*;
+//import org.apache.ibatis.session.ResultHandler;
+//import org.apache.ibatis.session.RowBounds;
 //import org.springframework.stereotype.Component;
 //
 //import java.sql.Connection;
@@ -34,47 +39,25 @@
 ////  handleOutputParameters	处理存储过程的输出参数
 //@Component
 ////@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
-//@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})})
+//@Intercepts({@Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class,
+//        CacheKey.class, BoundSql.class})})
 //@Slf4j
 //public class QueryInterceptor1 implements Interceptor {
 //    @Override
 //    public Object intercept(Invocation invocation) throws Throwable {
-//        StatementHandler handler = (StatementHandler) invocation.getTarget();
-////        Object[] args = invocation.getArgs();
-////        MappedStatement mappedStatement = (MappedStatement) args[0];
-////        Object object = args[1];
-////        RowBounds rowBounds = (RowBounds) args[2];
-//////        ResultHandler resultHandler = (ResultHandler)args[3];
-//////        Transaction transaction = executor.getTransaction();
-//////        Object parameterObject = parameterHandler.getParameterObject();
-//        System.err.println(handler);
-//        BoundSql boundSql = handler.getBoundSql();
+//        Executor handler = (Executor) invocation.getTarget();
+//        // 获取 MappedStatement 和参数
+//        MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+//        Object parameterObject = invocation.getArgs()[1];
 //
-//        System.err.println(boundSql);
-//        boundSql.setAdditionalParameter("id", "-10010");
-//        String sql = boundSql.getSql();
-//        System.err.println(sql);
+//        // 修改查询条件（以添加逻辑条件为例）
+//        if (parameterObject instanceof Map) {
+//            @SuppressWarnings("unchecked")
+//            Map<String, Object> paramMap = (Map<String, Object>) parameterObject;
+//            paramMap.put("extraCondition", "AND id = -10010");
+//        }
 //
-//        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-//        System.err.println(parameterMappings);
-//
-//        Object parameterObject = boundSql.getParameterObject();
-//        System.err.println(parameterObject);
-//
-//        Map<String, Object> additionalParameters = boundSql.getAdditionalParameters();
-//        System.err.println(additionalParameters);
-////        System.err.println(args);
-////        System.err.println(transaction);
-//        //第一种，性能高
-//        // if(parameterObject instanceof BaseModel){
-//        //  BaseModel baseModel = (BaseModel) parameterObject;
-//        //  baseModel.setLastUpdateBy(LocalUserUtil.getLocalUser().getNickName());
-//        // }
-//        //第二种使用反射处理，扒光撕开
-////        Field lastUpdateBy = ReflectUtil.getField(parameterObject.getClass(), "lastUpdateBy");
-////        if (lastUpdateBy != null) {
-////            ReflectUtil.setFieldValue(parameterObject, lastUpdateBy, LocalUserUtil.getLocalUser().getNickName());
-////        }
+//        // 调用原方法
 //        return invocation.proceed();
 //
 //    }

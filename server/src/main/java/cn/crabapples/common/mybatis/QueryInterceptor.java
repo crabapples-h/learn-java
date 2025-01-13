@@ -32,7 +32,7 @@ import java.util.Properties;
 //  ResultSetHandler
 //  handleResultSets	    处理查询结果
 //  handleOutputParameters	处理存储过程的输出参数
-@Component
+//@Component
 //@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
 @Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
 @Slf4j
