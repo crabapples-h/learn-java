@@ -39,6 +39,7 @@ public class SysUser extends BaseEntity<SysUser> {
     private String username; // 用户名
     private String password; // 密码
     private String name;// 姓名
+    @CMask(CMaskEnum.EMAIL)
     private String mail;// 邮箱
     @CMask(CMaskEnum.PHONE)
     private String phone; // 电话
