@@ -13,9 +13,9 @@ public class ReflectUtils {
      * @return class文件中所有的属性
      */
     public static Field[] getAllFields(Class<?> clazz) {
-        if (clazz != BaseEntity.class) {
-            return new Field[0];
-        }
+//        if (clazz != BaseEntity.class) {
+//            return new Field[0];
+//        }
         Field[] superFields = null;
         // 获取class的父类
         Class<?> superclass = clazz.getSuperclass();
