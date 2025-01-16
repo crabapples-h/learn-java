@@ -61,13 +61,14 @@ module.exports = {
         loaderOptions: {
             less: {
                 //If you are using less-loader@5 please spread the lessOptions to options directly
-                javascriptEnabled: true,
                 modifyVars: {
-                    /* less 变量覆盖，用于自定义 ant design 主题 */
-                    'primary-color': '#2daef6',
-                    'link-color': '#2daef6',
-                    'border-radius-base': '4px',
+                    // /* less 变量覆盖，用于自定义 ant design 主题 */
+                    // 'primary-color': '#2daef6',
+                    // 'link-color': '#2daef6',
+                    // "layout-color": "#ee88aa",
+                    // 'border-radius-base': '4px',
                 },
+                javascriptEnabled: true,
             }
         }
     },
@@ -100,7 +101,7 @@ module.exports = {
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
                 pathRewrite: {
-                // 把 /api 开头的路径替换为 ''
+                    // 把 /api 开头的路径替换为 ''
                     '^/api': '/api'
                 }
             },
@@ -110,14 +111,14 @@ module.exports = {
 
     },
     // 第三方插件配置
-    pluginOptions: {
-        // "style-resources-loader": {
-        //     preProcessor: "less",
-        //     patterns: [
-        //         //这个是加上自己的路径，
-        //         //注意：试过不能使用别名路径
-        //         path.resolve(__dirname, "public/color.less")
-        //     ]
-        // }
-    },
+    // pluginOptions: {
+    //     "style-resources-loader": {
+    //         preProcessor: "less",
+    //         patterns: [
+    //             //这个是加上自己的路径，
+    //             //注意：试过不能使用别名路径
+    //             path.resolve(__dirname, "public/color.less")
+    //         ]
+    //     }
+    // },
 };
