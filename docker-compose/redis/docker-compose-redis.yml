@@ -11,6 +11,28 @@ networks:
 #          gateway: 172.16.21.1
 # 创建服务
 services:
+  redis_sentinel:
+    networks:
+      redis_network:
+        ipv4_address: 172.16.21.5
+    container_name: redis_sentinel
+    image: bitnami/redis-sentinel:latest
+    restart: always
+    volumes:
+      - /data/redis/conf:/usr/local/etc/redis
+    ports:
+      - "26380:26379"
+    environment:
+      - REDIS_MASTER_HOST=redis_6380
+      - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_SENTINEL_QUORUM=1
+      - REDIS_SENTINEL_FAILOVER_TIMEOUT=3000
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=15000
+    depends_on:
+      - redis_6380
+      - redis_6381
+      - redis_6382
+
   redis_6380:
     networks:
       redis_network:
@@ -18,10 +40,13 @@ services:
     container_name: redis_6380
     image: harbor.crabapples.cn/redis/redis:latest
     restart: always
-#    volumes:
-#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    volumes:
+      - /data/redis/conf:/usr/local/etc/redis
     ports:
       - "6380:6379"
+    command:
+      - "redis-server"
+      - "/usr/local/etc/redis/redis_6380.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -35,15 +60,20 @@ services:
     container_name: redis_6381
     image: harbor.crabapples.cn/redis/redis:latest
     restart: always
-#    volumes:
-#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    volumes:
+      - /data/redis/conf:/usr/local/etc/redis
     ports:
       - "6381:6379"
+    command:
+      - "redis-server"
+      - "/usr/local/etc/redis/redis_6381.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
       timeout: 5s
       retries: 3
+    depends_on:
+      - redis_6380
 
   redis_6382:
     networks:
@@ -52,12 +82,17 @@ services:
     container_name: redis_6382
     image: harbor.crabapples.cn/redis/redis:latest
     restart: always
-#    volumes:
-#      - /data/redis/6382:/usr/local/etc/redis/redis.conf
+    volumes:
+      - /data/redis/conf:/usr/local/etc/redis
     ports:
       - "6382:6379"
+    command:
+      - "redis-server"
+      - "/usr/local/etc/redis/redis_6382.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
       timeout: 5s
       retries: 3
+    depends_on:
+      - redis_6380
