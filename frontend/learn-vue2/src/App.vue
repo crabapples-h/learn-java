@@ -1,10 +1,12 @@
 <template>
   <div id="app">
+    <design></design>
+    <!--    <a-b></a-b>-->
     <!--    <hello-world />-->
     <!--    <org-wechat />-->
     <!--    <wechat-location />-->
     <!--    <face-check-image />-->
-        <face-check-video />
+    <!--        <face-check-video />-->
     <!--    <face-check-video-file />-->
     <!--    <qr-code/>-->
     <!--    <qr-code-list/>-->
@@ -14,7 +16,7 @@
     <!--    <pixi-base />-->
     <!--    <pixi-anima/>-->
     <!--    <any-touch-base/>-->
-<!--    <any-touch-advance/>-->
+    <!--    <any-touch-advance/>-->
     <!--    <pixi-one-end />-->
     <!--    <div id="nav">-->
     <!--      <router-link to="/">Home</router-link>-->
@@ -42,11 +44,15 @@ import PixiAnima from '@/views/pixi/pixi-anima.vue'
 import PixiOneEnd from '@/views/pixi/pixi-one-end.vue'
 import AnyTouchBase from '@/views/any-touch/anyTouch-base.vue'
 import AnyTouchAdvance from '@/views/any-touch/anyTouch-advance.vue'
+import Design from '@/views/code-gen/design.vue'
+import Render from '@/views/code-gen/render.vue'
 
 export default {
   name: 'app',
   mixins: [],
   components: {
+    Design,// 表单设计器
+    Render,// 表单渲染器
     HelloWorld,// 从url解析参数
     OrgWechat,// 企业微信获取定位
     WechatLocation,//微信获取定位
@@ -88,9 +94,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   //text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
   color: #2c3e50;
 }
 
