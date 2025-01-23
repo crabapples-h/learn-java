@@ -47,6 +47,10 @@
         </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/ognl/ognl -->
         <dependency>
             <groupId>ognl</groupId>

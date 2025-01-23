@@ -16,7 +16,7 @@
     <modules>
         <module>frontend-vue2</module>
         <module>frontend-vue3</module>
-        <module>frontend-react</module>
+<!--        <module>frontend-react</module>-->
         <module>frontend-mpvue</module>
         <module>frontend-hbuildx</module>
         <module>frontend-electron</module>

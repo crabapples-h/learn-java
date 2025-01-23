@@ -4,11 +4,13 @@ version: "3"
 # 创建网络
 networks:
   redis_cluster_network:
+    driver_opts:
+      com.docker.network.bridge.name: "custom_bridge"
     ipam:
       driver: default
       config:
         - subnet: 172.16.22.0/24
-#          gateway: 172.16.21.1
+          gateway: 172.16.22.1
 # 创建服务
 services:
   redis_6390:
@@ -16,15 +18,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.2
     container_name: redis_6390
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6390:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6390.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -35,15 +37,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.3
     container_name: redis_6391
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6391:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6391.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -56,15 +58,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.4
     container_name: redis_6392
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6392:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6392.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -77,15 +79,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.5
     container_name: redis_6393
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6393:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6393.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -98,15 +100,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.6
     container_name: redis_6394
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6394:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6394.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -119,15 +121,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.7
     container_name: redis_6395
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6395:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6393.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -140,15 +142,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.8
     container_name: redis_6396
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6396:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6396.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -161,15 +163,15 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.9
     container_name: redis_6397
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6397:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6397.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
@@ -182,15 +184,36 @@ services:
       redis_cluster_network:
         ipv4_address: 172.16.22.10
     container_name: redis_6398
-    image: harbor.crabapples.cn/redis/redis:latest
+    image: redis:latest
     restart: always
     volumes:
-      - /data/redis/conf:/usr/local/etc/redis
+      - /Users/mshe/developer/data:/usr/local/etc/redis
     ports:
       - "6398:6379"
     command:
       - "redis-server"
-      - "/usr/local/etc/redis/redis_cluster_6398.conf"
+      - "/usr/local/etc/redis/redis_cluster.conf"
+    healthcheck:
+      test: "redis-cli ping"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      - redis_6390
+  redis_6399:
+    networks:
+      redis_cluster_network:
+        ipv4_address: 172.16.22.11
+    container_name: redis_6399
+    image: redis:latest
+    restart: always
+    volumes:
+      - /Users/mshe/developer/data:/usr/local/etc/redis
+    ports:
+      - "6399:6379"
+    command:
+      - "redis-server"
+      - "/usr/local/etc/redis/redis_cluster.conf"
     healthcheck:
       test: "redis-cli ping"
       interval: 10s
