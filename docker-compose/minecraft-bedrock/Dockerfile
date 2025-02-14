@@ -9,7 +9,7 @@ EXPOSE 19132
 EXPOSE 19133
 VOLUME /data/worlds
 #VOLUME /data/server.properties
-COPY bedrock-server-1.21.51.02.zip /data/app.zip
+COPY bedrock-server.zip /data/app.zip
 RUN apt-get update && \
     apt-get install unzip wget libcurl4 -y && \
     unzip /data/app.zip -d /data/ && \

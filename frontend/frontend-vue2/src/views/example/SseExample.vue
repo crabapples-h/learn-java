@@ -28,6 +28,32 @@ export default {
     }
   },
   methods: {
+    axiosConnect() {
+      this.$http.get(`${this.url.connect}/${this.clientId}`)
+      this.clientId = Math.floor(Math.random() * 10000000).toString()
+      let url = `${this.url.connect}/${this.clientId}`;
+      // console.log(NativeEventSource)
+      // console.log(EventSourcePolyfill)
+      let connection = new EventSourcePolyfill(url, {
+        headers: this.headers
+      });
+      console.log("url", url, connection);
+
+      connection.addEventListener("open", (event) => {
+        // this.disable = true;
+        console.log("连接成功", event);
+      });
+      connection.addEventListener("log", (event) => {
+        console.log("收到消息", event.data);
+        this.messages.push(event.data)
+      });
+      connection.addEventListener("error", (event) => {
+        console.warn("连接断开", event);
+        this.disable = false;
+        // sse.close();
+      });
+      this.testSend()
+    },
     connect() {
       this.clientId = Math.floor(Math.random() * 10000000).toString()
       let url = `${this.url.connect}/${this.clientId}`;
