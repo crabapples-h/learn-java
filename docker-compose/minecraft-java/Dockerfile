@@ -5,9 +5,9 @@ ENV GAME_MODE="survival"
 ENV DIFFICULTY="easy"
 ENV LEVEL_NAME="server"
 ENV LEVEL_SEED=""
-EXPOSE 19132
-EXPOSE 19133
-#VOLUME /data/minecraft-java
+EXPOSE 25565
+VOLUME /data/eula.txt
+#-v /data/minecraft-java/eula.txt /data/eula.txt
 COPY server.jar /data/app.jar
 #RUN apt-get update && \
 #    apt-get install unzip wget libcurl4 -y && \
