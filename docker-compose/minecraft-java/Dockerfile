@@ -1,14 +1,19 @@
-FROM aomountainu/openjdk21:latest
+#FROM aomountainu/openjdk21:latest
+FROM ubuntu:latest
 LABEL authors="mshe"
 WORKDIR /data
-ENV GAME_MODE="survival"
-ENV DIFFICULTY="easy"
-ENV LEVEL_NAME="server"
-ENV LEVEL_SEED=""
+#ENV GAME_MODE="survival"
+#ENV DIFFICULTY="easy"
+#ENV LEVEL_NAME="server"
+#ENV LEVEL_SEED=""
 EXPOSE 25565
-VOLUME /data/eula.txt
-#-v /data/minecraft-java/eula.txt /data/eula.txt
+#VOLUME /data/eula.txt
 COPY server.jar /data/app.jar
+RUN apt-get update && \
+    apt-get install libudev-dev openjdk-21-jdk libcurl4 -y && \
+    echo "eula=true" > /data/eula.txt
+
+
 #RUN apt-get update && \
 #    apt-get install unzip wget libcurl4 -y && \
 #    unzip /data/app.zip -d /data/ && \
