@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * 文件功能实现类
@@ -55,5 +57,11 @@ public class FileInfoServiceImpl implements FileInfoService {
         String url = minioUtils.upload(getFile(request));
         log.info("文件上传完成url:[{}]", url);
         return url;
+    }
+
+
+    @Override
+    public void fileDownload(String url, HttpServletResponse response) throws IOException {
+        minioUtils.download(url,response.getOutputStream());
     }
 }

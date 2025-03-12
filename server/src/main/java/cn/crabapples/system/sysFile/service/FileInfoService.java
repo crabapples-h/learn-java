@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -31,4 +32,6 @@ public interface FileInfoService {
     FileInfo uploadFile(HttpServletRequest request);
 
     String uploadFile2Oss(HttpServletRequest request);
+
+    void fileDownload(String url, HttpServletResponse response) throws IOException;
 }

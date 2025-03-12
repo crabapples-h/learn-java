@@ -1,16 +1,12 @@
 package cn.crabapples.common.minio;
 
 import cn.crabapples.common.base.ApplicationException;
-import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
-import io.minio.PutObjectArgs;
-import io.minio.UploadObjectArgs;
+import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -59,7 +56,7 @@ public class MinioUtils {
                     .build();
             minioClient.putObject(args);
             inputStream.close();
-            return bucketName;
+            return bucketName + "/" + multipartFile.getOriginalFilename();
         } catch (ErrorResponseException | InternalException | IOException | ServerException | XmlParserException |
                  InsufficientDataException | InvalidResponseException | NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -92,5 +89,37 @@ public class MinioUtils {
 
         return "";
     }
+
+    public void download(String url, OutputStream outputStream) {
+        try {
+//            if (imgPath.contains("s3obj")) {
+////                String[] s3paths = imgPath.split("/");
+////                this.viewS3(request, response, s3paths[1], s3paths[2]);
+//                String prefix = imgPath.substring(0, imgPath.indexOf("/"));
+//                String bucketName = imgPath.substring(prefix.length() + 1, imgPath.indexOf("/", prefix.length() + 1));
+//                String fileName = imgPath.substring(prefix.length() + 1 + bucketName.length() + 1);
+//                this.viewS3(request, response, bucketName, fileName);
+//                return;
+//            }
+            GetObjectArgs args = GetObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(url).build();
+            GetObjectResponse object = minioClient.getObject(args);
+            byte[] bytes = new byte[1024];
+            for (int i = object.read(); i != -1; i = object.read()) {
+                outputStream.write(bytes, 0, bytes.length);
+            }
+            outputStream.flush();
+            object.close();
+        } catch (ErrorResponseException | InternalException | IOException | ServerException | XmlParserException |
+                 InsufficientDataException | InvalidResponseException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            throw new ApplicationException("文件上传失败");
+        } catch (InvalidKeyException e) {
+            log.info("minioKey错误");
+            throw new ApplicationException("文件上传失败:-3");
+        }
+    }
+
 
 }

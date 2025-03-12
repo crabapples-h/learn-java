@@ -8,11 +8,13 @@ import io.minio.errors.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -56,6 +58,15 @@ public class FileInfoController extends BaseController {
         log.info("收到请求->上传文件到对象存储(返回路径)");
         String url = fileInfoService.uploadFile2Oss(request);
         log.info("返回结果->上传文件到对象存储(返回路径)结束:[{}]", url);
+        return new ResponseDTO<>(url);
+    }
+
+    @GetMapping("/fileDownload")
+    @Operation(summary = "获取文件", description = "获取文件接口")
+    public ResponseDTO<String> fileDownload(HttpServletResponse response, String url) throws IOException {
+        log.info("收到请求->从对象存储获取文件");
+        fileInfoService.fileDownload(url, response);
+        log.info("返回结果->从对象存储获取文件结束:[{}]", url);
         return new ResponseDTO<>(url);
     }
 }
