@@ -111,7 +111,7 @@ public class DictAspect {
                 ((ResponseDTO<?>) result).setData(data);
             }
         } catch (Exception e) {
-            log.error("数据翻译失败,[{}],[{}]", e, result);
+            log.warn("数据翻译失败,[{}],[{}]", e, result);
         }
         return result;
     }
