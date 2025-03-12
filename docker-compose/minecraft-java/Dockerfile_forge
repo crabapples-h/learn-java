@@ -5,17 +5,23 @@ ENV GAME_MODE="survival"
 ENV DIFFICULTY="easy"
 ENV LEVEL_NAME="server"
 ENV LEVEL_SEED=""
-EXPOSE 19132
-EXPOSE 19133
+ENV ONLINE_MODE="true"
+EXPOSE 25565
+COPY forge-1.20.1-47.3.33-installer-offline.jar /data/installer.jar
+COPY server.properties /data/server.properties
 #VOLUME /data/server.properties
-COPY bedrock-server.zip /data/app.zip
 RUN apt-get update && \
-    apt-get install unzip wget libcurl4 -y && \
-    unzip /data/app.zip -d /data/ && \
+    apt-get install libudev-dev openjdk-21-jdk libcurl4 -y && \
+    echo "eula=true" > /data/eula.txt && \
+    java -jar /data/installer.jar --installServer && \
     echo 'sed -i "s/^gamemode=.*/gamemode=$GAME_MODE/" /data/server.properties' >> /data/init.sh && \
     echo 'sed -i "s/^difficulty=.*/difficulty=$DIFFICULTY/" /data/server.properties' >> /data/init.sh && \
     echo 'sed -i "s/^level-name=.*/level-name=$LEVEL_NAME/" /data/server.properties' >> /data/init.sh && \
     echo 'sed -i "s/^level-seed=.*/level-seed=$LEVEL_SEED/" /data/server.properties' >> /data/init.sh && \
+    echo 'sed -i "s/^online-mode=.*/online-mode=$ONLINE_MODE/" /data/server.properties' >> /data/init.sh && \
     chmod +x /data/init.sh
-CMD /data/init.sh && /data/bedrock_server
+CMD /data/init.sh && ./run.sh
+#CMD ./run.sh
+#CMD java -Xmx1024M -Xms1024M -jar installer.jar
+#CMD java -Xmx1024M -Xms1024M -jar app.jar
 #CMD ["/bin/bash /data/init.sh" , "/data/bedrock_server"]

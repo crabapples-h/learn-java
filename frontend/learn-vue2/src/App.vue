@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <design></design>
+    <table-demo></table-demo>
+<!--    <design></design>-->
     <!--    <a-b></a-b>-->
     <!--    <hello-world />-->
     <!--    <org-wechat />-->

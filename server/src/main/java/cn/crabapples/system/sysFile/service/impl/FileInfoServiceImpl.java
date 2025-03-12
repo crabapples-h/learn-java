@@ -1,6 +1,7 @@
 package cn.crabapples.system.sysFile.service.impl;
 
 import cn.crabapples.common.utils.file.FileUtils;
+import cn.crabapples.system.sysFile.dao.FileInfoDAO;
 import cn.crabapples.system.sysFile.dao.mybatis.mapper.FileInfoMapper;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
@@ -17,17 +18,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Service
-public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> implements FileInfoService {
+public class FileInfoServiceImpl implements FileInfoService {
     @Value("${virtualPath}")
     private String virtualPath;
     @Value("${uploadPath}")
     private String uploadPath;
 
-//    private final FileInfoDAO fileInfoDAO;
-//
-//    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO) {
-//        this.fileInfoDAO = fileInfoDAO;
-//    }
+    private final FileInfoDAO fileInfoDAO;
+
+    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO) {
+        this.fileInfoDAO = fileInfoDAO;
+    }
 
     /**
      * 上传文件
@@ -43,7 +44,12 @@ public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> i
     }
 
     private FileInfo saveFileInfo(FileInfo fileInfo) {
-        saveOrUpdate(fileInfo);
+        fileInfoDAO.saveOrUpdate(fileInfo);
         return fileInfo;
+    }
+
+    @Override
+    public String uploadFile2Oss(HttpServletRequest request) {
+        return "";
     }
 }

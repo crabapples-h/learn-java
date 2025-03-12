@@ -45,4 +45,12 @@ public class FileInfoController extends BaseController {
         log.info("返回结果->上传文件(返回路径)结束:[{}]", entity);
         return new ResponseDTO<>(entity.getVirtualPath());
     }
+    @PostMapping("/uploadFileV3")
+    @Operation(summary = "上传文件(返回路径)", description = "上传文件(返回路径)接口")
+    public ResponseDTO<String> uploadFileV3(HttpServletRequest request) {
+        log.info("收到请求->上传文件到对象存储(返回路径)");
+        String url = fileInfoService.uploadFile2Oss(request);
+        log.info("返回结果->上传文件到对象存储(返回路径)结束:[{}]", url);
+        return new ResponseDTO<>(url);
+    }
 }

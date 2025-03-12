@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 文件功能抽象接口
  */
-public interface FileInfoService extends IService<FileInfo> {
+public interface FileInfoService  {
     default FileInfo getFilePath(HttpServletRequest request, String uploadPath, String virtualPath) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile multipartFile = multipartRequest.getFile("file");
@@ -25,4 +25,6 @@ public interface FileInfoService extends IService<FileInfo> {
     }
 
     FileInfo uploadFile(HttpServletRequest request);
+
+    String uploadFile2Oss(HttpServletRequest request);
 }

@@ -1,0 +1,20 @@
+version: "3"
+services:
+  minecraft_forge:
+    container_name: minecraft_forge
+    image: ubuntu:latest
+    #    restart: always
+    volumes:
+      - /data/minecraft_java/:/data/
+    ports:
+      - "25565:25565"
+    command:
+      - "apt-get update"
+      - "apt-get install libudev-dev openjdk-21-jdk libcurl4 -y"
+      - "echo \"eula=true\" > /data/eula.txt"
+      - "echo 'sed -i \"s/^gamemode=.*/gamemode=$GAME_MODE/\" /data/server.properties' >> /data/init.sh"
+      - "echo 'sed -i \"s/^difficulty=.*/difficulty=$DIFFICULTY/\" /data/server.properties' >> /data/init.sh"
+      - "echo 'sed -i \"s/^level-name=.*/level-name=$LEVEL_NAME/\" /data/server.properties' >> /data/init.sh"
+      - "echo 'sed -i \"s/^level-seed=.*/level-seed=$LEVEL_SEED/\" /data/server.properties' >> /data/init.sh"
+      - "echo 'sed -i \"s/^online-mode=.*/online-mode=$ONLINE_MODE/\" /data/server.properties' >> /data/init.sh"
+      - "chmod +x /data/init.sh"

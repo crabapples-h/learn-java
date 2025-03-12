@@ -1,220 +1,59 @@
 <template>
-  <a-table
-      :columns="columns"
-      :data-source="data"
-      bordered
-      size="middle"
-      :scroll="{ x: 'calc(700px + 50%)', y: 240 }"
-  />
+  <a-tree-select
+      v-model="value"
+      style="width: 100%"
+      :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+      :tree-data="treeData"
+      placeholder="Please select"
+      tree-default-expand-all
+  >
+    <span v-if="key === '0-0-1'" slot="title" slot-scope="{ key, value }" style="color: #08c">
+      Child Node1 {{ value }}
+    </span>
+  </a-tree-select>
 </template>
+
 <script>
-const columns = [
+const treeData = [
   {
-    title: '序号',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-  {
-    title: '省份',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-  {
-    title: '门店数',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-  {
-    title: '员工数',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-  {
-    title: 'AI预警',
+    title: 'Node1',
+    value: '0-0',
+    key: '0-0',
+    disabled: true,
     children: [
       {
-        title: '总数',
-        dataIndex: 'age',
-        key: 'age',
-        width: 200,
-        sorter: (a, b) => a.age - b.age,
+        value: '0-0-1',
+        key: '0-0-1',
+        scopedSlots: {
+          // custom title
+          title: 'title',
+        },
       },
       {
-        title: '员工着装',
-        dataIndex: 'building',
-        key: 'buildin'
-      },
-      {
-        title: '员工行为',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '员工脱岗',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '营业时段',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '产品陈列',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '风险单',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '店面卫生',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '用电量',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '温湿度',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
-      },
-      {
-        title: '水浸',
-        dataIndex: 'street',
-        key: 'street',
-        width: 200,
+        title: 'Child Node2',
+        value: '0-0-2',
+        key: '0-0-2',
       },
     ],
   },
   {
-    title: '申诉通过数',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
+    title: 'Node2',
+    value: '0-1',
+    key: '0-1',
+    disabled: true,
   },
-  {
-    title: '计入预警数',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-
 ];
-
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: 'John Brown',
-    age: i + 1,
-    street: 'Lake Park',
-    building: 'C',
-    number: 2035,
-    companyAddress: 'Lake Street 42',
-    companyName: 'SoftLake Co',
-    gender: 'M',
-  });
-}
-
 export default {
   data() {
     return {
-      data,
-      columns,
+      value: undefined,
+      treeData,
     };
   },
-  mounted() {
-    console.log(window.location.href)
+  watch: {
+    value(value) {
+      console.log(value);
+    },
   },
 };
 </script>
