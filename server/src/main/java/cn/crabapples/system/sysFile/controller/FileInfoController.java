@@ -4,6 +4,7 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
+import io.minio.errors.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 文件接口
@@ -45,6 +49,7 @@ public class FileInfoController extends BaseController {
         log.info("返回结果->上传文件(返回路径)结束:[{}]", entity);
         return new ResponseDTO<>(entity.getVirtualPath());
     }
+
     @PostMapping("/uploadFileV3")
     @Operation(summary = "上传文件(返回路径)", description = "上传文件(返回路径)接口")
     public ResponseDTO<String> uploadFileV3(HttpServletRequest request) {

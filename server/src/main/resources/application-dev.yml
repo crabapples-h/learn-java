@@ -10,6 +10,12 @@ logging:
     com.mybatisflex: debug
 
 spring:
+  #----- minio config -----
+  minio:
+    access-key: gQ6MwJZxCoPX4qoh2O80
+    secret-key: vLmlVPM1mG2cBjBu8mLXhNBpdGkRbgpBJBT9S5yz
+    url: http://172.16.8.1:9000
+    bucket-name: crabapples
   #----- flyway config -----
   flyway.enabled: true
   flyway.baseline-on-migrate: true
