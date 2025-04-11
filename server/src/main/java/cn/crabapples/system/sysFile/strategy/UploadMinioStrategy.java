@@ -1,7 +1,6 @@
 package cn.crabapples.system.sysFile.strategy;
 
 import cn.crabapples.common.minio.MinioUtils;
-import cn.crabapples.common.utils.file.FileUtils;
 import cn.crabapples.system.sysFile.UploadTypeEnum;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
@@ -53,16 +51,16 @@ public class UploadMinioStrategy implements UploadFileStrategy {
             String contentType = part.getContentType();
             try {
                 InputStream inputStream = part.getInputStream();
-                String fullPath = "/api/file/download";
-                String url = minioUtils.upload(fileName, inputStream);
-                System.err.println(url);
-//                /download?fileName=img.png
+                String fullPath = minioUtils.upload(null, inputStream, fileName);
+                String urlPrefix = fullPath.substring(0, fullPath.indexOf("/"));
+                String bucketName = fullPath.substring(urlPrefix.length() + 1, fullPath.indexOf("/", urlPrefix.length() + 1));
+                String uploadFileName = fullPath.substring(urlPrefix.length() + 1 + bucketName.length() + 1);
                 return new FileInfo()
-                        .setVirtualPath("/api/file/download?fileName=" + fileName)
+                        .setVirtualPath("/api/file/download?fileName=" + uploadFileName)
                         .setContentType(contentType)
                         .setFileSize(part.getSize())
                         .setOldName(fileName)
-                        .setUploadPath("")
+                        .setUploadPath(fullPath)
                         .setSaveType(UploadTypeEnum.MINIO.type);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -73,5 +71,18 @@ public class UploadMinioStrategy implements UploadFileStrategy {
                 .collect(Collectors.joining(","));
         log.info("文件上传完成url:[{}]", url);
         return url;
+    }
+
+    public static void main(String[] args) {
+//        String imgPath = "/crabapples/ddd/test.txt";
+//        String[] split = imgPath.split("/");
+//
+//        String prefix = imgPath.substring(0, imgPath.indexOf("/"));
+//        String bucketName = imgPath.substring(prefix.length() + 1, imgPath.indexOf("/", prefix.length() + 1));
+//        String fileName = imgPath.substring(prefix.length() + 1 + bucketName.length() + 1);
+//
+//        System.err.println(prefix);
+//        System.err.println(bucketName);
+//        System.err.println(fileName);
     }
 }
