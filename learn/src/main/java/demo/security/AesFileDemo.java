@@ -79,7 +79,6 @@ public class AesFileDemo {
         }
         FileInputStream fileInputStream = new FileInputStream(sourceFile);
         FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
-        byte[] data = new byte[1024];
         /*
          * 当操作类型为加密时
          */
@@ -93,6 +92,7 @@ public class AesFileDemo {
             /*
              * 创建加密流读入文件
              */
+            byte[] data = new byte[1024];
             CipherInputStream cipherInputStream = new CipherInputStream(fileInputStream, cipher);
             for (int i = 0; i != -1; i = cipherInputStream.read(data)) {
                 fileOutputStream.write(data, 0, i);

@@ -1,18 +1,20 @@
 package cn.crabapples.system.sysFile.service.impl;
 
 import cn.crabapples.common.minio.MinioUtils;
-import cn.crabapples.common.utils.file.FileUtils;
+import cn.crabapples.system.sysFile.UploadTypeEnum;
 import cn.crabapples.system.sysFile.dao.FileInfoDAO;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
+import cn.crabapples.system.sysFile.strategy.StrategyFactory;
+import cn.crabapples.system.sysFile.strategy.UploadFileStrategy;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 文件功能实现类
@@ -20,17 +22,25 @@ import java.io.IOException;
 @Slf4j
 @Service
 public class FileInfoServiceImpl implements FileInfoService {
-    @Value("${virtualPath}")
-    private String virtualPath;
-    @Value("${uploadPath}")
-    private String uploadPath;
+    @Resource
+    private StrategyFactory strategyFactory;
 
     private final FileInfoDAO fileInfoDAO;
-    private final MinioUtils minioUtils;
 
-    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO,  MinioUtils minioUtils) {
+    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO, MinioUtils minioUtils) {
         this.fileInfoDAO = fileInfoDAO;
-        this.minioUtils = minioUtils;
+    }
+
+    @Override
+    public List<FileInfo> saveFileInfo(List<FileInfo> fileInfo) {
+        fileInfoDAO.saveOrUpdateBatch(fileInfo);
+        return fileInfo;
+    }
+
+    @Override
+    public FileInfo saveFileInfo(FileInfo fileInfo) {
+        fileInfoDAO.saveOrUpdate(fileInfo);
+        return fileInfo;
     }
 
     /**
@@ -39,29 +49,20 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return 返回上传的文件信息
      */
     @Override
-    public FileInfo uploadFile(HttpServletRequest request) {
-        MultipartFile multipartFile = getFile(request);
-        FileUtils fileUtils = new FileUtils(uploadPath, virtualPath);
-        FileInfo fileInfo = fileUtils.saveFile(multipartFile);
-        return saveFileInfo(fileInfo);
-    }
-
-    private FileInfo saveFileInfo(FileInfo fileInfo) {
-        fileInfoDAO.saveOrUpdate(fileInfo);
-        return fileInfo;
-    }
-
-    @Override
-    public String uploadFile2Oss(HttpServletRequest request) {
-        log.info("开始上传文件");
-        String url = minioUtils.upload(getFile(request));
-        log.info("文件上传完成url:[{}]", url);
-        return url;
+    public String uploadFile(HttpServletRequest request, UploadTypeEnum func) {
+        UploadFileStrategy upload = strategyFactory.getBean(func);
+        return upload.upload(request);
     }
 
 
     @Override
-    public void fileDownload(String url, HttpServletResponse response) throws IOException {
-        minioUtils.download(url,response.getOutputStream());
+    public void fileDownload(String fileName, HttpServletResponse response) throws IOException {
+//        minioUtils.download(fileName, response.getOutputStream());
+    }
+
+    @Override
+    public String fileShare(String fileName) {
+//        return minioUtils.share(fileName);
+        return "";
     }
 }

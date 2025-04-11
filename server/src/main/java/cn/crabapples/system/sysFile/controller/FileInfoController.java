@@ -2,9 +2,8 @@ package cn.crabapples.system.sysFile.controller;
 
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
-import cn.crabapples.system.sysFile.entity.FileInfo;
+import cn.crabapples.system.sysFile.UploadTypeEnum;
 import cn.crabapples.system.sysFile.service.FileInfoService;
-import io.minio.errors.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * 文件接口
@@ -25,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 @Slf4j
 @Tag(name = "文件上传接口")
-@RequestMapping("/api")
+@RequestMapping("/api/file")
 public class FileInfoController extends BaseController {
 
     private final FileInfoService fileInfoService;
@@ -34,39 +31,47 @@ public class FileInfoController extends BaseController {
         this.fileInfoService = fileInfoService;
     }
 
-    @PostMapping("/uploadFile")
-    @Operation(summary = "上传文件(对象)", description = "上传文件(返回对象)接口")
-    public ResponseDTO<FileInfo> uploadFile(HttpServletRequest request) {
-        log.info("收到请求->上传文件(返回对象)");
-        FileInfo entity = fileInfoService.uploadFile(request);
-        log.info("返回结果->上传文件(返回对象)结束:[{}]", entity);
-        return new ResponseDTO<>(entity);
-    }
+//    @PostMapping("/upload")
+//    @Operation(summary = "上传文件(对象)", description = "上传文件(返回对象)接口")
+//    public ResponseDTO<FileInfo> upload(HttpServletRequest request) {
+//        log.info("收到请求->上传文件(返回对象)");
+//        FileInfo entity = fileInfoService.uploadFile(request, UploadFunc.LOCAL);
+//        log.info("返回结果->上传文件(返回对象)结束:[{}]", entity);
+//        return new ResponseDTO<>(entity);
+//    }
 
-    @PostMapping("/uploadFileV2")
-    @Operation(summary = "上传文件(返回路径)", description = "上传文件(返回路径)接口")
-    public ResponseDTO<String> uploadFileV2(HttpServletRequest request) {
-        log.info("收到请求->上传文件(返回路径)");
-        FileInfo entity = fileInfoService.uploadFile(request);
-        log.info("返回结果->上传文件(返回路径)结束:[{}]", entity);
-        return new ResponseDTO<>(entity.getVirtualPath());
-    }
-
-    @PostMapping("/uploadFileV3")
-    @Operation(summary = "上传文件(返回路径)", description = "上传文件(返回路径)接口")
-    public ResponseDTO<String> uploadFileV3(HttpServletRequest request) {
-        log.info("收到请求->上传文件到对象存储(返回路径)");
-        String url = fileInfoService.uploadFile2Oss(request);
-        log.info("返回结果->上传文件到对象存储(返回路径)结束:[{}]", url);
+    @PostMapping("/uploadV2")
+    @Operation(summary = "上传文件(本地)", description = "上传文件(本地)接口")
+    public ResponseDTO<String> uploadV2(HttpServletRequest request) {
+        log.info("收到请求->上传文件(本地)");
+        String url = fileInfoService.uploadFile(request, UploadTypeEnum.LOCAL);
+        log.info("返回结果->上传文件(本地)结束:[{}]", url);
         return new ResponseDTO<>(url);
     }
 
-    @GetMapping("/fileDownload")
+    @PostMapping("/uploadV3")
+    @Operation(summary = "上传文件(Minio)", description = "上传文件(Minio)接口")
+    public ResponseDTO<String> uploadV3(HttpServletRequest request) {
+        log.info("收到请求->上传文件(Minio)");
+        String url = fileInfoService.uploadFile(request, UploadTypeEnum.MINIO);
+        log.info("返回结果->上传文件(Minio)结束:[{}]", url);
+        return new ResponseDTO<>(url);
+    }
+
+    @GetMapping("/download")
     @Operation(summary = "获取文件", description = "获取文件接口")
-    public void fileDownload(HttpServletResponse response, String url) throws IOException {
+    public void download(HttpServletResponse response, String fileName) throws IOException {
         log.info("收到请求->从对象存储获取文件");
-        fileInfoService.fileDownload(url, response);
-        log.info("返回结果->从对象存储获取文件结束:[{}]", url);
-//        return new ResponseDTO<>(url);
+        fileInfoService.fileDownload(fileName, response);
+        log.info("返回结果->从对象存储获取文件结束:[{}]", fileName);
+    }
+
+    @PostMapping("/share")
+    @Operation(summary = "分享文件", description = "分享文件接口")
+    public ResponseDTO<String> share(String fileName) throws IOException {
+        log.info("收到请求->从对象存储分享文件");
+        String url = fileInfoService.fileShare(fileName);
+        log.info("返回结果->从对象存储分享文件结束:[{}],分享链接:[{}]", fileName, url);
+        return new ResponseDTO<>(url);
     }
 }

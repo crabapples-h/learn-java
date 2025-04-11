@@ -1,5 +1,7 @@
 package cn.crabapples.system.sysFile.entity;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -27,10 +29,16 @@ public class FileInfo extends Model<FileInfo> {
     private String uploadPath; // 文件保存路径
     private String contentType;// 文件类型
     private Long fileSize; // 文件大小
+    private String saveType; // 存储方式
 
     @Column(isLogicDelete = true)
     private byte delFlag;
 
     // 租户, 多个用逗号隔开
     private String tenantId;
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
 }
