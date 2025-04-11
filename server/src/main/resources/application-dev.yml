@@ -10,6 +10,16 @@ logging:
     com.mybatisflex: debug
 
 spring:
+  ai:
+    openai:
+      api-key:
+      base-url: http://172.21.54.227:8000
+      chat:
+        options:
+          model: deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+          temperature: 0.7
+      # The DeepSeek API doesn't support embeddings, so we need to disable it.
+      embedding.enabled: false
   #----- minio config -----
   minio:
     access-key: gQ6MwJZxCoPX4qoh2O80

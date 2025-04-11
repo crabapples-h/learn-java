@@ -11,6 +11,11 @@
     <artifactId>server</artifactId>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>1.0.0-M5</version>
+        </dependency>
+        <dependency>
             <groupId>org.ejml</groupId>
             <artifactId>ejml-all</artifactId>
             <version>0.41</version>
