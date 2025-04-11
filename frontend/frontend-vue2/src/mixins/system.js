@@ -34,7 +34,8 @@ export default {
             },
             sysUser: sessionStorage.getItem("sysUser"),
             uploadUrl: '/api/uploadFile',
-            uploadUrlV2: '/api/uploadFileV2',
+            uploadUrlV2: '/api/file/uploadV2',
+            uploadUrlV3: '/api/file/uploadV3',
             show: {
                 add: false,
                 edit: false,
@@ -142,6 +143,7 @@ export default {
         },
         submit() {
             const _this = this
+            console.log(_this.form)
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
                     _this.$http.post(this.url.save, _this.form).then(result => {

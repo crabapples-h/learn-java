@@ -22,6 +22,7 @@
     <change-password :visible="show.changePassword" @cancel="closeChangePasswordForm" :user-id="userId"
                      ref="changePassword"/>
 
+    <img src="/api/file/download/LOCAL/1910781574052450304.jpg">
     <a-table :data-source="dataSource" bordered
              rowKey="id"
              :columns="columns"

@@ -34,14 +34,14 @@
       </div>
 
     </a-upload>
-    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+    <a-modal title="图片预览" :visible="previewVisible" :footer="null" @cancel="handleCancel">
       <img alt="预览" style="width: 100%" :src="previewImage"/>
     </a-modal>
   </div>
 </template>
 
 <script>
-import system, { getBase64 } from '@/mixins/system'
+import system, {getBase64} from '@/mixins/system'
 
 export default {
   name: 'c-file-upload',
@@ -85,14 +85,16 @@ export default {
       handler: function (val, oldVal) {
         if (val) {
           this.fileList = val.split(',').map(e => {
-            return {
+            let imageItem = {
               id: Math.random(),
               key: Math.random(),
               uid: Math.random(),
               name: e,
               status: 'done',
-              url: e
+              url: '/api/file/download/' + e
             }
+            console.log(imageItem)
+            return imageItem
           })
         }
       },
@@ -116,7 +118,9 @@ export default {
       this.fileList = info.fileList;
       let status = info.file.status
       if (status === "done" || status === "removed") {
-        this.$emit("change", this.fileList.map(e => e.response?.data || e.url).join(','))
+        let imageList = this.fileList.map(e => e.response?.data || e.url);
+        this.$emit("change", imageList.join(','))
+        console.log('this.fileList', imageList[0])
       }
     },
     removeImage(file) {
@@ -126,6 +130,7 @@ export default {
       this.previewVisible = false;
     },
     async handlePreview(file) {
+      console.log('file', file)
       if (!file.url && !file.preview) {
         file.preview = await getBase64(file.originFileObj);
       }

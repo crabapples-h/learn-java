@@ -2,6 +2,7 @@ package cn.crabapples.system.sysFile.controller;
 
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
+import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.service.FileInfoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,6 +57,7 @@ public class FileInfoController extends BaseController {
 
     @GetMapping("/download/{type}/{fileName}")
     @Operation(summary = "获取文件", description = "获取文件接口")
+    @JwtIgnore
     public void download(HttpServletResponse response, @PathVariable UPLOAD_TYPE type, @PathVariable String fileName) {
         log.info("收到请求->获取文件");
         fileInfoService.download(fileName, response, type);

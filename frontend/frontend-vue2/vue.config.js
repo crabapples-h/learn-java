@@ -101,15 +101,6 @@ module.exports = {
         https: false,
         hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
-            '/videoability': {
-                target: 'http://localhost:9999/', // 接口的域名
-                // secure: false,  // 如果是https接口，需要配置这个参数
-                changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-                // pathRewrite: {
-                // 把 /api 开头的路径替换为 ''
-                //     '^/api': ''
-                // }
-            },
             '/ws': {
                 target: 'http://localhost:9093/', // 接口的域名
                 ws: true,
