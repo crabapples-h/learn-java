@@ -1,13 +1,13 @@
 package cn.crabapples.common.utils.file;
 
 import cn.crabapples.common.base.ApplicationException;
-import cn.crabapples.system.sysFile.UploadTypeEnum;
+import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.entity.FileInfo;
+import cn.hutool.core.lang.Snowflake;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.UUID;
 
 @Slf4j
 public class FileUtils {
@@ -23,6 +23,12 @@ public class FileUtils {
         this.VIRTUAL_PATH = virtualPath;
     }
 
+    private String genRandomFileName(String fileName) {
+        String[] split = fileName.split("\\.");
+        String suffix = split.length > 0 ? "." + split[split.length - 1] : "";
+        return new Snowflake(1, 1).nextIdStr() + suffix;
+    }
+
     /**
      * 保存文件,返回文件路径
      *
@@ -32,26 +38,21 @@ public class FileUtils {
      * @return 返回上传的文件信息
      */
     public FileInfo saveFile(String fileName, InputStream in, String contentType) {
-        log.info("保存文件,路径[{}]", UPLOAD_PATH);
-        String randomName = UUID.randomUUID().toString().replace("-", "");
-        log.info("保存文件,文件名[{}]", randomName);
+        log.debug("保存文件,路径[{}]", UPLOAD_PATH);
+        String randomName = genRandomFileName(fileName);
+        log.debug("保存文件,文件名[{}]", randomName);
         File fold = new File(UPLOAD_PATH);
         try {
             if (!(fold.exists() || fold.mkdirs())) {
                 throw new ApplicationException("文件保存失败: 目录异常");
             }
-            String[] split = fileName.split("\\.");
-            String suffix = split.length > 0 ? "." + split[split.length - 1] : "";
             log.debug("生成全文件名[{}],文件后缀为:[{}]", randomName, fileName);
-            File file = new File(UPLOAD_PATH + "/" + (randomName + suffix).toLowerCase());
-            log.info("准备写入文件");
+            File file = new File(UPLOAD_PATH + "/" + randomName.toLowerCase());
             long fileSize = writeFile(in, file);
-            log.info("文件写入完成");
             String uploadPath = file.getPath();
-            String virtualPath = VIRTUAL_PATH + randomName + suffix;
-            log.info("文件保存完成,路径[{}]", uploadPath);
-            log.info("文件保存完成,虚拟路径[{}]", virtualPath);
-            return createFileInfo(uploadPath, virtualPath, fileName, fileSize, contentType);
+            log.debug("文件保存完成,路径[{}]", uploadPath);
+            log.debug("文件保存完成,虚拟路径[{}]", randomName);
+            return createFileInfo(uploadPath, randomName, fileName, fileSize, contentType);
         } catch (IOException e) {
             log.error("保存文件时出现错误[]", e);
             return new FileInfo();
@@ -75,7 +76,7 @@ public class FileUtils {
         fileInfo.setUploadPath(uploadPath);
         fileInfo.setFileSize(fileSize);
         fileInfo.setContentType(contentType);
-        fileInfo.setSaveType(UploadTypeEnum.LOCAL.type);
+        fileInfo.setSaveType(UPLOAD_TYPE.LOCAL.type);
         return fileInfo;
     }
 

@@ -102,6 +102,9 @@ public class MinioUtils {
     public String share(String fileName) {
         try {
             log.debug("开始从Minio获取文件分享连接:[{}]", fileName);
+            GetObjectArgs args = GetObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName).build();
             String shareUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                     .bucket(bucketName)
                     .object(fileName)
@@ -110,6 +113,19 @@ public class MinioUtils {
                     .build());
             log.debug("从Minio获取文件分享连接:[{}]完成,分享地址为:[{}]", fileName, shareUrl);
             return shareUrl;
+        } catch (Exception e) {
+            throw new ApplicationException("文件分享失败", e);
+        }
+    }
+
+    public void remove(String fileName) {
+        try {
+            log.debug("开始从Minio删除文件:[{}]", fileName);
+            RemoveObjectArgs args = RemoveObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName).build();
+           minioClient.removeObject(args);
+            log.debug("从Minio删除文件:[{}]完成", fileName);
         } catch (Exception e) {
             throw new ApplicationException("文件分享失败", e);
         }

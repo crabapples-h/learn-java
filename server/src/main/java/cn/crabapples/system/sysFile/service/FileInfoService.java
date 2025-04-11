@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysFile.service;
 
 import cn.crabapples.common.base.ApplicationException;
-import cn.crabapples.system.sysFile.UploadTypeEnum;
+import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,9 +35,11 @@ public interface FileInfoService {
 
     FileInfo saveFileInfo(FileInfo fileInfo);
 
-    String uploadFile(HttpServletRequest request, UploadTypeEnum func);
+    String upload(HttpServletRequest request, UPLOAD_TYPE func);
 
-    void fileDownload(String fileName, HttpServletResponse response) throws IOException;
+    void download(String fileName, HttpServletResponse response, UPLOAD_TYPE type);
 
-    String fileShare(String fileName);
+    String share(String fileName, UPLOAD_TYPE type);
+
+    void remove(String fileName, UPLOAD_TYPE type);
 }

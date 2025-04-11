@@ -1,7 +1,8 @@
 package cn.crabapples.system.sysFile.service.impl;
 
+import cn.crabapples.common.base.ApplicationException;
 import cn.crabapples.common.minio.MinioUtils;
-import cn.crabapples.system.sysFile.UploadTypeEnum;
+import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.dao.FileInfoDAO;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
@@ -43,26 +44,32 @@ public class FileInfoServiceImpl implements FileInfoService {
         return fileInfo;
     }
 
-    /**
-     * 上传文件
-     *
-     * @return 返回上传的文件信息
-     */
     @Override
-    public String uploadFile(HttpServletRequest request, UploadTypeEnum func) {
-        UploadFileStrategy upload = strategyFactory.getBean(func);
-        return upload.upload(request);
+    public String upload(HttpServletRequest request, UPLOAD_TYPE type) {
+        UploadFileStrategy strategy = strategyFactory.getBean(type);
+        return strategy.upload(request);
     }
 
 
     @Override
-    public void fileDownload(String fileName, HttpServletResponse response) throws IOException {
-//        minioUtils.download(fileName, response.getOutputStream());
+    public void download(String fileName, HttpServletResponse response, UPLOAD_TYPE type) {
+        try {
+            UploadFileStrategy strategy = strategyFactory.getBean(type);
+            strategy.download(fileName, response.getOutputStream());
+        } catch (IOException e) {
+            throw new ApplicationException("文件获取失败", e);
+        }
     }
 
     @Override
-    public String fileShare(String fileName) {
-//        return minioUtils.share(fileName);
-        return "";
+    public String share(String fileName, UPLOAD_TYPE type) {
+        UploadFileStrategy strategy = strategyFactory.getBean(type);
+        return strategy.share(fileName);
+    }
+
+    @Override
+    public void remove(String fileName, UPLOAD_TYPE type) {
+        UploadFileStrategy strategy = strategyFactory.getBean(type);
+         strategy.remove(fileName);
     }
 }

@@ -1,6 +1,6 @@
 package cn.crabapples.system.sysFile.strategy;
 
-import cn.crabapples.system.sysFile.UploadTypeEnum;
+import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +16,7 @@ public class StrategyFactory implements ApplicationContextAware {
         context = applicationContext;
     }
 
-    public UploadFileStrategy getBean(UploadTypeEnum upload) {
+    public UploadFileStrategy getBean(UPLOAD_TYPE upload) {
         String type = upload.type;
         return context.getBean(type, UploadFileStrategy.class);
     }
