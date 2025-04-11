@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <table-demo></table-demo>
+<!--    <table-demo></table-demo>-->
 <!--    <design></design>-->
     <!--    <a-b></a-b>-->
     <!--    <hello-world />-->
     <!--    <org-wechat />-->
     <!--    <wechat-location />-->
-    <!--    <face-check-image />-->
+        <face-check-image />
     <!--        <face-check-video />-->
     <!--    <face-check-video-file />-->
     <!--    <qr-code/>-->
