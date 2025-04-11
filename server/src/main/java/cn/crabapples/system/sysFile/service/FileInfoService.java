@@ -6,6 +6,7 @@ import com.mybatisflex.core.service.IService;
 import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,8 @@ public interface FileInfoService {
     }
 
     default MultipartFile getFile(HttpServletRequest request) {
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartHttpServletRequest multipartRequest = (StandardMultipartHttpServletRequest) request;
+//        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         return multipartRequest.getFile("file");
     }
 

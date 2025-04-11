@@ -63,10 +63,10 @@ public class FileInfoController extends BaseController {
 
     @GetMapping("/fileDownload")
     @Operation(summary = "获取文件", description = "获取文件接口")
-    public ResponseDTO<String> fileDownload(HttpServletResponse response, String url) throws IOException {
+    public void fileDownload(HttpServletResponse response, String url) throws IOException {
         log.info("收到请求->从对象存储获取文件");
         fileInfoService.fileDownload(url, response);
         log.info("返回结果->从对象存储获取文件结束:[{}]", url);
-        return new ResponseDTO<>(url);
+//        return new ResponseDTO<>(url);
     }
 }
