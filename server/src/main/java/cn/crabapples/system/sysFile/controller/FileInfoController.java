@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FileInfoController extends BaseController {
 
     private final FileInfoService fileInfoService;
+    private UPLOAD_TYPE type;
 
     public FileInfoController(FileInfoService fileInfoService) {
         this.fileInfoService = fileInfoService;
@@ -37,23 +38,23 @@ public class FileInfoController extends BaseController {
 //        return new ResponseDTO<>(entity);
 //    }
 
-    @PostMapping("/uploadV2")
-    @Operation(summary = "上传文件(本地)", description = "上传文件(本地)接口")
-    public ResponseDTO<String> uploadV2(HttpServletRequest request) {
-        log.info("收到请求->上传文件(本地)");
-        String url = fileInfoService.upload(request, UPLOAD_TYPE.LOCAL);
-        log.info("返回结果->上传文件(本地)结束:[{}]", url);
+    @PostMapping("/upload/{type}")
+    @Operation(summary = "上传文件", description = "上传文件接口")
+    public ResponseDTO<String> upload(HttpServletRequest request, @PathVariable UPLOAD_TYPE type) {
+        log.info("收到请求->上传文件[{}]", type);
+        String url = fileInfoService.upload(request, type);
+        log.info("返回结果->上传文件[{}]结束:[{}]", type, url);
         return new ResponseDTO<>(url);
     }
 
-    @PostMapping("/uploadV3")
-    @Operation(summary = "上传文件(Minio)", description = "上传文件(Minio)接口")
-    public ResponseDTO<String> uploadV3(HttpServletRequest request) {
-        log.info("收到请求->上传文件(Minio)");
-        String url = fileInfoService.upload(request, UPLOAD_TYPE.MINIO);
-        log.info("返回结果->上传文件(Minio)结束:[{}]", url);
-        return new ResponseDTO<>(url);
-    }
+//    @PostMapping("/upload/minio")
+//    @Operation(summary = "上传文件(Minio)", description = "上传文件(Minio)接口")
+//    public ResponseDTO<String> uploadV3(HttpServletRequest request) {
+//        log.info("收到请求->上传文件(Minio)");
+//        String url = fileInfoService.upload(request, UPLOAD_TYPE.MINIO);
+//        log.info("返回结果->上传文件(Minio)结束:[{}]", url);
+//        return new ResponseDTO<>(url);
+//    }
 
     @GetMapping("/download/{type}/{fileName}")
     @Operation(summary = "获取文件", description = "获取文件接口")
