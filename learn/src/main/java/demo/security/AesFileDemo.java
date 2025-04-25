@@ -107,6 +107,7 @@ public class AesFileDemo {
             /*
              * 创建解密流输出文件
              */
+            byte[] data = new byte[1024];
             CipherOutputStream cipherOutputStream = new CipherOutputStream(fileOutputStream, cipher);
             for (int i = 0; i != -1; i = fileInputStream.read(data)) {
                 cipherOutputStream.write(data, 0, i);
