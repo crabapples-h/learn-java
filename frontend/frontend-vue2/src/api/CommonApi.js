@@ -3,6 +3,18 @@ import storage from '@/store/storage'
 import { SysApis } from '@/api/Apis'
 
 const commonApi = {
+  filePreviewAddress() {
+    return instance({
+      url: SysApis.filePreviewAddress,
+      method: 'get',
+    })
+  },
+  serverAddress() {
+    return instance({
+      url: SysApis.serverAddress,
+      method: 'get',
+    })
+  },
   login(data) {
     return instance({
       url: SysApis.login,

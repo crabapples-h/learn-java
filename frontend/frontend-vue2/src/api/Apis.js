@@ -7,6 +7,8 @@ const SysApis = {
     checkUsername: '/api/system/checkUsername',
     resetPassword: '/api/system/user/password/reset',
     updatePassword: '/api/system/user/updatePassword',
+    serverAddress: '/api/system/server/address',
+    filePreviewAddress: '/api/system/preview/address',
 
     //用户 user
     userPage: '/api/system/user/page',
