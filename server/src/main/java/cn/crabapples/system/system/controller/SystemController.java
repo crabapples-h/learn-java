@@ -4,6 +4,7 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.common.utils.Groups;
+import cn.crabapples.system.dto.SysOptionDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
@@ -90,5 +91,14 @@ public class SystemController extends BaseController {
         boolean exist = sysService.checkUsername(username);
         log.info("返回结果->检测用户名是否被使用:[{}]", exist);
         return new ResponseDTO<>("用户名未被使用", exist);
+    }
+
+    @GetMapping("/dict/options/{code}")
+    @Operation(summary = "根据字典渲染下拉项", description = "根据字典渲染下拉项")
+    public ResponseDTO<List<SysOptionDTO>> dictSelectOptions(@PathVariable String code) {
+        log.info("收到请求->根据字典渲染下拉项:[{}]", code);
+        List<SysOptionDTO> options = sysService.dictSelectOptions(code);
+        log.debug("返回结果->根据字典渲染下拉项:[{}]", options);
+        return new ResponseDTO<>("操作成功", options);
     }
 }

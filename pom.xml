@@ -129,6 +129,7 @@
         <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
         <!--安全-->
+        <!--安全-->
         <jwt.version>3.2.0</jwt.version>
         <!--        <java-jwt.version>3.2.0</java-jwt.version>-->
         <!--        <shiro.version>1.4.0</shiro.version>-->

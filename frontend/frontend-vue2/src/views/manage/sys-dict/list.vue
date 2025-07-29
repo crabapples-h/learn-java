@@ -84,7 +84,7 @@ export default {
       return "appstore"
     },
     showAddItem(e) {
-      this.dictCode = e.id
+      this.dictCode = e.code
       this.show.addItem = true
     },
     closeItemForm() {

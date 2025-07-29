@@ -4,6 +4,8 @@ import cn.crabapples.common.base.ApplicationException;
 import cn.crabapples.common.dic.DIC;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
+import cn.crabapples.system.dto.SysOptionDTO;
+import cn.crabapples.system.sysDict.service.SystemDictService;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
@@ -42,15 +44,17 @@ public class SystemServiceImpl implements SystemService {
     private boolean isDebug;
     @Value("${isCrypt}")
     private boolean isCrypt;
+    private final SystemDictService dictService;
     private final SystemUserService userService;
     private final SystemRolesService rolesService;
     private final SystemRoleMenusService roleMenusService;
     private final JwtTokenUtils jwtTokenUtils;
 
 
-    public SystemServiceImpl(SystemUserService userService, SystemRolesService rolesService,
+    public SystemServiceImpl(SystemDictService dictService, SystemUserService userService, SystemRolesService rolesService,
                              SystemRoleMenusService roleMenusService,
                              JwtTokenUtils jwtTokenUtils) {
+        this.dictService = dictService;
         this.userService = userService;
         this.rolesService = rolesService;
         this.roleMenusService = roleMenusService;
@@ -133,5 +137,16 @@ public class SystemServiceImpl implements SystemService {
         SysUser user = userService.findByUsername(username);
         AssertUtils.isNull(user, "用户名已被使用");
         return true;
+    }
+
+    @Override
+    public List<SysOptionDTO> dictSelectOptions(String code) {
+        return dictService.getDictItemListByCode(code)
+                .stream()
+                .map(e -> new SysOptionDTO()
+                        .setId(e.getId())
+                        .setLabel(e.getText())
+                        .setValue(e.getValue()))
+                .collect(Collectors.toList());
     }
 }

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import storage from "@/store/storage";
 
 /**
  * TODO vue自定义指令
@@ -16,8 +17,7 @@ import Vue from 'vue'
 // 注册一个全局自定义指令 `v-auth`
 const auth = Vue.directive('auth', {
     bind: (el, binding) => {
-        return;
-        let permissions = getPermissions()
+        let permissions = storage.getPermissions()
         if (!permissions) {
             return
         }
