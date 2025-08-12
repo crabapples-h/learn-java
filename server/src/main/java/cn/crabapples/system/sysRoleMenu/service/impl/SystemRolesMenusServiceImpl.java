@@ -41,12 +41,7 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
         List<SysMenu> hasMenus = roleMenusDAO.getRoleMenusList(roleId);
         List<String> hasMenuIds = hasMenus.stream().map(SysMenu::getId).collect(Collectors.toList());
         // 过滤掉没有权限的菜单
-        List<SysMenu> sysMenus = filterRootMenusTree(hasMenuIds, menusTree);
-//         把菜单树转换为列表
-//        List<SysMenu> menus = tree2List(sysMenus, new ArrayList<>());
-//         过滤掉没有权限的菜单
-//        return menus.stream().filter(e -> hasMenuIds.contains(e.getId())).collect(Collectors.toList());
-        return sysMenus;
+        return (List<SysMenu>) filterRootMenusTree(hasMenuIds, menusTree);
     }
 
     private List<SysMenu> tree2List(List<SysMenu> source, List<SysMenu> target) {

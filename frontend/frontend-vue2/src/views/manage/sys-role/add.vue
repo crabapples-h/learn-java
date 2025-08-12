@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
 
 export default {
@@ -97,13 +97,33 @@ export default {
   },
   methods: {
     loadRoleMenus() {
-      console.log("form", this.form)
+
       this.$http.get(`${this.url.roleMenus}/${this.form.id}`).then(result => {
-        let hasMenusIds = []
-        result.data.forEach(e => {
-          hasMenusIds.push(e.id)
-        })
-        this.form.menuList = hasMenusIds
+        /**
+         * 过滤菜单
+         * 1.将所有的菜单选项都展开
+         * 2.将当前角色拥有的菜单展开
+         * 3.找出选项中children节点和已拥有的菜单children节点数量不相同的菜单
+         * 4.从展开的菜单中过滤掉children节点不相同的节点
+         */
+        // 1.将所有的菜单选项都展开
+        const menusOption = this.tree2list(this.menusOptions)
+        // 2.将当前角色拥有的菜单展开
+        const hasMenuList = this.tree2list(result.data)
+        // 3.找出选项中children节点和已拥有的菜单children节点数量不相同的菜单
+        let diffIds = []
+        for (let i = hasMenuList.length - 1; i >= 0; i--) {
+          for (let option of menusOption) {
+            if (option.id === hasMenuList[i].id) {
+              if (option.children.length !== hasMenuList[i].children.length) {
+                diffIds.push(option.id)
+              }
+            }
+          }
+        }
+        // 4.从展开的菜单中过滤掉children节点不相同的节点
+        this.form.menuList = this.tree2list(result.data)
+            .map(e => e.id).filter(e => !diffIds.includes(e))
       })
     },
     getMenusList() {
@@ -113,7 +133,6 @@ export default {
           return
         }
         if (result.data !== null) {
-          // this.menusOptions = this.tree2list(result.data)
           this.menusOptions = result.data
         }
       }).catch(function (error) {
@@ -124,7 +143,7 @@ export default {
     },
     tree2list(list, data = []) {
       list.forEach(r => {
-        data.push({id: r.id, name: r.name, pid: r.pid, sort: r.sort})
+        data.push({id: r.id, name: r.name, pid: r.pid, sort: r.sort, children: r.children})
         this.tree2list(r.children, data)
       })
       return data

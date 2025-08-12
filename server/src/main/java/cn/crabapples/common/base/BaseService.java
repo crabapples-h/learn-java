@@ -40,16 +40,17 @@ public interface BaseService<BaseEntity> {
      */
     default List<SysMenu> filterRootMenusTree(List<String> userHasMenuIds, List<SysMenu> allMenuTree) {
         return allMenuTree.stream()
+                // 过了滤掉被删除的菜单
                 .filter(e -> DIC.NOT_DEL == e.getDelFlag())
                 .filter(e -> {
                     // children可能为null
                     List<SysMenu> children = e.getChildren();
                     e.setChildren(filterRootMenusTree(userHasMenuIds, children));
                     // 判断用户拥有的菜单中是否包含当前菜单
-                    boolean exist = userHasMenuIds.contains(e.getId());
+                    boolean hasMenu = userHasMenuIds.contains(e.getId());
                     // 判断用户拥有的菜单中是否包含当前菜单的子菜单,如果包含子菜单则需要将当前菜单一起返回
-                    boolean sizeZero = !e.getChildren().isEmpty();
-                    return exist || sizeZero;
+                    boolean hasChild = !e.getChildren().isEmpty();
+                    return hasMenu || hasChild;
                 }).sorted((a, b) -> a.getSort() - b.getSort())
                 .collect(Collectors.toList());
     }
