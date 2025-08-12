@@ -21,13 +21,14 @@
     <add-user :visible="show.edit" @close="closeEdit" :is-edit="true" title="编辑" ref="editForm"/>
     <change-password :visible="show.changePassword" @cancel="closeChangePasswordForm" :user-id="userId"
                      ref="changePassword"/>
-
-    <img src="/api/file/download/LOCAL/1910781574052450304.jpg">
     <a-table :data-source="dataSource" bordered
              rowKey="id"
              :columns="columns"
              :pagination="pagination"
              :scroll="{ x: 1200}">
+      <template #avatar="value,record">
+        <img :src="'/api/file/download/'+record.avatar" style="width: 40px;height: 40px;border-radius: 50%"/>
+      </template>
       <template #status="value,record">
         <a-tag color="green" v-if="value === 0">正常</a-tag>
         <a-tag color="red" v-else>锁定</a-tag>
@@ -53,7 +54,7 @@
 
 <script>
 
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
 import AddUser from '@/views/manage/sys-user/add.vue'
 import ChangePassword from '@/views/manage/sys-user/change-password.vue'
@@ -80,6 +81,14 @@ export default {
           key: 'name',
           align: 'center',
           width: 100
+        },
+        {
+          dataIndex: 'avatar',
+          title: '头像',
+          key: 'avatar',
+          scopedSlots: {customRender: 'avatar'},
+          align: 'center',
+          width: 80
         },
         {
           dataIndex: 'age',
@@ -146,6 +155,11 @@ export default {
   mounted() {
   },
   methods: {
+    test1() {
+      let url = 'http://127.0.0.1:9093/api/file/download/LOCAL/1910781574052450304.jpg';
+      let serverUrl = "http://127.0.0.1:8012/onlinePreview"
+      window.open(`${serverUrl}?url=${encodeURIComponent(btoa(1))}`);
+    },
     showChangePassword(e) {
       this.userId = e.id
       this.show.changePassword = true

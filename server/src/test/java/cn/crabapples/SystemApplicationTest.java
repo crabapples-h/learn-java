@@ -22,6 +22,22 @@ public class SystemApplicationTest {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
+    public static void main(String[] args) {
+        String name = "现场巡检_贵州茅台酒渠道商季度考核评价表-专卖店(试行),闭店前巡检";
+        boolean isTempSave = "4".equals("");//是否暂存
+        boolean isOpenOrClose = name == null ? false: (
+                name.contains("闭店前巡检") ||
+                        name.contains("开店前巡检")); //是否是开闭店巡检
+        System.err.println(isTempSave);
+        System.err.println(isOpenOrClose);
+//        System.err.println(!isTempSave);
+//        System.err.println( !isOpenOrClose);
+//        System.err.println(!isTempSave && !isOpenOrClose);
+        if (!isTempSave && !isOpenOrClose){
+            System.err.println("执行拦截");
+        }
+
+    }
     @Test
     public void case1() {
         System.err.println(1);

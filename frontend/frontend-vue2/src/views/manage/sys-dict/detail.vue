@@ -42,7 +42,7 @@ export default {
 		},
 	},
 	watch: {
-		dictCode(nowValue, oldValue) {
+    visible(nowValue, oldValue) {
 			this.loadDetail()
 		}
 	},
@@ -61,7 +61,7 @@ export default {
 			form: {},
 			url: {
 				detail: SysApis.dictItemListByCode,
-				delete: SysApis.delDictItems,
+        remove: SysApis.delDictItems,
 			},
 			show: {
 				addItem: false,
@@ -72,6 +72,7 @@ export default {
 	activated() {
 	},
 	mounted() {
+    this.loadDetail()
 	},
 	methods: {
 		closeForm() {

@@ -60,6 +60,6 @@ public class SystemDictServiceImpl implements SystemDictService {
 
     @Override
     public boolean deleteItemById(String id) {
-        return dictDAO.removeById(id);
+        return dictItemDAO.removeById(id);
     }
 }

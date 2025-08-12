@@ -34,7 +34,7 @@
 
 <script>
 
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
 import AddDict from '@/views/manage/sys-dict/add.vue'
 import AddDictItem from '@/views/manage/sys-dict/add-item.vue'
@@ -77,14 +77,8 @@ export default {
   mounted() {
   },
   methods: {
-    iconHandler(text) {
-      if (text) {
-        return text.substring(text.indexOf("\"") + 1, text.lastIndexOf("\""))
-      }
-      return "appstore"
-    },
     showAddItem(e) {
-      this.dictCode = e.id
+      this.dictCode = e.code
       this.show.addItem = true
     },
     closeItemForm() {

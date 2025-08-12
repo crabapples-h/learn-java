@@ -48,8 +48,6 @@ export default {
             formRules: formRules,
         }
     },
-    // let icons = document.querySelectorAll('.icon-twrap')
-    // Array.from(icons).forEach(v => v.click())
     watch: {
         dataSource() {
             this.scrollY = this.getTableScroll();
@@ -63,6 +61,12 @@ export default {
     mounted() {
     },
     methods: {
+        iconHandler(text) {
+            if (text) {
+                return text.substring(text.indexOf("\"") + 1, text.lastIndexOf("\""))
+            }
+            return "appstore"
+        },
         download(url, fileName = '') {
             const el = document.createElement('a');
             el.style.display = 'none';
@@ -163,6 +167,20 @@ export default {
                 }
             })
         },
+        remove(e) {
+            this.$http.delete(`${this.url.remove}/${e.id}`).then(result => {
+                if (result.status !== 200) {
+                    this.$message.error(result.message);
+                    return;
+                }
+                this.$message.success(result.message);
+            }).catch(function (error) {
+                console.error('出现错误:', error);
+            }).finally(() => {
+                this.refreshData()
+            });
+        },
+
         showExtend() {
             this.show.extend = true
         },
@@ -175,18 +193,14 @@ export default {
         },
         closeAdd() {
             this.show.add = false
-            this.$emit('close')
             this.refreshData()
         },
         showEdit(e) {
-            console.log('showEdit()->', e)
             this.$refs.editForm.form = e
             this.show.edit = true
         },
         closeEdit() {
-            this.$refs.editForm.form = {}
             this.show.edit = false
-            this.$emit('close')
             this.refreshData()
         },
         showDetail(e) {
@@ -207,25 +221,13 @@ export default {
             this.getList()
         },
         closeForm() {
+            this.resetForm()
             this.show.add = false
             this.show.edit = false
             this.$emit('close')
         },
         resetForm() {
             this.form = {}
-        },
-        remove(e) {
-            this.$http.delete(`${this.url.remove}/${e.id}`).then(result => {
-                if (result.status !== 200) {
-                    this.$message.error(result.message);
-                    return;
-                }
-                this.$message.success(result.message);
-            }).catch(function (error) {
-                console.error('出现错误:', error);
-            }).finally(() => {
-                this.refreshData()
-            });
         },
         getTableScroll(extraHeight = 74, id) {
             let tHeader = null
