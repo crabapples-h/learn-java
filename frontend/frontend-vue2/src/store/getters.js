@@ -25,6 +25,9 @@ const getters = {
   },
   LOAD_FINISH(state) {
     return state.sys.loadFinish
+  },
+  SERVER_ADDRESS(state) {
+    return state.sys.loadFinish
   }
 }
 export default getters

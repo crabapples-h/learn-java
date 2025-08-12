@@ -9,7 +9,7 @@
 <template>
   <div>
     <a-upload ref="fileUpload" name="file"
-              :action="uploadUrlV2"
+              :action="uploadLocal"
               :multiple="multiple"
               :accept="accept"
               :headers="headers"
@@ -42,6 +42,8 @@
 
 <script>
 import system, {getBase64} from '@/mixins/system'
+import storage from "@/store/storage";
+import {Base64} from "jsencrypt/lib/lib/asn1js/base64";
 
 export default {
   name: 'c-file-upload',
@@ -52,7 +54,7 @@ export default {
     },
     max: {
       type: Number,
-      default: 2,
+      default: 1,
     },
     beforeUpload: {
       type: Function,
@@ -91,7 +93,7 @@ export default {
               uid: Math.random(),
               name: e,
               status: 'done',
-              url: '/api/file/download/' + e
+              url: e
             }
             console.log(imageItem)
             return imageItem
@@ -120,7 +122,7 @@ export default {
       if (status === "done" || status === "removed") {
         let imageList = this.fileList.map(e => e.response?.data || e.url);
         this.$emit("change", imageList.join(','))
-        console.log('this.fileList', imageList[0])
+        console.log('this.fileList', imageList)
       }
     },
     removeImage(file) {
@@ -135,7 +137,12 @@ export default {
         file.preview = await getBase64(file.originFileObj);
       }
       this.previewImage = file.url || file.preview;
-      this.previewVisible = true;
+      let serverAddress = storage.getServerAddress()
+      let previewAddress = storage.getFilePreviewAddress()
+      let url = `${serverAddress}${file.url}`
+      let previewUrl = `${previewAddress}/onlinePreview?url=${encodeURIComponent(btoa(url))}`
+      window.open(previewUrl)
+      // this.previewVisible = true;
     },
   }
 

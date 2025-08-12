@@ -46,6 +46,8 @@ export default {
         this.$store.dispatch('INIT_TOKEN', token)
         this.$store.dispatch('USER_BASE_INFO')
         this.$store.dispatch('ROLES')
+        this.$store.dispatch('SERVER_ADDRESS')
+        this.$store.dispatch('FILE_PREVIEW_ADDRESS')
         // 初始化动态路由
         this.$store.dispatch('MENUS_TREE')
         this.$store.dispatch('MENUS_LIST')

@@ -4,6 +4,7 @@ import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.common.jwt.JwtIgnore;
 import cn.crabapples.common.utils.Groups;
+import cn.crabapples.system.dto.SysOptionDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
@@ -11,8 +12,13 @@ import cn.crabapples.system.system.service.SystemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -33,10 +39,15 @@ public class SystemController extends BaseController {
 
     private final SystemUserService userService;
     private final SystemService sysService;
+    private final ApplicationContext applicationContext;
 
-    public SystemController(SystemUserService userService, SystemService sysService) {
+    @Value("${previewAddress}")
+    private String previewAddress;
+
+    public SystemController(SystemUserService userService, SystemService sysService, ApplicationContext applicationContext) {
         this.userService = userService;
         this.sysService = sysService;
+        this.applicationContext = applicationContext;
     }
 
     /**
@@ -91,4 +102,35 @@ public class SystemController extends BaseController {
         log.info("返回结果->检测用户名是否被使用:[{}]", exist);
         return new ResponseDTO<>("用户名未被使用", exist);
     }
+
+    @GetMapping("/dict/options/{code}")
+    @Operation(summary = "根据字典渲染下拉项", description = "根据字典渲染下拉项")
+    public ResponseDTO<List<SysOptionDTO>> dictSelectOptions(@PathVariable String code) {
+        log.info("收到请求->根据字典渲染下拉项:[{}]", code);
+        List<SysOptionDTO> options = sysService.dictSelectOptions(code);
+        log.debug("返回结果->根据字典渲染下拉项:[{}]", options);
+        return new ResponseDTO<>("操作成功", options);
+    }
+
+    @GetMapping("/server/address")
+    @Operation(summary = "服务器地址", description = "获取服务器地址")
+    public ResponseDTO<String> serverAddress() throws UnknownHostException {
+        Environment env = applicationContext.getEnvironment();
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        String port = env.getProperty("server.port");
+        log.info("收到请求->获取服务器地址");
+        String url = "http://" + ip + ":" + port;
+        log.info("返回结果->获取服务器地址结束:[{}]", url);
+        return new ResponseDTO<>(url);
+    }
+
+    @GetMapping("/preview/address")
+    @Operation(summary = "文件预览服务器地址", description = "获取文件预览服务器地址")
+    public ResponseDTO<String> previewAddress() {
+        log.info("收到请求->文件预览服务器地址");
+        log.info("返回结果->文件预览服务器地址:[{}]", previewAddress);
+        return new ResponseDTO<>(previewAddress);
+    }
+
+
 }

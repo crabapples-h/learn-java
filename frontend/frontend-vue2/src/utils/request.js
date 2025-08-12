@@ -41,7 +41,11 @@ instance.interceptors.response.use(response => {
         if (response.data.status !== 200) {
             if (response.data) {
                 console.log("接口出现异常", response)
-                notification.warn({message: response.data.message})
+                notification.warn({
+                    key: response.data.message,
+                    message: "接口出现异常",
+                    description: response.data.message,
+                })
             }
         }
         return response.status === 200 ? Promise.resolve(data) : Promise.reject(data)
@@ -49,7 +53,11 @@ instance.interceptors.response.use(response => {
     // HTTP状态码不是200的情况
     error => {
         console.error('响应拦截:[error]--->', error)
-        notification.error({message: `HTTP服务器异常：${error.response.status}`})
+        notification.error({
+            key: error.code,
+            message: error.code,
+            description: `服务器异常：${error.response.status}`,
+        })
         return Promise.reject(error.response)
     }
 )

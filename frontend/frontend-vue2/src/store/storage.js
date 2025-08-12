@@ -28,4 +28,10 @@ export default {
   setPermissions: (data) => localStorage.setItem('USER_PERMISSION_LIST', JSON.stringify(data)),
 
   logout: () => localStorage.removeItem('TOKEN'),
+
+  getServerAddress: () => localStorage.getItem('SERVER_ADDRESS'),
+  setServerAddress: (data) => localStorage.setItem('SERVER_ADDRESS', data),
+
+  getFilePreviewAddress: () => localStorage.getItem('FILE_PREVIEW_ADDRESS'),
+  setFilePreviewAddress: (data) => localStorage.setItem('FILE_PREVIEW_ADDRESS', data),
 }

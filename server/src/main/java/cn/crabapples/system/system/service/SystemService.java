@@ -1,6 +1,7 @@
 package cn.crabapples.system.system.service;
 
 import cn.crabapples.common.base.BaseService;
+import cn.crabapples.system.dto.SysOptionDTO;
 import cn.crabapples.system.sysUser.form.UserForm;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface SystemService extends BaseService {
 
     boolean checkUsername(String username);
 
+    List<SysOptionDTO> dictSelectOptions(String code);
 }
