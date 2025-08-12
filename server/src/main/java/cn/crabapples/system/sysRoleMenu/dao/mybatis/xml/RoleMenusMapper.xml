@@ -28,9 +28,13 @@
         from sys_role as role
         inner join sys_role_menus srm on role.id = srm.role_id
         inner join sys_menu sm on srm.menu_id = sm.id
-        where role.id in
-        <foreach collection="roleIds" open="(" close=")" separator="," item="item">
-            #{item}
-        </foreach>
+        <where>
+            <if test="roleIds != null and roleIds.size>0">
+                and role.id in
+                <foreach item="item" collection="roleIds" separator="," close=")" open="(" index="index">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </select>
 </mapper>

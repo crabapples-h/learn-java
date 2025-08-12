@@ -82,6 +82,7 @@ export default {
       this.show.addItem = true
     },
     closeItemForm() {
+      this.dictCode = null
       this.show.addItem = false
       this.refreshData()
     },
