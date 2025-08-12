@@ -2,7 +2,7 @@
   <a-layout-sider theme="light">
     <a-menu mode="inline" :theme="theme" style="height: 100%"
             :default-open-keys="openMenuIds"
-            :defaultSelectedKeys="selectMenuIds">
+            :default-selected-keys="selectMenuIds">
       <template v-for="item in menus">
         <a-menu-item v-if="!item.children" :key="item.key" @click="click(item)">
           <svg class="iconfont" aria-hidden="true">
@@ -85,16 +85,21 @@ export default {
     },
   },
   computed: {
+    // 当前选中的菜单
     selectMenuIds() {
       let SELECT_MENU_IDS = [localStorage.getItem('SELECT_MENU_IDS')]
-      SELECT_MENU_IDS = SELECT_MENU_IDS.filter(e => e != null)
-      console.debug('selectMenuIds', SELECT_MENU_IDS)
+      SELECT_MENU_IDS = SELECT_MENU_IDS.filter(e => e != null && e !== 'null')
+      console.info('当前选中的菜单', SELECT_MENU_IDS)
       return SELECT_MENU_IDS
     },
+    // 当前展开的菜单
     openMenuIds() {
       let OPEN_MENU_IDS = [localStorage.getItem('OPEN_MENU_IDS')]
-      OPEN_MENU_IDS = OPEN_MENU_IDS.filter(e => e != null)
-      console.debug('openMenuIds', OPEN_MENU_IDS)
+      OPEN_MENU_IDS = OPEN_MENU_IDS.filter(e => e != null && e !== 'null')
+      if(!OPEN_MENU_IDS.length){
+        OPEN_MENU_IDS = [...this.selectMenuIds]
+      }
+      console.info('当前展开的菜单', OPEN_MENU_IDS)
       return OPEN_MENU_IDS
     }
   },
@@ -103,8 +108,6 @@ export default {
   },
   methods: {
     click(e) {
-      localStorage.setItem('OPEN_MENU_IDS', e.pid)
-      localStorage.setItem('SELECT_MENU_IDS', e.id)
       this.$emit('clickMenu', e)
     },
   },

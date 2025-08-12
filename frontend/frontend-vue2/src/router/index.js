@@ -147,7 +147,7 @@ function initRouter(menus) {
                 path: e['path'] ?? '',
                 component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
                 name: e.name,
-                meta: {title: e.name, icon: 'clipboard'},
+                meta: {title: e.name, icon: 'clipboard',id:e.id,pid:e.pid},
                 hidden: e.showFlag === 1
             }
         })

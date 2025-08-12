@@ -47,7 +47,10 @@ export default {
   },
   methods: {
     clickMenu(e) {
-      console.log('点击菜单', e.path, e.name)
+      // 点击菜单时记录当前点击的菜单ID，用于重新登录时恢复之前的页面
+      localStorage.setItem('OPEN_MENU_IDS', e.pid)
+      localStorage.setItem('SELECT_MENU_IDS', e.id)
+      console.log('点击菜单', e.path, e.name, e.id)
       if (e.menusType === 3) {
         window.open(e.link)
       } else {

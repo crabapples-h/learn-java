@@ -22,18 +22,21 @@ export default {
   mounted() {
     const _this = this
     window.addEventListener('beforeunload', function (event) {
-      // 页面刷新时获取当前页面的path地址放入缓存中，
+      // 页面刷新或退出登录时获取当前页面的path地址放入缓存中，
       // 如果path地址在白名单中，则说明用户并没有登录，则直接将首页放入缓存
       let LAST_PAGE = _this.$route.path
       let isWhiteList = whiteList.includes(LAST_PAGE)
+      debugger
       if (isWhiteList) {
         localStorage.setItem('LAST_PAGE', '/manage/index')
       } else {
         localStorage.setItem('LAST_PAGE', _this.$route.path)
+        localStorage.setItem('OPEN_MENU_IDS', _this.$route.meta['pid'])
+        localStorage.setItem('SELECT_MENU_IDS', _this.$route.meta['id'])
       }
+      console.log('当前页面:', _this.$route)
       // 刷新时做一个标记
       localStorage.setItem('RELOAD_PAGE', '1')
-      // event.returnValue = '确定要离开页面吗？'
     })
   },
   methods: {
