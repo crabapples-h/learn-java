@@ -58,9 +58,9 @@ const commonApi = {
         storage.setPermissions(res.data)
       }
     })
-    this.getUserMenus().then(res => {
+    this.getUserMenusTree().then(res => {
       if (res.status === 200) {
-        storage.setUserMenus(res.data)
+        storage.setUserMenusTree(res.data)
       }
     })
   }

@@ -113,12 +113,8 @@ export default {
           return
         }
         if (result.data !== null) {
-          // this.menusOptions = this.tree2list(result.data).sort((a, b) => {
-          //   return b.sort - a.sort
-          // })
-          this.menusOptions = result.data.sort((a, b) => {
-            return a.sort - b.sort
-          })
+          // this.menusOptions = this.tree2list(result.data)
+          this.menusOptions = result.data
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

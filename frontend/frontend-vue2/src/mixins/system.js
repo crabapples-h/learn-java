@@ -203,6 +203,7 @@ export default {
                 console.error('出现错误:', error)
             })
         },
+
         showAdd() {
             this.show.add = true
         },
@@ -210,6 +211,7 @@ export default {
             this.show.add = false
             this.refreshData()
         },
+
         showEdit(e) {
             this.$refs.editForm.form = e
             this.show.edit = true

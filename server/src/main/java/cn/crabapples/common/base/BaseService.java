@@ -50,7 +50,7 @@ public interface BaseService<BaseEntity> {
                     // 判断用户拥有的菜单中是否包含当前菜单的子菜单,如果包含子菜单则需要将当前菜单一起返回
                     boolean sizeZero = !e.getChildren().isEmpty();
                     return exist || sizeZero;
-                })
+                }).sorted((a, b) -> a.getSort() - b.getSort())
                 .collect(Collectors.toList());
     }
 }

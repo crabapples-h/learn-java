@@ -19,7 +19,7 @@ const SysApis = {
     //菜单 menu
     menuTreeList: '/api/system/menu/tree/list',
     menuTreePage: '/api/system/menu/tree/page',
-    menuList: '/api/system/menu/list',
+    menuList: '/api/system/menu/tree/list',
     menuListPage: '/api/system/menu/list/page',
     childMenuList: '/api/system/menu/child/list',
 
@@ -28,7 +28,7 @@ const SysApis = {
     menusListUser: '/api/system/menu/list/user',
     delMenus: '/api/system/menu/remove',
     saveMenus: '/api/system/menu/save',
-    roleMenus: '/api/system/menu/role',
+    roleMenus: '/api/system/menu/tree/role',
 
     //角色 role
     roleList: '/api/system/role/list',

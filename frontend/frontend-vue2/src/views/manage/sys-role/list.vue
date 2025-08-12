@@ -78,7 +78,6 @@ export default {
   mounted() {
   },
   methods: {
-
     closeForm() {
       this.show.add = false
       this.show.edit = false

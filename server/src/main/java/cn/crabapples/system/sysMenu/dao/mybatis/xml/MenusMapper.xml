@@ -36,6 +36,7 @@
                 and pid = #{id}
             </otherwise>
         </choose>
+        order by sort asc
     </select>
 
     <select id="findMenusTreePage" resultMap="sysMenus">
