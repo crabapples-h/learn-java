@@ -100,7 +100,7 @@ public class SystemUserServiceImpl implements SystemUserService {
             entity.setPassword(encryptPassword(newPassword));
         }
         boolean status = entity.saveOrUpdate();
-        userRoleService.saveUserRoles(entity.getId(), entity.getRoleList());
+        userRoleService.saveUserRoles(entity.getId(), form.getRoleList());
         return status;
     }
 
