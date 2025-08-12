@@ -16,16 +16,21 @@ import java.util.List;
  * qq 294046317
  * pc-name mrhe
  */
-public interface SystemMenusService extends BaseService {
+public interface SystemMenusService extends BaseService<SysMenu> {
+
+    List<SysMenu> getChildList(String pid);
 
     List<SysMenu> getUserMenusTree();
 
-    List<SysMenu> getMenusList();
+    List<SysMenu> getMenusTreeList();
 
-    Page<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form);
+    Page<SysMenu> getMenuTreePage(Integer pageIndex, Integer pageSize, MenusForm form);
 
     boolean saveMenus(MenusForm form);
 
     boolean removeMenus(String id);
 
+    Page<SysMenu> getMenuListPage(Integer pageIndex, Integer pageSize, MenusForm form);
+
+    List<SysMenu> getUserMenusList();
 }

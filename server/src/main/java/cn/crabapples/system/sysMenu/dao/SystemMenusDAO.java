@@ -3,6 +3,7 @@ package cn.crabapples.system.sysMenu.dao;
 import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.sysMenu.dao.mybatis.mapper.MenusMapper;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
+import cn.crabapples.system.sysMenu.form.MenusForm;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
@@ -22,8 +23,11 @@ import java.util.List;
 @Component
 public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
+    public List<SysMenu> getChildList(String pid) {
+        return mapper.selectListByQuery(new QueryWrapper().eq(SysMenu::getPid, pid));
+    }
+
     public boolean remove(String id) {
-//        return baseMapper.removeById(id);
         return mapper.deleteById(id) > 0;
     }
 
@@ -44,11 +48,16 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      *
      * @return 菜单树
      */
-    public List<SysMenu> findMenusTree() {
+    public List<SysMenu> findMenusTreeList() {
         return mapper.findMenusTree(null);
     }
 
-    public Page<SysMenu> getMenuPage(Page<SysMenu> page) {
-        return mapper.xmlPaginate("findMenusTreePage",page, QueryWrapper.create());
+    public Page<SysMenu> getMenuTreePage(Page<SysMenu> page) {
+        return mapper.xmlPaginate("findMenusTreePage", page, QueryWrapper.create());
+    }
+
+
+    public Page<SysMenu> getMenuListPage(Page<SysMenu> page, MenusForm form) {
+        return mapper.paginate(page,QueryWrapper.create().isNull(SysMenu::getPid));
     }
 }

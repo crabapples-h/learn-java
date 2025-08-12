@@ -12,9 +12,9 @@
     </a-form>
     <a-divider/>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination"
-             :scroll="{x:true}" bordered>
+             :scroll="{x:true}" bordered @expand="onExpand">
       <span slot="action" slot-scope="text, record">
-      <a-space align="center" style="flex-wrap: wrap">
+        <a-space align="center" style="flex-wrap: wrap">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)" v-auth:sys:menus:del/>
         <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:menus:edit>编辑</a-button>
         <span v-if="record.menusType === 1">
@@ -57,7 +57,7 @@ export default {
         {
           dataIndex: 'name',
           title: '名称',
-          align: 'center',
+          align: 'left',
           width: 180
         },
         {
@@ -97,8 +97,9 @@ export default {
         add: false,
       },
       url: {
-        list: SysApis.menuPage,
+        list: SysApis.menuListPage,
         remove: SysApis.delMenus,
+        childList: SysApis.childMenuList,
       }
     }
   },
@@ -115,19 +116,20 @@ export default {
           return
         }
         if (result.data !== null) {
-          let format = function (data) {
-            return data.map(e => {
-              if (e.children && e.children.length > 0) {
-                e.children = format(e.children)
-              } else {
-                delete e.children;
-              }
-              return e
-            }).sort((a, b) => {
-              return a.sort - b.sort
-            })
-          }
-          this.dataSource = format(result.data.records)
+          // let format = function (data) {
+          //   return data.map(e => {
+          //     if (e.children && e.children.length > 0) {
+          //       e.children = format(e.children)
+          //     } else {
+          //       delete e.children;
+          //     }
+          //     return e
+          //   }).sort((a, b) => {
+          //     return a.sort - b.sort
+          //   })
+          // }
+          // this.dataSource = format(result.data.records)
+          this.dataSource = result.data.records
           this.pagination.total = result.data.total || result.data.totalRow
           this.pagination.current = result.data.current || result.data.pageNumber
           this.pagination.pageSize = result.data.size || result.data.pageSize

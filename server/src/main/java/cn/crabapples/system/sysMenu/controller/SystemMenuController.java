@@ -40,70 +40,26 @@ public class SystemMenuController extends BaseController {
     }
 
     /**
-     * 获取[当前用户]菜单树
+     * 获取子菜单列表
+     *
+     * @param pid 父级id
+     * @return 子菜单列表
      */
-    @GetMapping("/user")
-    @Operation(summary = "获取当前用户菜单树", description = "获取当前用户菜单树接口")
-    public ResponseDTO<List<SysMenu>> getUserMenus() {
-        log.info("收到请求->获取[当前用户]菜单树");
-        List<SysMenu> menus = menusService.getUserMenusTree();
-        log.debug("返回结果->获取[当前用户]菜单树:[{}]", menus);
+    @GetMapping("/child/list")
+    @Operation(summary = "获取子菜单列表", description = "获取子菜单列表")
+    public ResponseDTO<List<SysMenu>> getChildList(String pid) {
+        log.info("收到请求->获取获取子菜单列表");
+        List<SysMenu> menus = menusService.getChildList(pid);
+        log.debug("返回结果->获取获取子菜单列表:[{}]", menus);
         return new ResponseDTO<>(menus);
     }
 
-    /**
-     * 获取[所有]菜单列表
-     */
-    @GetMapping("/list")
-    @Operation(summary = "获取所有菜单树", description = "获取所有菜单树接口")
-    public ResponseDTO<List<SysMenu>> getMenusList() {
-        log.info("收到请求->获取[所有]菜单列表");
-        List<SysMenu> list = menusService.getMenusList();
-        log.debug("返回结果->获取[所有]菜单列表成功:[{}]", list);
-        return new ResponseDTO<>(list);
-    }
-
-    /**
-     * 获取[所有]菜单列表
-     */
-    @GetMapping("/page")
-    @Operation(summary = "获取所有菜单列表", description = "获取所有菜单列表接口")
-    public ResponseDTO<Page<SysMenu>> getMenuPage(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
-                                                  @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-                                                  MenusForm form) {
-        log.info("收到请求->获取菜单列表");
-        Page<SysMenu> list = menusService.getMenuPage(pageIndex,pageSize,form);
-        log.debug("返回结果->获取菜单列表成功:[{}]", list);
-        return new ResponseDTO<>(list);
-    }
-
-
-    /**
-     * 获取[角色]菜单树
-     */
-    @GetMapping("/tree/role/{id}")
-    @Operation(summary = "获取角色菜单树", description = "获取角色菜单列表树")
-    public ResponseDTO<List<SysMenu>> getRoleMenusTree(@PathVariable String id) {
-        log.info("收到请求->获取[角色]菜单列表(tree):[{}]", id);
-        List<SysMenu> list = roleMenusService.getRoleMenusTree(id);
-        log.debug("返回结果->获取[角色]菜单列表(tree)成功:[{}]", list);
-        return new ResponseDTO<>(list);
-    }
-
-      /**
-     * 获取[角色]菜单列表
-     */
-    @GetMapping("/role/{id}")
-    @Operation(summary = "获取角色菜单列表", description = "获取角色菜单列表列表")
-    public ResponseDTO<List<SysMenu>> getRoleMenus(@PathVariable String id) {
-        log.info("收到请求->获取[角色]菜单列表(list):[{}]", id);
-        List<SysMenu> list = roleMenusService.getRoleMenusList(id);
-        log.debug("返回结果->获取[角色]菜单列表成功(list):[{}]", list);
-        return new ResponseDTO<>(list);
-    }
 
     /**
      * 保存菜单
+     *
+     * @param form 菜单表单
+     * @return 保存结果
      */
     @PostMapping("/save")
     public ResponseDTO<Boolean> saveMenus(@RequestBody MenusForm form) {
@@ -116,6 +72,9 @@ public class SystemMenuController extends BaseController {
 
     /**
      * 删除菜单
+     *
+     * @param id 菜单id
+     * @return 删除结果
      */
     @DeleteMapping("/remove/{id}")
     @Operation(summary = "保存菜单", description = "保存菜单")

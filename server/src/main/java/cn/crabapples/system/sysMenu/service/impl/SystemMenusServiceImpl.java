@@ -43,6 +43,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         this.roleMenusService = roleMenusService;
     }
 
+    @Override
+    public List<SysMenu> getChildList(String pid) {
+        return systemMenusDAO.getChildList(pid);
+    }
+
     /**
      * 获取当前用户拥有的菜单树
      * 读取用户所拥有的所有角色，将所有角色拥有的菜单id放入一个集合，然后去重
@@ -58,13 +63,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         List<SysMenu> userMenus = systemMenusDAO.getUserMenus(user.getId());
         List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
-        List<SysMenu> allRootMenuTree = systemMenusDAO.findMenusTree();
-//        Utils.saveObj(allRootMenuTree, "allRootMenuTree");
+        List<SysMenu> allRootMenuTree = systemMenusDAO.findMenusTreeList();
         List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
         log.debug("用户拥有的所有菜单[{}]", list);
         return list;
     }
-
 
 
     @Override
@@ -72,11 +75,6 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         return systemMenusDAO.remove(id);
     }
 
-    /**
-     * 保存菜单
-     *
-     * @return 是否保存成功
-     */
     @Override
     public boolean saveMenus(MenusForm form) {
         if (StringUtils.isNotBlank(form.getPid())) {
@@ -90,12 +88,24 @@ public class SystemMenusServiceImpl implements SystemMenusService {
      * 获取菜单列表(全部)
      */
     @Override
-    public List<SysMenu> getMenusList() {
-        return systemMenusDAO.findMenusTree();
+    public List<SysMenu> getMenusTreeList() {
+        return systemMenusDAO.findMenusTreeList();
     }
 
     @Override
-    public Page<SysMenu> getMenuPage(Integer pageIndex, Integer pageSize, MenusForm form) {
-        return systemMenusDAO.getMenuPage(Page.of(pageIndex, pageSize));
+    public Page<SysMenu> getMenuTreePage(Integer pageIndex, Integer pageSize, MenusForm form) {
+        return systemMenusDAO.getMenuTreePage(Page.of(pageIndex, pageSize));
+    }
+
+    @Override
+    public Page<SysMenu> getMenuListPage(Integer pageIndex, Integer pageSize, MenusForm form) {
+        return systemMenusDAO.getMenuListPage(Page.of(pageIndex, pageSize),form);
+    }
+
+    @Override
+    public List<SysMenu> getUserMenusList() {
+        log.debug("获取用户拥有的所有菜单");
+        SysUser user = userService.getUserInfo();
+        return systemMenusDAO.getUserMenus(user.getId());
     }
 }

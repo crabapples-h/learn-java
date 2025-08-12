@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { Menu } from 'ant-design-vue'
+import {Menu} from 'ant-design-vue'
 
 const SubMenu = {
   template: `
@@ -99,12 +99,10 @@ export default {
     }
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     click(e) {
-      console.log('内部点击菜单', e)
       localStorage.setItem('OPEN_MENU_IDS', e.pid)
       localStorage.setItem('SELECT_MENU_IDS', e.id)
       this.$emit('clickMenu', e)

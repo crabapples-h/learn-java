@@ -131,9 +131,6 @@ export default {
                     }
                     if (result.data !== null) {
                         this.dataSource = result.data.records || result.data
-                        this.dataSource = this.dataSource.sort((a, b) => {
-                            return a.sort - b.sort
-                        })
                         this.pagination.total = result.data.total || result.data.totalRow
                         this.pagination.current = result.data.current || result.data.pageNumber
                         this.pagination.pageSize = result.data.size || result.data.pageSize
@@ -187,6 +184,24 @@ export default {
         closeExtend() {
             this.show.extend = false
             this.$emit('closeExtend')
+        },
+        onExpand(expanded, row) {
+            if (!expanded) {
+                row.children = []
+                return
+            }
+            let config = {params: {pid: row.id}}
+            this.$http.get(this.url.childList, config).then(result => {
+                if (result.status !== 200) {
+                    this.$message.error(result.message)
+                    return
+                }
+                if (result.data !== null) {
+                    row.children = (result.data.records || result.data)
+                }
+            }).catch(function (error) {
+                console.error('出现错误:', error)
+            })
         },
         showAdd() {
             this.show.add = true

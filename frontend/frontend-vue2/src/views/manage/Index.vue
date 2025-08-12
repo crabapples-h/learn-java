@@ -2,7 +2,7 @@
   <a-layout>
     <c-page-header :title="title" :userInfo="userInfo" style="height: 7vh" :theme="theme"/>
     <a-layout :style="showFooter? {height: '87vh'} : {height: '93vh'}">
-      <c-page-menus :menus="$store.getters.MENUS" @clickMenu="clickMenu" :theme="theme"/>
+      <c-page-menus :menus="$store.getters.MENUS_TREE" @clickMenu="clickMenu" :theme="theme"/>
       <a-layout-content class="content">
         <a-card style="overflow-y: scroll;height: 80vh" class="content-card">
           <keep-alive>
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     clickMenu(e) {
-      console.log('点击菜单', e);
+      console.log('点击菜单', e.path, e.name)
       if (e.menusType === 3) {
         window.open(e.link)
       } else {

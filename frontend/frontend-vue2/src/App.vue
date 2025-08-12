@@ -44,7 +44,8 @@ export default {
         this.$store.dispatch('USER_BASE_INFO')
         this.$store.dispatch('ROLES')
         // 初始化动态路由
-        this.$store.dispatch('MENUS')
+        this.$store.dispatch('MENUS_TREE')
+        this.$store.dispatch('MENUS_LIST')
         this.$store.dispatch('PERMISSIONS')
         // 获取刷新标记，如果用户是刷新页面则跳到loading页，如果不是刷新页面则直接跳转到指定页面
         // - 用于处理直接在浏览器输入url的情况，防止输入时跳转到loading页

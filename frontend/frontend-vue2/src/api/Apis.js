@@ -17,13 +17,19 @@ const SysApis = {
     saveUser: '/api/system/user/save',
 
     //菜单 menu
+    menuTreeList: '/api/system/menu/tree/list',
+    menuTreePage: '/api/system/menu/tree/page',
     menuList: '/api/system/menu/list',
-    menuPage: '/api/system/menu/page',
+    menuListPage: '/api/system/menu/list/page',
+    childMenuList: '/api/system/menu/child/list',
+
+    roleMenusTree: '/api/system/menu/tree/role',
+    menusTreeUser: '/api/system/menu/tree/user',
+    menusListUser: '/api/system/menu/list/user',
     delMenus: '/api/system/menu/remove',
     saveMenus: '/api/system/menu/save',
     roleMenus: '/api/system/menu/role',
-    roleMenusTree: '/api/system/menu/tree/role',
-    menusUser: '/api/system/menu/user',
+
     //角色 role
     roleList: '/api/system/role/list',
     rolePage: '/api/system/role/page',

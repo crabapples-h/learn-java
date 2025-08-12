@@ -13,6 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class SysMenu extends BaseEntity<SysMenu> {
     private String permission; // 授权标识
 
     @Column(ignore = true)
-    private List<SysMenu> children;
+    private List<SysMenu> children = Collections.EMPTY_LIST;
 
     private Integer showFlag;
 

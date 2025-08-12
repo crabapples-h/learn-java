@@ -33,9 +33,15 @@ const commonApi = {
     })
   },
   //获取用户拥有的菜单，并根据菜单生成路由表
-  getUserMenus() {
+  getUserMenusTree() {
     return instance({
-      url: SysApis.menusUser,
+      url: SysApis.menusTreeUser,
+      method: 'get',
+    })
+  },
+  getUserMenusList() {
+    return instance({
+      url: SysApis.menusListUser,
       method: 'get',
     })
   },

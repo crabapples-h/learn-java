@@ -12,8 +12,11 @@ const getters = {
     return state.user.token
   },
   USER_BASE_INFO: state => state.user.info,
-  MENUS(state) {
-    return [...state.permissions.menus]
+  MENUS_TREE(state) {
+    return [...state.permissions.menusTree]
+  },
+  MENUS_LIST(state) {
+    return [...state.permissions.menusList]
   },
   ROUTERS: state => state.user.routers,
   PERMISSIONS(state) {

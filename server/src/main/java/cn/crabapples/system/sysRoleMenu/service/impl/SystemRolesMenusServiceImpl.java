@@ -36,7 +36,7 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
 
     public List<SysMenu> getRoleMenusTree(String roleId) {
         // 查找所有菜单树
-        List<SysMenu> menusTree = menusDAO.findMenusTree();
+        List<SysMenu> menusTree = menusDAO.findMenusTreeList();
         // 获取当前角色拥有的菜单
         List<SysMenu> hasMenus = roleMenusDAO.getRoleMenusList(roleId);
         List<String> hasMenuIds = hasMenus.stream().map(SysMenu::getId).collect(Collectors.toList());

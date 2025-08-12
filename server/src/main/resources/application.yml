@@ -1,8 +1,8 @@
 dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
 #上传文件配置
 virtualPath: '/file/'
-#uploadPath: 'd:/uploadPath/'
-uploadPath: '/Users/mshe/developer/uploadPath'
+uploadPath: 'd:/uploadPath/'
+#uploadPath: '/Users/mshe/developer/uploadPath'
 # 设置最大文件大小
 spring.servlet.multipart.max-file-size: 100MB
 # 设置最大请求大小

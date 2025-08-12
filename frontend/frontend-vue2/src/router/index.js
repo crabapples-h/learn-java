@@ -102,31 +102,6 @@ let router = new VueRouter({
     routes: staticRouter,
 })
 
-// 森林转list
-function forestToList(forest) {
-    const result = []
-
-    function traverse(node) {
-        if (node.hasOwnProperty('path') && node.path) {
-            if (node.menusType !== 2) {
-                result.push({
-                    path: node.path,
-                    component: resolve => require([`@/views/${node.filePath}.vue`], resolve),
-                    name: node.name,
-                    meta: {title: node.name, icon: 'clipboard'},
-                    hidden: node.showFlag === 1
-                })
-            }
-        }
-        if (node && node.children) {
-            node.children.forEach(child => traverse(child))
-        }
-    }
-
-    forest.forEach(tree => traverse(tree))
-    return result
-}
-
 // 修改页面title
 function changePageTitle(e) {
     window.document.title = e.meta.title
@@ -134,7 +109,7 @@ function changePageTitle(e) {
 
 // 修改页面icon
 function changePageIcon(e) {
-    console.log('changePageIcon()', e)
+    console.log('修改页面icon', e.meta)
     // let link = document.querySelector('link[rel*=\'icon\']')
     // link.href = 'https://www.baidu.com/img/flexible/logo/pc/result.png'
     // document.getElementsByTagName('head')[0].appendChild(link)
@@ -164,16 +139,26 @@ router.afterEach((route) => {
 
 //渲染动态路由
 function initRouter(menus) {
+    console.log('开始初始化路由表,菜单数据:', menus)
     store.dispatch('LOAD_FINISH', false)
-    // console.log('开始初始化路由表,菜单数据:', menus)
-    const newRouter = forestToList(menus)
+    const newRouter = menus.filter(e => e.menusType !== 2)
+        .map(e => {
+            return {
+                path: e['path'] ?? '',
+                component: resolve => require([`@/views/${e.filePath}.vue`], resolve),
+                name: e.name,
+                meta: {title: e.name, icon: 'clipboard'},
+                hidden: e.showFlag === 1
+            }
+        })
     newRouter.push({path: '*', redirect: '/404', hidden: true})
     customRouter.children = newRouter
     customRouter.children.push(...errorRouter)
     router.addRoute(customRouter)
-    store.dispatch('LOAD_FINISH', true)
-    console.log('动态路由初始化完成')
-    console.log('新的路由表:-->', customRouter)
+    store.dispatch('LOAD_FINISH', true).then(r => {
+        console.log('动态路由初始化完成')
+        console.log('新的路由表:-->', customRouter)
+    })
 }
 
 router.onReady(() => {
