@@ -58,6 +58,7 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
 
     public Page<SysMenu> getMenuListPage(Page<SysMenu> page, MenusForm form) {
-        return mapper.paginate(page,QueryWrapper.create().isNull(SysMenu::getPid));
+        return mapper.paginate(page, QueryWrapper.create()
+                .isNull(SysMenu::getPid).orderBy(SysMenu::getSort, true));
     }
 }
