@@ -44,7 +44,6 @@ export default {
             },
             spinning: false,
             queryParam: {},
-
             formRules: formRules,
         }
     },
