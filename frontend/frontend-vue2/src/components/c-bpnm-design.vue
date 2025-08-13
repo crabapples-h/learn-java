@@ -54,16 +54,9 @@ export default {
   },
   mixins: [system],
   watch: {
-    value: {
-      handler(newVal) {
-        this.xml = newVal
-      },
-      immediate: true
-    },
     form: {
       handler(newVal) {
         if (this.show.isElement) {
-          console.log(newVal)
           if (this.selectedElement) {
             this.updateElementId(this.selectedElement, 'id', newVal.elementId)
             if (newVal.elementName) {
@@ -99,6 +92,35 @@ export default {
     }
   },
   methods: {
+    initBpmn() {
+      // 获取 DOM 元素
+      const canvas = this.$refs.canvas;
+      const propertiesPanel = this.$refs.propertiesPanel;
+
+      // 初始化 BpmnJS
+      this.bpmnModeler = new BpmnJS({
+        container: canvas,
+        // 挂载属性面板
+        propertiesPanel: {
+          parent: propertiesPanel,
+        },
+        // 添加 Camunda 扩展模块
+        additionalModules: [
+          // BpmnPropertiesPanelModule,
+          // BpmnPropertiesProviderModule,
+          customTranslateModule
+          // CamundaExtensionModule,
+        ],
+        // 添加 Camunda 扩展描述符
+        moddleExtensions: {
+          camunda: CamundaModdleDescriptor,
+        },
+      });
+      this.bindEvents();
+
+      // 加载默认的 BPMN 图
+      this.loadDiagram(this.initialDiagramXML);
+    },
     updateElementId(element, key, value) {
       console.log('updateElementId-->', element, key, value)
       // 检查是否有选中的元素和输入的新 ID
@@ -134,9 +156,8 @@ export default {
       })
     },
     bindEvents() {
-      const eventBus = this.bpmnModeler.get('eventBus');
-      // 1. 监听图表导入完成事件
-      eventBus.on('import.done', (event) => {
+      // 1. 图表导入完成事件
+      const importDone = (event) => {
         const {error, warnings} = event;
         if (error) {
           console.error('图表导入失败!', error);
@@ -151,9 +172,9 @@ export default {
           console.log('图表导入成功!', businessObject);
 
         }
-      });
-      // 2. 监听元素点击事件
-      eventBus.on('element.click', (event) => {
+      };
+      // 2. 元素点击事件
+      const elementClick = (event) => {
         const {element} = event;
         this.selectedElement = element;
         this.form.elementName = element.businessObject.name
@@ -170,9 +191,9 @@ export default {
         if (element.businessObject.assignee) {
           console.log('负责人:', element.businessObject.assignee);
         }
-      });
-      // 3. 监听元素属性变化事件
-      eventBus.on('element.changed', async (event) => {
+      };
+      // 3. 元素属性变化事件
+      const elementChange = async (event) => {
         const {element} = event;
         this.selectedElement = element;
         this.readElement(element)
@@ -180,52 +201,29 @@ export default {
         this.bpmnModeler.saveXML({format: true}).then(res => {
           this.$emit('change', res.xml)
         });
-      });
-      // 4. 监听新形状添加事件
-      eventBus.on('shape.added', (event) => {
+      };
+      // 4. 新节点添加事件
+      const shapeAdd = (event) => {
         this.show.isElement = true
         const {element} = event;
         this.selectedElement = element;
         this.readElement(element)
         console.log(`4.一个新的形状被添加: ${element.id} (类型: ${element.type})`);
-      });
-      // 5. 监听撤销/重做事件
-      eventBus.on('commandStack.changed', (event) => {
+      };
+      // 5. 撤销/重做事件
+      const commandStackChange = (event) => {
         console.log('5命令栈发生变化，可能执行了撤销或重做。');
         console.log(event)
         // 在这里可以触发保存操作，更新后端数据
-      });
+      };
+
+      const eventBus = this.bpmnModeler.get('eventBus');
+      eventBus.on('import.done', importDone);
+      eventBus.on('element.click', elementClick);
+      eventBus.on('element.changed', elementChange);
+      eventBus.on('shape.added', shapeAdd);
+      eventBus.on('commandStack.changed', commandStackChange);
     },
-    initBpmn() {
-      // 获取 DOM 元素
-      const canvas = this.$refs.canvas;
-      const propertiesPanel = this.$refs.propertiesPanel;
-
-      // 初始化 BpmnJS
-      this.bpmnModeler = new BpmnJS({
-        container: canvas,
-        // 挂载属性面板
-        propertiesPanel: {
-          parent: propertiesPanel,
-        },
-        // 添加 Camunda 扩展模块
-        additionalModules: [
-          // BpmnPropertiesPanelModule,
-          // BpmnPropertiesProviderModule,
-          customTranslateModule
-          // CamundaExtensionModule,
-        ],
-        // 添加 Camunda 扩展描述符
-        moddleExtensions: {
-          camunda: CamundaModdleDescriptor,
-        },
-      });
-      this.bindEvents();
-
-      // 加载默认的 BPMN 图
-      this.loadDiagram(this.initialDiagramXML);
-    },
-
     async loadDiagram(xml) {
       try {
         await this.bpmnModeler.importXML(xml);
@@ -272,8 +270,6 @@ export default {
         console.error('导出 SVG 失败:', err);
       }
     },
-
-
   },
 
 }
