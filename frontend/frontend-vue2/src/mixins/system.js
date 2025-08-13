@@ -67,6 +67,17 @@ export default {
             }
             return "appstore"
         },
+        // 通用文件下载方法
+        downloadFile(filename, data, type) {
+            const blob = new Blob([data], {type});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        },
         download(url, fileName = '') {
             const el = document.createElement('a');
             el.style.display = 'none';

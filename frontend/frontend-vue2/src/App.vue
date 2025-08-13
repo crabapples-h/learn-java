@@ -26,7 +26,6 @@ export default {
       // 如果path地址在白名单中，则说明用户并没有登录，则直接将首页放入缓存
       let LAST_PAGE = _this.$route.path
       let isWhiteList = whiteList.includes(LAST_PAGE)
-      debugger
       if (isWhiteList) {
         localStorage.setItem('LAST_PAGE', '/manage/index')
       } else {

@@ -8,8 +8,11 @@
       <a-form-model-item label="名称" prop="name">
         <a-input v-model="form.name"/>
       </a-form-model-item>
-      <div ref="bpmn-container" style="height: 500px; width: 100%" id="bpmn-container"></div>
-
+<!--      <div ref="bpmn-container" ></div>-->
+      <div class="bpmn-container" style="height: 500px; width: 100%" id="bpmn-container">
+        <div ref="canvas" class="canvas"></div>
+        <div ref="properties" class="properties-panel"></div>
+      </div>
     </a-form-model>
     <div class="drawer-bottom-button">
       <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
@@ -23,24 +26,15 @@
 import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
 import CIconSelect from '@comp/c-icon-select.vue'
-import BpmnViewer from 'bpmn-js';
-
-// import BpmnModeler from 'bpmn-js/lib/Modeler';
-
-// import resizeAllModule from 'bpmn-js-nyan/lib/resize-all-rules';
-// import colorPickerModule from 'bpmn-js-nyan/lib/color-picker';
-// import nyanDrawModule from 'bpmn-js-nyan/lib/nyan/draw';
-// import nyanPaletteModule from 'bpmn-js-nyan/lib/nyan/palette';
 
 
-// var bpmnJS = new BpmnModeler({
-//   additionalModules: [
-//     // resizeAllModule,
-//     // colorPickerModule,
-//     // nyanDrawModule,
-//     // nyanPaletteModule
-//   ]
-// });
+import BpmnModeler from 'bpmn-js/lib/Modeler'
+import 'bpmn-js/dist/assets/diagram-js.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
+
+// // 如果使用属性面板
+// import 'bpmn-js-properties-panel/dist/assets/properties-panel.css';
+
 export default {
   name: 'activiti-add',
   components: {CIconSelect},
@@ -54,7 +48,6 @@ export default {
       type: Function,
     }
   },
-
   data() {
     return {
       rules: {
@@ -70,27 +63,59 @@ export default {
       }
     }
   },
+  watch:{
+    xml(newVal) {
+      this.loadDiagram(newVal);
+    }
+  },
   activated() {
   },
   mounted() {
-    this.initBpmnJS()
+    this.initModeler();
+    this.loadDiagram(this.xml || this.getEmptyDiagram());
   },
   methods: {
-    async initBpmnJS() {
-      // let container = this.$refs['bpmn-container']
-      // var viewer = new BpmnViewer({
-      //   container: '#bpmn-container'
-      // });
+    initModeler() {
+      this.bpmnModeler = new BpmnModeler({
+        container: this.$refs.canvas,
+        propertiesPanel: {
+          parent: this.$refs.properties
+        },
+        // 如果需要属性面板
+        additionalModules: [
+          // 引入属性面板模块
+        ]
+      });
 
-      // viewer.importXML(pizzaDiagram).then(function (result) {
-      //   const {warnings} = result;
-      //   console.log('success !', warnings);
-      //   viewer.get('canvas').zoom('fit-viewport');
-      // }).catch(function (err) {
-      //   const {warnings, message} = err;
-      //   console.log('something went wrong:', warnings, message);
-      // });
-
+      // 监听变化事件
+      this.bpmnModeler.on('commandStack.changed', () => {
+        this.saveDiagram();
+      });
+    },
+    getEmptyDiagram() {
+      return `<?xml version="1.0" encoding="UTF-8"?>
+        <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                          id="sample-diagram"
+                          targetNamespace="http://bpmn.io/schema/bpmn">
+          <bpmn2:process id="Process_1" isExecutable="false">
+            <bpmn2:startEvent id="StartEvent_1"/>
+          </bpmn2:process>
+        </bpmn2:definitions>`;
+    },
+    async loadDiagram(xml) {
+      try {
+        await this.bpmnModeler.importXML(xml);
+      } catch (err) {
+        console.error('加载流程图失败:', err);
+      }
+    },
+    async saveDiagram() {
+      try {
+        const { xml } = await this.bpmnModeler.saveXML({ format: true });
+        this.$emit('update:xml', xml);
+      } catch (err) {
+        console.error('保存失败:', err);
+      }
     },
     closeForm() {
       this.form = {}
