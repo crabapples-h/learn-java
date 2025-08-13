@@ -22,9 +22,6 @@
         <a-button type="primary" size="small" @click="showDetail(record)">查看流程图</a-button>
       </a-space>
       </span>
-      <span slot="icon" slot-scope="text, record">
-        <a-icon :type='iconHandler(text)'/>
-      </span>
     </a-table>
   </div>
 </template>
