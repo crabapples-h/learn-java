@@ -30,19 +30,26 @@
         </a-form-model>
       </div>
       <div ref="canvas" class="bpmn-canvas"></div>
+      <div ref="propertiesPanel" class="bpmn-properties-panel"></div>
+
     </div>
     <!-- 隐藏的文件输入框 -->
     <input type="file" ref="fileInput" style="display: none" @change="importBPMN" accept=".bpmn, .xml"/>
   </div>
 </template>
 <script>
+import customTranslateModule, {initialDiagramXML} from './c-bpmn-plugins';
+import system from "@/mixins/system";
 import BpmnJS from 'bpmn-js/lib/Modeler';
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
-import CamundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
-import customTranslateModule, {initialDiagramXML} from './c-bpmn-plugins';
-import system from "@/mixins/system";
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
+import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
+import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from "bpmn-js-properties-panel";
 
+import CamundaExtensionModule from 'camunda-bpmn-moddle';
+import CamundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 
 export default {
   name: 'c-bpmn-design',
@@ -92,7 +99,8 @@ export default {
     }
   },
   methods: {
-    initBpmn() {
+    async initBpmn() {
+      console.log('initBpmn-->', BpmnModdle)
       // 获取 DOM 元素
       const canvas = this.$refs.canvas;
       const propertiesPanel = this.$refs.propertiesPanel;
@@ -106,48 +114,33 @@ export default {
         },
         // 添加 Camunda 扩展模块
         additionalModules: [
-          // BpmnPropertiesPanelModule,
-          // BpmnPropertiesProviderModule,
-          customTranslateModule
+          customTranslateModule,
+          BpmnPropertiesPanelModule,
+          BpmnPropertiesProviderModule,
           // CamundaExtensionModule,
         ],
         // 添加 Camunda 扩展描述符
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor,
+          activiti: CamundaModdleDescriptor,
         },
       });
       this.bindEvents();
-
-      // 加载默认的 BPMN 图
       this.loadDiagram(this.initialDiagramXML);
     },
     updateElementId(element, key, value) {
-      console.log('updateElementId-->', element, key, value)
-      // 检查是否有选中的元素和输入的新 ID
+      console.log('更新数据-->', element, key, value)
       if (!value || !value.trim()) {
         this.$message.error(`请输入一个有效的新 ${key}！`);
         return;
       }
-      //  不能包含空格
       if (/\s/.test(value)) {
         this.$message.error(`${key} 不能包含空格！`);
         return;
       }
-
-      // 获取 modeling 模块
       const modeling = this.bpmnModeler.get('modeling');
-
-      // 使用 updateProperties 方法来修改 ID
-      // 第一个参数是目标元素
-      // 第二个参数是一个对象，包含了要更新的属性
       modeling.updateProperties(element, {
         [key]: value
       });
-      // console.log(`元素 ${key} 已成功修改为: ${value}`);
-      //
-      // // 更新后，最好也更新一下 activeElement 的 id，虽然模型已经变了
-      // // 但我们的本地引用可能还是旧的
-      // element[key] = value;
     },
     readElement({businessObject}) {
       this.$nextTick(() => {
@@ -160,7 +153,7 @@ export default {
       const importDone = (event) => {
         const {error, warnings} = event;
         if (error) {
-          console.error('图表导入失败!', error);
+          console.error('BPMN导入失败!', error);
         } else {
           // 可以在这里执行自适应视口等操作
           this.bpmnModeler.get('canvas').zoom('fit-viewport');
@@ -169,7 +162,7 @@ export default {
           const businessObject = rootElement.businessObject;
           this.$set(this.form, 'processId', businessObject.id);
           this.$set(this.form, 'processName', businessObject.name);
-          console.log('图表导入成功!', businessObject);
+          console.log('BPMN导入成功!', businessObject);
 
         }
       };
@@ -282,6 +275,7 @@ export default {
   border: 1px solid #ccc;
 }
 
+
 /* 建模器和属性面板容器 */
 .bpmn-canvas-container {
   display: flex;
@@ -303,6 +297,16 @@ export default {
   border: 1px solid #f1f1f1;
   padding: 6px;
 }
+
+/* 属性面板样式 */
+.bpmn-properties-panel {
+  width: 300px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8f8f8;
+  border-left: 1px solid #ccc;
+}
+
 
 /* 隐藏 bpmn.io Logo */
 /deep/ .bjs-powered-by {
