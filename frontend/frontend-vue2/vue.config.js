@@ -61,6 +61,7 @@ module.exports = {
         sourceMap: false,
         loaderOptions: {
             less: {
+                lessOptions:{
                 //If you are using less-loader@5 please spread the lessOptions to options directly
                 javascriptEnabled: true,
                 // modifyVars: {
@@ -69,7 +70,7 @@ module.exports = {
                 //     'link-color': '#2daef6',
                 //     'border-radius-base': '4px',
                 // },
-            }
+            }}
         }
     },
     pages: {
@@ -89,17 +90,11 @@ module.exports = {
         }
     },
     devServer: {
-        // 让浏览器 overlay 同时显示警告和错误
-        overlay: {
-            warnings: false,
-            errors: false
-        },
-        // open: process.platform === "darwin",
-        disableHostCheck: false,
+        hot: true,       // 开启 HMR
+        liveReload: true, // 可选，自动刷新
         host: "0.0.0.0",
         port: 8080,
         https: false,
-        hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
             '/ws': {
                 target: 'http://localhost:9093/', // 接口的域名

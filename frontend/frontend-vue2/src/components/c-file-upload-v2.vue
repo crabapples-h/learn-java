@@ -43,7 +43,6 @@
 <script>
 import system, {getBase64} from '@/mixins/system'
 import storage from "@/store/storage";
-import {Base64} from "jsencrypt/lib/lib/asn1js/base64";
 
 export default {
   name: 'c-file-upload',
