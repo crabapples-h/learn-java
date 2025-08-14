@@ -56,7 +56,6 @@ import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from 'bpmn-js-p
 import activitiModdle from "./activiti";
 import activitiDescriptor from "./activitiDescriptor.json";
 
-
 export default {
   name: 'c-bpmn-design',
   props: {
@@ -223,7 +222,6 @@ export default {
       try {
         await this.bpmnModeler.importXML(xml);
         this.fitViewport();
-        console.log('BPMN 图加载成功!');
       } catch (err) {
         console.error('加载 BPMN 图失败:', err);
       }

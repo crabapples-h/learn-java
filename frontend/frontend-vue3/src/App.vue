@@ -5,14 +5,11 @@
     </router-view>
   </div>
 </template>
-<script>
+<script setup>
+import {onMounted, ref} from 'vue'
 
-export default {
-  setup(e) {
-    console.log('setup', e)
-  },
-  created() {
-    // const _this = this
+onMounted(() => {
+  {
     // let routerMap = getRouterMap()
     // $addRouters(routerMap)
     // let path = sessionStorage.getItem("pathName")
@@ -26,8 +23,9 @@ export default {
     // this.$store.commit('setUserInfo', storage.getUserInfo())
     // this.$store.commit('setUserMenus', storage.getUserMenus())
     // this.$store.commit('setUserPermissions', storage.getPermissions())
-  },
-}
+  }
+
+})
 </script>
 
 <style>
