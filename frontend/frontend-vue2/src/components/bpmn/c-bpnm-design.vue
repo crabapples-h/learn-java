@@ -21,8 +21,8 @@
               <a-input v-model="form.elementId"/>
             </a-form-model-item>
             <a-form-model-item label="执行人">
-            <a-input v-model="form.assignee"/>
-          </a-form-model-item>
+              <a-input v-model="form.assignee"/>
+            </a-form-model-item>
           </template>
           <a-divider/>
           <a-space>
@@ -41,7 +41,8 @@
   </div>
 </template>
 <script>
-import customTranslateModule, {initialDiagramXML} from './c-bpmn-plugins';
+import initialDiagramXML from './initialDiagramXML';
+import customTranslateModule from './i18n/zh_cn';
 import system from "@/mixins/system";
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
@@ -51,7 +52,7 @@ import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
 import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
 import BpmnJS from 'bpmn-js/lib/Modeler';
-import {BpmnPropertiesPanelModule,BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
+import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
 import activitiModdle from "./activiti";
 import activitiDescriptor from "./activitiDescriptor.json";
 
@@ -142,11 +143,11 @@ export default {
     },
     readElement({businessObject}) {
       this.$nextTick(() => {
-        console.log('读取数据start-->',businessObject)
+        console.log('读取数据start-->', businessObject)
         this.$set(this.form, 'elementId', businessObject?.id);
         this.$set(this.form, 'elementName', businessObject?.name);
         this.$set(this.form, 'assignee', businessObject?.assignee);
-        console.log('读取数据end-->',this.form)
+        console.log('读取数据end-->', this.form)
 
       })
     },
@@ -183,7 +184,7 @@ export default {
         }
         this.show.isElement = true
         // businessObject 包含了元素的业务属性，如 name, assignee 等
-        console.debug('点击的元素-->',element.businessObject)
+        console.debug('点击的元素-->', element.businessObject)
       };
       // 3. 元素属性变化事件
       const elementChange = async (event) => {
