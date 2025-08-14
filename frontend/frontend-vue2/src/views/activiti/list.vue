@@ -72,6 +72,9 @@ export default {
         remove: SysApis.delDicts,
       },
       dictCode: '',
+      show:{
+        add:true
+      }
     }
   },
   activated() {

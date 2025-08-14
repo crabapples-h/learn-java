@@ -43,7 +43,6 @@ const permissions = {
                     object.commit('INIT_ROUTER', menus)
                 }
             }).catch(function (error) {
-                debugger
                 console.error('出现错误:', error)
             })
         },

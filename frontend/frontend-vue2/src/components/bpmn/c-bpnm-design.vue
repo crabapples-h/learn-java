@@ -41,18 +41,19 @@
 import customTranslateModule, {initialDiagramXML} from './c-bpmn-plugins';
 import system from "@/mixins/system";
 import BpmnJS from 'bpmn-js/lib/Modeler';
-import 'bpmn-js/dist/assets/diagram-js.css'
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
-import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
-import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
-import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule, CamundaPlatformPropertiesProviderModule}
-  from "bpmn-js-properties-panel";
-// import CamundaExtensionModule from 'camunda-bpmn-moddle';
-import CamundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
-import activitiDescriptor from './descriptor/activitiDescriptor.json';
-import activitiModule from './extension-module/activiti';
-import ActivitiPropertiesProvider from "@comp/bpmn/activitiPropertiesProvider";
+// import 'bpmn-js/dist/assets/diagram-js.css'
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
+// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
+import propertiesPanelModule   from "bpmn-js-properties-panel";
+import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
+import activitiModdle from 'activiti-bpmn-moddle/resources/activiti.json';
+
+import {ActivitiProperties} from "@comp/bpmn/avtivitiProperties";
+import activitiModdleDescriptor from 'activiti-bpmn-moddle/resources/activiti.json';
+import ActivitiPropertiesProvider from "@comp/bpmn_bak/activitiPropertiesProvider";
+
 
 export default {
   name: 'c-bpmn-design',
@@ -79,7 +80,6 @@ export default {
     }
   },
   beforeDestroy() {
-    // 组件销毁时，销毁 BpmnJS 实例
     if (this.bpmnModeler) {
       this.bpmnModeler.destroy();
     }
@@ -103,30 +103,20 @@ export default {
   },
   methods: {
     async initBpmn() {
-      // 获取 DOM 元素
-      const canvas = this.$refs.canvas;
-      const propertiesPanel = this.$refs.propertiesPanel;
-
       // 初始化 BpmnJS
       this.bpmnModeler = new BpmnJS({
-        container: canvas,
+        container: this.$refs.canvas,
         // 挂载属性面板
         propertiesPanel: {
-          parent: propertiesPanel,
+          parent: this.$refs.propertiesPanel,
         },
         additionalModules: [
-          // 在 BPMN-JS 中注册
-          {
-            __init__: ['activitiPropertiesProvider'],
-            activitiPropertiesProvider: ['type', ActivitiPropertiesProvider]
-          },
-          BpmnPropertiesPanelModule,
-          BpmnPropertiesProviderModule,
-          customTranslateModule,
-
+          propertiesPanelModule,
+          propertiesProviderModule,
+          customTranslateModule
         ],
         moddleExtensions: {
-          activiti: activitiDescriptor
+          activiti: activitiModdle,
         },
       });
       this.bindEvents();
@@ -186,9 +176,7 @@ export default {
         }
         this.show.isElement = true
         // businessObject 包含了元素的业务属性，如 name, assignee 等
-        if (element.businessObject.assignee) {
-          console.log('负责人:', element.businessObject.assignee);
-        }
+        console.log('点击的元素-->',element.businessObject)
       };
       // 3. 元素属性变化事件
       const elementChange = async (event) => {
@@ -206,7 +194,7 @@ export default {
         const {element} = event;
         this.selectedElement = element;
         this.readElement(element)
-        console.log(`4.一个新的形状被添加: ${element.id} (类型: ${element.type})`);
+        console.log(`4.添加元素--->: ${element.id} (类型: ${element.type})`);
       };
       // 5. 撤销/重做事件
       const commandStackChange = (event) => {
