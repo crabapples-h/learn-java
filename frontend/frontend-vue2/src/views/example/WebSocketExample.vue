@@ -18,8 +18,8 @@ export default {
   data() {
     return {
       url: {
-        connectV1: '/ws/v1',
-        connectV2: '/ws/v2',
+        connectV1: '/websocket/v1',
+        connectV2: '/websocket/v2',
       },
       clientId: '',
       disable: false,

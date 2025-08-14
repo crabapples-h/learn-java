@@ -97,7 +97,7 @@ module.exports = {
         port: 8080,
         https: false,
         proxy: {
-            '/ws': {
+            '/websocket': {
                 target: 'http://localhost:9093/', // 接口的域名
                 ws: true,
                 // secure: false,  // 如果是https接口，需要配置这个参数

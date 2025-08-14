@@ -28,7 +28,7 @@ const staticRouter = [
     {
         path: '/',
         meta: {title: '首页', icon: 'clipboard'},
-        redirect: '/login',
+        redirect: '/manage/welcome',
         hidden: true
     },
     {
@@ -73,7 +73,7 @@ const staticRouter = [
     // { path: '*', redirect: '/404', hidden: true }
 ]
 // 白名单路由
-const whiteList = ['/login', '/404', '/401']
+const whiteList = ['/login', '/404', '/401','']
 // 错误页面
 const errorRouter = [
     {
