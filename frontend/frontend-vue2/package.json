@@ -11,7 +11,7 @@
     "ant-design-vue": "1.7.8",
     "axios": "1.11.0",
     "bpmn-js": "9.0.3",
-    "bpmn-js-properties-panel": "^1.0.0",
+    "bpmn-js-properties-panel": "1.0.0",
     "core-js": "^3.6.5",
     "echarts": "^5.0.2",
     "event-source-polyfill": "^1.0.31",
