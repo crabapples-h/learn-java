@@ -20,6 +20,9 @@
             <a-form-model-item label="元素ID">
               <a-input v-model="form.elementId"/>
             </a-form-model-item>
+            <a-form-model-item label="执行人">
+            <a-input v-model="form.assignee"/>
+          </a-form-model-item>
           </template>
           <a-divider/>
           <a-space>
@@ -40,19 +43,17 @@
 <script>
 import customTranslateModule, {initialDiagramXML} from './c-bpmn-plugins';
 import system from "@/mixins/system";
-import BpmnJS from 'bpmn-js/lib/Modeler';
-// import 'bpmn-js/dist/assets/diagram-js.css'
-// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
-// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
-// import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
-import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
-import propertiesPanelModule   from "bpmn-js-properties-panel";
-import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
-import activitiModdle from 'activiti-bpmn-moddle/resources/activiti.json';
+import 'bpmn-js/dist/assets/diagram-js.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
+import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
+import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
-import {ActivitiProperties} from "@comp/bpmn/avtivitiProperties";
-import activitiModdleDescriptor from 'activiti-bpmn-moddle/resources/activiti.json';
-import ActivitiPropertiesProvider from "@comp/bpmn_bak/activitiPropertiesProvider";
+import BpmnJS from 'bpmn-js/lib/Modeler';
+import {BpmnPropertiesPanelModule,BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
+import activitiModdle from "./activiti";
+import activitiDescriptor from "./activitiDescriptor.json";
 
 
 export default {
@@ -111,12 +112,13 @@ export default {
           parent: this.$refs.propertiesPanel,
         },
         additionalModules: [
-          propertiesPanelModule,
-          propertiesProviderModule,
-          customTranslateModule
+          BpmnPropertiesPanelModule,
+          BpmnPropertiesProviderModule,
+          customTranslateModule,
+          activitiModdle
         ],
         moddleExtensions: {
-          activiti: activitiModdle,
+          activiti: activitiDescriptor
         },
       });
       this.bindEvents();
@@ -133,14 +135,19 @@ export default {
         return;
       }
       const modeling = this.bpmnModeler.get('modeling');
+      console.log(modeling)
       modeling.updateProperties(element, {
         [key]: value
       });
     },
     readElement({businessObject}) {
       this.$nextTick(() => {
+        console.log('读取数据start-->',businessObject)
         this.$set(this.form, 'elementId', businessObject?.id);
         this.$set(this.form, 'elementName', businessObject?.name);
+        this.$set(this.form, 'assignee', businessObject?.assignee);
+        console.log('读取数据end-->',this.form)
+
       })
     },
     bindEvents() {
@@ -176,15 +183,16 @@ export default {
         }
         this.show.isElement = true
         // businessObject 包含了元素的业务属性，如 name, assignee 等
-        console.log('点击的元素-->',element.businessObject)
+        console.debug('点击的元素-->',element.businessObject)
       };
       // 3. 元素属性变化事件
       const elementChange = async (event) => {
         const {element} = event;
         this.selectedElement = element;
         this.readElement(element)
-        console.log(`3.元素 ${element.id} 的属性或位置发生了变化`, JSON.stringify(element.businessObject));
+        console.log(`3.修改了元素 ${element.id}-->`, JSON.stringify(element.businessObject));
         this.bpmnModeler.saveXML({format: true}).then(res => {
+          // console.log('change', res.xml)
           this.$emit('change', res.xml)
         });
       };
