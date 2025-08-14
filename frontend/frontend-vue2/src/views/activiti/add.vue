@@ -11,7 +11,7 @@
 <script>
 import {SysApis} from '@/api/Apis'
 import system from '@/mixins/system'
-import CBpmnDesign from "@comp/c-bpnm-design.vue";
+import CBpmnDesign from "@comp/bpmn/c-bpnm-design.vue";
 
 
 export default {

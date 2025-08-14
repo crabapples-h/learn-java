@@ -46,10 +46,13 @@ import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import 'bpmn-js-properties-panel/dist/assets/properties-panel.css'
-import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from "bpmn-js-properties-panel";
-
-import CamundaExtensionModule from 'camunda-bpmn-moddle';
-import CamundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
+import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule, CamundaPlatformPropertiesProviderModule}
+  from "bpmn-js-properties-panel";
+// import CamundaExtensionModule from 'camunda-bpmn-moddle';
+import CamundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda';
+import activitiDescriptor from './descriptor/activitiDescriptor.json';
+import activitiModule from './extension-module/activiti';
+import ActivitiPropertiesProvider from "@comp/bpmn/activitiPropertiesProvider";
 
 export default {
   name: 'c-bpmn-design',
@@ -100,7 +103,6 @@ export default {
   },
   methods: {
     async initBpmn() {
-      console.log('initBpmn-->', BpmnModdle)
       // 获取 DOM 元素
       const canvas = this.$refs.canvas;
       const propertiesPanel = this.$refs.propertiesPanel;
@@ -112,16 +114,19 @@ export default {
         propertiesPanel: {
           parent: propertiesPanel,
         },
-        // 添加 Camunda 扩展模块
         additionalModules: [
-          customTranslateModule,
+          // 在 BPMN-JS 中注册
+          {
+            __init__: ['activitiPropertiesProvider'],
+            activitiPropertiesProvider: ['type', ActivitiPropertiesProvider]
+          },
           BpmnPropertiesPanelModule,
           BpmnPropertiesProviderModule,
-          // CamundaExtensionModule,
+          customTranslateModule,
+
         ],
-        // 添加 Camunda 扩展描述符
         moddleExtensions: {
-          activiti: CamundaModdleDescriptor,
+          activiti: activitiDescriptor
         },
       });
       this.bindEvents();

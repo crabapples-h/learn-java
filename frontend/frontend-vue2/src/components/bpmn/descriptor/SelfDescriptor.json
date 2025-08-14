@@ -1,0 +1,131 @@
+{
+  "name": "self",
+  "uri": "https://self",
+  "prefix": "bpmn2",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "types": [
+    {
+      "name": "AttrOne",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "type": "String",
+          "isAttr": "true"
+        },
+        {
+          "name": "values",
+          "type": "AttrOneProp",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "timeDate",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+         "*"
+        ]
+      },
+      "properties": [
+        {
+          "name": "body",
+          "isBody": true,
+          "type": "String"
+        }
+        ,
+        {
+          "name": "values",
+          "type": "AttrOneProp",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "timeDuration",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+         "*"
+        ]
+      },
+      "properties": [
+        {
+          "name": "body",
+          "isBody": true,
+          "type": "String"
+        }
+        ,
+        {
+          "name": "values",
+          "type": "AttrOneProp",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "timeCycle",
+      "superClass": [ "Element" ],
+      "meta": {
+        "allowedIn": [
+         "*"
+        ]
+      },
+      "properties": [
+        {
+          "name": "body",
+          "isBody": true,
+          "type": "String"
+        }
+        ,
+        {
+          "name": "values",
+          "type": "AttrOneProp",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "AttrOneProp",
+      "superClass": [
+        "Element"
+      ],
+      "meta": {
+        "allowedIn": [ "*" ]
+      },
+      "properties": [
+        {
+          "name": "propName",
+          "type": "String",
+          "isAttr": true
+        },
+        {
+          "name": "value",
+          "type": "String",
+          "isAttr": true
+        }
+      ]
+    },
+    {
+      "name": "AttrTwo",
+      "superClass": [
+        "Element"
+      ],
+      "meta": {
+        "allowedIn": [ "*" ]
+      },
+      "properties": [
+        {
+          "name": "value",
+          "type": "String",
+          "isBody": true
+        }
+      ]
+    }
+  ]
+}
