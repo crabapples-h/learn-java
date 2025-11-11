@@ -61,9 +61,9 @@ public class FileInfoServiceImpl implements FileInfoService {
     }
 
     @Override
-    public String share(String fileName, UPLOAD_TYPE type) {
+    public String share( String bucket,String fileName, UPLOAD_TYPE type) {
         UploadFileStrategy strategy = strategyFactory.getBean(type);
-        return strategy.share(fileName);
+        return strategy.share(bucket,fileName);
     }
 
     @Override

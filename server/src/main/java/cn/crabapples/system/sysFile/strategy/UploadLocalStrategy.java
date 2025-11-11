@@ -108,7 +108,7 @@ public class UploadLocalStrategy implements UploadFileStrategy {
     }
 
     @Override
-    public String share(String fileName) {
+    public String share(String bucket, String fileName) {
         throw new ApplicationException("当前类型文件不支持分享");
     }
 

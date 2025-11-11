@@ -93,8 +93,8 @@ public class UploadS3Strategy implements UploadFileStrategy {
     }
 
     @Override
-    public String share(String fileName) {
-        return service.createTempDownloadUrl(fileName, 1L, ChronoUnit.MINUTES).url().toString();
+    public String share(String bucket, String fileName) {
+        return service.createTempDownloadUrl(bucket, fileName, 1L, ChronoUnit.HOURS).url().toString();
     }
 
     @Override

@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component("upload_minio")
@@ -75,8 +76,8 @@ public class UploadMinioStrategy implements UploadFileStrategy {
     }
 
     @Override
-    public String share(String fileName) {
-        return service.createTempDownloadUrl(fileName);
+    public String share(String bucket, String fileName) {
+        return service.createTempDownloadUrl(bucket, fileName, 1, TimeUnit.HOURS);
     }
 
     @Override

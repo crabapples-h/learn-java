@@ -39,7 +39,7 @@ public interface FileInfoService {
 
     void download(String bucket,String fileName, HttpServletResponse response, UPLOAD_TYPE type);
 
-    String share(String fileName, UPLOAD_TYPE type);
+    String share( String bucket,String fileName, UPLOAD_TYPE type);
 
     void remove(String fileName, UPLOAD_TYPE type);
 }
