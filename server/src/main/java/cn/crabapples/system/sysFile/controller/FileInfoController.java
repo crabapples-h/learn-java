@@ -56,12 +56,12 @@ public class FileInfoController extends BaseController {
 //        return new ResponseDTO<>(url);
 //    }
 
-    @GetMapping("/download/{type}/{fileName}")
+    @GetMapping("/download/{type}/{bucket}/{fileName}")
     @Operation(summary = "获取文件", description = "获取文件接口")
     @JwtIgnore
-    public void download(HttpServletResponse response, @PathVariable UPLOAD_TYPE type, @PathVariable String fileName) {
+    public void download(HttpServletResponse response, @PathVariable UPLOAD_TYPE type,  @PathVariable String bucket,@PathVariable String fileName) {
         log.info("收到请求->获取文件");
-        fileInfoService.download(fileName, response, type);
+        fileInfoService.download(bucket,fileName, response, type);
         log.info("返回结果->获取文件结束:[{}]", fileName);
     }
 

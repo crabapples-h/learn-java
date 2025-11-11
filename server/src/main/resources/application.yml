@@ -40,3 +40,12 @@ spring.cloud.sentinel.transport.dashboard: 127.0.0.1:8858
 spring.cloud.sentinel.log.dir: ./logs/csp
 
 
+#### mail oss ###
+#crabapples.oss.accessKey: smtp.qq.com
+#crabapples.oss.secretKey: xxxxx@qq.com
+#crabapples.oss.endpoint: 465
+#crabapples.oss.bucketName: xxxxx@qq.com
+#crabapples.oss.region: xxxxx
+#crabapples.oss.path: true
+#crabapples.oss.url: true
+

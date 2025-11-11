@@ -9,7 +9,7 @@
 <template>
   <div>
     <a-upload ref="fileUpload" name="file"
-              :action="uploadLocal"
+              :action="uploadRustFs"
               :multiple="multiple"
               :accept="accept"
               :headers="headers"
@@ -140,6 +140,8 @@ export default {
       let previewAddress = storage.getFilePreviewAddress()
       let url = `${serverAddress}${file.url}`
       let previewUrl = `${previewAddress}/onlinePreview?url=${encodeURIComponent(btoa(url))}`
+      // alert(previewUrl)
+      // alert(url)
       window.open(previewUrl)
       // this.previewVisible = true;
     },

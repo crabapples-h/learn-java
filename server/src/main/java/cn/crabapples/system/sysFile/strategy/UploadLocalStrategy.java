@@ -94,7 +94,7 @@ public class UploadLocalStrategy implements UploadFileStrategy {
     }
 
     @Override
-    public void download(String fileName, OutputStream outputStream) {
+    public void download(String bucket, String fileName, OutputStream outputStream) {
         String filePath = uploadPath + File.separator + fileName;
         try (FileInputStream inputStream = new FileInputStream(filePath)) {
             byte[] data = new byte[1024];

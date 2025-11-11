@@ -33,9 +33,9 @@ export default {
                 'crabapples-token': this.$store.getters.TOKEN,
             },
             sysUser: sessionStorage.getItem("sysUser"),
-            uploadUrl: '/api/uploadFile',
-            uploadUrlV2: '/api/file/uploadV2',
-            uploadUrlV3: '/api/file/uploadV3',
+            uploadLocal: '/api/upload/LOCAL',
+            uploadMinio: '/api/file/upload/MINIO',
+            uploadRustFs: '/api/file/upload/RUST_FS',
             show: {
                 add: false,
                 edit: false,
