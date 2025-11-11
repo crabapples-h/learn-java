@@ -15,7 +15,7 @@ import CBpmnDesign from "@comp/bpmn/c-bpnm-design.vue";
 
 
 export default {
-  name: 'activiti-add',
+  name: 'process-add',
   components: {CBpmnDesign},
   mixins: [system],
   props: {

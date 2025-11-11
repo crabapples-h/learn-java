@@ -33,7 +33,7 @@ import system from '@/mixins/system'
 import Add from './add.vue'
 
 export default {
-  name: 'activiti-list',
+  name: 'process-list',
   mixins: [system],
   components: {
     Add,
@@ -72,8 +72,8 @@ export default {
         remove: SysApis.delDicts,
       },
       dictCode: '',
-      show:{
-        add:true
+      show: {
+        add: true
       }
     }
   },
@@ -81,8 +81,7 @@ export default {
   },
   mounted() {
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
