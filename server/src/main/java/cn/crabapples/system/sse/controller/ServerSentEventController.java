@@ -1,12 +1,10 @@
 package cn.crabapples.system.sse.controller;
 
+import cn.crabapples.common.dic.IgnoreDict;
 import cn.crabapples.common.jwt.JwtIgnore;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -31,10 +29,11 @@ import java.util.concurrent.TimeUnit;
 public class ServerSentEventController {
     private static final Map<String, SseEmitter> SSE_CLENT_MAP = new ConcurrentHashMap<>();
 
-    @GetMapping(value = "/connect/{id}")
+    @PostMapping(value = "/connect/{id}")
     @JwtIgnore
+    @IgnoreDict
     public SseEmitter connectSse(@PathVariable String id) {
-        log.info("收到sse请求,id:[{}]", id);
+        log.info("收到建立sse请求,id:[{}]", id);
         SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
         if (Objects.isNull(sseEmitter)) {
             sseEmitter = new SseEmitter(1000 * 60 * 30L);
@@ -43,12 +42,14 @@ public class ServerSentEventController {
             sseEmitter.onCompletion(() -> SSE_CLENT_MAP.remove(id));
             SSE_CLENT_MAP.put(id, sseEmitter);
         }
+        log.info("sse连接建立成功,id:[{}],[{}]", id, sseEmitter);
         return sseEmitter;
     }
 
-    @GetMapping("/send/{id}")
+    @PostMapping("/send/{id}")
     @JwtIgnore
-    public void sseTestSend(@PathVariable String id) throws IOException, InterruptedException {
+    @IgnoreDict
+    public void sseTestSend(@PathVariable String id) {
         new Thread(() -> {
             SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
             log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);
