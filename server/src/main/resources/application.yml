@@ -1,4 +1,9 @@
-dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+dataBaseParam: 'useUnicode=true
+&characterEncoding=utf-8
+&serverTimezone=Asia/Shanghai
+&zeroDateTimeBehavior=convertToNull
+&allowPublicKeyRetrieval=true
+&nullDatabaseMeansCurrent=true'
 previewAddress: http://localhost:8012
 #上传文件配置
 virtualPath: '/file/'

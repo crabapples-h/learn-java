@@ -1,9 +1,12 @@
 <template>
-  <a-modal :visible="visible" width="100%" height="70vh" :dialog-style="{ top: '0' }" @cancel="closeForm">
-    <c-bpmn-design v-model="form.xml"></c-bpmn-design>
+  <a-modal :visible="visible" width="100%" height="70vh" :dialog-style="{ top: '0' }" @cancel="closeForm"
+           title="流程设计">
+    <c-bpmn-design v-model="form.xml" ref="cBpmnDesign"/>
     <div class="drawer-bottom-button">
-      <a-button :style="{ marginRight: '8px' }" @click="closeForm">关闭</a-button>
-      <a-button type="primary" @click="submit">保存</a-button>
+      <a-space>
+        <a-button @click="submit" type="primary">保存</a-button>
+        <a-button @click="closeForm">关闭</a-button>
+      </a-space>
     </div>
   </a-modal>
 </template>
@@ -52,8 +55,11 @@ export default {
   },
 
   methods: {
+
     submit() {
-      console.log(this.form.xml)
+      this.$refs.cBpmnDesign.saveXml().then(res => {
+        console.log(res.xml)
+      })
     },
   }
 }
@@ -70,5 +76,9 @@ export default {
   background: #fff;
   text-align: right;
   z-index: 1;
+}
+
+/deep/ .ant-modal-body {
+  padding: 0;
 }
 </style>
