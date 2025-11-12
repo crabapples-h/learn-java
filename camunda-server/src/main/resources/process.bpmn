@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://www.activiti.org/test" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://bpmn.io/schema/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="Definitions_0fr9mxs" name="" targetNamespace="http://bpmn.io/schema/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema">
+    <bpmn:process camunda:historyTimeToLive="180" id="my-test-process" isClosed="false" isExecutable="true" processType="None">
+        <bpmn:startEvent id="StartEvent_1"/>
+        <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="say-hello"/>
+        <bpmn:endEvent id="EndEvent_0x6ir2l"/>
+        <bpmn:sequenceFlow id="SequenceFlow_16gzt2m" sourceRef="say-hello" targetRef="EndEvent_0x6ir2l"/>
+        <bpmn:userTask activiti:exclusive="true" camunda:candidateUsers="admin" id="say-hello" name="Say hello to&#10;admin"/>
+    </bpmn:process>
+    <bpmndi:BPMNDiagram documentation="background=#2B2D30;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+        <bpmndi:BPMNPlane bpmnElement="my-test-process">
+            <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="Shape-StartEvent_1">
+                <dc:Bounds height="32.0" width="32.0" x="179.0" y="99.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="EndEvent_0x6ir2l" id="Shape-EndEvent_0x6ir2l">
+                <dc:Bounds height="32.0" width="32.0" x="432.0" y="99.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="say-hello" id="Shape-say-hello">
+                <dc:Bounds height="80.0" width="100.0" x="270.0" y="77.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="80.0" width="100.0" x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_16gzt2m" id="BPMNEdge_SequenceFlow_16gzt2m" sourceElement="say-hello" targetElement="EndEvent_0x6ir2l">
+                <di:waypoint x="370.0" y="117.0"/>
+                <di:waypoint x="432.0" y="115.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1fp17al" id="BPMNEdge_SequenceFlow_1fp17al" sourceElement="StartEvent_1" targetElement="say-hello">
+                <di:waypoint x="211.0" y="115.0"/>
+                <di:waypoint x="270.0" y="117.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

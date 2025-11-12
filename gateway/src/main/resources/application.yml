@@ -1,4 +1,4 @@
-server.port: 9092
+server.port: 9093
 spring.application.name: api-gateway
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848

@@ -1,0 +1,23 @@
+dataBaseParam: 'useUnicode=true
+&characterEncoding=utf-8
+&serverTimezone=Asia/Shanghai
+&zeroDateTimeBehavior=convertToNull
+&allowPublicKeyRetrieval=true
+&nullDatabaseMeansCurrent=true'
+server:
+  port: 8001
+spring:
+  application:
+    name: camunda-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/camunda?${dataBaseParam}
+    username: root
+    password: root
+
+camunda.bpm:
+  database:
+    schema-update: true
+  admin-user:
+    id: admin
+    password: admin
