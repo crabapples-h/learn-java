@@ -29,6 +29,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class AuthHandshakeInterceptor implements HandshakeInterceptor {
+    private static final String URL_PREFIX = "/websocket/v2/";
 
     private final JwtTokenUtils jwtTokenUtils;
 
@@ -42,7 +43,7 @@ public class AuthHandshakeInterceptor implements HandshakeInterceptor {
         HttpHeaders headers = request.getHeaders();
         URI uri = request.getURI();
         String path = uri.getPath();
-        String clientId = path.replaceFirst("/ws/", "");
+        String clientId = path.replaceFirst("/ws/", "").replace(URL_PREFIX,"");
         List<String> tokenList = headers.get("sec-websocket-protocol");
         headers.remove("sec-websocket-protocol");
         if (Objects.nonNull(tokenList) && !tokenList.isEmpty()) {
