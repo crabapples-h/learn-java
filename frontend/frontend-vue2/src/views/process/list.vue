@@ -7,7 +7,7 @@
         </a-form-item>
         <a-button type="default" @click="getList" icon="search">查询</a-button>
         <a-button type="default" @click="resetSearch" icon="reload">重置</a-button>
-        <a-button type="primary" @click="showAdd" icon="plus" v-auth:sys:menus:add ghost>添加</a-button>
+        <a-button type="primary" @click="showAdd" icon="plus" v-auth:sys:process:add ghost>添加</a-button>
       </a-space>
     </a-form>
     <a-divider/>
@@ -17,8 +17,8 @@
              bordered>
       <span slot="action" slot-scope="text, record">
       <a-space align="center" style="flex-wrap: wrap">
-        <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)"/>
-        <a-button type="primary" size="small" @click="showEdit(record)">编辑</a-button>
+        <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)" v-auth:sys:process:del/>
+        <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:process:edit>编辑</a-button>
         <a-button type="primary" size="small" @click="showDetail(record)">查看流程图</a-button>
       </a-space>
       </span>

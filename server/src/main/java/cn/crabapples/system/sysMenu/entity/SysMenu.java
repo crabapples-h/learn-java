@@ -44,6 +44,9 @@ public class SysMenu extends BaseEntity<SysMenu> {
     private String permission; // 授权标识
 
     @Column(ignore = true)
+    private boolean hasChildren; // 是否有子菜单
+
+    @Column(ignore = true)
     private List<SysMenu> children = Collections.EMPTY_LIST;
 
     private Integer showFlag;

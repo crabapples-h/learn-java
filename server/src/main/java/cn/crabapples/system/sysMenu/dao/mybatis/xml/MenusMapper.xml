@@ -88,4 +88,35 @@
         where sys_user.id = #{userId}
     </select>
 
+    <select id="findMenusListPage" resultType="cn.crabapples.system.sysMenu.entity.SysMenu">
+        select a.*, if(count(b.id) > 0, true, false) as hasChildren
+        from sys_menu a
+                 left join sys_menu b on a.id = b.pid
+        where a.pid is null and a.del_flag = 0
+        group by a.id
+        ORDER BY a.sort
+    </select>
+
+    <select id="findMenusListPage_COUNT" resultType="long">
+        select count(1)
+        from sys_menu
+        where del_flag = 0
+        <choose>
+            <when test="id == null">
+                and pid is null and del_flag = 0
+            </when>
+            <otherwise>
+                and pid = #{id} and del_flag = 0
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findMenusList" resultType="cn.crabapples.system.sysMenu.entity.SysMenu">
+        select a.*, if(count(b.id) > 0, true, false) as hasChildren
+        from sys_menu a
+                 left join sys_menu b on a.id = b.pid
+        where a.pid = #{id} and a.del_flag = 0
+        group by a.id
+        ORDER BY a.sort
+    </select>
+
 </mapper>

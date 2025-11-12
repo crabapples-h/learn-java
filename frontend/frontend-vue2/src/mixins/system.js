@@ -1,5 +1,5 @@
-import { initCPagination } from '@/views/common/CPagination'
-import { TreeSelect } from 'ant-design-vue'
+import {initCPagination} from '@/views/common/CPagination'
+import {TreeSelect} from 'ant-design-vue'
 import CButton from '@comp/c-button.vue'
 import CPopButton from '@comp/c-pop-button.vue'
 import formRules from '@/utils/formRules'
@@ -208,6 +208,12 @@ export default {
                 }
                 if (result.data !== null) {
                     row.children = (result.data.records || result.data)
+                    row.children.forEach(e => {
+                        console.log(e.name, e.id)
+                    })
+                    if (!row.children.length) {
+                        delete row.children
+                    }
                 }
             }).catch(function (error) {
                 console.error('出现错误:', error)

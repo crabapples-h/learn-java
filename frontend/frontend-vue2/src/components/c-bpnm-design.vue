@@ -24,15 +24,15 @@
   </div>
 </template>
 <script>
-import './properties-panel.css';
-import initialDiagramXML from './initialDiagramXML';
+import './bpmn/properties-panel.css';
+import initialDiagramXML from './bpmn/initialDiagramXML';
 import system from "@/mixins/system";
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
 import zh_cn from 'bpmn-js-i18n/translations/zn.js';
-import zh_cn_custom from './zh_cn';
+import zh_cn_custom from './bpmn/zh_cn';
 import CamundaBpmnModdle from 'camunda-bpmn-moddle/resources/camunda.json'
 import BpmnJS from 'bpmn-js/lib/Modeler'; // 或者使用 Viewer
 import {BpmnPropertiesPanelModule} from 'bpmn-js-properties-panel';
