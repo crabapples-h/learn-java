@@ -9,7 +9,7 @@
 <template>
   <div>
     <a-upload ref="fileUpload" name="file"
-              :action="uploadLocal"
+              :action="uploadRustFs"
               :multiple="multiple"
               :accept="accept"
               :headers="headers"

@@ -16,4 +16,8 @@ public interface MenusMapper extends BaseMapper<SysMenu> {
 
     Page<SysMenu> findMenusTreePage(Page<SysMenu> page, @Param("id") String id);
 
+    Page<SysMenu> findMenusListPage(Page<SysMenu> page);
+
+    List<SysMenu> findMenusList(@Param("id")String pid);
+
 }

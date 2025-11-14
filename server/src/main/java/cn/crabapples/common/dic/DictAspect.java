@@ -13,15 +13,15 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -63,7 +63,11 @@ public class DictAspect {
 
     @Around("dictService()")
     public Object doAround(ProceedingJoinPoint point) throws Throwable {
-//        MethodSignature methodSignature = (MethodSignature) point.getSignature();
+        MethodSignature methodSignature = (MethodSignature) point.getSignature();
+        IgnoreDict ignoreDict = methodSignature.getMethod().getDeclaredAnnotation(IgnoreDict.class);
+        if (null != ignoreDict) {
+            return point.proceed();
+        }
 //        EnableDict annotation = methodSignature.getMethod().getAnnotation(EnableDict.class);
 //        System.err.println(annotation);
         long time1 = System.currentTimeMillis();

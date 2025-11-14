@@ -28,7 +28,7 @@ const staticRouter = [
     {
         path: '/',
         meta: {title: '首页', icon: 'clipboard'},
-        redirect: '/manage/welcome',
+        redirect: '/login',
         hidden: true
     },
     {

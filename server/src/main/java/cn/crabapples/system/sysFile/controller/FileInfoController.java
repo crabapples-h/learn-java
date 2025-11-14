@@ -56,20 +56,20 @@ public class FileInfoController extends BaseController {
 //        return new ResponseDTO<>(url);
 //    }
 
-    @GetMapping("/download/{type}/{fileName}")
+    @GetMapping("/download/{type}/{bucket}/{fileName}")
     @Operation(summary = "获取文件", description = "获取文件接口")
     @JwtIgnore
-    public void download(HttpServletResponse response, @PathVariable UPLOAD_TYPE type, @PathVariable String fileName) {
+    public void download(HttpServletResponse response, @PathVariable UPLOAD_TYPE type, @PathVariable String bucket, @PathVariable String fileName) {
         log.info("收到请求->获取文件");
-        fileInfoService.download(fileName, response, type);
+        fileInfoService.download(bucket, fileName, response, type);
         log.info("返回结果->获取文件结束:[{}]", fileName);
     }
 
-    @PostMapping("/share/{type}/{fileName}")
+    @PostMapping("/share/{type}/{bucket}/{fileName}")
     @Operation(summary = "分享文件", description = "分享文件接口")
-    public ResponseDTO<String> share(@PathVariable UPLOAD_TYPE type, @PathVariable String fileName) {
+    public ResponseDTO<String> share(@PathVariable UPLOAD_TYPE type, @PathVariable String bucket, @PathVariable String fileName) {
         log.info("收到请求->分享文件");
-        String url = fileInfoService.share(fileName, type);
+        String url = fileInfoService.share(bucket,fileName, type);
         log.info("返回结果->分享文件结束:[{}],分享链接:[{}]", fileName, url);
         return new ResponseDTO<>(url);
     }

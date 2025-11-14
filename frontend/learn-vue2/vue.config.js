@@ -92,8 +92,8 @@ module.exports = {
         disableHostCheck: true,
         open: process.platform === "darwin",
         host: "0.0.0.0",
-        port: 8889,
-        https: false,
+        port: 90,
+        https: true,
         hotOnly: false, // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#configuring-proxy
         proxy: {
             '/api': {

@@ -1,5 +1,5 @@
-import { initCPagination } from '@/views/common/CPagination'
-import { TreeSelect } from 'ant-design-vue'
+import {initCPagination} from '@/views/common/CPagination'
+import {TreeSelect} from 'ant-design-vue'
 import CButton from '@comp/c-button.vue'
 import CPopButton from '@comp/c-pop-button.vue'
 import formRules from '@/utils/formRules'
@@ -33,9 +33,9 @@ export default {
                 'crabapples-token': this.$store.getters.TOKEN,
             },
             sysUser: sessionStorage.getItem("sysUser"),
-            uploadUrl: '/api/uploadFile',
-            uploadUrlV2: '/api/file/uploadV2',
-            uploadUrlV3: '/api/file/uploadV3',
+            uploadLocal: '/api/upload/LOCAL',
+            uploadMinio: '/api/file/upload/MINIO',
+            uploadRustFs: '/api/file/upload/RUST_FS',
             show: {
                 add: false,
                 edit: false,
@@ -208,6 +208,12 @@ export default {
                 }
                 if (result.data !== null) {
                     row.children = (result.data.records || result.data)
+                    row.children.forEach(e => {
+                        console.log(e.name, e.id)
+                    })
+                    if (!row.children.length) {
+                        delete row.children
+                    }
                 }
             }).catch(function (error) {
                 console.error('出现错误:', error)

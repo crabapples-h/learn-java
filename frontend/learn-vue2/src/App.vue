@@ -1,12 +1,13 @@
 <template>
   <div id="app">
+    <fas></fas>
 <!--    <table-demo></table-demo>-->
 <!--    <design></design>-->
     <!--    <a-b></a-b>-->
     <!--    <hello-world />-->
     <!--    <org-wechat />-->
     <!--    <wechat-location />-->
-        <face-check-image />
+<!--        <face-check-image />-->
     <!--        <face-check-video />-->
     <!--    <face-check-video-file />-->
     <!--    <qr-code/>-->
@@ -29,6 +30,7 @@
   </div>
 </template>
 <script>
+import Fas from '@/views/fas.vue'
 import HelloWorld from '@/hello-world.vue'
 import QrCode from '@/views/canvas-poster/qrcode.vue'
 import QrCodeList from '@/views/canvas-poster/qrcode-list.vue'
@@ -52,6 +54,7 @@ export default {
   name: 'app',
   mixins: [],
   components: {
+    Fas,// openNds认证页面
     Design,// 表单设计器
     Render,// 表单渲染器
     HelloWorld,// 从url解析参数

@@ -95,11 +95,13 @@ module.exports = {
             logging: 'warn', // 只显示警告和错误
             overlay: false   // 完全禁用错误遮罩
         },
-        hot: true,       // 开启 HMR
-        liveReload: true, // 可选，自动刷新
+        hot: true,       // 开启热重载
+        liveReload: true, // 可选自动刷新
         host: "0.0.0.0",
         port: 8080,
         https: false,
+        compress: false, // 禁用压缩,开启压缩会导致流式传输失效,如sse,websocket
+        // webSocketServer: false, // 禁用开发服务器的 WebSocket
         proxy: {
             '/websocket': {
                 target: 'http://localhost:9093/', // 接口的域名

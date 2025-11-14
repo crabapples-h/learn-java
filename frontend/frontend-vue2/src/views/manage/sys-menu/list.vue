@@ -12,7 +12,7 @@
     </a-form>
     <a-divider/>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination"
-             :scroll="{x:true}" bordered @expand="onExpand">
+             :scroll="{x:true}" bordered @expand="onExpand" >
       <span slot="action" slot-scope="text, record">
         <a-space align="center" style="flex-wrap: wrap">
         <c-pop-button title="确定要删除吗" text="删除" type="danger" @click="remove(record)" v-auth:sys:menus:del/>
@@ -100,7 +100,7 @@ export default {
         list: SysApis.menuListPage,
         remove: SysApis.delMenus,
         childList: SysApis.childMenuList,
-      }
+      },
     }
   },
   activated() {
@@ -116,23 +116,41 @@ export default {
           return
         }
         if (result.data !== null) {
-          // let format = function (data) {
-          //   return data.map(e => {
-          //     if (e.children && e.children.length > 0) {
-          //       e.children = format(e.children)
-          //     } else {
-          //       delete e.children;
-          //     }
-          //     return e
-          //   }).sort((a, b) => {
-          //     return a.sort - b.sort
-          //   })
-          // }
-          // this.dataSource = format(result.data.records)
           this.dataSource = result.data.records
           this.pagination.total = result.data.total || result.data.totalRow
           this.pagination.current = result.data.current || result.data.pageNumber
           this.pagination.pageSize = result.data.size || result.data.pageSize
+          this.dataSource.forEach(e => {
+            if (!e.hasChildren) {
+              delete e.children
+            }
+          })
+        }
+      }).catch(function (error) {
+        console.error('出现错误:', error)
+      })
+    },
+    onExpand(expanded, row) {
+      if (!expanded) {
+        row.children = []
+        return
+      }
+      let config = {params: {pid: row.id}}
+      this.$http.get(this.url.childList, config).then(result => {
+        if (result.status !== 200) {
+          this.$message.error(result.message)
+          return
+        }
+        if (result.data !== null) {
+          row.children = (result.data.records || result.data)
+          row.children.forEach(e => {
+            if (!e.hasChildren) {
+              delete e.children
+            }
+          })
+          if (!row.children.length) {
+            delete row.children
+          }
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

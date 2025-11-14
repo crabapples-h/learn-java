@@ -1,9 +1,11 @@
 package cn.crabapples.system.sysFile.strategy;
 
-import cn.crabapples.common.minio.MinioUtils;
+import cn.crabapples.minio.config.MinioConfigProperties;
+import cn.crabapples.minio.service.MinioService;
 import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.entity.FileInfo;
 import cn.crabapples.system.sysFile.service.FileInfoService;
+import cn.crabapples.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Component("upload_minio")
@@ -25,10 +28,10 @@ public class UploadMinioStrategy implements UploadFileStrategy {
     @Resource
     private FileInfoService fileInfoService;
 
-    private final MinioUtils minioUtils;
+    private final MinioService service;
 
-    public UploadMinioStrategy(MinioUtils minioUtils) {
-        this.minioUtils = minioUtils;
+    public UploadMinioStrategy(MinioService service) {
+        this.service = service;
     }
 
 
@@ -46,40 +49,39 @@ public class UploadMinioStrategy implements UploadFileStrategy {
             String contentType = part.getContentType();
             try {
                 InputStream inputStream = part.getInputStream();
-                String fullPath = minioUtils.upload(null, inputStream, fileName);
-                String urlPrefix = fullPath.substring(0, fullPath.indexOf("/"));
-                String bucketName = fullPath.substring(urlPrefix.length() + 1, fullPath.indexOf("/", urlPrefix.length() + 1));
-                String uploadFileName = fullPath.substring(urlPrefix.length() + 1 + bucketName.length() + 1);
+                String randomFileName = StringUtils.genRandomFileName(fileName);
+                service.uploadFile(randomFileName, inputStream);
+                MinioConfigProperties config = service.getConfig();
+                String fullPath = config.getBucketName() + "/" + randomFileName;
                 return new FileInfo()
-                        .setVirtualPath(uploadFileName)
+                        .setVirtualPath(fullPath)
                         .setContentType(contentType)
                         .setFileSize(part.getSize())
                         .setOldName(fileName)
-                        .setUploadPath(fullPath)
                         .setSaveType(UPLOAD_TYPE.MINIO.type);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }).collect(Collectors.toList());
         String url = fileInfoService.saveFileInfo(list).stream()
-                .map(e -> UPLOAD_TYPE.MINIO + "/" + e.getVirtualPath())
+                .map(e -> "/api/file/download/" + UPLOAD_TYPE.MINIO + "/" + e.getVirtualPath())
                 .collect(Collectors.joining(","));
         log.info("文件上传完成url:[{}]", url);
         return url;
     }
 
     @Override
-    public void download(String fileName, OutputStream outputStream) {
-        minioUtils.download(fileName, outputStream);
+    public void download(String bucket, String fileName, OutputStream outputStream) {
+        service.downloadAsStream(bucket, fileName, outputStream);
     }
 
     @Override
-    public String share(String fileName) {
-        return minioUtils.share(fileName);
+    public String share(String bucket, String fileName) {
+        return service.createTempDownloadUrl(bucket, fileName, 1, TimeUnit.HOURS);
     }
 
     @Override
     public void remove(String fileName) {
-        minioUtils.remove(fileName);
+        service.remove(fileName);
     }
 }

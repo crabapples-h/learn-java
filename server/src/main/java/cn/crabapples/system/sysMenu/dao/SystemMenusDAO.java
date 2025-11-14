@@ -4,12 +4,15 @@ import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.sysMenu.dao.mybatis.mapper.MenusMapper;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
+import com.mybatisflex.core.field.FieldQueryBuilder;
+import com.mybatisflex.core.field.QueryBuilder;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * TODO 系统菜单DAO
@@ -24,7 +27,9 @@ import java.util.List;
 public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
     public List<SysMenu> getChildList(String pid) {
-        return mapper.selectListByQuery(new QueryWrapper().eq(SysMenu::getPid, pid));
+        return mapper.findMenusList(pid);
+
+//        return mapper.selectListByQuery(new QueryWrapper().eq(SysMenu::getPid, pid));
     }
 
     public boolean remove(String id) {
@@ -58,7 +63,11 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 
 
     public Page<SysMenu> getMenuListPage(Page<SysMenu> page, MenusForm form) {
-        return mapper.paginate(page, QueryWrapper.create()
-                .isNull(SysMenu::getPid).orderBy(SysMenu::getSort, true));
+//        return mapper.paginate(page, QueryWrapper.create()
+//                .isNull(SysMenu::getPid)
+//                .leftJoin(SysMenu.class).as("child")
+//                .on(SysMenu::getId, SysMenu::getPid)
+//                .orderBy(SysMenu::getSort, true));
+        return mapper.xmlPaginate("findMenusListPage", page, QueryWrapper.create());
     }
 }

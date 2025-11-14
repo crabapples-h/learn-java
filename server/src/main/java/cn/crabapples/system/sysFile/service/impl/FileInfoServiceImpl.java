@@ -1,7 +1,6 @@
 package cn.crabapples.system.sysFile.service.impl;
 
 import cn.crabapples.common.base.ApplicationException;
-import cn.crabapples.common.minio.MinioUtils;
 import cn.crabapples.system.sysFile.UPLOAD_TYPE;
 import cn.crabapples.system.sysFile.dao.FileInfoDAO;
 import cn.crabapples.system.sysFile.entity.FileInfo;
@@ -28,7 +27,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 
     private final FileInfoDAO fileInfoDAO;
 
-    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO, MinioUtils minioUtils) {
+    public FileInfoServiceImpl(FileInfoDAO fileInfoDAO) {
         this.fileInfoDAO = fileInfoDAO;
     }
 
@@ -52,24 +51,24 @@ public class FileInfoServiceImpl implements FileInfoService {
 
 
     @Override
-    public void download(String fileName, HttpServletResponse response, UPLOAD_TYPE type) {
+    public void download(String bucket, String fileName, HttpServletResponse response, UPLOAD_TYPE type) {
         try {
             UploadFileStrategy strategy = strategyFactory.getBean(type);
-            strategy.download(fileName, response.getOutputStream());
+            strategy.download(bucket, fileName, response.getOutputStream());
         } catch (IOException e) {
             throw new ApplicationException("文件获取失败", e);
         }
     }
 
     @Override
-    public String share(String fileName, UPLOAD_TYPE type) {
+    public String share( String bucket,String fileName, UPLOAD_TYPE type) {
         UploadFileStrategy strategy = strategyFactory.getBean(type);
-        return strategy.share(fileName);
+        return strategy.share(bucket,fileName);
     }
 
     @Override
     public void remove(String fileName, UPLOAD_TYPE type) {
         UploadFileStrategy strategy = strategyFactory.getBean(type);
-         strategy.remove(fileName);
+        strategy.remove(fileName);
     }
 }

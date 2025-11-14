@@ -1,10 +1,10 @@
-server.port: 9092
+server.port: 9093
 spring.application.name: api-gateway
+#spring.config.import: nacos:consumer-01.yaml
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
-#spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
 spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
-spring.cloud.nacos.discovery.group: hq
+#spring.cloud.nacos.discovery.group: hq
 # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
 spring.cloud.nacos.discovery.service: api-gateway
 # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务

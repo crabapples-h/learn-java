@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/ws/v1/{id}", configurator = EndPointConfigure.class)
+@ServerEndpoint(value = "/websocket/v1/{id}", configurator = EndPointConfigure.class)
 public class WebSocketServerSimple {
 
     public static final ConcurrentHashMap<String, Session> WEB_SOCKET_CLIENT = new ConcurrentHashMap<>(16);

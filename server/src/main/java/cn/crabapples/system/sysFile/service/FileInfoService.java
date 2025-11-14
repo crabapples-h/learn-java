@@ -37,9 +37,9 @@ public interface FileInfoService {
 
     String upload(HttpServletRequest request, UPLOAD_TYPE func);
 
-    void download(String fileName, HttpServletResponse response, UPLOAD_TYPE type);
+    void download(String bucket,String fileName, HttpServletResponse response, UPLOAD_TYPE type);
 
-    String share(String fileName, UPLOAD_TYPE type);
+    String share( String bucket,String fileName, UPLOAD_TYPE type);
 
     void remove(String fileName, UPLOAD_TYPE type);
 }

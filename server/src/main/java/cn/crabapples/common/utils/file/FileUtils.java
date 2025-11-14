@@ -7,6 +7,8 @@ import cn.hutool.core.lang.Snowflake;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.nio.channels.Channel;
+import java.nio.channels.Channels;
 import java.nio.file.Files;
 
 @Slf4j
@@ -78,6 +80,36 @@ public class FileUtils {
         fileInfo.setContentType(contentType);
         fileInfo.setSaveType(UPLOAD_TYPE.LOCAL.type);
         return fileInfo;
+    }
+
+    /**
+     * NIO写入文件
+     *
+     * @param is   读取的文件流
+     * @param file 需要保存到的文件
+     * @return 文件大小
+     * @throws IOException 文件IO异常
+     */
+    private static long writeFileV2(InputStream is, File file) throws IOException {
+        log.debug("开始写入文件");
+        BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                log.error("文件写入失败,文件创建失败");
+                throw new ApplicationException("文件写入失败");
+            }
+        }
+        BufferedInputStream bis = new BufferedInputStream(is);
+        byte[] data = new byte[1024];
+        long size = 0;
+        for (int i = bis.read(data); i != -1; i = bis.read(data)) {
+            bos.write(data, 0, i);
+            size += i;
+        }
+        bos.flush();
+        bos.close();
+        log.debug("文件写入完成");
+        return size;
     }
 
     /**
