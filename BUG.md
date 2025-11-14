@@ -3,3 +3,4 @@
 3. 登陆超时时刷新页面会报错
 4. mybatis-flex使用xml查询时不方便,后续考虑使用mybatis-plus
 5. 研究mybatis-plus拦截器做自定义脱敏
+6. 引入nacos2.5版本后存在jdk兼容性问题

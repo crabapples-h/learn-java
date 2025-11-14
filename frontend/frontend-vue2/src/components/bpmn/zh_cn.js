@@ -103,6 +103,12 @@ export default {
     'Format': '格式',
     'External resource': '外部资源',
     'Inline script': '内联脚本',
-    'Result variable': '结果变量'
+    'Result variable': '结果变量',
+
+    'Form key': '表单键',
+    'Local variable name': '局部变量名',
+    'Assignment type': '赋值类型',
+    'List': '列表',
+    'Map': '映射'
 
 };

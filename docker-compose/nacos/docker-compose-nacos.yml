@@ -17,16 +17,25 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.2
     container_name: nacos_8849
-    image: harbor.crabapples.cn/nacos/nacos-server:latest
+#    image: 192.168.31.60/nacos/nacos-server:latest
+    image: nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8849:8848"
+      - "9849:9848"
     environment:
+      #     NACOS_AUTH_TOKEN: Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
+      #     NACOS_AUTH_IDENTITY_KEY: Nacos Server端之间 Inner API的身份标识的Key，必填。
+      #     NACOS_AUTH_IDENTITY_VALUE: Nacos Server端之间 Inner API的身份标识的Value，必填。
+      NACOS_AUTH_ENABLE: true
+      NACOS_AUTH_TOKEN: bXJDYUJrM3ZqVldLaGYyemV2T0F5SFo2Y0wyNGJVUW4=
+      NACOS_AUTH_IDENTITY_KEY: custom_server_identity_key
+      NACOS_AUTH_IDENTITY_VALUE: custom_server_identity_value
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_HOST: nps.crabapples.cn
-      MYSQL_SERVICE_PORT: 30001
+      MYSQL_SERVICE_HOST: 192.168.31.60
+      MYSQL_SERVICE_PORT: 3307
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -42,16 +51,25 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.3
     container_name: nacos_8850
-    image: harbor.crabapples.cn/nacos/nacos-server:latest
+#    image: 192.168.31.60/nacos/nacos-server:latest
+    image: nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8850:8848"
+      - "9850:9848"
     environment:
+      #     NACOS_AUTH_TOKEN: Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
+      #     NACOS_AUTH_IDENTITY_KEY: Nacos Server端之间 Inner API的身份标识的Key，必填。
+      #     NACOS_AUTH_IDENTITY_VALUE: Nacos Server端之间 Inner API的身份标识的Value，必填。
+      NACOS_AUTH_ENABLE: true
+      NACOS_AUTH_TOKEN: bXJDYUJrM3ZqVldLaGYyemV2T0F5SFo2Y0wyNGJVUW4=
+      NACOS_AUTH_IDENTITY_KEY: custom_server_identity_key
+      NACOS_AUTH_IDENTITY_VALUE: custom_server_identity_value
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_HOST: nps.crabapples.cn
-      MYSQL_SERVICE_PORT: 30001
+      MYSQL_SERVICE_HOST: 192.168.31.60
+      MYSQL_SERVICE_PORT: 3307
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -67,16 +85,25 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.4
     container_name: nacos_8851
-    image: harbor.crabapples.cn/nacos/nacos-server:latest
+#    image: 192.168.31.60/nacos/nacos-server:latest
+    image: nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8851:8848"
+      - "9851:9848"
     environment:
+#     NACOS_AUTH_TOKEN: Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
+#     NACOS_AUTH_IDENTITY_KEY: Nacos Server端之间 Inner API的身份标识的Key，必填。
+#     NACOS_AUTH_IDENTITY_VALUE: Nacos Server端之间 Inner API的身份标识的Value，必填。
+      NACOS_AUTH_ENABLE: true
+      NACOS_AUTH_TOKEN: bXJDYUJrM3ZqVldLaGYyemV2T0F5SFo2Y0wyNGJVUW4=
+      NACOS_AUTH_IDENTITY_KEY: custom_server_identity_key
+      NACOS_AUTH_IDENTITY_VALUE: custom_server_identity_value
       SPRING_DATASOURCE_PLATFORM: mysql
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
-      MYSQL_SERVICE_HOST: nps.crabapples.cn
-      MYSQL_SERVICE_PORT: 30001
+      MYSQL_SERVICE_HOST: 192.168.31.60
+      MYSQL_SERVICE_PORT: 3307
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
