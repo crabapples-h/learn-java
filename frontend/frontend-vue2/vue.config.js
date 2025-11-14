@@ -91,6 +91,10 @@ module.exports = {
         }
     },
     devServer: {
+        client: {
+            logging: 'warn', // 只显示警告和错误
+            overlay: false   // 完全禁用错误遮罩
+        },
         hot: true,       // 开启 HMR
         liveReload: true, // 可选，自动刷新
         host: "0.0.0.0",

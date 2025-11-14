@@ -27,8 +27,6 @@
           <a-divider/>
           <a-space>
             <a-button @click="handleOpenFile">打开文件</a-button>
-            <a-button @click="handleDownloadXML">下载 BPMN</a-button>
-            <a-button @click="handleDownloadSVG">下载 SVG</a-button>
           </a-space>
         </a-form-model>
       </div>
@@ -53,8 +51,8 @@ import 'bpmn-js-properties-panel/dist/assets/element-templates.css'
 
 import BpmnJS from 'bpmn-js/lib/Modeler';
 import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
-import activitiModdle from "./activiti";
-import activitiDescriptor from "./activitiDescriptor.json";
+import customModule from './custom/CustomModule';
+import activitiModdle from './custom/custom.json';
 
 export default {
   name: 'c-bpmn-design',
@@ -115,14 +113,14 @@ export default {
           BpmnPropertiesPanelModule,
           BpmnPropertiesProviderModule,
           customTranslateModule,
-          activitiModdle
+          customModule
         ],
         moddleExtensions: {
-          activiti: activitiDescriptor
+          activiti: activitiModdle
         },
       });
       this.bindEvents();
-      this.loadDiagram(this.initialDiagramXML);
+      await this.loadDiagram(this.initialDiagramXML);
     },
     updateElementId(element, key, value) {
       console.log('更新数据-->', element, key, value)
@@ -165,7 +163,6 @@ export default {
           this.$set(this.form, 'processId', businessObject.id);
           this.$set(this.form, 'processName', businessObject.name);
           console.log('BPMN导入成功!', businessObject);
-
         }
       };
       // 2. 元素点击事件
@@ -245,29 +242,15 @@ export default {
         reader.readAsText(file);
       }
     },
-    // 导出 BPMN (XML 格式)
-    async handleDownloadXML() {
-      try {
-        const {xml} = await this.bpmnModeler.saveXML({format: true});
-        this.downloadFile('diagram.bpmn', xml, 'application/xml');
-      } catch (err) {
-        console.error('导出 BPMN 失败:', err);
-      }
-    },
-    // 导出 SVG 图像
-    async handleDownloadSVG() {
-      try {
-        const {svg} = await this.bpmnModeler.saveSVG();
-        this.downloadFile('diagram.svg', svg, 'image/svg+xml');
-      } catch (err) {
-        console.error('导出 SVG 失败:', err);
-      }
-    },
   },
 
 }
 </script>
 <style scoped lang="less">
+.bpmn-icon-triangle {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,0 100,100 0,100" fill="gold"/></svg>');
+}
+
 /* 容器样式 */
 .bpmn-container {
   display: flex;

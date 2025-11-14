@@ -1,0 +1,12 @@
+{
+  "name": "Activiti",
+  "uri": "http://activiti.org/bpmn",
+  "prefix": "activiti",
+  "types": [
+    {
+      "name": "TriangleTask",
+      "superClass": ["bpmn:Task"],
+      "properties": []
+    }
+  ]
+}
