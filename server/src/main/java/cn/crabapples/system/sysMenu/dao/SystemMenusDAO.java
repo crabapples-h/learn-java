@@ -4,11 +4,11 @@ import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.sysMenu.dao.mybatis.mapper.MenusMapper;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
-import com.mybatisflex.core.field.FieldQueryBuilder;
-import com.mybatisflex.core.field.QueryBuilder;
-import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import cn.crabapples.system.sysRole.entity.SysRole;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,27 +25,25 @@ import java.util.function.Consumer;
  */
 @Component
 public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
-
     public List<SysMenu> getChildList(String pid) {
-        return mapper.findMenusList(pid);
-
+        return baseMapper.findMenusList(pid);
 //        return mapper.selectListByQuery(new QueryWrapper().eq(SysMenu::getPid, pid));
     }
 
     public boolean remove(String id) {
-        return mapper.deleteById(id) > 0;
+        return baseMapper.deleteById(id) > 0;
     }
 
     public List<SysMenu> findButtonsByIds(List<String> ids) {
-        QueryWrapper wrapper = QueryWrapper.create(SysMenu.class);
-        wrapper.in(SysMenu::getId, ids)
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>(SysMenu.class)
+                .in(SysMenu::getId, ids)
                 .eq(SysMenu::getMenusType, DIC.MENUS_TYPE_BUTTON);
         return list(wrapper);
     }
 
     // 查询用户的菜单列表
     public List<SysMenu> getUserMenus(String id) {
-        return mapper.getUserMenus(id);
+        return baseMapper.getUserMenus(id);
     }
 
     /**
@@ -54,11 +52,11 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
      * @return 菜单树
      */
     public List<SysMenu> findMenusTreeList() {
-        return mapper.findMenusTree(null);
+        return baseMapper.findMenusTree(null);
     }
 
     public Page<SysMenu> getMenuTreePage(Page<SysMenu> page) {
-        return mapper.xmlPaginate("findMenusTreePage", page, QueryWrapper.create());
+        return baseMapper.findMenusTreePage(page, null);
     }
 
 
@@ -68,6 +66,6 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
 //                .leftJoin(SysMenu.class).as("child")
 //                .on(SysMenu::getId, SysMenu::getPid)
 //                .orderBy(SysMenu::getSort, true));
-        return mapper.xmlPaginate("findMenusListPage", page, QueryWrapper.create());
+        return baseMapper.findMenusListPage(page);
     }
 }

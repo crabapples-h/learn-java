@@ -1,12 +1,14 @@
-package cn.crabapples.common.dic;
+package cn.crabapples.common.aspect;
 
 import cn.crabapples.common.base.ResponseDTO;
+import cn.crabapples.common.annotation.Dict;
+import cn.crabapples.common.annotation.IgnoreDict;
 import cn.crabapples.common.utils.ReflectUtils;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.service.impl.SystemDictServiceImpl;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONWriter;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -56,8 +57,8 @@ public class DictAspect {
      * 定义切点Pointcut
      */
     @Pointcut("execution(public * cn.crabapples.*.*.controller.*.*(..)) || " +
-            "@annotation(cn.crabapples.common.dic.EnableDict)")
-//    @Pointcut("@annotation(cn.crabapples.common.dic.EnableDict)")
+            "@annotation(cn.crabapples.common.annotation.EnableDict)")
+//    @Pointcut("@annotation(cn.crabapples.common.annotation.EnableDict)")
     public void dictService() {
     }
 

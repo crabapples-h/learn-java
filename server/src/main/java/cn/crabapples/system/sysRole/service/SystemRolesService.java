@@ -4,7 +4,7 @@ import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 

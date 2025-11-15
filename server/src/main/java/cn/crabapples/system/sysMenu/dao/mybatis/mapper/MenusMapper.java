@@ -1,8 +1,8 @@
 package cn.crabapples.system.sysMenu.dao.mybatis.mapper;
 
 import cn.crabapples.system.sysMenu.entity.SysMenu;
-import com.mybatisflex.core.BaseMapper;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

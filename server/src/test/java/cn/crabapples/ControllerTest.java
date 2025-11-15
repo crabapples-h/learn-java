@@ -3,7 +3,7 @@
 //import cn.crabapples.common.Groups;
 //import cn.crabapples.common.base.BaseController;
 //import cn.crabapples.common.config.ApplicationConfigure;
-//import cn.crabapples.common.jwt.JwtIgnore;
+//import cn.crabapples.common.annotation.JwtIgnore;
 //import cn.crabapples.system.websocket.entity.WebsocketMessage;
 //import cn.crabapples.system.websocket.service.MessageService;
 //import cn.crabapples.test.form.DemoPostForm1;

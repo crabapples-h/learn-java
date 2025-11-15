@@ -2,14 +2,14 @@ package cn.crabapples.system.sysUser.controller;
 
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
-import cn.crabapples.common.dic.EnableDict;
+import cn.crabapples.common.annotation.EnableDict;
 import cn.crabapples.common.utils.Groups;
 import cn.crabapples.system.dto.SysUserDTO;
 import cn.crabapples.system.sysUser.form.ResetPasswordForm;
 import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

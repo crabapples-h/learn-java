@@ -12,8 +12,7 @@ import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUserRole.service.SystemUserRoleService;
 import cn.hutool.crypto.digest.MD5;
-import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.tenant.TenantManager;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -99,7 +98,7 @@ public class SystemUserServiceImpl implements SystemUserService {
             }
             entity.setPassword(encryptPassword(newPassword));
         }
-        boolean status = entity.saveOrUpdate();
+        boolean status = entity.insertOrUpdate();
         userRoleService.saveUserRoles(entity.getId(), form.getRoleList());
         return status;
     }
@@ -179,7 +178,8 @@ public class SystemUserServiceImpl implements SystemUserService {
     public SysUser getUserInfo() {
         String userId = jwtTokenUtils.getUserId();
 //        Object user = cacheUtils.get(userId);
-        return TenantManager.withoutTenantCondition(() -> userDAO.findById(userId));
+//        return TenantManager.withoutTenantCondition(() -> userDAO.findById(userId));
+        return userDAO.findById(userId);
     }
     //    /**
 //     * 添加或编辑用户时将填充用户拥有的角色信息

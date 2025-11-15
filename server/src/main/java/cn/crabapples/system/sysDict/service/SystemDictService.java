@@ -5,7 +5,7 @@ import cn.crabapples.system.sysDict.entity.SysDict;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.form.DictForm;
 import cn.crabapples.system.sysDict.form.DictItemForm;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;

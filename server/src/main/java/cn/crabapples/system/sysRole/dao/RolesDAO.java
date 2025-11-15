@@ -4,9 +4,10 @@ import cn.crabapples.system.dto.SysRolesDTO;
 import cn.crabapples.system.sysRole.dao.mybatis.mapper.RolesMapper;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.crabapples.system.sysRole.form.RolesForm;
-import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.query.QueryWrapper;
-import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,12 @@ import java.util.stream.Collectors;
 @Component
 public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
 
+    private LambdaQueryWrapper<SysRole> createQueryWrapper(SysRole entity) {
+        return new LambdaQueryWrapper<>(entity)
+                .like(!StringUtils.isEmpty(entity.getName()), SysRole::getName, entity.getName())
+                .like(!StringUtils.isEmpty(entity.getCode()), SysRole::getCode, entity.getCode());
+    }
+
     @Transactional
     public boolean save(SysRole entity) {
         return saveOrUpdate(entity);
@@ -33,17 +40,17 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
 
     public Page<SysRole> findAll(Integer pageIndex, Integer pageSize, RolesForm form) {
         Page<SysRole> page = Page.of(pageIndex, pageSize);
-        QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
-        return mapper.paginate(page, wrapper);
+        LambdaQueryWrapper<SysRole> wrapper = createQueryWrapper(form.toEntity());
+        return baseMapper.selectPage(page, wrapper);
     }
 
     public List<SysRole> findAll(RolesForm form) {
-        QueryWrapper wrapper = QueryWrapper.create(form.toEntity());
-        return mapper.selectListByQuery(wrapper);
+        LambdaQueryWrapper<SysRole> wrapper = createQueryWrapper(form.toEntity());
+        return baseMapper.selectList(wrapper);
     }
 
     public List<SysRole> findByIds(List<String> ids) {
-        return mapper.selectListByIds(ids);
+        return baseMapper.selectBatchIds(ids);
     }
 
 
@@ -60,6 +67,6 @@ public class RolesDAO extends ServiceImpl<RolesMapper, SysRole> {
     }
 
     public List<SysRole> getUserRoles(String id) {
-        return mapper.getUserRoles(id);
+        return baseMapper.getUserRoles(id);
     }
 }

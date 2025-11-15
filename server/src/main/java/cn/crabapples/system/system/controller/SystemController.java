@@ -2,7 +2,7 @@ package cn.crabapples.system.system.controller;
 
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
-import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.common.annotation.JwtIgnore;
 import cn.crabapples.common.utils.Groups;
 import cn.crabapples.system.dto.SysOptionDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;

@@ -1,7 +1,7 @@
 package cn.crabapples.test.controller;
 
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.common.annotation.JwtIgnore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

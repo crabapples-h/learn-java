@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     loadAreaTree() {
-      this.$http.get('/api/area/tree').then(result => {
+      this.$http.get('/system/api/area/tree').then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message);
           return;

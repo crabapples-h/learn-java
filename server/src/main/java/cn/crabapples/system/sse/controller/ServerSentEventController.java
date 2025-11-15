@@ -1,7 +1,7 @@
 package cn.crabapples.system.sse.controller;
 
-import cn.crabapples.common.dic.IgnoreDict;
-import cn.crabapples.common.jwt.JwtIgnore;
+import cn.crabapples.common.annotation.IgnoreDict;
+import cn.crabapples.common.annotation.JwtIgnore;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

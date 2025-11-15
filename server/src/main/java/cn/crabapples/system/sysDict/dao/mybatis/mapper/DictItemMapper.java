@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysDict.dao.mybatis.mapper;
 
 import cn.crabapples.system.sysDict.entity.SysDictItem;
-import com.mybatisflex.core.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

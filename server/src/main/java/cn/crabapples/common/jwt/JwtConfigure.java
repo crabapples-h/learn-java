@@ -1,4 +1,4 @@
-package cn.crabapples.common.jwt;//package cn.crabapples.common.jwt;
+package cn.crabapples.common.jwt;
 //
 //import com.alibaba.fastjson2.JSONObject;
 //import lombok.Getter;

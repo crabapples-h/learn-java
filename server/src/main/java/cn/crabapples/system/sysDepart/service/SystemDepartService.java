@@ -3,7 +3,7 @@ package cn.crabapples.system.sysDepart.service;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.sysDepart.entity.SysDepart;
 import cn.crabapples.system.sysDepart.form.DepartForm;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 

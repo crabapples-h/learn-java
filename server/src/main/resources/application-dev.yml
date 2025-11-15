@@ -1,7 +1,6 @@
 isDebug: false
 isCrypt: true
 
-dataBaseParam: 'useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true'
 ### log config ###
 logging:
   level:
@@ -21,13 +20,6 @@ spring:
           temperature: 0.7
       # The DeepSeek API doesn't support embeddings, so we need to disable it.
       embedding.enabled: false
-  #----- minio config -----
-  minio:
-    access-key: gQ6MwJZxCoPX4qoh2O80
-    secret-key: vLmlVPM1mG2cBjBu8mLXhNBpdGkRbgpBJBT9S5yz
-    url: http://172.16.8.1:9000
-    bucket-name: crabapples
-    expiry-time: 2
   #----- flyway config -----
   flyway.enabled: true
   flyway.baseline-on-migrate: true

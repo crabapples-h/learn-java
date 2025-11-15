@@ -1,7 +1,7 @@
 server.port: 9093
 spring.application.name: api-gateway
 logging.level:
-  root: debug
+  root: info
 #spring.config.import: nacos:consumer-01.yaml
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
@@ -13,7 +13,7 @@ spring.cloud.nacos.discovery.service: api-gateway
 spring.cloud.gateway.discovery.locator.enabled: true
 spring.cloud.gateway.routes:
   - id: system_api # 路由的唯一标识
-    uri: lb://api-system:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
+    uri: lb://api-system # 转发地址,lb://表示使用LoadBalanced负载均衡
     predicates: # 断言，用于路由规则匹配
       #      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
       #      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
@@ -22,7 +22,7 @@ spring.cloud.gateway.routes:
       #      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
       #      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
       - Method=GET,POST # 请求方式
-      - Path=/system/api/system/** # 请求路径为/system/api/system/开头的
+      - Path=/api/system/** # 请求路径为/api/system/开头的
       #      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
       #      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
       - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
@@ -33,6 +33,16 @@ spring.cloud.gateway.routes:
       - AddRequestHeader=name,test
       - Custom=name,test,666,777
 #      - RedirectTo=301,http://www.baidu.com
+  - id: file_upload # 路由的唯一标识
+    uri: lb://file-upload-service:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
+    predicates: # 断言，用于路由规则匹配
+      - Method=GET,POST # 请求方式
+      - Path=/api/file/** # 请求路径为/api/file/开头的
+      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
+    filters:
+      # 过滤器，转发之前去掉第一段前缀，即/system
+#      - StripPrefix=1
+      - Custom=name,test,666,777
 spring.cloud.gateway.globalcors: # 全局跨域处理
   # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
   add-to-simple-url-handler-mapping: true
@@ -40,8 +50,8 @@ spring.cloud.gateway.globalcors: # 全局跨域处理
     '[/**]': # 允许跨域访问的资源
       allowedOrigins: # 允许哪些网站的跨域请求
 #        - "http://localhost:63342"
-#        - "http://localhost:8080"
-        - "*"
+        - "http://localhost:8080"
+#        - "*"
       allowedMethods: # 允许的跨域的请求方式
         - "GET"
         - "POST"

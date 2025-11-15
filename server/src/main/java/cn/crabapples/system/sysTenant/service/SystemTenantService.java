@@ -3,7 +3,7 @@ package cn.crabapples.system.sysTenant.service;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.sysTenant.entity.SysTenant;
 import cn.crabapples.system.sysTenant.form.TenantForm;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 

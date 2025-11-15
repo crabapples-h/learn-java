@@ -4,7 +4,7 @@ import cn.crabapples.system.sysDepart.dao.DepartDAO;
 import cn.crabapples.system.sysDepart.entity.SysDepart;
 import cn.crabapples.system.sysDepart.form.DepartForm;
 import cn.crabapples.system.sysDepart.service.SystemDepartService;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package cn.crabapples.oss;
+package cn.crabapples.upload.oss;
 
 import cn.crabapples.s3.service.S3Service;
 import org.junit.Test;

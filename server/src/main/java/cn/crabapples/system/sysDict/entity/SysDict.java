@@ -1,35 +1,31 @@
 package cn.crabapples.system.sysDict.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
-import cn.crabapples.common.mybatis.flex.OnInsertListener;
-import cn.crabapples.common.mybatis.flex.OnUpdateListener;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.core.keygen.KeyGenerators;
+import cn.crabapples.common.annotation.Dict;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 
 
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-@Table(value = "sys_dict", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
+@TableName(value = "sys_dict")
 @ToString
 @Data(staticConstructor = "create")
 @Accessors(chain = true)
 public class SysDict extends BaseEntity<SysDict> {
     // id 为自增主键
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Id
     private String id;
     private Integer sort;
     private String code;
     private String name;
 
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
+    @TableLogic(delval = "1", value = "0")
     @Dict(dictCode = "delFlag")
     private Integer delFlag;
 

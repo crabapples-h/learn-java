@@ -1,19 +1,15 @@
 package cn.crabapples.system.sysMenu.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.mybatis.flex.OnInsertListener;
-import cn.crabapples.common.mybatis.flex.OnUpdateListener;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.core.keygen.KeyGenerators;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,12 +22,13 @@ import java.util.List;
  * qq 294046317
  * pc-name root
  */
-@Table(value = "sys_menu", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
+//@Table(value = "sys_menu", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
+@TableName(value = "sys_menu")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @Data(staticConstructor = "create")
 public class SysMenu extends BaseEntity<SysMenu> {
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Id
     private String id;
     private String pid;
     private Integer sort; // 排序
@@ -43,16 +40,16 @@ public class SysMenu extends BaseEntity<SysMenu> {
     private String filePath; // VUE文件存放路径
     private String permission; // 授权标识
 
-    @Column(ignore = true)
+    @TableField(exist = false)
     private boolean hasChildren; // 是否有子菜单
 
-    @Column(ignore = true)
+    @TableField(exist = false)
     private List<SysMenu> children = Collections.EMPTY_LIST;
 
     private Integer showFlag;
 
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
+    @TableLogic
     @JSONField(serialize = false)
     private Integer delFlag;
 }

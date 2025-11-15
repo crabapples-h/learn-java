@@ -24,11 +24,10 @@ mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/
 # mybatis-flex
 mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # nacos配置
-nacos.config.server-addr: @nacos.server-addr@
 spring.application.name: api-system
-#spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
 #spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
 spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
+spring.cloud.nacos.server-addr: @nacos.server-addr@
 #spring.cloud.nacos.discovery.group: hq
 
 #spring.cloud.nacos.discovery.username: ''
@@ -43,5 +42,4 @@ logging.file.name: logs/springboot-jwt/
 
 spring.cloud.sentinel.transport.dashboard: 127.0.0.1:8858
 spring.cloud.sentinel.log.dir: ./logs/csp
-
 

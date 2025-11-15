@@ -1,14 +1,11 @@
 package cn.crabapples.system.dto;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
+import cn.crabapples.common.annotation.Dict;
 import cn.crabapples.system.sysUser.entity.SysUser;
-import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import java.time.LocalDateTime;
 
 /**
  * TODO 用户基本信息DTO

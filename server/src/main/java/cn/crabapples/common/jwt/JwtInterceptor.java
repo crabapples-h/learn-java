@@ -1,5 +1,6 @@
 package cn.crabapples.common.jwt;
 
+import cn.crabapples.common.annotation.JwtIgnore;
 import cn.crabapples.common.base.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +38,7 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 忽略带JwtIgnore注解的请求, 不做后续token认证校验
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-            JwtIgnore jwtIgnore = handlerMethod.getMethodAnnotation(JwtIgnore.class);
+            cn.crabapples.common.annotation.JwtIgnore jwtIgnore = handlerMethod.getMethodAnnotation(JwtIgnore.class);
             if (jwtIgnore != null) {
                 return true;
             }

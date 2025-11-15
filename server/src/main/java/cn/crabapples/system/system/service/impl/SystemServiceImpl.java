@@ -15,7 +15,6 @@ import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.system.service.SystemService;
 import cn.hutool.crypto.digest.MD5;
-import com.mybatisflex.core.tenant.TenantManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -84,7 +83,8 @@ public class SystemServiceImpl implements SystemService {
             password = MD5.create().digestHex(form.getPassword().getBytes(StandardCharsets.UTF_8));
         }
         log.info("开始登录->用户名:[{}],密码:[{}]", username, password);
-        SysUser sysUser = TenantManager.withoutTenantCondition(() -> userService.findByUsername(username));
+//        SysUser sysUser = TenantManager.withoutTenantCondition(() -> userService.findByUsername(username));
+        SysUser sysUser = userService.findByUsername(username);
         AssertUtils.notNull(sysUser, "用户名不存在");
         if (sysUser.getStatus() == DIC.USER_LOCK) {
             throw new ApplicationException("账户已被锁定，请联系管理员");

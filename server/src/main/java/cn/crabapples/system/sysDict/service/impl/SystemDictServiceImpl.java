@@ -7,9 +7,10 @@ import cn.crabapples.system.sysDict.entity.SysDictItem;
 import cn.crabapples.system.sysDict.form.DictForm;
 import cn.crabapples.system.sysDict.form.DictItemForm;
 import cn.crabapples.system.sysDict.service.SystemDictService;
-import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,12 @@ import java.util.List;
 public class SystemDictServiceImpl implements SystemDictService {
     private final DictDAO dictDAO;
     private final DictItemDAO dictItemDAO;
+
+    private LambdaQueryWrapper<SysDictItem> createQueryWrapper(SysDictItem entity) {
+        return new LambdaQueryWrapper<>(entity)
+                .like(!StringUtils.isEmpty(entity.getText()), SysDictItem::getText, entity.getText())
+                .like(!StringUtils.isEmpty(entity.getValue()), SysDictItem::getValue, entity.getValue());
+    }
 
     public SystemDictServiceImpl(DictDAO dictDAO, DictItemDAO dictItemDAO) {
         this.dictDAO = dictDAO;
@@ -43,13 +50,13 @@ public class SystemDictServiceImpl implements SystemDictService {
 
     @Override
     public boolean saveDictItem(DictItemForm form) {
-        return form.toEntity().saveOrUpdate();
+        return form.toEntity().insertOrUpdate();
     }
 
     @Override
     public List<SysDictItem> getDictItemListByCode(String code) {
         SysDictItem sysDictItem = SysDictItem.create().setDictCode(code);
-        return dictItemDAO.list(QueryWrapper.create(sysDictItem));
+        return dictItemDAO.list(createQueryWrapper(sysDictItem));
     }
 
     @Override

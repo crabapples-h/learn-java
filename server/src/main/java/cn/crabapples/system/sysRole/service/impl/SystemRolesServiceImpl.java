@@ -10,7 +10,7 @@ import cn.crabapples.system.sysRole.service.SystemRolesService;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.service.SystemUserService;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -94,7 +94,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     public boolean saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
         SysRole entity = form.toEntity();
-        boolean status = entity.saveOrUpdate();
+        boolean status = entity.insertOrUpdate();
         roleMenusService.saveRoleMenus(entity.getId(), form.getMenuList());
         return status;
     }

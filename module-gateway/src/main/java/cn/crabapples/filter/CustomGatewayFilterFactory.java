@@ -2,6 +2,7 @@ package cn.crabapples.filter;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -65,12 +66,12 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
     @Validated
     @Getter
     @Setter
+    @ToString
     public static class Config {
         private String name;
         private String value;
         private String test;
         private String test2;
-
     }
 
 }

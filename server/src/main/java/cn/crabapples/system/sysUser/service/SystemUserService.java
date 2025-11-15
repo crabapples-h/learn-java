@@ -6,7 +6,7 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.ResetPasswordForm;
 import cn.crabapples.system.sysUser.form.UpdatePasswordForm;
 import cn.crabapples.system.sysUser.form.UserForm;
-import com.mybatisflex.core.paginate.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 

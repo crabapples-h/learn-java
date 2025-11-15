@@ -1,19 +1,19 @@
 package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
-import cn.crabapples.common.mybatis.flex.OnInsertListener;
-import cn.crabapples.common.mybatis.flex.OnUpdateListener;
+import cn.crabapples.common.annotation.Dict;
 import cn.crabapples.common.mybatis.plugins.CMask;
 import cn.crabapples.common.mybatis.plugins.CMaskEnum;
 import cn.crabapples.system.sysRole.entity.SysRole;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.mybatisflex.annotation.*;
-import com.mybatisflex.core.keygen.KeyGenerators;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,11 +30,11 @@ import java.util.stream.Collectors;
  * pc-name 29404
  */
 @Accessors(chain = true)
-@Table(value = "sys_user", onInsert = OnInsertListener.class, onUpdate = OnUpdateListener.class)
+@TableName(value = "sys_user")
 @Data(staticConstructor = "create")
 @EqualsAndHashCode(callSuper = true)
 public class SysUser extends BaseEntity<SysUser> {
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Id
     private String id;
     private String username; // 用户名
     private String password; // 密码
@@ -48,12 +48,12 @@ public class SysUser extends BaseEntity<SysUser> {
     @Dict(dictCode = "gender")
     private Integer gender; // 性别
 
-    @Column(ignore = true)
+    @TableField(exist = false)
     private List<String> roleList;
 
-    @RelationOneToMany(joinTable = "sys_user_roles",
-            joinSelfColumn = "user_id", joinTargetColumn = "role_id",
-            selfField = "id", targetField = "id")
+//    @RelationOneToMany(joinTable = "sys_user_roles",
+//            joinSelfColumn = "user_id", joinTargetColumn = "role_id",
+//            selfField = "id", targetField = "id")
     @JSONField(serialize = false)
     private List<SysRole> roleListObj;
 
@@ -61,7 +61,7 @@ public class SysUser extends BaseEntity<SysUser> {
     private Integer status;
 
     // 删除标记 (0:正常 1:删除)
-    @Column(isLogicDelete = true)
+    @TableLogic(delval = "1", value = "0")
     private Integer delFlag;
 
     // 租户, 多个用逗号隔开
