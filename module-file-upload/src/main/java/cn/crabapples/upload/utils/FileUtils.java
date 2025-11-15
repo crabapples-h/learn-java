@@ -1,14 +1,12 @@
-package cn.crabapples.common.utils.file;
+package cn.crabapples.upload.utils;
 
 import cn.crabapples.common.base.ApplicationException;
-import cn.crabapples.system.sysFile.UPLOAD_TYPE;
-import cn.crabapples.system.sysFile.entity.FileInfo;
+import cn.crabapples.upload.strategy.UPLOAD_TYPE_ENUM;
+import cn.crabapples.upload.entity.FileInfo;
 import cn.hutool.core.lang.Snowflake;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
-import java.nio.channels.Channel;
-import java.nio.channels.Channels;
 import java.nio.file.Files;
 
 @Slf4j
@@ -78,7 +76,7 @@ public class FileUtils {
         fileInfo.setUploadPath(uploadPath);
         fileInfo.setFileSize(fileSize);
         fileInfo.setContentType(contentType);
-        fileInfo.setSaveType(UPLOAD_TYPE.LOCAL.type);
+        fileInfo.setSaveType(UPLOAD_TYPE_ENUM.LOCAL.type);
         return fileInfo;
     }
 
