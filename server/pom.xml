@@ -26,11 +26,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-            <version>1.0.0-M5</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.ai</groupId>-->
+        <!--            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>-->
+        <!--            <version>1.0.0-M5</version>-->
+        <!--        </dependency>-->
         <!-- 矩阵运算工具包 -->
         <dependency>
             <groupId>org.ejml</groupId>
@@ -50,22 +50,29 @@
 <!--            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>-->
 <!--        </dependency>-->
         <!-- nacos服务注册发现 -->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--            <version>2023.0.3.2</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>cn.crabapples</groupId>
-            <artifactId>turing-api</artifactId>
-            <version>1.0.4</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>${flyway-core.version}</version>
-        </dependency>
+        <!--nacos config-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.boot</groupId>-->
+<!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
+<!--            <version>${nacos-config-spring-boot-starter.version}</version>-->
+<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>cn.crabapples</groupId>-->
+        <!--            <artifactId>turing-api</artifactId>-->
+        <!--            <version>1.0.4</version>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.flywaydb</groupId>-->
+        <!--            <artifactId>flyway-core</artifactId>-->
+        <!--            <version>${flyway-core.version}</version>-->
+        <!--        </dependency>-->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -218,12 +225,6 @@
         </dependency>
 
 
-        <!--nacos config-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.boot</groupId>-->
-        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
-        <!--            <version>${nacos-config-spring-boot-starter.version}</version>-->
-        <!--        </dependency>-->
         <!-- elasticSearch依赖 -->
         <!--        <dependency>-->
         <!--            <groupId>org.elasticsearch.client</groupId>-->

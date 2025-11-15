@@ -38,7 +38,7 @@
             <id>mac</id>
             <properties>
                 <yarn>yarn</yarn>
-                <nacos.server-addr>127.0.0.1:8850</nacos.server-addr>
+                <nacos.server-addr>172.16.8.70:8848</nacos.server-addr>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

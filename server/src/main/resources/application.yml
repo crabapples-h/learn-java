@@ -14,7 +14,7 @@ spring.servlet.multipart.max-file-size: 100MB
 # 设置最大请求大小
 spring.servlet.multipart.max-request-size: 100MB
 ###
-server.port: 9093
+server.port: 19093
 
 spring.profiles.active: dev
 # mybatis
@@ -29,7 +29,7 @@ spring.application.name: api-system
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
 #spring.cloud.nacos.discovery.server-addr: 172.16.8.70:8850
 spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
-spring.cloud.nacos.discovery.group: hq
+#spring.cloud.nacos.discovery.group: hq
 
 #spring.cloud.nacos.discovery.username: ''
 #spring.cloud.nacos.discovery.password: ''

@@ -47,7 +47,7 @@ public class CustomRoutePredicateFactory extends AbstractRoutePredicateFactory<C
     public Predicate<ServerWebExchange> apply(Config config) {
         return (exchange) -> {
             ServerHttpRequest request = exchange.getRequest();
-            log.debug("请求详情:[{}]", request);
+            log.info("请求详情:[{}]", request);
             return true;
         };
     }

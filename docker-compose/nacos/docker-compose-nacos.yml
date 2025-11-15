@@ -17,8 +17,8 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.2
     container_name: nacos_8849
-#    image: 192.168.31.60/nacos/nacos-server:latest
-    image: nacos/nacos-server:v2.5.1
+    image: 192.168.31.60/nacos/nacos-server:v2.4.3
+#    image: 192.168.31.60/nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8849:8848"
@@ -35,7 +35,7 @@ services:
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
       MYSQL_SERVICE_HOST: 192.168.31.60
-      MYSQL_SERVICE_PORT: 3307
+      MYSQL_SERVICE_PORT: 3306
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -51,8 +51,8 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.3
     container_name: nacos_8850
-#    image: 192.168.31.60/nacos/nacos-server:latest
-    image: nacos/nacos-server:v2.5.1
+    image: 192.168.31.60/nacos/nacos-server:v2.4.3
+#    image: 192.168.31.60/nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8850:8848"
@@ -69,7 +69,7 @@ services:
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
       MYSQL_SERVICE_HOST: 192.168.31.60
-      MYSQL_SERVICE_PORT: 3307
+      MYSQL_SERVICE_PORT: 3306
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos
@@ -85,8 +85,8 @@ services:
       nacos_network:
         ipv4_address: 172.16.20.4
     container_name: nacos_8851
-#    image: 192.168.31.60/nacos/nacos-server:latest
-    image: nacos/nacos-server:v2.5.1
+    image: 192.168.31.60/nacos/nacos-server:v2.4.3
+#    image: 192.168.31.60/nacos/nacos-server:v2.5.1
     restart: always
     ports:
       - "8851:8848"
@@ -103,7 +103,7 @@ services:
       NACOS_SERVERS: 172.16.20.2:8848 172.16.20.3:8848 172.16.20.4:8848
 #      MYSQL_SERVICE_HOST: docker.for.mac.host.internal
       MYSQL_SERVICE_HOST: 192.168.31.60
-      MYSQL_SERVICE_PORT: 3307
+      MYSQL_SERVICE_PORT: 3306
       MYSQL_SERVICE_DB_NAME: nacos
       MYSQL_SERVICE_USER: nacos
       MYSQL_SERVICE_PASSWORD: nacos

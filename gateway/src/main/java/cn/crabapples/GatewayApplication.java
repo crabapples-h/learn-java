@@ -15,7 +15,7 @@ import java.io.InputStream;
 @SpringBootApplication
 public class GatewayApplication {
     public static void main(String[] args) throws IOException {
-        log.info("启动nacos服务...");
+//        log.info("启动nacos服务...");
 //        Runtime.getRuntime().exec("docker-compose -f ./docker-compose/nacos/docker-compose-nacos.yml up -d");
         SpringApplication.run(GatewayApplication.class, args);
     }
@@ -28,7 +28,7 @@ public class GatewayApplication {
 
     @PreDestroy
     void destroy() throws IOException {
-        log.info("关闭nacos服务");
-        Runtime.getRuntime().exec("docker-compose -f ./docker-compose/nacos/docker-compose-nacos.yml down");
+//        log.info("关闭nacos服务");
+//        Runtime.getRuntime().exec("docker-compose -f ./docker-compose/nacos/docker-compose-nacos.yml down");
     }
 }

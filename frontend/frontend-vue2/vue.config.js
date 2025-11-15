@@ -23,13 +23,10 @@ module.exports = {
     // https://www.foobar.com/my-app/
     // 那么将这个值改为 '/my-app/'
     // baseUrl: "/",
-    // 构建好的文件输出到哪里
-    outputDir: "dist",
-    // where to put static assets (js/css/img/font/...)
-    // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
-    assetsDir: "",
+    outputDir: "dist", // 构建好的文件输出路径
+    assetsDir: "", // 生成的静态资源 (js、css、img、fonts) 的目录 (相对于 outputDir 的)
     // 是否在保存时使用‘eslint-loader’进行检查
-    // 有效值: true | false | 'error',当设置为‘error’时，检查出的错误会触发编译失败
+    // 有效值: true | false | 'error',当设置为 'error' 时，检查出的错误会触发编译失败
     lintOnSave: false,
     // 使用带有浏览器内编译器的完整构建版本 // https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only
     // runtimeCompiler: false,
@@ -37,14 +34,14 @@ module.exports = {
     // transpileDependencies: [
     //     /* string or regex */
     // ],
-    // 是否为生产环境构建生成sourceMap?
-    productionSourceMap: false,
+    productionSourceMap: false, // 是否为生产环境构建生成sourceMap
     // 调整内部的webpack配置. // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     // configureWebpack: () => {
     // },
     // parallel: require("os").cpus().length > 1,
+    // pwa: {
     // PWA 插件相关配置 // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-    // pwa: {},
+    // },
     // configure webpack-dev-server behavior
     chainWebpack: (config) => {
         config.resolve.alias
@@ -76,14 +73,11 @@ module.exports = {
     },
     pages: {
         index: {
-            // page 的入口
-            entry: 'src/main.js',
-            // 模板来源
-            template: 'public/index.html',
-            // 在 dist/index.html 的输出
-            filename: 'index.html',
-            // 当使用 title 选项时，
-            // template 中的 title 标签需要是 <title><%= htmlWebpackPlugin.options.title %></title>
+            entry: 'src/main.js', // page 的入口
+            template: 'public/index.html', // 模板入口
+            filename: 'index.html', // 在 dist/index.html 的输出
+            // 当使用 title 选项时, template 中的 title 标签需要配置为
+            // <title><%= htmlWebpackPlugin.options.title %></title>
             title: '管理系统',
             // 在这个页面中包含的块，默认情况下会包含
             // 提取出来的通用 chunk 和 vendor chunk。
@@ -106,40 +100,27 @@ module.exports = {
             '/websocket': {
                 target: 'http://localhost:9093/', // 接口的域名
                 ws: true,
-                // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-                // pathRewrite: {
-                // 把 /api 开头的路径替换为 ''
-                //     '^/api': ''
-                // }
             },
             '/api': {
                 target: 'http://localhost:9093/', // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
                 // pathRewrite: {
-                // 把 /api 开头的路径替换为 ''
-                //     '^/api': ''
-                // }
+                //     '^/api': '' // 把 /api 开头的路径替换为 ''
+                // },
             },
             '/open-api': {
                 target: 'http://localhost:80/', // 接口的域名
                 // secure: false,  // 如果是https接口，需要配置这个参数
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
                 pathRewrite: {
-                    // 把 /open-api 开头的路径替换为 '/open'
-                    '^/open-api': '/open'
+                    '^/open-api': '/open' // 把 /open-api 开头的路径替换为 '/open'
                 }
             },
-            '/file': {
-                target: 'http://localhost:9093/', // 接口的域名
-                // secure: false,  // 如果是https接口，需要配置这个参数
-                changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-            }
         },
         // string | Object
         // before: app => {}
-
     },
     // 第三方插件配置
     pluginOptions: {
