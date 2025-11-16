@@ -15,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class AiService {
 
     public static void main(String[] args) {
+        // springboot2.x版本无法启动,后续更换为3.x版本使用webflex
         log.info("AI服务启动中...");
         SpringApplication.run(AiService.class, args);
     }
