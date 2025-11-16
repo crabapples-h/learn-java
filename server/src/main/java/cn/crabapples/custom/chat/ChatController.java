@@ -1,4 +1,4 @@
-//package cn.crabapples.custom.chat;
+package cn.crabapples.custom.chat;
 //
 //import org.springframework.ai.chat.messages.UserMessage;
 //import org.springframework.ai.chat.model.ChatResponse;

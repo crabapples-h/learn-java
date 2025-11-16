@@ -1,4 +1,4 @@
-//package cn.crabapples.custom.controller;
+package cn.crabapples.custom.controller;
 //
 //import cn.crabapples.a.common.rabbitmq.RabbitRpcConfigure;
 //import com.rabbitmq.client.Channel;

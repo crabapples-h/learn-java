@@ -4,14 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
-@SpringBootConfiguration
-@EnableAutoConfiguration
-@ComponentScan(basePackages = {"cn.crabapples"})
+//@SpringBootConfiguration
+//@EnableAutoConfiguration
+//@ComponentScan(basePackages = {"cn.crabapples"})
+@SpringBootApplication
 @Slf4j
-@EnableWebSocket
 public class AiService {
 
     public static void main(String[] args) {
