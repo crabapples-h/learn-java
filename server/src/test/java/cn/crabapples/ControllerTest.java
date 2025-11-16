@@ -1,9 +1,11 @@
 //package cn.crabapples;
 //
-//import cn.crabapples.a.common.Groups;
-//import cn.crabapples.a.common.base.BaseController;
-//import cn.crabapples.a.common.config.ApplicationConfigure;
-//import cn.crabapples.a.common.annotation.JwtIgnore;
+//import cn.crabapples.common.annotation.JwtIgnore;
+//import cn.crabapples.common.base.BaseController;
+//import cn.crabapples.common.base.ResponseDTO;
+//import cn.crabapples.common.config.ApplicationConfigure;
+//import cn.crabapples.common.utils.Groups;
+//import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.system.websocket.entity.WebsocketMessage;
 //import cn.crabapples.system.websocket.service.MessageService;
 //import cn.crabapples.test.form.DemoPostForm1;
@@ -16,6 +18,7 @@
 //import org.springframework.web.bind.annotation.*;
 //
 //import javax.validation.Valid;
+//import java.util.List;
 //
 ///**
 // * TODO 一个演示的controller

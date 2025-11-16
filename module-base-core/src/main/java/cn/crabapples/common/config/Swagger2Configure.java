@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;
+//package cn.crabapples.common.config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;

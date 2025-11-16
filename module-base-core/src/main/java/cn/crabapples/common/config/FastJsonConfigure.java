@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;//package cn.crabapples.a.common.config;
+//package cn.crabapples.common.config;
 //
 //import com.alibaba.fastjson.serializer.SerializerFeature;
 //import com.alibaba.fastjson.support.config.FastJsonConfig;

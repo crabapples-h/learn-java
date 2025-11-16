@@ -1,5 +1,6 @@
 package cn.crabapples.common.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -24,8 +25,8 @@ import java.util.Arrays;
 //@Aspect
 //@Component
 //@Order(50)
+@Slf4j
 public class AopLog {
-    private static final Logger logger = LoggerFactory.getLogger(AopLog.class);
     private static final String CONTROLLER_AOP = "execution(* cn.crabapples.system.controller.*.*(..))";
 
     @Pointcut(CONTROLLER_AOP)
@@ -33,7 +34,7 @@ public class AopLog {
     }
 
     public AopLog() {
-        logger.info("注入日志切面:[{}]", "AopConfigure");
+        log.info("注入日志切面:[{}]", "AopConfigure");
     }
 
 
@@ -59,21 +60,21 @@ public class AopLog {
         String longString = joinPoint.toLongString();
         String shortString = joinPoint.toShortString();
 
-        System.out.println("【前置通知】");
-        System.out.println("\targs=" + Arrays.asList(args));
-        System.out.println("\tsignature=" + signature);
-        System.out.println("\ttarget=" + target);
-        System.out.println("\taThis=" + aThis);
-        System.out.println("\tstaticPart=" + staticPart);
-        System.out.println("\tsourceLocation=" + sourceLocation);
-        System.out.println("\tlongString=" + longString);
-        System.out.println("\tshortString=" + shortString);
+        log.info("【前置通知】");
+        log.info("args={}", Arrays.asList(args));
+        log.info("signature={}", signature);
+        log.info("target={}", target);
+        log.info("aThis={}", aThis);
+        log.info("staticPart={}", staticPart);
+        log.info("sourceLocation={}", sourceLocation);
+        log.info("longString={}", longString);
+        log.info("shortString={}", shortString);
     }
 
     @After("controllerAop()")
     public void after(JoinPoint joinPoint) {
-        System.out.println("【后置通知】");
-        System.out.println("\tkind=" + joinPoint.getKind());
+        log.info("【后置通知】");
+        log.info("kind={}", joinPoint.getKind());
     }
 
     /**
@@ -87,8 +88,8 @@ public class AopLog {
      */
     @AfterReturning("controllerAop()")
     public void afterReturning(JoinPoint joinPoint, Object result) {
-        System.out.println("【返回通知】");
-        System.out.println("\t目标方法返回值=" + result);
+        log.info("【返回通知】");
+        log.info("目标方法返回值={}", result);
     }
 
     /**
@@ -102,11 +103,11 @@ public class AopLog {
     @AfterThrowing(value = "controllerAop()", throwing = "ex")
     public void afterThrowing(JoinPoint jp, Exception ex) {
         String methodName = jp.getSignature().getName();
-        System.out.println("【异常通知】");
+        log.info("【异常通知】");
         if (ex instanceof ArithmeticException) {
-            System.out.println("\t【" + methodName + "】方法算术异常（ArithmeticException）：" + ex.getMessage());
+            log.error("\t【{}】方法算术异常（ArithmeticException）：{}", methodName, ex.getMessage());
         } else {
-            System.out.println("\t【" + methodName + "】方法异常：" + ex.getMessage());
+            log.error("\t【{}】方法异常（Exception）：{}", methodName, ex.getMessage());
         }
     }
 
@@ -114,9 +115,9 @@ public class AopLog {
     public Object around(ProceedingJoinPoint join) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) join.getSignature();
         Method method = methodSignature.getMethod();
-        logger.info("切面拦截成功,拦截方法:[{}],参数:[{}]", method.getName(), join.getArgs());
+        log.info("切面拦截成功,拦截方法:[{}],参数:[{}]", method.getName(), join.getArgs());
         Object result = join.proceed();
-        logger.info("切面拦截结束,返回值:[{}]", result);
+        log.info("切面拦截结束,返回值:[{}]", result);
         return result;
     }
 
