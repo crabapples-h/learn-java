@@ -1,6 +1,6 @@
 //package cn.crabapples.test.dao;
 //
-//import cn.crabapples.common.base.BaseDAO;
+//import cn.crabapples.a.common.base.BaseDAO;
 //import cn.crabapples.system.entity.SysMenus;
 //import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.test.dao.jpa.UserRepositoryTest;

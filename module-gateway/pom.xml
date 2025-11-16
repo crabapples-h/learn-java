@@ -20,7 +20,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <!-- sentinel整合gateway依赖 -->
-          <dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
         </dependency>
@@ -57,7 +57,7 @@
     </dependencies>
     <build>
         <plugins>
-            <!--              <plugin>-->
+            <!--            <plugin>-->
             <!--                <groupId>org.apache.maven.plugins</groupId>-->
             <!--                <artifactId>maven-compiler-plugin</artifactId>-->
             <!--                <version>3.8.1</version>-->

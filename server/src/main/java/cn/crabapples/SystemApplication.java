@@ -21,11 +21,9 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Collections;
 
 
 /**
@@ -50,7 +48,6 @@ import java.util.Collections;
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @EnableAspectJAutoProxy
-@EnableWebSocket
 //--------start-------
 // 动态数据源，使用@DataSourceChange(name="xxx")切换
 //@Import({DynamicDataSourceRegister.class})

@@ -19,11 +19,14 @@ import java.util.stream.Collectors;
 public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
     private LambdaQueryWrapper<SysUser> createQueryWrapper(SysUser entity) {
-        return new LambdaQueryWrapper<>(entity)
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>(entity)
                 .like(!StringUtils.isEmpty(entity.getUsername()), SysUser::getUsername, entity.getUsername())
                 .like(!StringUtils.isEmpty(entity.getName()), SysUser::getName, entity.getName())
                 .like(!StringUtils.isEmpty(entity.getMail()), SysUser::getMail, entity.getMail())
                 .like(!StringUtils.isEmpty(entity.getPhone()), SysUser::getPhone, entity.getPhone());
+        String targetSql = wrapper.getTargetSql();
+        System.err.println(targetSql);
+        return wrapper;
     }
 
     public Page<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
@@ -43,11 +46,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
 
     public List<SysUserDTO> findAll(UserForm form) {
         return baseMapper.selectList(
-                new LambdaQueryWrapper<>(SysUser.create())
-                        .like(!StringUtils.isEmpty(form.getUsername()), SysUser::getUsername, form.getUsername())
-                        .like(!StringUtils.isEmpty(form.getName()), SysUser::getName, form.getName())
-                        .like(!StringUtils.isEmpty(form.getMail()), SysUser::getMail, form.getMail())
-                        .like(!StringUtils.isEmpty(form.getPhone()), SysUser::getPhone, form.getPhone())).stream().map(e -> {
+                createQueryWrapper(form.toEntity())).stream().map(e -> {
             SysUserDTO dto = new SysUserDTO();
             BeanUtils.copyProperties(e, dto);
             return dto;
@@ -55,7 +54,7 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
     }
 
     public SysUser findOne(UserForm form) {
-        return getOne(createQueryWrapper(form.toEntity()));
+        return baseMapper.selectOne(createQueryWrapper(form.toEntity()));
     }
 
     public SysUser findById(String id) {

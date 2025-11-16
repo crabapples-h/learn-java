@@ -50,7 +50,7 @@ public class SystemDictServiceImpl implements SystemDictService {
 
     @Override
     public boolean saveDictItem(DictItemForm form) {
-        return form.toEntity().insertOrUpdate();
+        return dictItemDAO.saveOrUpdate(form.toEntity());
     }
 
     @Override

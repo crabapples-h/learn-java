@@ -21,6 +21,8 @@
         <module>module-gateway</module>
         <module>module-base-core</module>
         <module>module-file-upload</module>
+        <module>module-websocket</module>
+        <module>module-ai-service</module>
         <module>server</module>
         <!--        <module>server-flux</module>-->
     </modules>

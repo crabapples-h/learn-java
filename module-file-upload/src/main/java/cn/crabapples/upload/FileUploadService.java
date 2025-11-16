@@ -19,7 +19,7 @@ import org.springframework.context.annotation.FilterType;
 public class FileUploadService {
 
     public static void main(String[] args) {
-        log.info("文件启动服务中...");
+        log.info("文件服务启动中...");
         SpringApplication.run(FileUploadService.class, args);
     }
 

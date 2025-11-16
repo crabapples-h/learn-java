@@ -1,10 +1,10 @@
 //package cn.crabapples.test.controller;
 //
-//import cn.crabapples.common.base.BaseController;
-//import cn.crabapples.common.config.ApplicationConfigure;
-//import cn.crabapples.common.ResponseDTO;
-//import cn.crabapples.common.Groups;
-//import cn.crabapples.common.annotation.JwtIgnore;
+//import cn.crabapples.a.common.base.BaseController;
+//import cn.crabapples.a.common.config.ApplicationConfigure;
+//import cn.crabapples.a.common.ResponseDTO;
+//import cn.crabapples.a.common.Groups;
+//import cn.crabapples.a.common.annotation.JwtIgnore;
 //import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.test.form.DemoPostForm1;
 //import cn.crabapples.test.form.DemoPostForm2;

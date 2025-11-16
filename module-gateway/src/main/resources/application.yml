@@ -2,6 +2,8 @@ server.port: 9093
 spring.application.name: api-gateway
 logging.level:
   root: info
+  org.springframework.cloud.gateway: DEBUG
+  reactor.netty.http.client: DEBUG
 #spring.config.import: nacos:consumer-01.yaml
 spring.profiles.active: ${PROFILE}
 #spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
@@ -29,7 +31,7 @@ spring.cloud.gateway.routes:
       - Custom=custom_filter_name,12323,66666 # 自定义过滤器
     filters:
       # 过滤器，转发之前去掉第一段前缀，即/system
-      - StripPrefix=1
+#      - StripPrefix=1
       - AddRequestHeader=name,test
       - Custom=name,test,666,777
 #      - RedirectTo=301,http://www.baidu.com

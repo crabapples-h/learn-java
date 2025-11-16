@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="demo.mybatis.MyBatisMapper">
-    <resultMap id="idcard" type="demo.mybatis.Idcard">
+<mapper namespace="demo.mybatis.mapper.MyBatisMapper">
+    <resultMap id="idcard" type="demo.mybatis.entity.Idcard">
         <result property="id" javaType="Integer" jdbcType="INTEGER" column="id"/>
         <result property="zip" javaType="String" jdbcType="VARCHAR" column="Zip"/>
         <result property="address" javaType="String" jdbcType="VARCHAR" column="Address"/>
@@ -25,11 +25,11 @@
     </select>
 
     <select id="count" resultType="LONG">
-        select count(id)
+        select count(1)
         from id_card_simple
     </select>
 
-    <insert id="insert" parameterType="demo.mybatis.Idcard">
+    <insert id="insert" parameterType="demo.mybatis.entity.Idcard">
         insert into idcard_2000w_dist (id, Address, Birthday, CtfId, CtfTp, EMail, Gender,
         Mobile, Name, Version,Nation,Company)
         values

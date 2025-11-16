@@ -94,7 +94,7 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     public boolean saveRoles(RolesForm form) {
         log.info("保存角色:[{}]", form);
         SysRole entity = form.toEntity();
-        boolean status = entity.insertOrUpdate();
+        boolean status = rolesDAO.saveOrUpdate(entity);
         roleMenusService.saveRoleMenus(entity.getId(), form.getMenuList());
         return status;
     }

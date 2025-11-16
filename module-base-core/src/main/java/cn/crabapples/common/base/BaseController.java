@@ -2,7 +2,6 @@ package cn.crabapples.common.base;
 
 import cn.idev.excel.FastExcel;
 import cn.idev.excel.support.ExcelTypeEnum;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -42,7 +41,7 @@ public abstract class BaseController {
         }
     }
 
-    protected <T extends Model<T>> void exportExcel(String fileName, List<T> list, Class<T> clazz) throws IOException {
+    protected <T> void exportExcel(String fileName, List<T> list, Class<T> clazz) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName);

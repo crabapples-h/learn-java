@@ -1,11 +1,19 @@
 package demo.mybatis;
 
 
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import demo.mybatis.entity.Idcard;
+import demo.mybatis.entity.SysUser;
+import demo.mybatis.mapper.MyBatisMapper;
+import demo.mybatis.mapper.SysUserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,16 +27,40 @@ public class MyBatis {
     private static final String SQL = "select * from id_card_simple";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(MyBatis.class);
+    private static final Logger log = LoggerFactory.getLogger(MyBatis.class);
+    private static SqlSession session;
+
+    private static void init() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String resource = "mybatis-config.xml";
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            session = sqlSessionFactory.openSession();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void queryUser() {
+        SysUserMapper mapper = session.getMapper(SysUserMapper.class);
+        List<SysUser> sysUsers = mapper.selectList(new LambdaQueryWrapper<>());
+        for (SysUser sysUser : sysUsers) {
+            log.info("用户:[{}]", sysUser);
+        }
+    }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        String resource = "mybatis-config.xml";
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession session = sqlSessionFactory.openSession();
+        init();
+        queryUser();
+    }
+
+
+    private static void insertData() {
         MyBatisMapper mapper = session.getMapper(MyBatisMapper.class);
-        Long count = mapper.count();
+        long count = mapper.count();
         long times = count / 50000;
         long start1 = System.currentTimeMillis();
         for (int time = 0; time < times; time++) {

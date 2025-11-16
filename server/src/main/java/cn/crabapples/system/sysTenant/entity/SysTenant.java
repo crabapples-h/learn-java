@@ -1,7 +1,6 @@
 package cn.crabapples.system.sysTenant.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;

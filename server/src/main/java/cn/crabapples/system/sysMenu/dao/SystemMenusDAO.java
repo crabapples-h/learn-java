@@ -4,15 +4,12 @@ import cn.crabapples.common.dic.DIC;
 import cn.crabapples.system.sysMenu.dao.mybatis.mapper.MenusMapper;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
-import cn.crabapples.system.sysRole.entity.SysRole;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * TODO 系统菜单DAO

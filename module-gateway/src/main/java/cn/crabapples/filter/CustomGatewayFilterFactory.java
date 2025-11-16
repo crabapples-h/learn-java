@@ -31,6 +31,11 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
         super(Config.class);
     }
 
+    /**
+     * 配置类中的属性，顺序为application.yml中配置的顺序，可有多个，按逗号分隔
+     *
+     * @return 属性名称
+     */
     @Override
     public List<String> shortcutFieldOrder() {
         return Arrays.asList("name", "value", "test", "test2");

@@ -17,7 +17,7 @@ import java.util.Set;
  */
 
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedAnnotationTypes("cn.crabapples.common.annotation.EnableDict")
+@SupportedAnnotationTypes("cn.crabapples.a.common.annotation.EnableDict")
 public class EnableDictAsp extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);

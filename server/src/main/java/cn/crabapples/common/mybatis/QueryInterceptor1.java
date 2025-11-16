@@ -1,4 +1,4 @@
-//package cn.crabapples.common.mybatis;
+//package cn.crabapples.a.common.mybatis;
 //
 //
 //import lombok.extern.slf4j.Slf4j;

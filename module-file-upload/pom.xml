@@ -36,6 +36,13 @@
             <version>4.10.0</version>
         </dependency>
 
+        <!--mybatis-plus-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-starter.version}</version>
+        </dependency>
+
 
         <!-- nacos服务注册发现 -->
         <dependency>

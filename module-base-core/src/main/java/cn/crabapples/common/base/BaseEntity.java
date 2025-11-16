@@ -2,7 +2,6 @@ package cn.crabapples.common.base;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,7 +22,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Accessors(chain = true)
-public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable, Cloneable {
+public abstract class BaseEntity<T> implements Serializable, Cloneable {
 
     // 创建时间
     @JSONField(format = "yyyy-MM-dd HH:mm:ss E")

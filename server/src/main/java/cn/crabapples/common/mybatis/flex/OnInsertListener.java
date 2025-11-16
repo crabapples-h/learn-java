@@ -1,6 +1,6 @@
-//package cn.crabapples.common.mybatis.flex;
+//package cn.crabapples.a.common.mybatis.flex;
 //
-//import cn.crabapples.common.base.BaseEntity;
+//import cn.crabapples.a.common.base.BaseEntity;
 //import com.mybatisflex.annotation.InsertListener;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.stereotype.Component;

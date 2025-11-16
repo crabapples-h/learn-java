@@ -1,6 +1,6 @@
 //package cn.crabapples.test.dao.jpa;
 //
-//import cn.crabapples.common.base.BaseRepository;
+//import cn.crabapples.a.common.base.BaseRepository;
 //import cn.crabapples.system.sysUser.entity.SysUser;
 //import org.springframework.data.jpa.repository.Query;
 //import org.springframework.data.repository.query.Param;

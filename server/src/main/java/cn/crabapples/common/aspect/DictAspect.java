@@ -58,7 +58,7 @@ public class DictAspect {
      */
     @Pointcut("execution(public * cn.crabapples.*.*.controller.*.*(..)) || " +
             "@annotation(cn.crabapples.common.annotation.EnableDict)")
-//    @Pointcut("@annotation(cn.crabapples.common.annotation.EnableDict)")
+//    @Pointcut("@annotation(cn.crabapples.a.common.annotation.EnableDict)")
     public void dictService() {
     }
 

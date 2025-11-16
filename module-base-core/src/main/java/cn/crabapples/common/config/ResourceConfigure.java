@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ResourceConfigure implements WebMvcConfigurer {
     //文件存储路径
-    @Value("${uploadPath}")
+    @Value("${uploadPath:uploadPath}")
     private String uploadPath;
     //文件访问路径
-    @Value("${virtualPath}")
+    @Value("${virtualPath:/file}")
     private String virtualPath;
 
     /**

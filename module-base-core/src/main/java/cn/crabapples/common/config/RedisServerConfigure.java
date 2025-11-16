@@ -1,4 +1,4 @@
-package cn.crabapples.common.config;//package cn.crabapples.common.config;
+package cn.crabapples.common.config;//package cn.crabapples.a.common.config;
 //
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.context.annotation.Configuration;

@@ -1,9 +1,9 @@
 //package cn.crabapples.rabbitmq;
 //
-//import cn.crabapples.common.rabbitmq.RabbitDirectConfigure;
-//import cn.crabapples.common.rabbitmq.RabbitFanoutConfigure;
-//import cn.crabapples.common.rabbitmq.RabbitTopicConfigure;
-//import cn.crabapples.common.rabbitmq.RabbitTtlConfigure;
+//import cn.crabapples.a.common.rabbitmq.RabbitDirectConfigure;
+//import cn.crabapples.a.common.rabbitmq.RabbitFanoutConfigure;
+//import cn.crabapples.a.common.rabbitmq.RabbitTopicConfigure;
+//import cn.crabapples.a.common.rabbitmq.RabbitTtlConfigure;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.springframework.amqp.core.Message;

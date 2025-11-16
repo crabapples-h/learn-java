@@ -1,4 +1,4 @@
-package cn.crabapples.common.elasticsearch;//package cn.crabapples.common.utils.elasticsearch;
+package cn.crabapples.common.elasticsearch;//package cn.crabapples.a.common.utils.elasticsearch;
 //
 //import org.apache.http.HttpHost;
 //import org.elasticsearch.client.RestClient;

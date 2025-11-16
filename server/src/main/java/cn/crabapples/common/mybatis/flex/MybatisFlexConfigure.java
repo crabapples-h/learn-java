@@ -1,4 +1,4 @@
-//package cn.crabapples.common.mybatis.flex;
+//package cn.crabapples.a.common.mybatis.flex;
 //
 //import com.mybatisflex.core.mybatis.FlexConfiguration;
 //import com.mybatisflex.spring.boot.ConfigurationCustomizer;

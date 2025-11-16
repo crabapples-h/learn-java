@@ -16,11 +16,7 @@
             <version>${application.version}</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.ai</groupId>-->
-        <!--            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>-->
-        <!--            <version>1.0.0-M5</version>-->
-        <!--        </dependency>-->
+
         <!-- 矩阵运算工具包 -->
         <dependency>
             <groupId>org.ejml</groupId>
@@ -187,11 +183,7 @@
         <!--        </dependency>-->
         <!--base-utils-->
 
-        <!-- websocket -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
