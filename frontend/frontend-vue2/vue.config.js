@@ -97,15 +97,17 @@ module.exports = {
         compress: false, // 禁用压缩,开启压缩会导致流式传输失效,如sse,websocket
         // webSocketServer: false, // 禁用开发服务器的 WebSocket
         proxy: {
-            '/websocket': {
-                target: 'http://localhost:9093/', // 接口的域名
-                ws: true,
-                changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-            },
             '/api': {
                 target: 'http://localhost:9093/', // 接口的域名
-                // secure: false,  // 如果是https接口，需要配置这个参数
+                secure: false,  // 是否是https接口
                 changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
+                ws: true,
+                onProxyReqWs: (proxyReq, req, socket, options, head) => {
+                    console.log('WebSocket 代理连接:', req.url);
+                },
+                onError: (err, req, res) => {
+                    console.error('WebSocket 代理错误:', err);
+                }
                 // pathRewrite: {
                 //     '^/api': '' // 把 /api 开头的路径替换为 ''
                 // },

@@ -33,7 +33,7 @@ public class WebSocketServerAdvanced implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new WebSocketHandlerImpl(), "/websocket/v2/*")
+        registry.addHandler(new WebSocketHandlerImpl(), "/api/stream/websocket/v2/*")
                 .addInterceptors(authHandshakeInterceptor) // 添加自定义拦截器
                 .setAllowedOrigins("*"); // 允许的跨域来源
     }
@@ -42,10 +42,12 @@ public class WebSocketServerAdvanced implements WebSocketConfigurer {
     public static class WebSocketHandlerImpl implements WebSocketHandler {
 
         @Override
-        public void afterConnectionEstablished(WebSocketSession session) {
+        public void afterConnectionEstablished(WebSocketSession session) throws IOException {
             String clientId = (String) session.getAttributes().get("clientId");
             log.info("websocket连接成功,连接方式[{}],客户端ID:[{}]", "配置", clientId);
             WEB_SOCKET_CLIENT.put(clientId, session);
+            TextMessage textMessage = new TextMessage("连接成功");
+            SocketMessageSender.sendMessageAdvanced(textMessage, clientId);
         }
 
         /**

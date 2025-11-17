@@ -25,8 +25,10 @@ export default {
   data() {
     return {
       url: {
-        connectV1: '/websocket/v1',
-        connectV2: '/websocket/v2',
+        connectV1: '/api/stream/websocket/v1',
+        // connectV1: 'ws://localhost:9093/api/stream/websocket/v1',
+        // ws://localhost:9093/api/stream/websocket/v1/
+        connectV2: '/api/stream/websocket/v2',
       },
       clientId: ['', ''],
       disable: [false, false],
@@ -65,7 +67,9 @@ export default {
     },
     startTimer(index) {
       this.timer[index] = setInterval(() => {
-        this.server[index].send("客户端发送消息:当前秒数" + new Date().getSeconds())
+       let msg =  "客户端发送消息:当前秒数" + new Date().getSeconds()
+        console.log(msg);
+        this.server[index].send(msg)
       }, 3000)
       this.disable[index] = true
     },

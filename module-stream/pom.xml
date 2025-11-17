@@ -7,7 +7,7 @@
         <artifactId>learn-java</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>module-websocket</artifactId>
+    <artifactId>module-stream</artifactId>
     <properties>
         <java.version>11</java.version>
     </properties>

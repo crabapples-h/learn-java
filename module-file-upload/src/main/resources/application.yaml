@@ -1,0 +1,60 @@
+# 数据库连接参数配置
+params: "useUnicode=true&
+characterEncoding=utf-8&
+serverTimezone=Asia/Shanghai&
+zeroDateTimeBehavior=convertToNull&
+allowPublicKeyRetrieval=true&
+nullDatabaseMeansCurrent=true"
+virtualPath: '/file/' # 虚拟路径
+#uploadPath: 'd:/uploadPath/' # 上传文件存储路径 (Windows)
+uploadPath: '/Users/mshe/developer/uploadPath' # 上传文件存储路径 (Mac/Linux)
+
+server.port: 19094
+spring:
+  application.name: file-upload-service
+  servlet:
+    multipart:
+      max-file-size: 100MB # 最大文件大小
+      max-request-size: 100MB # 最大请求大小
+  cloud:
+    nacos:
+      server-addr: @nacos.server-addr@
+      discovery:
+        service: file
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # type: com.alibaba.druid.pool.DruidDataSource  # 数据库连接池类型配置
+    url: "jdbc:mysql://127.0.0.1:3306/learn?useSSL=false&${params}"
+    username: root
+    password: root
+  redis:
+    host: 192.168.31.166
+    port: 6379
+    password: 123456789
+
+# 日志配置
+logging:
+  file.name: logs/crabapples-file-upload/
+  level:
+    root: info
+    druid.sql: info
+    com.mybatis: debug
+    com.mybatisplus: debug
+
+# MyBatis配置
+# mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+
+crabapples: # 文件上传配置
+  upload:
+    s3: # S3配置
+      url: http://127.0.0.1:9000
+      accessKey: B2FQ8PDKbYC1LGX3hSgj
+      secretKey: 63y4GX9eoD8hCVBaJjkqT1uFEMAfOmN7pnPLRtYb
+      bucketName: test-bucket
+      region: us-east-1
+    minio: # MinIO配置
+      url: http://192.168.31.60:9000
+      accessKey: gQ6MwJZxCoPX4qoh2O80
+      secretKey: vLmlVPM1mG2cBjBu8mLXhNBpdGkRbgpBJBT9S5yz
+      bucketName: crabapples

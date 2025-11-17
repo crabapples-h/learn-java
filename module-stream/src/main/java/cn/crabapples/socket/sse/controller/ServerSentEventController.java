@@ -4,10 +4,7 @@ import cn.crabapples.common.annotation.IgnoreDict;
 import cn.crabapples.common.annotation.JwtIgnore;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -26,14 +23,13 @@ import java.util.concurrent.TimeUnit;
  * pc-name admin
  */
 @RestController
-@RequestMapping("/api/sse")
+@RequestMapping("/api/stream/")
 @Slf4j
 @Tag(name = "sse接口")
 public class ServerSentEventController {
     private static final Map<String, SseEmitter> SSE_CLENT_MAP = new ConcurrentHashMap<>();
 
-    @PostMapping(value = "/connect/{id}")
-    @JwtIgnore
+    @GetMapping(value = "/sse/connect/auth/{id}")
     @IgnoreDict
     public SseEmitter connectSse(@PathVariable String id) {
         log.info("收到建立sse请求,id:[{}]", id);
@@ -49,10 +45,49 @@ public class ServerSentEventController {
         return sseEmitter;
     }
 
-    @PostMapping("/send/{id}")
-    @JwtIgnore
+    @PostMapping("/sse/send/auth/{id}")
     @IgnoreDict
     public void sseTestSend(@PathVariable String id) {
+        new Thread(() -> {
+            SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
+            log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    SseEmitter.SseEventBuilder sseEventBuilder = SseEmitter.event();
+                    TimeUnit.SECONDS.sleep(1);
+                    sseEventBuilder
+                            .name("log")
+                            .data(String.format("第[%d]次消息推送", i));
+                    sseEmitter.send(sseEventBuilder);
+                } catch (InterruptedException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+
+
+    @GetMapping(value = "/sse/connect/unAuth/{id}")
+    @IgnoreDict
+    @JwtIgnore
+    public SseEmitter connectSse1(@PathVariable String id) {
+        log.info("收到建立sse请求,id:[{}]", id);
+        SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
+        if (Objects.isNull(sseEmitter)) {
+            sseEmitter = new SseEmitter(1000 * 60 * 30L);
+            sseEmitter.onTimeout(() -> SSE_CLENT_MAP.remove(id));
+            sseEmitter.onError((e) -> SSE_CLENT_MAP.remove(id));
+            sseEmitter.onCompletion(() -> SSE_CLENT_MAP.remove(id));
+            SSE_CLENT_MAP.put(id, sseEmitter);
+        }
+        log.info("sse连接建立成功,id:[{}],[{}]", id, sseEmitter);
+        return sseEmitter;
+    }
+
+    @PostMapping("/sse/send/unAuth/{id}")
+    @IgnoreDict
+    @JwtIgnore
+    public void sseTestSend1(@PathVariable String id) {
         new Thread(() -> {
             SseEmitter sseEmitter = SSE_CLENT_MAP.get(id);
             log.info("sse测试发送消息,id:[{}],[{}]", id, sseEmitter);

@@ -1,68 +1,64 @@
 server.port: 9093
 spring.application.name: api-gateway
+### 日志配置 ###
 logging.level:
-  root: info
-  org.springframework.cloud.gateway: DEBUG
+  root: INFO
   reactor.netty.http.client: DEBUG
+  org.springframework.cloud.gateway: DEBUG
+  org.springframework.web.reactive: DEBUG
+  reactor.netty: DEBUG
+  org.springframework.cloud.loadbalancer: DEBUG
 #spring.config.import: nacos:consumer-01.yaml
 spring.profiles.active: ${PROFILE}
-#spring.cloud.nacos.discovery.server-addr: 127.0.0.1:8848
-spring.cloud.nacos.discovery.server-addr: @nacos.server-addr@
-#spring.cloud.nacos.discovery.group: hq
-# 注册到nacos的服务名称,不配置则默认为${spring.application.name}
-spring.cloud.nacos.discovery.service: api-gateway
-# 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
-spring.cloud.gateway.discovery.locator.enabled: true
-spring.cloud.gateway.routes:
-  - id: system_api # 路由的唯一标识
-    uri: lb://api-system # 转发地址,lb://表示使用LoadBalanced负载均衡
-    predicates: # 断言，用于路由规则匹配
-      #      - After=2024-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之后请求
-      #      - Before=2025-01-01T00:00:00.000+08:00[Asia/Shanghai] # 在指定的时间之前请求
-      #      - Between=2024-01-01T00:00:00.000+08:00[Asia/Shanghai],2025-01-01T00:00:00.000+08:00[Asia/Shanghai] #在两个时间点之间的请求
-      #      - Cookie=name,zhangsan # 存在cookie且值为zhangsan
-      #      - Header=X-Request-Id,\d+ # 请求头中存在X-Request-Id且值为数字
-      #      - Host=**.abc.com # 请求头中存在Host且值为abc.com或其子域名
-      - Method=GET,POST # 请求方式
-      - Path=/api/system/** # 请求路径为/api/system/开头的
-      #      - Query=name,zhangsan # 请求参数中存在name,并且值为zhangsan
-      #      - RemoteAddr=192.168.1.1/24 # 请求的ip必须是192.168.1.1/24
-      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
-      - Custom=custom_filter_name,12323,66666 # 自定义过滤器
+### sentinel配置 ###
+spring.cloud.sentinel:
+  enabled: true
+  eager: true  # 立即初始化
+  log.dir: ./logs/csp # Sentinel 日志目录
+  transport.dashboard: 127.0.0.1:8858 # Sentinel 控制台地址
+  transport.port: 8719
+  scg: # Gateway 特定配置
+    enabled: true
+    # 限流后的响应配置
+    fallback:
+      mode: response
+      response-status: 429
+      response-body: '{"code": 429, "msg": "请求过于频繁，请10秒后再试"}'
+### nacos配置 ###
+spring.cloud.nacos.discovery:
+  server-addr: @nacos.server-addr@
+  #  server-addr: 127.0.0.1:8848
+  service: api-gateway # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
+#  group: hq
+### gateway配置 ###
+spring.cloud.gateway:
+  discovery.locator:
+    enabled: true # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
+    lower-case-service-id: true # 服务名转为小写
+    predicates:
+      - name: Path
+        args:
+          pattern: "'/api/'+serviceId+'/**'"
     filters:
-      # 过滤器，转发之前去掉第一段前缀，即/system
-#      - StripPrefix=1
-      - AddRequestHeader=name,test
-      - Custom=name,test,666,777
-#      - RedirectTo=301,http://www.baidu.com
-  - id: file_upload # 路由的唯一标识
-    uri: lb://file-upload-service:9093 # 转发地址,lb://表示使用LoadBalanced负载均衡
-    predicates: # 断言，用于路由规则匹配
-      - Method=GET,POST # 请求方式
-      - Path=/api/file/** # 请求路径为/api/file/开头的
-      - Weight=groupName,1 # 权重 权重的组名为groupName，权重为1
-    filters:
-      # 过滤器，转发之前去掉第一段前缀，即/system
-#      - StripPrefix=1
-      - Custom=name,test,666,777
-spring.cloud.gateway.globalcors: # 全局跨域处理
-  # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
-  add-to-simple-url-handler-mapping: true
-  corsConfigurations:
-    '[/**]': # 允许跨域访问的资源
-      allowedOrigins: # 允许哪些网站的跨域请求
-#        - "http://localhost:63342"
-        - "http://localhost:8080"
-#        - "*"
-      allowedMethods: # 允许的跨域的请求方式
-        - "GET"
-        - "POST"
-        - "DELETE"
-        - "PUT"
-        - "OPTIONS"
-      allowedHeaders: "*" # 允许在请求中携带的头信息
-      allowCredentials: true # 允许携带cookie
-      maxAge: 3600 # 跨域检测的有效期(单位:秒)
-spring.cloud.sentinel.transport.dashboard: 127.0.0.1:8858
-spring.cloud.sentinel.log.dir: ./logs/csp
-
+#      - name: RewritePath
+#        args:
+#          regexp: "'/'+serviceId+'/(?<remaining>.*)'"
+#          replacement: "'/${remaining}'"
+  globalcors: # 全局跨域配置
+    add-to-simple-url-handler-mapping: true # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
+    corsConfigurations:
+      '[/**]': # 允许跨域访问的资源
+        # 允许所有域名跨域请求
+        allowedOriginPatterns: "*"
+        # 允许指定跨域请求
+        allowedOrigins: [ "http://localhost:8080" ]
+        # 允许指定请求方式跨域
+        allowedMethods: [ "GET", "HEAD","POST","DELETE","PUT","OPTIONS" ]
+        # 允许所有的请求头
+        allowedHeaders: "*"
+        # 允许浏览器访问的所有响应头
+        exposedHeaders: "*"
+        # 允许携带认证信息（如cookies、HTTP认证）,当设置为 true 时，allowedOrigins 不能使用 "*"，必须指定具体域名
+        allowCredentials: true
+        # 跨域检测（OPTIONS）请求的有效期(单位:秒)
+        maxAge: 3600

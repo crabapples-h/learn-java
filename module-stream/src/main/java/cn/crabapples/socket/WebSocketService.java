@@ -10,6 +10,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"cn.crabapples"})
+@ComponentScan(basePackages = {"cn.crabapples.common"})
 @Slf4j
 @EnableWebSocket
 public class WebSocketService {

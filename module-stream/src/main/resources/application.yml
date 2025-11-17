@@ -1,0 +1,27 @@
+# 数据库连接参数配置
+params: "useUnicode=true&
+characterEncoding=utf-8&
+serverTimezone=Asia/Shanghai&
+zeroDateTimeBehavior=convertToNull&
+allowPublicKeyRetrieval=true&
+nullDatabaseMeansCurrent=true"
+server.port: 19095
+# 日志配置
+logging:
+  file.name: logs/crabapples-websocket/
+  level:
+    root: info
+spring:
+  application.name: websocket-service
+  cloud.nacos:
+      server-addr: @nacos.server-addr@
+      discovery:
+        service: stream
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # type: com.alibaba.druid.pool.DruidDataSource  # 数据库连接池类型配置
+    url: "jdbc:mysql://127.0.0.1:3306/learn?useSSL=false&${params}"
+    username: root
+    password: root
+
+

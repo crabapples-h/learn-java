@@ -23,10 +23,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/websocket/v1/{id}", configurator = EndPointConfigure.class)
+@ServerEndpoint(value = "/api/stream/websocket/v1/{id}", configurator = EndPointConfigure.class)
 public class WebSocketServerSimple {
 
-    public static final ConcurrentHashMap<String, Session> WEB_SOCKET_CLIENT = new ConcurrentHashMap<>(16);
+    volatile public static ConcurrentHashMap<String, Session> WEB_SOCKET_CLIENT = new ConcurrentHashMap<>(16);
 
     /**
      * 连接建立成功调用的方法
@@ -40,7 +40,7 @@ public class WebSocketServerSimple {
 //        attributes.put("userId", userId);
 //        attributes.put("username", username);
         log.info("WebSocket连接成功,客户端ID:[{}],当前连接数量:[{}]", id, WEB_SOCKET_CLIENT.size());
-        cn.crabapples.socket.websocket.SocketMessageSender.sendMessageSimple("连接成功", id);
+        SocketMessageSender.sendMessageSimple("连接成功", id);
     }
 
     /**

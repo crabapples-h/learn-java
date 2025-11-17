@@ -27,7 +27,7 @@ public class SocketMessageSender {
      * @throws IOException IO异常
      */
     public static void sendMessageAllSimple(String message) throws IOException {
-        ConcurrentHashMap.KeySetView<String, Session> keys = cn.crabapples.socket.websocket.WebSocketServerSimple.WEB_SOCKET_CLIENT.keySet();
+        ConcurrentHashMap.KeySetView<String, Session> keys = WebSocketServerSimple.WEB_SOCKET_CLIENT.keySet();
         for (String key : keys) {
             Session session = WebSocketServerSimple.WEB_SOCKET_CLIENT.get(key);
             session.getBasicRemote().sendText(message);
@@ -43,7 +43,7 @@ public class SocketMessageSender {
      * @throws IOException IO异常
      */
     public static void sendMessageSimple(String message, String id) throws IOException {
-        Session session = cn.crabapples.socket.websocket.WebSocketServerSimple.WEB_SOCKET_CLIENT.get(id);
+        Session session = WebSocketServerSimple.WEB_SOCKET_CLIENT.get(id);
         if (session == null) {
             return;
         }
@@ -60,7 +60,7 @@ public class SocketMessageSender {
     public static void sendMessageAllAdvanced(WebSocketMessage<?> message) throws IOException {
         ConcurrentHashMap.KeySetView<String, WebSocketSession> keys = WebSocketServerAdvanced.WEB_SOCKET_CLIENT.keySet();
         for (String key : keys) {
-            WebSocketSession session = cn.crabapples.socket.websocket.WebSocketServerAdvanced.WEB_SOCKET_CLIENT.get(key);
+            WebSocketSession session = WebSocketServerAdvanced.WEB_SOCKET_CLIENT.get(key);
             session.sendMessage(message);
         }
     }
@@ -74,7 +74,7 @@ public class SocketMessageSender {
      * @throws IOException IO异常
      */
     public static void sendMessageAdvanced(WebSocketMessage<?> message, String id) throws IOException {
-        WebSocketSession session = cn.crabapples.socket.websocket.WebSocketServerAdvanced.WEB_SOCKET_CLIENT.get(id);
+        WebSocketSession session = WebSocketServerAdvanced.WEB_SOCKET_CLIENT.get(id);
         if (session == null) {
             return;
         }
