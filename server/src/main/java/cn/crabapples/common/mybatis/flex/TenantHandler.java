@@ -1,4 +1,4 @@
-//package cn.crabapples.a.common.mybatis.flex;
+package cn.crabapples.common.mybatis.flex;
 //
 //import cn.crabapples.system.sysUser.entity.SysUser;
 //import cn.crabapples.system.sysUser.service.SystemUserService;

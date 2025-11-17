@@ -83,7 +83,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
             String username = dataSourceMap.get("username").toString();
             String password = dataSourceMap.get("password").toString();
             // 自定义DataSource配置
-            DataSourceBuilder factory = DataSourceBuilder.create().driverClassName(driverClassName).url(url)
+            DataSourceBuilder<?> factory = DataSourceBuilder.create().driverClassName(driverClassName).url(url)
                     .username(username).password(password).type(dataSourceType);
             DataSource dataSource = factory.build();
             log.debug("数据源构建完成:[{}]", dataSource);

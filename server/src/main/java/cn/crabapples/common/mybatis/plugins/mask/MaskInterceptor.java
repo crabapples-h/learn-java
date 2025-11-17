@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatis.plugins;
+package cn.crabapples.common.mybatis.plugins.mask;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.executor.resultset.ResultSetHandler;

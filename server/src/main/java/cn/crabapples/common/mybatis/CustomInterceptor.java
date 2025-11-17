@@ -2,43 +2,74 @@ package cn.crabapples.common.mybatis;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.cache.CacheKey;
+import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
+import org.apache.ibatis.executor.resultset.ResultSetHandler;
+import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Properties;
-//  Executor
-//  update	    执行增删改操作
-//  query	    执行查询操作
-//  commit	    提交事务
-//  rollback	回滚事务
 
-//  StatementHandler
-//  prepare	        预处理 SQL 语句
-//  parameterize	设置 SQL 参数
-//  batch	        执行批处理
-//  update	        执行更新操作
-//  query	        执行查询操作
 
-//  ParameterHandler
-//  getParameterObject	获取参数对象
-//  setParameters	    设置参数对象
-
-//  ResultSetHandler
-//  handleResultSets	    处理查询结果
-//  handleOutputParameters	处理存储过程的输出参数
+/**
+ * 文档写在语雀里
+ * Executor SQL执行器
+ * StatementHandler SQL语句处理器
+ * ParameterHandler 参数处理器
+ * ResultSetHandler 结果集处理器
+ */
 //@Component
-//@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
-@Intercepts({@Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class})})
+@Intercepts({
+        @Signature(type = Executor.class, method = "query",
+                args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class}),
+        @Signature(type = Executor.class, method = "query",
+                args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
+        @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class}),
+        @Signature(type = StatementHandler.class, method = "query", args = {Statement.class, ResultHandler.class}),
+        @Signature(type = StatementHandler.class, method = "getBoundSql", args = {}),
+        @Signature(type = StatementHandler.class, method = "getParameterHandler", args = {}),
+        @Signature(type = ParameterHandler.class, method = "getParameterObject", args = {}),
+        @Signature(type = ParameterHandler.class, method = "setParameters", args = {PreparedStatement.class}),
+        @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}),
+})
 @Slf4j
-public class QueryInterceptor implements Interceptor {
+public class CustomInterceptor implements Interceptor {
+
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        ParameterHandler handler = (ParameterHandler) invocation.getTarget();
+        log.info("\nmybatis 自定义拦截器拦截开始");
+        Object target = invocation.getTarget();
+        Method method = invocation.getMethod();
+        Object[] args = invocation.getArgs();
 
-        System.err.println(handler);
-        PreparedStatement ps = (PreparedStatement) invocation.getArgs()[0];
-        System.err.println(ps);
+        String className = target.getClass().getName();
+        String methodName = method.getName();
+
+
+        log.info("\n拦截器类:[{}]\n方法:[{}]\n参数:[{}]", className, methodName, Arrays.toString(args));
+        log.info("\nmybatis 自定义拦截器拦截结束");
+
+        log.info("\n----------------------------\n");
+
+//        System.err.println(args[0]);
+//        PreparedStatement ps = (PreparedStatement) args[0];
+//        System.err.println(ps);
+
+
+//        Object parameter = args[1];
+//        System.err.println(parameter);
+
 //        handler.setParameters(ps);
 //        Object[] args = invocation.getArgs();
 //        MappedStatement mappedStatement = (MappedStatement) args[0];
@@ -81,11 +112,14 @@ public class QueryInterceptor implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
+        System.err.println(target);
         return Plugin.wrap(target, this);
     }
 
+    //
     @Override
     public void setProperties(Properties properties) {
+        System.err.println(properties);
         // 可选：读取配置文件中的属性
     }
 

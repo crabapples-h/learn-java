@@ -1,4 +1,4 @@
-//package cn.crabapples.a.common.mybatis.flex;
+package cn.crabapples.common.mybatis.flex;
 //
 //import cn.crabapples.a.common.base.BaseEntity;
 //import com.mybatisflex.annotation.InsertListener;

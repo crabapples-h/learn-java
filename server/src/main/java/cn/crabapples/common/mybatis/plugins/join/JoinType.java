@@ -1,4 +1,4 @@
-package demo.mybatis.anno;
+package cn.crabapples.common.mybatis.plugins.join;
 
 /**
  * Join类型枚举

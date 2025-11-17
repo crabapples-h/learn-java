@@ -1,4 +1,4 @@
-package cn.crabapples.common.mybatis.plugins;
+package cn.crabapples.common.mybatis.plugins.mask;
 
 import lombok.Getter;
 

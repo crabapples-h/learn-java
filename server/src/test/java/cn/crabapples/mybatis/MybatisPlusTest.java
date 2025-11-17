@@ -1,4 +1,4 @@
-package cn.crabapples.mybatis.plus;
+package cn.crabapples.mybatis;
 
 import cn.crabapples.system.sysUser.dao.UserDAO;
 import cn.crabapples.system.sysUser.entity.SysUser;
@@ -26,16 +26,19 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
 @Slf4j
-public class MybatisFlexTest {
+public class MybatisPlusTest {
     @Autowired
     UserDAO dao;
 
     @Test
     public void case1() {
-        List<SysUser> users = dao.list(new LambdaQueryWrapper<>(SysUser.class));
+        List<SysUser> users = dao.list(new LambdaQueryWrapper<>(SysUser.class)
+                .eq(SysUser::getId, "001")
+        );
         for (SysUser user : users) {
-            log.info("用户:[{}]", user);
+            log.info("\n用户:[{}]", user);
         }
+        dao.saveOrUpdate(SysUser.create().setId("003"));
     }
 }
 

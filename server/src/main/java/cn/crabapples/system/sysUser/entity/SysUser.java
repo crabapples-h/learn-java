@@ -2,8 +2,12 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.annotation.Dict;
-import cn.crabapples.common.mybatis.plugins.CMask;
-import cn.crabapples.common.mybatis.plugins.CMaskEnum;
+import cn.crabapples.common.mybatis.plugins.join.JoinField;
+import cn.crabapples.common.mybatis.plugins.join.JoinType;
+import cn.crabapples.common.mybatis.plugins.mask.CMask;
+import cn.crabapples.common.mybatis.plugins.mask.CMaskEnum;
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -11,6 +15,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -42,14 +48,9 @@ public class SysUser extends BaseEntity<SysUser> {
     @Dict(dictCode = "gender")
     private Integer gender; // 性别
 
-//    @TableField(exist = false)
-    private List<String> roleList;
-
-//    @RelationOneToMany(joinTable = "sys_user_roles",
-//            joinSelfColumn = "user_id", joinTargetColumn = "role_id",
-//            selfField = "id", targetField = "id")
-//    @JSONField(serialize = false)
-//    private List<SysRole> roleListObj;
+    @JoinField(table = "sys_user_roles", selfKey = "id", targetKey = "user_id",
+            type = JoinType.LEFT_JOIN, selectFields = "role_id", alias = "ur")
+    private String roleList;
 
     // 用户状态标记 0:正常 1:禁用
     private Integer status;
@@ -62,10 +63,10 @@ public class SysUser extends BaseEntity<SysUser> {
     private String tenantId;
 
 
-//    public List<String> getRoleList() {
-//        if (CollectionUtil.isEmpty(this.roleListObj)) {
-//            return Collections.emptyList();
-//        }
-//        return roleListObj.stream().map(SysRole::getId).collect(Collectors.toList());
-//    }
+    public List<String> getRoleList() {
+        if (null == roleList) {
+            return Collections.emptyList();
+        }
+        return Arrays.asList(roleList.split(","));
+    }
 }
