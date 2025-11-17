@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import demo.mybatis.anno.JoinField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -43,12 +42,12 @@ public class SysUser extends Model<SysUser> implements Serializable, Cloneable {
     private Integer gender; // 性别
 
     @TableField(exist = false)
-    @JoinField(
-            table = "sys_user_roles",
-            primaryKey = "id",
-            foreignKey = "user_id",
-            selectFields = {"id", "name"},
-            alias = "roleList")
+//    @JoinField(
+//            table = "sys_user_roles",
+//            primaryKey = "id",
+//            foreignKey = "user_id",
+//            selectFields = {"id", "name"},
+//            alias = "roleList")
     private List<String> roleList;
 
 //    @RelationOneToMany(joinTable = "sys_user_roles",
