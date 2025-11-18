@@ -48,7 +48,7 @@ spring:
         #password:
     ### sentinel
     sentinel:
-      transport.dashboard: 127.0.0.1:8858
+      transport.dashboard: 172.16.8.70:8858
       transport.port: 8859
       log.dir: ./logs/csp
 

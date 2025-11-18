@@ -15,7 +15,7 @@ spring.cloud.sentinel:
   enabled: true
   eager: true  # 立即初始化
   log.dir: ./logs/csp # Sentinel 日志目录
-  transport.dashboard: 127.0.0.1:8858 # Sentinel 控制台地址
+  transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
   transport.port: 8719
   scg: # Gateway 特定配置
     enabled: true
