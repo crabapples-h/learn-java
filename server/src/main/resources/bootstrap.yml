@@ -4,11 +4,11 @@ dataBaseParam: 'useUnicode=true
 &zeroDateTimeBehavior=convertToNull
 &allowPublicKeyRetrieval=true
 &nullDatabaseMeansCurrent=true'
-previewAddress: http://localhost:8012
-#上传文件配置
-virtualPath: '/file/'
-uploadPath: 'd:/uploadPath/'
-#uploadPath: '/Users/mshe/developer/uploadPath'
+
+# 允许Netty使用反射
+#io.netty.tryReflectionSetAccessible: true
+# 或者禁用Netty的Unsafe
+#io.netty.noUnsafe: true
 server.port: 19093
 # 日志配置
 logging:
@@ -17,12 +17,13 @@ logging:
     root: info
     druid.sql: warn
     com.mybatisplus: info
+    com.alibaba: info
 
 # mybatis
 mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # mybatis-plus
 mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
-
+spring.config.import: optional:nacos:api-system.yaml
 spring:
   redis:
     host: 192.168.31.166
@@ -36,21 +37,22 @@ spring:
   mvc.throw-exception-if-no-handler-found: true #出现错误时, 直接抛出异常
   web.resources.add-mappings: false #不要为工程中的资源文件建立映射
   cloud:
-    ### nacos配置
-    nacos:
+    nacos: ### nacos配置
       server-addr: @nacos.server-addr@
       discovery:
-        server-addr: @nacos.server-addr@
-        #server-addr: 172.16.8.70:8850
         service: system
-        #group: hq
-        #username:
-        #password:
+        group: DEFAULT_GROUP
+        namespace:
+    #        username:
+    #        password:
     ### sentinel
     sentinel:
+      enabled: true
       transport.dashboard: 172.16.8.70:8858
       transport.port: 8859
       log.dir: ./logs/csp
+      scg:
+        enabled: true
 
 
 

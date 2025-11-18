@@ -1,5 +1,6 @@
 package cn.crabapples.system.system.controller;
 
+import cn.crabapples.common.annotation.IgnoreDict;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.base.ResponseDTO;
 import cn.crabapples.common.annotation.JwtIgnore;
@@ -9,6 +10,7 @@ import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.UserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.system.service.SystemService;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -51,6 +53,19 @@ public class SystemController extends BaseController {
     }
 
     /**
+     * 发起登录请求-流控接管
+     *
+     * @param form 用户名和密码
+     * @return 登录成功返回token
+     */
+    @JwtIgnore
+    @IgnoreDict
+    public ResponseDTO<String> loginCallback(@RequestBody UserForm form) {
+        log.warn("收到请求->用户登陆验证:[{}],------流控接管-----", form);
+        return new ResponseDTO<String>().returnCustom(429, "流控接管", null);
+    }
+
+    /**
      * 发起登录请求
      *
      * @param form 用户名和密码
@@ -59,6 +74,8 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping(value = "/login")
     @Operation(summary = "用户登陆", description = "用户登陆接口")
+    @SentinelResource(value = "login", blockHandler = "loginCallback")
+    @IgnoreDict
     public ResponseDTO<String> login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);

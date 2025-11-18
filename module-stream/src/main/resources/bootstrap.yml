@@ -1,0 +1,21 @@
+# 数据库连接参数配置
+params: "useUnicode=true&
+characterEncoding=utf-8&
+serverTimezone=Asia/Shanghai&
+zeroDateTimeBehavior=convertToNull&
+allowPublicKeyRetrieval=true&
+nullDatabaseMeansCurrent=true"
+server.port: 19095
+# 日志配置
+logging:
+  file.name: logs/crabapples-websocket/
+  level:
+    root: info
+
+spring.config.import: optional:nacos:websocket-service.yaml
+spring.application.name: websocket-service
+spring.cloud.nacos:
+  server-addr: @nacos.server-addr@
+  discovery.service: stream
+
+

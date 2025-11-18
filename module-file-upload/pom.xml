@@ -36,6 +36,27 @@
             <version>4.10.0</version>
         </dependency>
 
+        <!-- bootstrap.yml支持,springboot2.4之后需要手动导入 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <!-- sentinel流控 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <!-- nacos服务注册发现 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!-- nacos配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+
         <!--mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -43,12 +64,6 @@
             <version>${mybatis-plus-starter.version}</version>
         </dependency>
 
-
-        <!-- nacos服务注册发现 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>

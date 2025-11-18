@@ -29,24 +29,27 @@
             <version>3.6.1</version>
         </dependency>
 
-
-        <!-- sentinel核心依赖 -->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>-->
-        <!--        </dependency>-->
+        <!-- bootstrap.yml支持,springboot2.4之后需要手动导入 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <!-- sentinel流控 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
         <!-- nacos服务注册发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <!-- nacos配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
 
-        <!--nacos config-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba.boot</groupId>-->
-        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
-        <!--            <version>${nacos-config-spring-boot-starter.version}</version>-->
-        <!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>cn.crabapples</groupId>-->
         <!--            <artifactId>turing-api</artifactId>-->
@@ -87,63 +90,17 @@
             <version>${commons-codec.version}</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
-        <!--        </dependency>-->
-
-        <!--        &lt;!&ndash; lombok工具 &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.projectlombok</groupId>-->
-        <!--            <artifactId>lombok</artifactId>-->
-        <!--            <version>${lombok.version}</version>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
             <version>${mybatis-generator.version}</version>
         </dependency>
-
-
-        <!--mybatis-plus-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.baomidou</groupId>-->
-        <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
-        <!--            <version>${mybatis-plus-starter.version}</version>-->
-        <!--        </dependency>-->
-
-
-        <!--        <dependency>-->
-        <!--            <groupId>com.mybatis-flex</groupId>-->
-        <!--            <artifactId>mybatis-flex-processor</artifactId>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
-
-        <!-- 添加已适配 springboot 3 的 mybatis-spring 依赖-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.mybatis</groupId>-->
-        <!--            <artifactId>mybatis-spring</artifactId>-->
-        <!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>com.github.pagehelper</groupId>-->
-        <!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
-        <!--            <version>1.2.12</version>-->
-        <!--        </dependency>-->
-
-        <!--        &lt;!&ndash; redis &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-        <!--        </dependency>-->
 
 
         <!-- elasticSearch依赖 -->
@@ -206,14 +163,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
-        <!--        </dependency>-->
     </dependencies>
     <build>
         <plugins>

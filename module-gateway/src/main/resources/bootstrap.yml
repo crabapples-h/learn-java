@@ -1,0 +1,66 @@
+server.port: 9093
+### 日志配置 ###
+logging.level:
+  root: INFO
+  reactor.netty.http.client: DEBUG
+  org.springframework.cloud.gateway: DEBUG
+  org.springframework.web.reactive: DEBUG
+  reactor.netty: DEBUG
+  org.springframework.cloud.loadbalancer: DEBUG
+spring.config.import: optional:nacos:api-gateway.yaml
+#spring.profiles.active: ${PROFILE}
+spring.application.name: api-gateway
+### sentinel配置 ###
+spring.cloud.sentinel:
+  enabled: true
+  eager: true  # 立即初始化
+  log.dir: ./logs/csp # Sentinel 日志目录
+  transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
+  transport.port: 8719
+  scg: # Gateway 特定配置
+    enabled: true
+    # 限流后的响应配置
+    fallback:
+      mode: response
+      response-status: 429
+      response-body: '{"code": 429, "msg": "请求过于频繁，请10秒后再试"}'
+### nacos配置 ###
+spring.cloud.nacos:
+  config.file-extension: yaml
+  server-addr: @nacos.server-addr@
+  discovery:
+    namespace:
+    service: api-gateway # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
+    group: DEFAULT_GROUP
+#### gateway配置 ###
+#spring.cloud.gateway:
+#  discovery.locator:
+#    enabled: true # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
+#    lower-case-service-id: true # 服务名转为小写
+#    predicates:
+#      - name: Path
+#        args:
+#          pattern: "'/api/'+serviceId+'/**'"
+#    filters:
+##      - name: RewritePath
+##        args:
+##          regexp: "'/'+serviceId+'/(?<remaining>.*)'"
+##          replacement: "'/${remaining}'"
+#  globalcors: # 全局跨域配置
+#    add-to-simple-url-handler-mapping: true # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
+#    corsConfigurations:
+#      '[/**]': # 允许跨域访问的资源
+#        # 允许所有域名跨域请求
+#        allowedOriginPatterns: "*"
+#        # 允许指定跨域请求
+#        allowedOrigins: [ "http://localhost:8080" ]
+#        # 允许指定请求方式跨域
+#        allowedMethods: [ "GET", "HEAD","POST","DELETE","PUT","OPTIONS" ]
+#        # 允许所有的请求头
+#        allowedHeaders: "*"
+#        # 允许浏览器访问的所有响应头
+#        exposedHeaders: "*"
+#        # 允许携带认证信息（如cookies、HTTP认证）,当设置为 true 时，allowedOrigins 不能使用 "*"，必须指定具体域名
+#        allowCredentials: true
+#        # 跨域检测（OPTIONS）请求的有效期(单位:秒)
+#        maxAge: 3600
