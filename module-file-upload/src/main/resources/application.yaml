@@ -8,7 +8,14 @@ nullDatabaseMeansCurrent=true"
 virtualPath: '/file/' # 虚拟路径
 #uploadPath: 'd:/uploadPath/' # 上传文件存储路径 (Windows)
 uploadPath: '/Users/mshe/developer/uploadPath' # 上传文件存储路径 (Mac/Linux)
-
+# 日志配置
+logging:
+  file.name: logs/crabapples-file-upload
+  level:
+    root: info
+    druid.sql: info
+    com.mybatis: debug
+    com.mybatisplus: debug
 server.port: 19094
 spring:
   application.name: file-upload-service
@@ -32,14 +39,7 @@ spring:
     port: 6379
     password: 123456789
 
-# 日志配置
-logging:
-  file.name: logs/crabapples-file-upload/
-  level:
-    root: info
-    druid.sql: info
-    com.mybatis: debug
-    com.mybatisplus: debug
+
 
 # MyBatis配置
 # mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml

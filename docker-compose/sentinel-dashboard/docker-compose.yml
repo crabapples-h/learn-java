@@ -16,7 +16,7 @@ services:
       - "-Dsentinel.dashboard.auth.username=crabapples"
       - "-Dsentinel.dashboard.auth.password=crabapples"
       - "-Dauth.enabled=true"
-      - "-Dcsp.sentinel.log.dir=/logs/csp"
+      - "-Dcsp.sentinel.log.dir=logs/csp"
       - "/opt/app.jar"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8858" ]

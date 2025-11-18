@@ -1,11 +1,13 @@
 # FROM dockette/openjdk8
 #FROM dockette/openjdk8
-FROM harbor.crabapples.cn/jdk/jdk11
+FROM 192.168.31.60/jdk/jdk11
 #FROM harbor.crabapples.cn/jdk/jdk8
+WORKDIR /opt
 VOLUME /logs/csp
 EXPOSE 8858
-COPY sentinel-dashboard-1.8.8.jar /opt/app.jar
-
+COPY sentinel-dashboard-1.8.8.jar app.jar
+COPY start.sh start.sh
+ENTRYPOINT ["/bin/bash","start.sh"]
 
 # FROM 指定基础镜像
 # FROM centos

@@ -16,8 +16,7 @@ logging:
   level:
     root: info
     druid.sql: warn
-    #    com.mybatisflex: debug
-    com.mybatisflex: info
+    com.mybatisplus: info
 
 # mybatis
 mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
@@ -25,6 +24,10 @@ mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/da
 mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 
 spring:
+  redis:
+    host: 192.168.31.166
+    port: 6379
+    password: 123456789
   application.name: api-system
   profiles.active: dev
   servlet.multipart:
