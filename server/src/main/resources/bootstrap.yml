@@ -12,7 +12,7 @@ dataBaseParam: 'useUnicode=true
 server.port: 19093
 # 日志配置
 logging:
-  file.name: logs/springboot-jwt/
+  file.name: logs/api-system/
   level:
     root: info
     druid.sql: warn
@@ -50,7 +50,7 @@ spring:
       enabled: true
       transport.dashboard: 172.16.8.70:8858
       transport.port: 19113
-      log.dir: ./logs/csp
+      log.dir: ./logs/sentinel/api-system
       scg:
         enabled: true
 

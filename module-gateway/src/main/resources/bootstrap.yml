@@ -21,7 +21,7 @@ spring.cloud.sentinel:
   enabled: true
   # true:应用启动时立即初始化 Sentinel，而不是等到第一次调用时才初始化,默认为false
   eager: true
-  log.dir: ./logs/sentinel/gateway
+  log.dir: ./logs/sentinel/api-gateway
   transport.dashboard: 172.16.8.70:8858 # sentinel控制台地址
   transport.port: 9113 # sentinel与本机通信端口
   scg:

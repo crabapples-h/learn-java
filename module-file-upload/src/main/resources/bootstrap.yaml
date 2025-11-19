@@ -11,7 +11,7 @@ uploadPath: '/Users/mshe/developer/uploadPath' # 上传文件存储路径 (Mac/L
 
 # 日志配置
 logging:
-  file.name: logs/crabapples-file-upload
+  file.name: logs/file-upload-service
   level:
     root: info
     druid.sql: info
@@ -32,7 +32,7 @@ spring:
     sentinel:
       enabled: true
       eager: true  # 立即初始化
-      log.dir: ./logs/csp # Sentinel 日志目录
+      log.dir: ./logs/sentinel/file-upload-service # Sentinel 日志目录
       transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
       transport.port: 19114
 
