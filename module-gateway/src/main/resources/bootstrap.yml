@@ -39,19 +39,30 @@ spring.cloud.nacos:
     service: api-gateway # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
     group: DEFAULT_GROUP
 #### gateway配置 ###
-#spring.cloud.gateway:
-#  discovery.locator:
-#    enabled: true # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
-#    lower-case-service-id: true # 服务名转为小写
-#    predicates:
-#      - name: Path
+spring.cloud.gateway:
+  discovery.locator:
+    enabled: true # 是否启动自动识别nacos服务,默认为false，即使用nacos里的服务名自动选择调用哪个微服务
+    lower-case-service-id: true # 服务名转为小写
+    predicates:
+      - name: Path
+        args:
+          pattern: "'/api/'+serviceId+'/**'"
+  default-filters:
+    - AddRequestHeader=test,123456
+    - name: AddRequestHeader
+      args:
+          name: 'test1'
+          value: '123456'
+#    - name: CustomFilter
+#      args:
+#        name: 这是name
+#        value: 这是value
+#        test: 这是test
+#        test2: 这是test2
+#      - name: RewritePath
 #        args:
-#          pattern: "'/api/'+serviceId+'/**'"
-#    filters:
-##      - name: RewritePath
-##        args:
-##          regexp: "'/'+serviceId+'/(?<remaining>.*)'"
-##          replacement: "'/${remaining}'"
+#          regexp: "'/'+serviceId+'/(?<remaining>.*)'"
+#          replacement: "'/${remaining}'"
 #  globalcors: # 全局跨域配置
 #    add-to-simple-url-handler-mapping: true # 跨域时浏览器会先发起一次options请求，配置这可以解决options请求被拦截的问题
 #    corsConfigurations:

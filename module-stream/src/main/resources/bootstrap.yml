@@ -17,5 +17,8 @@ spring.application.name: websocket-service
 spring.cloud.nacos:
   server-addr: @nacos.server-addr@
   discovery.service: stream
-
-
+spring.cloud.sentinel:
+  enabled: true
+  transport.dashboard: 172.16.8.70:8858
+  transport.port: 19115
+  log.dir: ./logs/sentinel/api-stream

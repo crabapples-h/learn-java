@@ -24,8 +24,6 @@ public class UserDAO extends ServiceImpl<UserMapper, SysUser> {
                 .like(!StringUtils.isEmpty(entity.getName()), SysUser::getName, entity.getName())
                 .like(!StringUtils.isEmpty(entity.getMail()), SysUser::getMail, entity.getMail())
                 .like(!StringUtils.isEmpty(entity.getPhone()), SysUser::getPhone, entity.getPhone());
-        String targetSql = wrapper.getTargetSql();
-        System.err.println(targetSql);
         return wrapper;
     }
 

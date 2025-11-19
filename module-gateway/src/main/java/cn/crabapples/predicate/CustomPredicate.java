@@ -1,5 +1,6 @@
 package cn.crabapples.predicate;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * 自定义路由断言工厂
+ * 自定义断言
  *
  * @author Mr.He
  * 2024-11-24 23:24
@@ -24,10 +25,10 @@ import java.util.function.Predicate;
  */
 @Component
 @Slf4j
-public class CustomRoutePredicateFactory extends AbstractRoutePredicateFactory<CustomRoutePredicateFactory.Config> {
+public class CustomPredicate extends AbstractRoutePredicateFactory<CustomPredicate.Config> {
 
     // 需要在构造函数中指定配置类
-    public CustomRoutePredicateFactory() {
+    public CustomPredicate() {
         super(Config.class);
     }
 
@@ -47,14 +48,13 @@ public class CustomRoutePredicateFactory extends AbstractRoutePredicateFactory<C
     public Predicate<ServerWebExchange> apply(Config config) {
         return (exchange) -> {
             ServerHttpRequest request = exchange.getRequest();
-            log.info("请求详情:[{}]", request);
+            log.info("自定义路由断言执行,请求详情:[{}]", request);
             return true;
         };
     }
 
     @Validated
-    @Getter
-    @Setter
+    @Data
     public static class Config {
         private String name;
         private String value;

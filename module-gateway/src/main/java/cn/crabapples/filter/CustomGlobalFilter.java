@@ -1,15 +1,17 @@
 package cn.crabapples.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
- * 自定义全局路由过滤器
+ * 全局过滤器,直接生效
  * 实现 GlobalFilter 接口
  *
  * @author Ms.He
@@ -19,7 +21,8 @@ import reactor.core.publisher.Mono;
  * pc-name mshe
  */
 @Component
-public class CustomGlobalGatewayFilterFactory implements GlobalFilter, Ordered {
+@Slf4j
+public class CustomGlobalFilter implements GlobalFilter, Ordered {
     /**
      * @param exchange 请求上下文，包含了Request，Response等信息
      * @param chain    用来把请求委托(转发)给下一个过滤器
@@ -27,11 +30,13 @@ public class CustomGlobalGatewayFilterFactory implements GlobalFilter, Ordered {
      */
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest sourceRequest = exchange.getRequest();
+        log.info("全局路由过滤器执行->[{}]", "CustomGlobalFilter");
+        ServerHttpRequest request = exchange.getRequest();
+        request.mutate().headers((e)-> e.add("origin", "gateway"));
         System.err.println(exchange);
         System.err.println(chain);
-        System.err.println(sourceRequest);
-//            ServerHttpRequest request = sourceRequest.mutate()
+        System.err.println(request);
+//            ServerHttpRequest request = request.mutate()
 //                    .headers(httpHeaders -> httpHeaders.add(config.getName(), value)).build();
         return chain.filter(exchange.mutate().build());
     }

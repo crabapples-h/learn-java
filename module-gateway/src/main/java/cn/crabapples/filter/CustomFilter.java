@@ -1,12 +1,16 @@
 package cn.crabapples.filter;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.server.ServerWebExchange;
@@ -16,7 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 自定义路由过滤器
+ * 自定义过滤器,需要在yaml中配置才能生效
+ * 执行顺序 defaultFilter(默认过滤器) > 路由过滤器 > GlobalFilter(全局过滤器)
  * 继承 AbstractGatewayFilterFactory 类
  *
  * @author Mr.He
@@ -26,9 +31,19 @@ import java.util.List;
  * pc-name mshe
  */
 @Component
-public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<CustomGatewayFilterFactory.Config> {
-    public CustomGatewayFilterFactory() {
+@Slf4j
+public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
+    public CustomFilter() {
         super(Config.class);
+    }
+
+    @Validated
+    @Data
+    public static class Config {
+        private String name;
+        private String value;
+        private String test;
+        private String test2;
     }
 
     /**
@@ -55,28 +70,21 @@ public class CustomGatewayFilterFactory extends AbstractGatewayFilterFactory<Cus
              */
             @Override
             public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-                ServerHttpRequest sourceRequest = exchange.getRequest();
+                log.info("自定义路由过滤器执行->[{}]", "CustomFilterFactory");
+                ServerHttpRequest request = exchange.getRequest();
+                ServerHttpResponse response = exchange.getResponse();
                 System.err.println(config);
                 System.err.println(exchange);
                 System.err.println(chain);
-                System.err.println(sourceRequest);
-//            ServerHttpRequest request = sourceRequest.mutate()
+                System.err.println(request);
+                response.setStatusCode(HttpStatus.UNAUTHORIZED);
+//                return response.setComplete(); // 中断请求
+//            ServerHttpRequest request = request.mutate()
 //                    .headers(httpHeaders -> httpHeaders.add(config.getName(), value)).build();
                 return chain.filter(exchange.mutate().build());
             }
         };
     }
 
-
-    @Validated
-    @Getter
-    @Setter
-    @ToString
-    public static class Config {
-        private String name;
-        private String value;
-        private String test;
-        private String test2;
-    }
 
 }

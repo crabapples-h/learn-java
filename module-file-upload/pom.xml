@@ -41,11 +41,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-        <!-- sentinel流控 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
         <!-- nacos服务注册发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -64,14 +59,12 @@
             <version>${mybatis-plus-starter.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
