@@ -34,7 +34,7 @@ spring:
       eager: true  # 立即初始化
       log.dir: ./logs/csp # Sentinel 日志目录
       transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
-      transport.port: 8720
+      transport.port: 19114
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

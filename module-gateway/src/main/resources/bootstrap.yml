@@ -10,15 +10,21 @@ logging.level:
 spring.config.import: optional:nacos:api-gateway.yaml
 #spring.profiles.active: ${PROFILE}
 spring.application.name: api-gateway
+### 负载均衡配置 ###
+spring.cloud.loadbalancer:
+  configurations:
+    - round-robin  # 默认轮询
+  retry:
+    enabled: true
 ### sentinel配置 ###
 spring.cloud.sentinel:
   enabled: true
-  eager: true  # 立即初始化
-  log.dir: ./logs/csp # Sentinel 日志目录
-  transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
-  transport.port: 8719
-  scg: # Gateway 特定配置
-    enabled: true
+  # true:应用启动时立即初始化 Sentinel，而不是等到第一次调用时才初始化,默认为false
+  eager: true
+  log.dir: ./logs/sentinel/gateway
+  transport.dashboard: 172.16.8.70:8858 # sentinel控制台地址
+  transport.port: 9113 # sentinel与本机通信端口
+  scg:
     # 限流后的响应配置
     fallback:
       mode: response

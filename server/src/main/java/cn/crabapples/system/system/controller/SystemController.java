@@ -52,18 +52,18 @@ public class SystemController extends BaseController {
         this.applicationContext = applicationContext;
     }
 
-    /**
-     * 发起登录请求-流控接管
-     *
-     * @param form 用户名和密码
-     * @return 登录成功返回token
-     */
-    @JwtIgnore
-    @IgnoreDict
-    public ResponseDTO<String> loginCallback(@RequestBody UserForm form) {
-        log.warn("收到请求->用户登陆验证:[{}],------流控接管-----", form);
-        return new ResponseDTO<String>().returnCustom(429, "流控接管", null);
-    }
+//    /**
+//     * 发起登录请求-流控接管
+//     *
+//     * @param form 用户名和密码
+//     * @return 登录成功返回token
+//     */
+//    @JwtIgnore
+//    @IgnoreDict
+//    public ResponseDTO<String> loginCallback(@RequestBody UserForm form) {
+//        log.warn("收到请求->用户登陆验证:[{}],------流控接管-----", form);
+//        return new ResponseDTO<String>().returnCustom(429, "流控接管", null);
+//    }
 
     /**
      * 发起登录请求
@@ -74,7 +74,7 @@ public class SystemController extends BaseController {
     @JwtIgnore
     @PostMapping(value = "/login")
     @Operation(summary = "用户登陆", description = "用户登陆接口")
-    @SentinelResource(value = "login", blockHandler = "loginCallback")
+//    @SentinelResource(value = "login", blockHandler = "loginCallback")
     @IgnoreDict
     public ResponseDTO<String> login(@RequestBody UserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
