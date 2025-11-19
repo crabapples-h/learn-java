@@ -49,6 +49,7 @@ spring:
     sentinel:
       enabled: true
       eager: true
+      web-context-unify: false
       transport.dashboard: 172.16.8.70:8858
       transport.port: 19113
       log.dir: ./logs/sentinel/api-system

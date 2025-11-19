@@ -21,6 +21,10 @@ spring.cloud.sentinel:
   enabled: true
   # true:应用启动时立即初始化 Sentinel，而不是等到第一次调用时才初始化,默认为false
   eager: true
+  # 作用：是否将 Web 调用链上下文统一
+  # true：所有 Web 请求在同一个 Context 中（默认） false：每个资源创建独立的 Context
+  # 当配置为true时会导致链路流控失效
+  web-context-unify: false
   log.dir: ./logs/sentinel/api-gateway
   transport.dashboard: 172.16.8.70:8858 # sentinel控制台地址
   transport.port: 9113 # sentinel与本机通信端口

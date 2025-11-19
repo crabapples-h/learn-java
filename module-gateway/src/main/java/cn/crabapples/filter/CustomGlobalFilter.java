@@ -32,7 +32,7 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("全局路由过滤器执行->[{}]", "CustomGlobalFilter");
         ServerHttpRequest request = exchange.getRequest();
-        request.mutate().headers((e)-> e.add("origin", "gateway"));
+        request.mutate().headers((e)-> e.add("origin", "api-gateway"));
         System.err.println(exchange);
         System.err.println(chain);
         System.err.println(request);
