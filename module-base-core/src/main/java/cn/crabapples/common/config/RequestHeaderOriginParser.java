@@ -22,7 +22,7 @@ public class RequestHeaderOriginParser implements RequestOriginParser {
     @Override
     public String parseOrigin(HttpServletRequest httpServletRequest) {
         String origin = httpServletRequest.getHeader("origin");
-        if (!StringUtils.hasLength(origin)) {
+        if (StringUtils.hasLength(origin)) {
             return origin;
         }
         return "black";
