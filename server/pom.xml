@@ -15,7 +15,11 @@
             <artifactId>module-base-core</artifactId>
             <version>${application.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>${sentinel.version}</version>
+        </dependency>
 
         <!-- 矩阵运算工具包 -->
         <dependency>

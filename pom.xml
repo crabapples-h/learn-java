@@ -94,6 +94,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <rustfs.version>2.25.27</rustfs.version>
 
+        <sentinel.version>1.8.9</sentinel.version>
+
         <!--spring-->
         <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
         <!--        <spring-boot-starter-security.version>2.1.6.RELEASE</spring-boot-starter-security.version>-->

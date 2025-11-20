@@ -1,6 +1,7 @@
 package cn.crabapples.common;
 
 import cn.crabapples.common.base.ApplicationException;
+//import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * 自定义Sentinel限流异常处理器
@@ -41,11 +43,10 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
      * @param request  请求
      * @param response 响应
      * @param e        异常
-     * @throws Exception 异常
      */
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
-        logger.error("进入自定义限流异常处理器:[{}]", e.getClass().getSimpleName());
+    public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) {
+        logger.error("进入自定义限流异常处理器:[{}],[{}]", BlockException.isBlockException(e), e.getClass().getSimpleName());
         if (e instanceof AuthorityException) {
             throw new ApplicationException("操作失败:授权规则限流");
         }
@@ -56,11 +57,12 @@ public class CustomBlockExceptionHandler implements BlockExceptionHandler {
             throw new ApplicationException("操作失败:服务限流");
         }
         if (e instanceof DegradeException) {
-            throw new ApplicationException("操作失败:服务降级");
+            throw new ApplicationException("操作失败:服务熔断");
         }
         if (e instanceof SystemBlockException) {
             throw new ApplicationException("操作失败:系统规则限流");
         }
-        throw new ApplicationException("操作失败:Sentinel异常");
+        throw new ApplicationException("操作失败:Sentinel拦截异常");
     }
+
 }

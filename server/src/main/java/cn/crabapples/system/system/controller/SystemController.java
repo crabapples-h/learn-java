@@ -76,9 +76,10 @@ public class SystemController extends BaseController {
     @Operation(summary = "用户登陆", description = "用户登陆接口")
 //    @SentinelResource(value = "login", blockHandler = "loginCallback")
     @IgnoreDict
-    public ResponseDTO<String> login(@RequestBody UserForm form) {
+    public ResponseDTO<String> login(@RequestBody UserForm form) throws InterruptedException {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validator(form, Groups.IsLogin.class);
+        Thread.sleep(500);
         String token = sysService.login(form);
         log.info("返回结果->登录成功->token:[{}]", token);
         return new ResponseDTO<>("登录成功", token);

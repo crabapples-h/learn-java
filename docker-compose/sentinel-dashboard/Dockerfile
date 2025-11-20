@@ -5,7 +5,7 @@ FROM 192.168.31.60/jdk/jdk11
 WORKDIR /opt
 VOLUME /logs/csp
 EXPOSE 8858
-COPY sentinel-dashboard-1.8.8.jar app.jar
+COPY sentinel-dashboard-1.8.9.jar app.jar
 COPY start.sh start.sh
 ENTRYPOINT ["/bin/bash","start.sh"]
 

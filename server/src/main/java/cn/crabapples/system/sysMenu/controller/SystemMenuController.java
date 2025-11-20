@@ -7,6 +7,7 @@ import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysMenu.form.MenusForm;
 import cn.crabapples.system.sysMenu.service.SystemMenusService;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +78,7 @@ public class SystemMenuController extends BaseController {
      */
     @DeleteMapping("/remove/{id}")
     @Operation(summary = "保存菜单", description = "保存菜单")
+    @SentinelResource("/remove/{id}")
     public ResponseDTO<Boolean> removeMenus(@PathVariable String id) {
         log.info("收到请求->删除菜单:[{}]", id);
         boolean status = menusService.removeMenus(id);
