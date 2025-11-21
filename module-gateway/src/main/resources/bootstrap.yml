@@ -29,7 +29,7 @@ spring.cloud.sentinel:
   web-context-unify: false
   log.dir: ./logs/sentinel/${spring.application.name}
   transport.dashboard: 172.16.8.70:8858 # sentinel控制台地址
-#  transport.dashboard: 127.0.0.1:8080 # sentinel控制台地址
+  #  transport.dashboard: 127.0.0.1:8080 # sentinel控制台地址
   transport.port: 9113 # sentinel与本机通信端口
   scg:
     # 限流后的响应配置
@@ -43,13 +43,13 @@ spring.cloud.sentinel:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
         data-id: ${spring.application.name}-FLOW.json
-        rule-type:  FLOW
+        rule-type: FLOW
     degrade_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
         data-id: ${spring.application.name}-DEGRADE.json
-        rule-type:  DEGRADE
+        rule-type: DEGRADE
     param_config:
       nacos:
         server-addr: @nacos.server-addr@
@@ -81,7 +81,6 @@ spring.cloud.sentinel:
         data-id: ${spring.application.name}-GATEWAY_FLOW.json
         rule-type: GW_FLOW
 
-
 ### nacos配置 ###
 spring.cloud.nacos:
   config.file-extension: yaml
@@ -99,6 +98,12 @@ spring.cloud.gateway:
       - name: Path
         args:
           pattern: "'/api/'+serviceId+'/**'"
+    filters:
+  # 当使用服务发现时，Spring Cloud Gateway 会自动配置RewritePath过滤器,如果不用过滤，则需要将filters设置为空
+  #      - name: RewritePath
+  #        args:
+  #          regexp: "'/'+serviceId+'/(?<remaining>.*)'"
+  #          replacement: "'/${remaining}'"
   default-filters:
     - AddRequestHeader=test,123456
     - name: AddRequestHeader

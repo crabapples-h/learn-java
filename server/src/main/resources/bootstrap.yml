@@ -21,7 +21,6 @@ logging:
     com.alibaba.cloud.sentinel: DEBUG
     com.alibaba.nacos.common.remote.client: DEBUG
 
-
 # mybatis
 mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # mybatis-plus
