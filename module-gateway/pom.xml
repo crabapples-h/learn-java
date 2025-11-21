@@ -25,10 +25,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
         <!-- sentinel整合gateway依赖 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -39,7 +35,13 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
-        <!-- nacos服务注册发现 -->
+        <!-- sentinel-nacos整合 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>${sentinel.version}</version>
+        </dependency>
+        <!-- nacos服务发现 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -49,8 +51,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-
-
+        
         <!-- loadbalancer负载均衡 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

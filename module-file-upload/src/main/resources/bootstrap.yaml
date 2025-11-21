@@ -11,7 +11,7 @@ uploadPath: '/Users/mshe/developer/uploadPath' # 上传文件存储路径 (Mac/L
 
 # 日志配置
 logging:
-  file.name: logs/file-upload-service
+  file.name: logs/${spring.application.name}
   level:
     root: info
     druid.sql: info
@@ -19,7 +19,7 @@ logging:
     com.mybatisplus: debug
 server.port: 19094
 spring.application.name: file-upload-service
-spring.config.import: optional:nacos:api-file-upload.yaml
+spring.config.import: optional:nacos:${spring.application.name}.yaml
 spring:
   servlet.multipart:
     max-file-size: 100MB # 最大文件大小
@@ -32,21 +32,47 @@ spring:
     sentinel:
       enabled: true
       eager: true  # 立即初始化
-      log.dir: ./logs/sentinel/file-upload-service # Sentinel 日志目录
+      log.dir: ./logs/sentinel/${spring.application.name} # Sentinel 日志目录
 #      transport.dashboard: 172.16.8.70:8858 # Sentinel 控制台地址
       transport.dashboard: 127.0.0.1:8080 # Sentinel 控制台地址
       transport.port: 19114
-
+      datasource:
+        flow_config:
+          nacos:
+            server-addr: @nacos.server-addr@
+            namespace: namespace-sentinel
+            data-id: ${spring.application.name}-FLOW.json
+            rule-type:  FLOW
+        degrade_config:
+          nacos:
+            server-addr: @nacos.server-addr@
+            namespace: namespace-sentinel
+            data-id: ${spring.application.name}-DEGRADE.json
+            rule-type:  DEGRADE
+        param_config:
+          nacos:
+            server-addr: @nacos.server-addr@
+            namespace: namespace-sentinel
+            data-id: ${spring.application.name}-PARAM_FLOW.json
+            rule-type: PARAM_FLOW
+        system_config:
+          nacos:
+            server-addr: @nacos.server-addr@
+            namespace: namespace-sentinel
+            data-id: ${spring.application.name}-SYSTEM.json
+            rule-type: SYSTEM
+        authority_config:
+          nacos:
+            server-addr: @nacos.server-addr@
+            namespace: namespace-sentinel
+            data-id: ${spring.application.name}-AUTHORITY_FLOW.json
+            rule-type: AUTHORITY
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # type: com.alibaba.druid.pool.DruidDataSource  # 数据库连接池类型配置
     url: "jdbc:mysql://127.0.0.1:3306/learn?useSSL=false&${params}"
     username: root
     password: root
-#  redis:
-#    host: 192.168.31.166
-#    port: 6379
-#    password: 123456789
 
 
 # MyBatis配置

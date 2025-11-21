@@ -8,11 +8,11 @@ nullDatabaseMeansCurrent=true"
 server.port: 19095
 # 日志配置
 logging:
-  file.name: logs/crabapples-websocket/
+  file.name: logs/${spring.application.name}
   level:
     root: info
 
-spring.config.import: optional:nacos:websocket-service.yaml
+spring.config.import: optional:nacos:${spring.application.name}.yaml
 spring.application.name: websocket-service
 spring.cloud.nacos:
   server-addr: @nacos.server-addr@
@@ -20,7 +20,39 @@ spring.cloud.nacos:
 spring.cloud.sentinel:
   enabled: true
   eager: true
-#  transport.dashboard: 172.16.8.70:8858
+  #  transport.dashboard: 172.16.8.70:8858
   transport.dashboard: 127.0.0.1:8080
   transport.port: 19115
-  log.dir: ./logs/sentinel/api-stream
+  log.dir: ./logs/sentinel/${spring.application.name}
+  datasource:
+    flow_config:
+      nacos:
+        server-addr: @nacos.server-addr@
+        namespace: namespace-sentinel
+        data-id: ${spring.application.name}-FLOW.json
+        rule-type: FLOW
+    degrade_config:
+      nacos:
+        server-addr: @nacos.server-addr@
+        namespace: namespace-sentinel
+        data-id: ${spring.application.name}-DEGRADE.json
+        rule-type: DEGRADE
+    param_config:
+      nacos:
+        server-addr: @nacos.server-addr@
+        namespace: namespace-sentinel
+        data-id: ${spring.application.name}-PARAM_FLOW.json
+        rule-type: PARAM_FLOW
+    system_config:
+      nacos:
+        server-addr: @nacos.server-addr@
+        namespace: namespace-sentinel
+        data-id: ${spring.application.name}-SYSTEM.json
+        rule-type: SYSTEM
+    authority_config:
+      nacos:
+        server-addr: @nacos.server-addr@
+        namespace: namespace-sentinel
+        data-id: ${spring.application.name}-AUTHORITY_FLOW.json
+        rule-type: AUTHORITY
+

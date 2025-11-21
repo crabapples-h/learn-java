@@ -33,13 +33,19 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.10.0</version>
+            <version>${okhttp.version}</version>
         </dependency>
 
         <!-- bootstrap.yml支持,springboot2.4之后需要手动导入 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <!-- sentinel-nacos整合 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>${sentinel.version}</version>
         </dependency>
         <!-- nacos服务注册发现 -->
         <dependency>

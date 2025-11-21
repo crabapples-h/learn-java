@@ -12,7 +12,7 @@ dataBaseParam: 'useUnicode=true
 server.port: 19093
 # 日志配置
 logging:
-  file.name: logs/api-system/
+  file.name: logs/{spring.application.name}
   level:
     root: info
     druid.sql: warn
@@ -26,13 +26,13 @@ logging:
 mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # mybatis-plus
 mybatis-plus.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
-spring.config.import: optional:nacos:api-system.yaml
+spring.config.import: optional:nacos:${spring.application.name}.yaml
+spring.application.name: api-system
 spring:
   redis:
     host: 192.168.31.166
     port: 6379
     password: 123456789
-  application.name: api-system
   profiles.active: dev
   servlet.multipart:
     max-file-size: 100MB # 设置最大文件大小
@@ -46,8 +46,6 @@ spring:
         service: system
         group: DEFAULT_GROUP
         namespace:
-    #        username:
-    #        password:
     ### sentinel
     sentinel:
       enabled: true
@@ -56,7 +54,7 @@ spring:
       #      transport.dashboard: 172.16.8.70:8858
       transport.dashboard: 127.0.0.1:8080
       transport.port: 19113
-      log.dir: ./logs/sentinel/api-system
+      log.dir: ./logs/sentinel/${spring.application.name
       datasource:
         # 流控规则
         flow_config:

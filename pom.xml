@@ -24,7 +24,6 @@
         <module>module-stream</module>
         <module>module-ai-service</module>
         <module>server</module>
-        <!--        <module>server-flux</module>-->
     </modules>
     <profiles>
         <profile>
@@ -111,7 +110,6 @@
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <!--        <nacos-discovery.version>2.2.0.RELEASE</nacos-discovery.version>-->
         <!--基础工具-->
-        <!--        <crabapples-base-project.version>1.0.4</crabapples-base-project.version>-->
         <maven-resources-plugin.version>2.4.3</maven-resources-plugin.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.4</commons-lang.version>
@@ -139,7 +137,6 @@
         <slf4j-log4j12.version>1.7.12</slf4j-log4j12.version>
         <slf4j-api.version>1.7.21</slf4j-api.version>
         <!--安全-->
-        <!--安全-->
         <jwt.version>3.2.0</jwt.version>
         <!--        <java-jwt.version>3.2.0</java-jwt.version>-->
         <!--        <shiro.version>1.4.0</shiro.version>-->
@@ -153,12 +150,11 @@
         <!--        <elasticsearch-transport.version>7.5.0</elasticsearch-transport.version>-->
         <!--        <elasticsearch-rest-high-level-client.version>7.5.0</elasticsearch-rest-high-level-client.version>-->
         <!--数据库-->
-        <!--        <druid.version>1.1.20</druid.version>-->
         <!--        <embedded-redis.version>0.6</embedded-redis.version>-->
         <amqp-client.version>5.7.3</amqp-client.version>
         <mysql.version>8.4.0</mysql.version>
         <!--网络-->
-        <okhttp.version>4.7.2</okhttp.version>
+        <okhttp.version>4.10.0</okhttp.version>
         <javax.mail.version>1.4.7</javax.mail.version>
         <ganymed-ssh2.version>262</ganymed-ssh2.version>
         <!--        <javax.mail.version>1.4.7</javax.mail.version>-->

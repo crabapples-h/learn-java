@@ -15,12 +15,6 @@
             <artifactId>module-base-core</artifactId>
             <version>${application.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-            <version>${sentinel.version}</version>
-        </dependency>
-
         <!-- 矩阵运算工具包 -->
         <dependency>
             <groupId>org.ejml</groupId>
@@ -37,6 +31,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <!-- sentinel-nacos整合 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+            <version>${sentinel.version}</version>
         </dependency>
         <!-- nacos服务注册发现 -->
         <dependency>

@@ -1,13 +1,15 @@
 server.port: 9093
 ### 日志配置 ###
-logging.level:
-  root: INFO
-  reactor.netty.http.client: DEBUG
-  org.springframework.cloud.gateway: DEBUG
-  org.springframework.web.reactive: DEBUG
-  reactor.netty: DEBUG
-  org.springframework.cloud.loadbalancer: DEBUG
-spring.config.import: optional:nacos:api-gateway.yaml
+logging:
+  file.name: logs/${spring.application.name}
+  level:
+    root: INFO
+    reactor.netty.http.client: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG
+    org.springframework.cloud.loadbalancer: DEBUG
+spring.config.import: optional:nacos:${spring.application.name}.yaml
 #spring.profiles.active: ${PROFILE}
 spring.application.name: api-gateway
 ### 负载均衡配置 ###
@@ -25,7 +27,7 @@ spring.cloud.sentinel:
   # true：所有 Web 请求在同一个 Context 中（默认） false：每个资源创建独立的 Context
   # 当配置为true时会导致链路流控失效
   web-context-unify: false
-  log.dir: ./logs/sentinel/api-gateway
+  log.dir: ./logs/sentinel/${spring.application.name}
 #  transport.dashboard: 172.16.8.70:8858 # sentinel控制台地址
   transport.dashboard: 127.0.0.1:8080 # sentinel控制台地址
   transport.port: 9113 # sentinel与本机通信端口
@@ -40,44 +42,44 @@ spring.cloud.sentinel:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: flow-rules-${spring.application.name}.json
-        rule-type:  flow
+        data-id: ${spring.application.name}-FLOW.json
+        rule-type:  FLOW
     degrade_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: degrade-rules-${spring.application.name}.json
-        rule-type:  degrade
+        data-id: ${spring.application.name}-DEGRADE.json
+        rule-type:  DEGRADE
     param_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: param-rules-${spring.application.name}.json
-        rule-type: param_flow
+        data-id: ${spring.application.name}-PARAM_FLOW.json
+        rule-type: PARAM_FLOW
     system_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: system-rules-${spring.application.name}.json
-        rule-type: system
+        data-id: ${spring.application.name}-SYSTEM.json
+        rule-type: SYSTEM
     authority_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: authority-rules-${spring.application.name}.json
-        rule-type: authority
-    api_group_config:
+        data-id: ${spring.application.name}-AUTHORITY_FLOW.json
+        rule-type: AUTHORITY
+    api_definition_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: api-group-${spring.application.name}.json
-        rule-type: gw-api-group
-    gw_flow_config:
+        data-id: ${spring.application.name}-API_DEFINITION.json
+        rule-type: GW_API_GROUP
+    gateway_flow_config:
       nacos:
         server-addr: @nacos.server-addr@
         namespace: namespace-sentinel
-        data-id: gateway-flow-${spring.application.name}.json
-        rule-type: gw-flow
+        data-id: ${spring.application.name}-GATEWAY_FLOW.json
+        rule-type: GW_FLOW
 
 
 ### nacos配置 ###
