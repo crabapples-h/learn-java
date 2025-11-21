@@ -3,7 +3,9 @@ services:
   sentinel-dashboard:
     build:
       dockerfile: Dockerfile
+    image: sentinel-dashboard:1.8.9
     container_name: sentinel-dashboard
+    #    network_mode:  host
     restart: always
     ports:
       - "8858:8858"
@@ -17,6 +19,11 @@ services:
       - "-Dsentinel.dashboard.auth.password=crabapples"
       - "-Dauth.enabled=true"
       - "-Dcsp.sentinel.log.dir=logs/csp"
+      - "-Dnacos.config.server-addr=http://172.16.8.70:8848"
+      - "-Dnacos.config.namespace=namespace-sentinel"
+      - "-Dnacos.config.groupId=DEFAULT_GROUP"
+      - "-Dnacos.config.username="
+      - "-Dnacos.config.password="
       - "/opt/app.jar"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8858" ]
