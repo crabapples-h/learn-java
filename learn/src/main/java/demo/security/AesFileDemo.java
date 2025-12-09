@@ -127,11 +127,13 @@ public class AesFileDemo {
     }
 
     public static void main(String[] args) throws Exception {
-        File source = new File("F:/IdCard");
-        String target = "f:/2";
-        Key key = createKey("8174254");
+        String inputPath = "/Users/mshe/OneDrive/encodePath";
+        String outputPath = "/Users/mshe/decodePath";
+        String keySeed = "8174254";
+        File source = new File(inputPath);
+        Key key = createKey(keySeed);
         for (File file : Objects.requireNonNull(source.listFiles())) {
-            doFinal(key, file, target, Cipher.DECRYPT_MODE);
+            doFinal(key, file, outputPath, Cipher.ENCRYPT_MODE);
         }
     }
 }
