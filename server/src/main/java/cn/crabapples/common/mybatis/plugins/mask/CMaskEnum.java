@@ -19,13 +19,9 @@ public enum CMaskEnum {
     }
 
     public String mask(String source) {
+        if (source == null) {
+            return null;
+        }
         return source.replaceAll(this.regex, this.maskFormat);
-    }
-
-    public static void main(String[] args) {
-//        System.out.println(CMaskEnum.PHONE.mask("13765710705"));
-//        System.out.println(CMaskEnum.ID_CARD.mask("520201199701214811"));
-//        System.out.println(CMaskEnum.EMAIL.mask("294046317@qq.com"));
-//        System.out.println(CMaskEnum.BANK_CARD.mask("6216612800005972582"));
     }
 }
