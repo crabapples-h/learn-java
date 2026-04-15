@@ -54,7 +54,7 @@ public class UploadS3Strategy implements UploadFileStrategy {
                 InputStream inputStream = part.getInputStream();
                 RequestBody requestBody = RequestBody.fromInputStream(inputStream, part.getSize());
                 String randomFileName = StringUtils.genRandomFileName(fileName);
-                service.uploadFile(randomFileName, requestBody);
+                service.uploadFile(randomFileName, requestBody,contentType);
                 S3ConfigProperties config = service.getConfig();
                 String fullPath = config.getBucketName() + "/" + randomFileName;
                 return new FileInfo()

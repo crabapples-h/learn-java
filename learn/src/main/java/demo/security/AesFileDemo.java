@@ -129,11 +129,11 @@ public class AesFileDemo {
     public static void main(String[] args) throws Exception {
         String inputPath = "/Users/mshe/OneDrive/encodePath";
         String outputPath = "/Users/mshe/decodePath";
-        String keySeed = "8174254";
+        String keySeed = "xxxxx";
         File source = new File(inputPath);
         Key key = createKey(keySeed);
         for (File file : Objects.requireNonNull(source.listFiles())) {
-            doFinal(key, file, outputPath, Cipher.ENCRYPT_MODE);
+            doFinal(key, file, outputPath, Cipher.DECRYPT_MODE);
         }
     }
 }

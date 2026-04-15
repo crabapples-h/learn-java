@@ -49,7 +49,7 @@ public class UploadMinioStrategy implements UploadFileStrategy {
             try {
                 InputStream inputStream = part.getInputStream();
                 String randomFileName = StringUtils.genRandomFileName(fileName);
-                service.uploadFile(randomFileName, inputStream);
+                service.uploadFile(randomFileName, inputStream,contentType);
                 MinioConfigProperties config = service.getConfig();
                 String fullPath = config.getBucketName() + "/" + randomFileName;
                 return new FileInfo()
