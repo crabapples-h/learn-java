@@ -64,7 +64,7 @@ public class S3ServiceTest {
 
     @Test
     public void test3() {
-        s3Service.uploadFile("1/2/3/test.jpg", "/Users/mshe/developer/1.jpg");
+        s3Service.uploadFile("1/2/3/test.jpg", "/Users/mshe/developer/1.jpg","image/jpg");
         s3Service.uploadFile("crabapples-test", "1/2/3/test.jpg", "/Users/mshe/developer/1.jpg");
     }
 
@@ -72,7 +72,7 @@ public class S3ServiceTest {
     public void test4() throws IOException {
         File file = new File("/Users/mshe/developer/1.jpg");
         RequestBody requestBody = RequestBody.fromInputStream(new FileInputStream(file), file.length());
-        s3Service.uploadFile("test1.jpg", requestBody);
+        s3Service.uploadFile("test1.jpg", requestBody,"image/jpg");
     }
 
     @Test
