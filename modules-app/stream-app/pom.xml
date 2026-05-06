@@ -8,16 +8,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>module-stream</artifactId>
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>cn.crabapples</groupId>
-            <artifactId>module-stream</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+<!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>cn.crabapples</groupId>-->
+<!--            <artifactId>module-stream</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
 
     <build>
         <plugins>
