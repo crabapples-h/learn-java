@@ -11,8 +11,10 @@
     </parent>
     <artifactId>modules</artifactId>
     <modules>
+        <module>module-ai</module>
         <module>module-file-upload</module>
         <module>module-gateway</module>
-        <module>module-stream</module>
+        <module>module-socket</module>
+        <module>module-system</module>
     </modules>
 </project>
