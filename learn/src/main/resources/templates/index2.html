@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>页面标题</title>
+    <style>
+        * {
+            font-family: SourceHanSans-Normal;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .title-1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container" th:with="analyzeData=${analyze2Data}">
+    <h3 class="title">[(${analyzeData.orgName})]分公司[(${analyzeData.proName})]专业/专题评价报告</h3>
+    <div>
+        <p class="title-1">一、背景情况</p>
+        <p><span>[(${analyzeData.backend})]</span></p>
+    </div>
+    <div th:with="comment3=${analyzeData.comment3}">
+        <p class="title-1">二、“三效”分析及存在问题</p>
+        <p><span>[(${analyzeData.comment3})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">三、下一步改进举措</p>
+        <p><span>[(${analyzeData.nextStep})]</span></p>
+    </div>
+</div>
+</body>
+</html>

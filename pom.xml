@@ -18,12 +18,9 @@
         <module>frontend</module>
         <module>plugins</module>
         <module>learn-byte-buddy</module>
-        <module>module-gateway</module>
         <module>module-base-core</module>
-        <module>module-file-upload</module>
-        <module>module-stream</module>
-        <module>module-ai-service</module>
-        <module>server</module>
+        <module>modules</module>
+        <module>modules-application</module>
     </modules>
     <profiles>
         <profile>
@@ -44,7 +41,7 @@
             <id>mac</id>
             <properties>
                 <yarn>yarn</yarn>
-                <nacos.server-addr>172.16.8.70:8848</nacos.server-addr>
+                <nacos.server-addr>hk.crabapples.cn:8848</nacos.server-addr>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

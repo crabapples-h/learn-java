@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>页面标题</title>
+    <style>
+        * {
+            font-family: SourceHanSans-Normal;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .title-1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .title-2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container"  th:with="analyzeData=${analyze1Data}">
+    <h3 class="title">[(${analyzeData.orgName})]分公司[(${analyzeData.analyzeYear})]年投资“三效”总体评价报告</h3>
+    <div>
+        <p class="title-1">一、总体情况</p>
+        <p><span>[(${analyzeData.situation})]</span></p>
+    </div>
+    <div th:with="comment3=${analyzeData.comment3}">
+        <p class="title-1">二、投资“三效”评价</p>
+        <div th:with="efficiency=${comment3.efficiency}">
+            <p class="title-2">（一）投资效率</p>
+            <p>1.总体投资执行</p>
+            <p><span>[(${efficiency.investment})]</span></p>
+            <p>2.重点专业投资效率</p>
+            <p><span>[(${efficiency.proInvestment})]</span></p>
+        </div>
+        <div th:with="effect=${comment3.effect}">
+            <p class="title-2">（二）投资效果</p>
+            <p>1.总体投资效果评价</p>
+            <p><span>[(${effect.investment})]</span></p>
+            <p>2.重点专业投资效果评价</p>
+            <p><span>[(${effect.proInvestment})]</span></p>
+        </div>
+        <div th:with="benefit=${comment3.benefit}">
+            <p class="title-2">（三）投资效益</p>
+            <p>1.总体投资效益评价</p>
+            <p><span>[(${benefit.investment})]</span></p>
+            <p>2.重点专业投资效益评价</p>
+            <p><span>[(${benefit.proInvestment})]</span></p>
+        </div>
+    </div>
+    <div>
+        <p class="title-1">三、年度投资管理过程评估</p>
+        <p><span>[(${analyzeData.evaluate})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">四、结论举措和下一步计划</p>
+        <p><span>[(${analyzeData.nextStep})]</span></p>
+    </div>
+</div>
+</body>
+</html>

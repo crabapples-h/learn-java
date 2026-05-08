@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>页面标题</title>
+    <style>
+        * {
+            /*font-family: WawaSC;*/
+            font-family: SimSun;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            text-indent: 2em;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 26px;
+        }
+
+        .title-1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .table-container {
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /*tr {*/
+        /*    page-break-inside: avoid;*/
+        /*}*/
+
+        td, th {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+            vertical-align: middle;
+            word-break: break-all;
+        }
+
+        .left {
+            text-align: left;
+        }
+
+        .vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 4px;
+        }
+
+        .large-row {
+            height: 120px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<div class="container" th:with="analyzeData=${analyze3Data}">
+    <h3 class="title">[(${analyzeData.orgName})]分公司[(${analyzeData.projectName})]专业/专题评价报告</h3>
+    <div>
+        <p class="title-1">一、项目概述</p>
+        <p><span>[(${analyzeData.situation})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">二、项目前期决策情况</p>
+        <p><span>[(${analyzeData.preliminary})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">三、项目实施过程总结</p>
+        <p><span>[(${analyzeData.process})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">四、项目运行效果及效益评价</p>
+        <p><span>[(${analyzeData.runEnv})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">五、项目目标及可持续性评价</p>
+        <p><span>[(${analyzeData.target})]</span></p>
+    </div>
+    <div>
+        <p class="title-1">六、项目评价结论及改进建议</p>
+        <p><span>[(${analyzeData.improve})]</span></p>
+    </div>
+    <div class="table-container" th:with="tableData=${analyzeData.tableData}">
+        <table>
+            <tr>
+                <td colspan="2">项目名称</td>
+                <td colspan="7">[(${tableData.projectName})]项目</td>
+            </tr>
+            <tr>
+                <td colspan="2">项目责任单位</td>
+                <td colspan="2">[(${tableData.provinceName})]省公司</td>
+                <td>投资管理部门</td>
+                <td colspan="4">[(${tableData.deptName})]</td>
+            </tr>
+            <tr>
+                <td rowspan="2" colspan="2">项目资金<br/>(万元)</td>
+                <td colspan="3">立项批复金额</td>
+                <td colspan="3">最终完成列账金额</td>
+                <td rowspan="">得分</td>
+            </tr>
+            <tr>
+                <td colspan="3">[(${tableData.priceCreate})]</td>
+                <td colspan="3">[(${tableData.priceEnd})]</td>
+                <td colspan="">[(${tableData.scoreEnd})]</td>
+            </tr>
+            <tr class="large-row">
+                <td rowspan="2" class="vertical">年度总体目标</td>
+                <td colspan="4">预期目标</td>
+                <td colspan="4">实际完成情况</td>
+            </tr>
+            <tr class="large-row">
+                <td colspan="4" class="left">[(${tableData.targetExpectation})]</td>
+                <td colspan="4" class="left">[(${tableData.targetFinish})]</td>
+            </tr>
+
+            <tbody th:with="performance=${tableData.performance}">
+            <tr>
+                <td rowspan="13" class="vertical">绩效指标</td>
+                <td>一级指标</td>
+                <td colspan="2">二级指标</td>
+                <td>
+                    指标预期<br/>
+                    （与可研批复一致）
+                </td>
+                <td>实际完成值</td>
+                <td>分值</td>
+                <td>得分</td>
+                <td>偏差分析及改进措施</td>
+            </tr>
+            <!-- 投资方向 -->
+            <tr>
+                <td rowspan="1">投资方向<br/>(10分)</td>
+                <td colspan="2" class="left">
+                    投资方向是否符合集团战略要求
+                </td>
+                <td>[(${performance[0].perExpectation})]</td>
+                <td>[(${performance[0].finishValue})]</td>
+                <td>10</td>
+                <td>[(${performance[0].score})]</td>
+                <td>[(${performance[0].analysis})]</td>
+            </tr>
+
+            <!-- 投资程序 -->
+            <tr>
+                <td rowspan="5">投资程序<br/>(20分)</td>
+                <td colspan="2" class="left">
+                    是否按规定履行决策和审批程序擅自投资
+                </td>
+                <td>[(${performance[1].perExpectation})]</td>
+                <td>[(${performance[1].finishValue})]</td>
+                <td>4</td>
+                <td>[(${performance[1].score})]</td>
+                <td>[(${performance[1].analysis})]</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left">
+                    项目建议书/可研报告批复流程是否合规
+                </td>
+                <td>[(${performance[2].perExpectation})]</td>
+                <td>[(${performance[2].finishValue})]</td>
+                <td>4</td>
+                <td>[(${performance[2].score})]</td>
+                <td>[(${performance[2].analysis})]</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left">
+                    完成项目可研时间
+                </td>
+                <td>[(${performance[3].perExpectation})]</td>
+                <td>[(${performance[3].finishValue})]</td>
+                <td>4</td>
+                <td>[(${performance[3].score})]</td>
+                <td>[(${performance[3].analysis})]</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left">
+                    完成项目开工时间
+                </td>
+                <td>[(${performance[4].perExpectation})]</td>
+                <td>[(${performance[4].finishValue})]</td>
+                <td>4</td>
+                <td>[(${performance[4].score})]</td>
+                <td>[(${performance[4].analysis})]</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="left">
+                    完成项目建设交付时间
+                </td>
+                <td>[(${performance[5].perExpectation})]</td>
+                <td>[(${performance[5].finishValue})]</td>
+                <td>4</td>
+                <td>[(${performance[5].score})]</td>
+                <td>[(${performance[5].analysis})]</td>
+            </tr>
+
+            <!-- 投资风险 -->
+            <tr>
+                <td rowspan="4">投资风险<br/>(30分)</td>
+                <td colspan="2" class="left">
+                    项目用途是否与批复一致
+                </td>
+                <td>[(${performance[6].perExpectation})]</td>
+                <td>[(${performance[6].finishValue})]</td>
+                <td>9</td>
+                <td>[(${performance[6].score})]</td>
+                <td>[(${performance[6].analysis})]</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="left">
+                    投资规模
+                </td>
+                <td>[(${performance[7].perExpectation})]</td>
+                <td>[(${performance[7].finishValue})]</td>
+                <td>7</td>
+                <td>[(${performance[7].score})]</td>
+                <td>[(${performance[7].analysis})]</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="left">
+                    建设资源(可补充具体指标XX)
+                </td>
+                <td>[(${performance[8].perExpectation})]</td>
+                <td>[(${performance[8].finishValue})]</td>
+                <td>7</td>
+                <td>[(${performance[8].score})]</td>
+                <td>[(${performance[8].analysis})]</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="left">
+                    造价标准(可补充具体指标XX)
+                </td>
+                <td>[(${performance[9].perExpectation})]</td>
+                <td>[(${performance[9].finishValue})]</td>
+                <td>7</td>
+                <td>[(${performance[9].score})]</td>
+                <td>[(${performance[9].analysis})]</td>
+            </tr>
+
+            <!-- 投资回报 -->
+            <tr>
+                <td rowspan="2">投资回报<br/>(40分)</td>
+                <td colspan="2" class="left">
+                    承诺静态回收期
+                </td>
+                <td>[(${performance[10].perExpectation})]</td>
+                <td>[(${performance[10].finishValue})]</td>
+                <td>20</td>
+                <td>[(${performance[10].score})]</td>
+                <td>[(${performance[10].analysis})]</td>
+            </tr>
+
+            <tr>
+                <td colspan="2" class="left">
+                    承诺内部收益率
+                </td>
+                <td>[(${performance[11].perExpectation})]</td>
+                <td>[(${performance[11].finishValue})]</td>
+                <td>20</td>
+                <td>[(${performance[11].score})]</td>
+                <td>[(${performance[11].analysis})]</td>
+            </tr>
+
+            <!-- 总分 -->
+            <tr>
+                <td colspan="6">总分</td>
+                <td>100</td>
+                <td>[(${performance[12].score})]</td>
+                <td>[(${performance[12].analysis})]</td>
+            </tr>
+
+            <!-- 说明 -->
+            <tr>
+                <td colspan="9" class="left">
+                    说明：<br/>
+                    得分=单项总分×单项完成度<br/>
+                    单项完成度=实际完成值/指标预期<br/>
+                    投资回报指标可根据实际建设目标更换
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+</body>
+</html>
