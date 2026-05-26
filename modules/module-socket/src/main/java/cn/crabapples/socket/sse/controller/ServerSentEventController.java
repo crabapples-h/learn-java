@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO SSE接口(这个接口在node环境下会有问题，暂时只能在纯浏览器环境打开)
  *
  * @author Mr.He
  * 2021/6/16 9:14
