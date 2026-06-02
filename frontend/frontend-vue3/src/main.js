@@ -1,18 +1,23 @@
-import {createApp, h} from 'vue'
+import { createApp } from 'vue'
+import Antd from 'ant-design-vue'
+import axios from 'axios'
 import App from './App.vue'
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import router from '@/router'
+import { pinia } from '@/store'
+import request from '@/utils/request'
+import '@/utils/permission'
+import 'ant-design-vue/dist/reset.css'
 import '@public/color.less'
+import '@public/iconfont/icon-antd'
+import '@public/iconfont/icon-lolita'
+import '@public/iconfont/icon-cute'
 
-import router from './router'
-import store from './store'
+const app = createApp(App)
 
-// import axios from '@/utils/axios'
+app.use(pinia)
+app.use(router)
+app.use(Antd)
+app.config.globalProperties.$http = request
+app.config.globalProperties.$axios = axios
 
-const vue = createApp({
-    render: () => h(App)
-});
-vue.use(Antd)
-vue.use(store)
-vue.use(router)
-vue.mount('#app')
+app.mount('#app')

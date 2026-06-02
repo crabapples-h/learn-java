@@ -1,145 +1,90 @@
 <template>
-  <div class="loginApi-bg">
-    <div class="loginApi-div">
+  <div class="login-page">
+    <a-form class="login-panel" :model="form" layout="vertical" @finish="submit">
       <div class="title">用户登录</div>
-      <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username" class="input-text"></a-input>
-      <a-input autocomplete="off" placeholder="密码" type="password" v-model="password" class="input-text"></a-input>
-      <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
-    </div>
+      <a-form-item name="username" :rules="[{ required: true, message: '请输入用户名' }]">
+        <a-input v-model:value="form.username" autocomplete="off" placeholder="用户名" />
+      </a-form-item>
+      <a-form-item name="password" :rules="[{ required: true, message: '请输入密码' }]">
+        <a-input-password v-model:value="form.password" autocomplete="off" placeholder="密码" />
+      </a-form-item>
+      <a-button class="login-button" type="primary" html-type="submit" :loading="loading">
+        立即登录
+      </a-button>
+    </a-form>
   </div>
 </template>
 
-<script>
-import commonApi from '@/api/CommonApi'
-import storage from '@/store/storage'
+<script setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/modules/user'
+import { useRoleStore } from '@/store/modules/roles'
+import { usePermissionStore } from '@/store/modules/permissions'
 
-export default {
-  name: 'Login',
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  activated() {
-  },
-  mounted() {
-  },
-  methods: {
-    async submit() {
-      const _this = this
-      let data = {
-        username: _this.username,
-        password: _this.password
-      };
-      let token = await _this.login(data)
-      if (token.status === 200) {
-        this.$store.commit('setToken', token.data)
-        let userInfo = await _this.getUserInfo()
-        let userMenus = await _this.getUserMenus()
-        let permissions = await _this.getPermissions()
-        if (userInfo.status && userMenus.status && permissions.status) {
-          this.$store.commit('setUserInfo', userInfo.data)
-          this.$store.commit('setUserMenus', userMenus.data)
-          this.$store.commit('setUserPermissions', permissions.data)
-          // _this.$route.push('/manage/index')
-          window.location.reload();
-        } else {
-          _this.$message.error('登录失败')
-        }
-      }
-    },
-    login(data) {
-      return commonApi.login(data).then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return
-        }
-        return Promise.resolve({status: 200, data: result.data})
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      })
-    },
-    //获取用户信息
-    getUserInfo() {
-      return commonApi.getUserInfo().then(result => {
-        if (result.status !== 200) {
-          this.$message.error(result.message);
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      })
-    },
-    //获取用户拥有的菜单，并根据菜单生成路由表
-    getUserMenus() {
-      return commonApi.getUserMenus().then(result => {
-        if (result.status !== 200) {
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    },
-    //获取用户拥有的权限(按钮)
-    getPermissions() {
-      return commonApi.getUserPermissions().then(result => {
-        if (result.status !== 200) {
-          return;
-        }
-        if (result.data !== null) {
-          return Promise.resolve({status: true, data: result.data})
-        }
-      }).catch(function (error) {
-        console.error('出现错误:', error);
-      });
-    },
+const router = useRouter()
+const userStore = useUserStore()
+const roleStore = useRoleStore()
+const permissionStore = usePermissionStore()
+const loading = ref(false)
+
+const form = reactive({
+  username: '',
+  password: '',
+})
+
+const submit = async () => {
+  loading.value = true
+  try {
+    await userStore.login(form)
+    await Promise.all([
+      userStore.loadUserBaseInfo(),
+      roleStore.loadRoles(),
+      permissionStore.loadMenusTree(),
+      permissionStore.loadMenusList(),
+      permissionStore.loadPermissions(),
+    ])
+    router.replace('/loading')
+  } finally {
+    loading.value = false
   }
 }
 </script>
-<style lang="less" scoped>
-@import "~@public/color.less";
 
-.loginApi-bg {
-  background: url(~@assets/login-background.png) no-repeat center;
-  background-size: 100%;
-  overflow: hidden;
+<style scoped lang="less">
+@import '@public/theme.less';
+
+.login-page {
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  background: url('@assets/login-background.png') no-repeat center;
+  background-size: cover;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.loginApi-div {
-  margin: 120px auto 0 auto;
-  min-height: 420px;
-  max-width: 420px;
+.login-panel {
+  width: min(420px, calc(100vw - 32px));
+  min-height: 360px;
+  margin-top: 120px;
   padding: 40px;
-  background-color: #ffffff;
+  background: #fff;
   border-radius: 4px;
-  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.16);
 }
 
 .title {
-  margin: 10px 0 0 -58px;
+  margin: 0 0 28px -58px;
   padding: 18px 10px 18px 60px;
-  background: @primary-color;
-  position: relative;
   color: #fff;
   font-size: 16px;
+  background: @primary-color;
 }
 
-.input-text {
-  height: 50px;
-  box-sizing: border-box;
-  margin: 16px 0;
-}
-
-.loginApi-button {
-  height: 50px;
-  border: none;
+.login-button {
+  width: 100%;
+  height: 40px;
 }
 </style>

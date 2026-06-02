@@ -1,0 +1,149 @@
+{
+  "id": "4744140",
+  "name": "cute",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13109448",
+      "name": "棒球帽",
+      "font_class": "bangqiumao",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
+      "icon_id": "13109449",
+      "name": "帆布帽",
+      "font_class": "fanbumao",
+      "unicode": "e676",
+      "unicode_decimal": 58998
+    },
+    {
+      "icon_id": "13109450",
+      "name": "大衣",
+      "font_class": "dayi",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
+      "icon_id": "13109451",
+      "name": "包包",
+      "font_class": "baobao",
+      "unicode": "e678",
+      "unicode_decimal": 59000
+    },
+    {
+      "icon_id": "13109452",
+      "name": "咖啡",
+      "font_class": "kafei",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "13109453",
+      "name": "吊带裙",
+      "font_class": "diaodaiqun",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "13109454",
+      "name": "毛线帽",
+      "font_class": "maoxianmao",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "13109455",
+      "name": "太阳帽",
+      "font_class": "taiyangmao",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
+      "icon_id": "13109456",
+      "name": "短裤",
+      "font_class": "duanku",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "13109457",
+      "name": "牛仔裤",
+      "font_class": "niuziku",
+      "unicode": "e67e",
+      "unicode_decimal": 59006
+    },
+    {
+      "icon_id": "13109458",
+      "name": "套裙",
+      "font_class": "taoqun",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    },
+    {
+      "icon_id": "13109459",
+      "name": "卫衣",
+      "font_class": "weiyi",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
+      "icon_id": "13109460",
+      "name": "行李箱",
+      "font_class": "hanglixiang",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "13109461",
+      "name": "围巾",
+      "font_class": "weijin",
+      "unicode": "e682",
+      "unicode_decimal": 59010
+    },
+    {
+      "icon_id": "13109462",
+      "name": "帆布鞋",
+      "font_class": "fanbuxie",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "13109463",
+      "name": "男友衬衫",
+      "font_class": "nanyouchenshan",
+      "unicode": "e684",
+      "unicode_decimal": 59012
+    },
+    {
+      "icon_id": "13109464",
+      "name": "相机",
+      "font_class": "xiangji",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "13109465",
+      "name": "靴子",
+      "font_class": "xuezi",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "13109466",
+      "name": "高跟鞋",
+      "font_class": "gaogenxie",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "13109467",
+      "name": "丝巾",
+      "font_class": "sijin",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    }
+  ]
+}

@@ -1,24 +1,20 @@
-# frontend
+# frontend-vue3
 
-## Project setup
-```
+基于 `frontend-vue2` 项目结构搭建的 Vue 3 前端框架。
+
+## 技术栈
+
+- Vue 3
+- Vite
+- Vue Router 4
+- Pinia
+- Ant Design Vue 4
+- Axios
+
+## 命令
+
+```bash
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
+npm run dev
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

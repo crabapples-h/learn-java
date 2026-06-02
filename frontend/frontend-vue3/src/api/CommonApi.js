@@ -1,53 +1,76 @@
-import instance from '@/utils/axios'
+import instance from '@/utils/request'
 import storage from '@/store/storage'
 import { SysApis } from '@/api/Apis'
 
 const commonApi = {
-    login(data) {
-        return instance({
-            url: SysApis.login,
-            method: 'post',
-            data: data
-        })
-    },
-    logout() {
-        sessionStorage.clear()
-        localStorage.clear()
-        return instance({
-            url: SysApis.logout,
-            method: 'get',
-        })
-    },
-    //获取用户信息
-    getUserInfo() {
-        return instance({
-            url: SysApis.userInfo,
-            method: 'get',
-        })
-    },
-    //获取用户拥有的菜单，并根据菜单生成路由表
-    getUserMenus() {
-        return instance({
-            url: SysApis.menus,
-            method: 'get',
-        })
-    },
-    //获取用户拥有的权限(按钮)
-    getUserPermissions() {
-        return instance({
-            url: SysApis.permissions,
-            method: 'get',
-        })
-    },
-    refreshSysData() {
-        this.getUserPermissions().then(res => {
-            if (res.status === 200)
-                storage.setPermissions(res.data)
-        })
-        this.getUserMenus().then(res => {
-            if (res.status === 200)
-                storage.setUserMenus(res.data)
-        })
+  filePreviewAddress() {
+    return instance({
+      url: SysApis.filePreviewAddress,
+      method: 'get',
+    })
+  },
+  serverAddress() {
+    return instance({
+      url: SysApis.serverAddress,
+      method: 'get',
+    })
+  },
+  login(data) {
+    return instance({
+      url: SysApis.login,
+      method: 'post',
+      data,
+    })
+  },
+  logout() {
+    sessionStorage.clear()
+    localStorage.clear()
+    return instance({
+      url: SysApis.logout,
+      method: 'post',
+    })
+  },
+  getUserInfo() {
+    return instance({
+      url: SysApis.userInfo,
+      method: 'get',
+    })
+  },
+  getUserRoles() {
+    return instance({
+      url: SysApis.userRoles,
+      method: 'get',
+    })
+  },
+  getUserMenusTree() {
+    return instance({
+      url: SysApis.menusTreeUser,
+      method: 'get',
+    })
+  },
+  getUserMenusList() {
+    return instance({
+      url: SysApis.menusListUser,
+      method: 'get',
+    })
+  },
+  getUserPermissions() {
+    return instance({
+      url: SysApis.permissions,
+      method: 'get',
+    })
+  },
+  async refreshSysData() {
+    const permissions = await this.getUserPermissions()
+    if (permissions.status === 200) {
+      storage.setPermissions(permissions.data)
     }
+
+    const menusTree = await this.getUserMenusTree()
+    if (menusTree.status === 200) {
+      storage.setUserMenusTree(menusTree.data)
+    }
+  },
 }
+
 export default commonApi

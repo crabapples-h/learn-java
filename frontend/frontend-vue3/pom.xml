@@ -26,17 +26,15 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${yarn}</executable>
+                            <executable>${vue-package}</executable>
                             <arguments>
                                 <argument>config</argument>
                                 <argument>set</argument>
                                 <argument>registry</argument>
-                                <!--<argument>https://registry.npmjs.org</argument>-->
                                 <argument>https://registry.yarnpkg.com</argument>
                             </arguments>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>exec-yarn-install</id>
                         <phase>prepare-package</phase>
@@ -44,13 +42,12 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${yarn}</executable>
+                            <executable>${vue-package}</executable>
                             <arguments>
                                 <argument>install</argument>
                             </arguments>
                         </configuration>
                     </execution>
-
                     <execution>
                         <id>exec-yarn-run-build</id>
                         <phase>prepare-package</phase>
@@ -58,17 +55,15 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>${yarn}</executable>
+                            <executable>${vue-package}</executable>
                             <arguments>
                                 <argument>run</argument>
                                 <argument>build</argument>
                             </arguments>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

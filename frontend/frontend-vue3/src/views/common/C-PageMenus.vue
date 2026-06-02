@@ -1,117 +1,56 @@
 <template>
-  <div>
-    <a-layout-sider>
-      <a-menu style="width: 200px;height: 100%" mode="inline">
-        <a-sub-menu :key="item.key" v-for="item in menus" v-if="item.children && item.children.length">
-          <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-          <a-sub-menu :key="item.key" v-if="item.children && item.children.length" v-for="item in item.children">
-            <span slot="title"><a-icon :type="item.icon"/><span>{{ item.name }}</span></span>
-            <a-menu-item :key="item.key" v-for="item in item.children" @click="clickMenu(item)">
-              <a-icon :type="item.icon"/>
-              <span>{{ item.name }}</span>
-            </a-menu-item>
-          </a-sub-menu>
-          <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-            <a-icon :type="item.icon"/>
-            <span>{{ item.name }}</span>
+  <a-layout-sider class="page-sider" width="220" theme="light">
+    <a-menu mode="inline" :selected-keys="selectedKeys" :open-keys="openKeys" @click="handleClick">
+      <template v-for="menu in menus" :key="menu.id || menu.path">
+        <a-sub-menu v-if="menu.children?.length" :key="String(menu.id || menu.path)">
+          <template #title>{{ menu.name }}</template>
+          <a-menu-item v-for="child in menu.children" :key="child.path">
+            {{ child.name }}
           </a-menu-item>
         </a-sub-menu>
-        <a-menu-item :key="item.key" v-else @click="clickMenu(item)">
-          <a-icon :type="item.icon"/>
-          <span>{{ item.name }}</span>
+        <a-menu-item v-else :key="menu.path">
+          {{ menu.name }}
         </a-menu-item>
-      </a-menu>
-    </a-layout-sider>
-  </div>
+      </template>
+    </a-menu>
+  </a-layout-sider>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
-export default {
-  name: "C-PageMenus",
-  props: {
-    menus: {
-      type: Array,
-      required: true,
-      default: () => {
-        return []
-      }
-    }
+const props = defineProps({
+  menus: {
+    type: Array,
+    default: () => [],
   },
-  data() {
-    return {};
+  theme: {
+    type: String,
+    default: 'light',
   },
-  activated() {
-    this.$router.push({path: '/manage/welcome'})
-  },
-  mounted() {
-  },
-  methods: {
-    clickMenu(e) {
-      this.$router.push(e.path)
-    }
+})
+
+const emit = defineEmits(['clickMenu'])
+const route = useRoute()
+const selectedKeys = computed(() => [route.path])
+const openKeys = computed(() => [String(route.meta.pid || '')].filter(Boolean))
+
+const flatten = items => items.flatMap(item => item.children?.length ? [item, ...flatten(item.children)] : [item])
+
+const handleClick = ({ key }) => {
+  const menu = flatten(props.menus).find(item => item.path === key || String(item.id) === String(key))
+  if (menu) {
+    emit('clickMenu', menu)
   }
 }
 </script>
 
-<style scoped lang="less">
-
-.title {
-  font-size: 20px;
-  color: #fff;
-  font-weight: 700;
-}
-
-.ant-layout-header {
-  background: @primary-color;
-  color: #fff;
-  height: 7vh;
-  line-height: 7vh;
-}
-
-.ant-layout-footer {
-  background: @primary-color;
-  color: #fff;
-  height: 10vh;
-  line-height: 7vh;
-}
-
-.ant-layout-sider {
-  width: 100%;
-  height: 83vh;
-  background: #fff;
-}
-
-.ant-layout-content {
-  box-shadow: inset 0 0 5px fade(@primary-color, 20%);
-  padding: 12px;
-  background: #fff;
-  min-height: 120px;
-  height: 83vh;
+<style scoped>
+.page-sider {
+  height: 100%;
   overflow: auto;
-}
-
-/*滚动条整体样式*/
-.ant-layout-content::-webkit-scrollbar {
-  width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 1px;
-  margin-right: 10px;
-  opacity: 0.2;
-}
-
-/*滚动条里面小方块(滑块 )*/
-.ant-layout-content::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
-}
-
-/*滚动条里面轨道(背景)*/
-.ant-layout-content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 5px @primary-color;
-  border-radius: 10px;
-  background: fade(@primary-color, 20%);
-  opacity: 0.2;
+  border-right: 1px solid #e5e7eb;
+  background: #fff;
 }
 </style>
