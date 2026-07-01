@@ -1,9 +1,15 @@
 <template>
   <a-layout-sider theme="light">
-    <a-menu mode="inline" :theme="theme" style="height: 100%"
-            :default-open-keys="openMenuIds"
-            :default-selected-keys="selectMenuIds">
-      <template v-for="item in menus">
+    <div style="padding: 8px">
+      <a-input v-model="searchKey" placeholder="搜索菜单" allow-clear>
+        <a-icon slot="prefix" type="search" />
+      </a-input>
+    </div>
+    <a-menu mode="inline" :theme="theme" style="height: calc(100% - 44px)"
+            :default-open-keys="currentOpenKeys"
+            :default-selected-keys="selectMenuIds"
+            @openChange="onOpenChange">
+      <template v-for="item in filteredMenus">
         <a-menu-item v-if="!item.children" :key="item.key" @click="click(item)">
           <svg class="iconfont" aria-hidden="true">
             <use :xlink:href="'#icon-'+item.icon"></use>
@@ -89,24 +95,62 @@ export default {
     selectMenuIds() {
       let SELECT_MENU_IDS = [localStorage.getItem('SELECT_MENU_IDS')]
       SELECT_MENU_IDS = SELECT_MENU_IDS.filter(e => e != null && e !== 'null')
-      console.info('当前选中的菜单', SELECT_MENU_IDS)
       return SELECT_MENU_IDS
     },
     // 当前展开的菜单
-    openMenuIds() {
+    currentOpenKeys() {
+      if (this.currentInternalKeys.length) {
+        return this.currentInternalKeys
+      }
       let OPEN_MENU_IDS = [localStorage.getItem('OPEN_MENU_IDS')]
       OPEN_MENU_IDS = OPEN_MENU_IDS.filter(e => e != null && e !== 'null')
-      if(!OPEN_MENU_IDS.length){
+      if (!OPEN_MENU_IDS.length) {
         OPEN_MENU_IDS = [...this.selectMenuIds]
       }
-      console.info('当前展开的菜单', OPEN_MENU_IDS)
       return OPEN_MENU_IDS
+    },
+    filteredMenus() {
+      if (!this.searchKey) return this.menus
+      const keyword = this.searchKey.toLowerCase()
+      const filterTree = (items) => {
+        return items.reduce((acc, item) => {
+          if (!item || !item.name) return acc
+          const nameMatch = item.name.toLowerCase().includes(keyword)
+          if (item.children) {
+            const filteredChildren = filterTree(item.children)
+            if (filteredChildren.length > 0 || nameMatch) {
+              acc.push({...item, children: filteredChildren})
+            }
+          } else if (nameMatch) {
+            acc.push(item)
+          }
+          return acc
+        }, [])
+      }
+      return filterTree(this.menus)
     }
   },
   data() {
-    return {};
+    return {
+      searchKey: '',
+      currentInternalKeys: [],
+    };
+  },
+  watch: {
+    searchKey(val) {
+      if (val) {
+        this.currentInternalKeys = this.filteredMenus
+          .filter(item => item.children && item.children.length > 0)
+          .map(item => String(item.id))
+      } else {
+        this.currentInternalKeys = []
+      }
+    }
   },
   methods: {
+    onOpenChange(openKeys) {
+      this.currentInternalKeys = openKeys
+    },
     click(e) {
       this.$emit('clickMenu', e)
     },

@@ -12,7 +12,7 @@ import commonApi from '@/api/CommonApi'
 
 const permissions = {
     state: {
-        menusTree: '',
+        menusTree: [],
         menusList: '',
         permissions: '',
         routers: '',
