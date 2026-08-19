@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - 本项目所有提示、对话、输出均使用中文
 - AGENTS.md 使用中文
-- 所有项目记忆必须保存在项目目录下（如 `.mimocode/MEMORY.md`），通过 git 管理，禁止保存在用户目录（`~/.local/share/mimocode/` 等）
+- 所有项目记忆必须保存在项目目录下（如 `.claude/memory/`），通过 git 管理，禁止保存在用户目录（`~/.local/share/mimocode/` 等）
 
 ## Repo shape
 
