@@ -28,4 +28,4 @@ metadata:
 - `learn/src/main/java/demo/mq/README.md` — RabbitMQ 笔记（见 [[learning-mq-rabbitmq]]）
 - `learn-byte-buddy/src/test/java/base/README.md` — ByteBuddy 笔记（见 [[learning-bytebuddy]]）
 - `frontend/frontend-vue2/前端代码分析报告.md`、`modules-application/system-app/Bug分析报告.md` — 安全分析（见 [[known-security-issues]]）
-- `README.md` — 按时间倒序的更新日志；`AGENTS.md`/`CLAUDE.md`/`BUG.md` — 项目指南
+- `README.md` — 按时间倒序的更新日志；`CLAUDE.md`/`BUG.md` — 项目指南

@@ -5,7 +5,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 规则
 
 - 本项目所有提示、对话、输出均使用中文
-- AGENTS.md 使用中文
 - 所有项目记忆必须保存在项目目录下（如 `.claude/memory/`），通过 git 管理，禁止保存在用户目录（`~/.local/share/mimocode/` 等）
 
 ## Repo shape
@@ -70,5 +69,4 @@ Tests: `modules-application` sets surefire `skipTests=true` by default. To actua
 ## Docs to read first when adding features
 
 - `README.md` — chronological changelog (Chinese). Useful for finding when/where a demo was added, not for architecture.
-- `AGENTS.md` — same module map as above, slightly more prose. Keep it and CLAUDE.md consistent when the layout changes.
 - `BUG.md` — short list of known issues (frontend menu bugs, mybatis-flex XML pain, nacos 2.5 JDK compat).
