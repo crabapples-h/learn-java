@@ -28,12 +28,12 @@ spring:
     nacos:
       server-addr: @nacos.server-addr@ # nacos根配置
       config:
-        namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+        namespace: @nacos.namespace@
       discovery:
-        namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+        namespace: @nacos.namespace@
         service: file
-      username: nacos
-      password: nacos
+      username: @nacos.username@
+      password: @nacos.password@
     #### sentinel配置 ###
     sentinel:
       enabled: true

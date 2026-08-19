@@ -85,14 +85,14 @@ spring.cloud.sentinel:
 spring.cloud.nacos:
   config:
     file-extension: yaml
-    namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+    namespace: @nacos.namespace@
   server-addr: @nacos.server-addr@
   discovery:
-    namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+    namespace: @nacos.namespace@
     service: api-gateway # 注册到nacos的服务名称,不配置则默认为${spring.application.name}
     group: DEFAULT_GROUP
-  username: nacos
-  password: nacos
+  username: @nacos.username@
+  password: @nacos.password@
 #### gateway配置 ###
 spring.cloud.gateway:
   discovery.locator:

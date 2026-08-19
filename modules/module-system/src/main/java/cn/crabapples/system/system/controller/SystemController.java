@@ -43,7 +43,7 @@ public class SystemController extends BaseController {
     private final SystemService sysService;
     private final ApplicationContext applicationContext;
 
-    @Value("${previewAddress}")
+    @Value("${previewAddress:localhost:8012}")
     private String previewAddress;
 
     public SystemController(SystemUserService userService, SystemService sysService, ApplicationContext applicationContext) {

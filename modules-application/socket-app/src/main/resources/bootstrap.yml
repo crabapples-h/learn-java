@@ -15,14 +15,14 @@ logging:
 spring.config.import: optional:nacos:${spring.application.name}.yaml
 spring.application.name: websocket-service
 spring.cloud.nacos:
-  username: nacos
-  password: nacos
+  username: @nacos.username@
+  password: @nacos.password@
   server-addr: @nacos.server-addr@
   discovery:
-    namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+    namespace: @nacos.namespace@
     service: stream
   config:
-    namespace: 3dc5f842-09a4-4db0-b6ee-f4aa95199c71
+    namespace: @nacos.namespace@
 #spring.cloud.sentinel:
 #  enabled: true
 #  eager: true

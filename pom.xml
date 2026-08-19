@@ -27,7 +27,10 @@
             <id>windows</id>
             <properties>
                 <yarn>yarn</yarn>
-                <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
+                <nacos.server-addr>hw.crabapples.cn:8848</nacos.server-addr>
+                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>BestLoveBaby!</nacos.password>
             </properties>
         </profile>
         <profile>
@@ -35,6 +38,9 @@
             <properties>
                 <yarn>yarn</yarn>
                 <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
+                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>BestLoveBaby!</nacos.password>
             </properties>
         </profile>
         <profile>
@@ -43,6 +49,9 @@
                 <yarn>yarn</yarn>
 <!--                <nacos.server-addr>hk.crabapples.cn:8848</nacos.server-addr>-->
                 <nacos.server-addr>127.0.0.1:8848</nacos.server-addr>
+                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.username>nacos</nacos.username>
+                <nacos.password>BestLoveBaby!</nacos.password>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -140,7 +149,7 @@
         <!--        <shiro.version>1.4.0</shiro.version>-->
         <!--        <thymeleaf-extras-shiro.version>2.0.0</thymeleaf-extras-shiro.version>-->
 
-        <druid-spring-boot-starter.version>1.2.21</druid-spring-boot-starter.version>
+        <druid-spring-boot-3-starter.version>1.2.21</druid-spring-boot-3-starter.version>
         <!--        <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>-->
         <!--        <spring-websocket.version>5.1.6.RELEASE</spring-websocket.version>-->
         <!--es-->
@@ -153,7 +162,7 @@
         <mysql.version>8.4.0</mysql.version>
         <!--网络-->
         <okhttp.version>4.12.0</okhttp.version>
-        <jakarta.mail.version>1.4.7</jakarta.mail.version>
+        <javax.mail.version>1.6.2</javax.mail.version>
         <ganymed-ssh2.version>262</ganymed-ssh2.version>
         <!--        <jakarta.mail.version>1.4.7</jakarta.mail.version>-->
         <!--二维码-->

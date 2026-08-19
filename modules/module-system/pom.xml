@@ -122,8 +122,8 @@
         <!--druid-->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid-spring-boot-starter.version}</version>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+            <version>${druid-spring-boot-3-starter.version}</version>
         </dependency>
         <!--rabbitmq-->
         <!--        <dependency>-->
