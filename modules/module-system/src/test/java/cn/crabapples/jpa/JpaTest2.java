@@ -18,7 +18,7 @@
 //import org.springframework.test.context.ActiveProfiles;
 //import org.springframework.test.context.junit4.SpringRunner;
 //
-//import javax.persistence.criteria.*;
+//import jakarta.persistence.criteria.*;
 //import java.util.ArrayList;
 //import java.util.List;
 //

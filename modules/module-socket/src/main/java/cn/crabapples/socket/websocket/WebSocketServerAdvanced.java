@@ -7,7 +7,7 @@ import org.springframework.web.socket.*;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.concurrent.ConcurrentHashMap;

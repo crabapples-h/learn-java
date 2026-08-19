@@ -7,8 +7,8 @@
 ## 规则
 
 - 本项目所有提示、对话、输出均使用中文
-- AGENTS.md 保持英文（供 OpenCode/Claude 等工具读取）
-- 项目记忆存储在项目目录 `.mimocode/MEMORY.md`，不在用户目录
+- AGENTS.md 使用中文
+- 所有项目记忆必须保存在项目目录下（如 `.mimocode/MEMORY.md`），通过 git 管理，禁止保存在用户目录（`~/.local/share/mimocode/` 等）
 - 每次会话开始时主动读取 `.mimocode/MEMORY.md`
 - bug 修复流程：先写文档 → 保存记忆 → 执行修复 → 更新记忆
 

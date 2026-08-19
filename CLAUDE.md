@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 规则
+
+- 本项目所有提示、对话、输出均使用中文
+- AGENTS.md 使用中文
+- 所有项目记忆必须保存在项目目录下（如 `.mimocode/MEMORY.md`），通过 git 管理，禁止保存在用户目录（`~/.local/share/mimocode/` 等）
+
 ## Repo shape
 
 Multi-module Maven learning/demo project for the Java + Spring ecosystem. Group `cn.crabapples`, **Java 11**, Spring Boot 2.6.13, Spring Cloud 2021.0.4, Spring Cloud Alibaba 2021.0.4.0.
@@ -14,9 +20,10 @@ design-pattern/       → GoF pattern demos
 module-base-core/     → shared base library (MyBatis-Plus, security, utils). Parent = modules, not root.
 modules/              → LIBRARY modules (module-system, module-ai, module-file-upload, module-gateway, module-socket)
 modules-application/  → DEPLOYABLE Spring Boot apps that depend on the matching library module
-frontend/             → Vue2/Vue3/Electron/mpvue projects, built via frontend/pom.xml (react module is commented out)
+frontend/             → Vue2/Vue3/Electron/mpvue projects, built via frontend/pom.xml. Only 5 sub-projects are reactor modules: frontend-vue2, frontend-vue3, frontend-mpvue, frontend-hbuildx, frontend-electron (frontend-react is commented out). Other dirs (app/, learn-vue2/, new-year-time/, frontend-react/) are standalone, not built by Maven.
 plugins/              → turing-api, mail-sender, code-generator
 learn-byte-buddy/     → ByteBuddy experiments (packaging=pom, multi-module)
+document/             → learning docs/notes (JVM.md, k8s install notes) — not a Maven module
 ```
 
 Outside the reactor (build separately):
@@ -30,6 +37,9 @@ Outside the reactor (build separately):
 
 ```bash
 # Full backend build (skip the frontend aggregator)
+# NOTE: a bare `mvn clean install` at root ALSO builds the frontend — each frontend module
+# runs `yarn install && yarn build` (exec-maven-plugin, prepare-package). Use the `-pl` list
+# below to skip the frontend aggregator.
 mvn clean install -pl learn,design-pattern,plugins,learn-byte-buddy,module-base-core,modules,modules-application
 
 # Single module (add -am to also build its dependencies)

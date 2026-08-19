@@ -4,7 +4,7 @@ import cn.crabapples.common.utils.Groups;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 /**
  * TODO 测试参数验证的DTO

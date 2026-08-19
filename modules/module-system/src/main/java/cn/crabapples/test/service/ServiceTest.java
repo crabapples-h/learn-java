@@ -1,6 +1,6 @@
 package cn.crabapples.test.service;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * TODO

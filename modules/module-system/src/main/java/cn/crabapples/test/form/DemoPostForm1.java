@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.util.Calendar;
 import java.util.Date;
 

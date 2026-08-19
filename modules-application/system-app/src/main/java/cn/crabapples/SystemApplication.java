@@ -87,7 +87,7 @@ public class SystemApplication {
                 ">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>:\n\t" +
                 "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
                 "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
-                "Swagger文档: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n" +
+                "Knife4j文档: \thttp://" + ip + ":" + port + path + "/doc.html\n" +
                 "----------------------------------------------------------");
 
 //        ThymeleafEngine engine = new ThymeleafEngine();

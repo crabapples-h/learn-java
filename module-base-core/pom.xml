@@ -6,6 +6,7 @@
         <groupId>cn.crabapples</groupId>
         <artifactId>modules</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../modules/pom.xml</relativePath>
     </parent>
     <artifactId>module-base-core</artifactId>
     <packaging>jar</packaging>
@@ -18,6 +19,12 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <!-- sentinel webmvc 6.x 适配器（Spring Boot 3 需 6x 版） -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-spring-webmvc-6x-adapter</artifactId>
+            <version>1.8.6</version>
         </dependency>
         <!--mybatis-plus-->
         <dependency>
@@ -95,11 +102,11 @@
         <!--        </dependency>-->
 
 
-        <!-- swagger -->
+        <!-- Knife4j (OpenAPI 3.0 文档) -->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi-ui.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
         </dependency>
         <!-- web -->
         <dependency>
@@ -126,8 +133,8 @@
         <!-- fastJson -->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2-extension-spring5</artifactId>
-            <version>${fastjson2-extension-spring5.version}</version>
+            <artifactId>fastjson2-extension-spring6</artifactId>
+            <version>${fastjson2-extension-spring6.version}</version>
         </dependency>
         <!-- redis -->
         <dependency>

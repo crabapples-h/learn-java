@@ -7,7 +7,7 @@ package cn.crabapples.common.mybatis.flex;//package cn.crabapples.a.common.mybat
 //import org.springframework.context.annotation.Lazy;
 //import org.springframework.stereotype.Component;
 //
-//import javax.annotation.Resource;
+//import jakarta.annotation.Resource;
 //
 ///**
 // * TODO 多租户插件
