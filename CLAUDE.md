@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repo shape
 
-Multi-module Maven learning/demo project for the Java + Spring ecosystem. Group `cn.crabapples`, **Java 11**, Spring Boot 2.6.13, Spring Cloud 2021.0.4, Spring Cloud Alibaba 2021.0.4.0.
+Multi-module Maven learning/demo project for the Java + Spring ecosystem. Group `cn.crabapples`, **Java 17** (root pom default), **Spring Boot 3.2.5**, **Spring Cloud 2023.0.1**, **Spring Cloud Alibaba 2023.0.3.2**. This is the Spring Boot 3 line, so new code uses the `jakarta.*` namespace, not `javax.*`.
 
 The root pom (`packaging=pom`) aggregates these modules — nothing else is in the reactor:
 
@@ -20,7 +20,7 @@ design-pattern/       → GoF pattern demos
 module-base-core/     → shared base library (MyBatis-Plus, security, utils). Parent = modules, not root.
 modules/              → LIBRARY modules (module-system, module-ai, module-file-upload, module-gateway, module-socket)
 modules-application/  → DEPLOYABLE Spring Boot apps that depend on the matching library module
-frontend/             → Vue2/Vue3/Electron/mpvue projects, built via frontend/pom.xml. Only 5 sub-projects are reactor modules: frontend-vue2, frontend-vue3, frontend-mpvue, frontend-hbuildx, frontend-electron (frontend-react is commented out). Other dirs (app/, learn-vue2/, new-year-time/, frontend-react/) are standalone, not built by Maven.
+frontend/             → Vue2/Vue3/Electron/mpvue projects, built via frontend/pom.xml. Only 5 sub-projects are reactor modules: frontend-vue2, frontend-vue3, frontend-mpvue, frontend-hbuildx, frontend-electron (frontend-react is commented out). Other dirs (app/, learn-vue2/, new-year-time/, frontend-react/, frontend-vue2-new/) are standalone, not built by Maven.
 plugins/              → turing-api, mail-sender, code-generator
 learn-byte-buddy/     → ByteBuddy experiments (packaging=pom, multi-module)
 document/             → learning docs/notes (JVM.md, k8s install notes) — not a Maven module
@@ -31,7 +31,11 @@ Outside the reactor (build separately):
 - `redis-server/` — embedded Redis
 - `docker-compose/` — local infra (Nacos cluster, Redis sentinel/cluster, Sentinel dashboard). Bring these up before running apps that need Nacos.
 
+Ignore the top-level dirs `module-ai-service/`, `module-stream/`, `server/`, `gateway/` (and the stale `module-file-upload/` / `module-gateway/`): they are untracked IntelliJ leftovers containing only gitignored `target/`, `rebel.xml`, `*.iml` — **NOT** Maven modules. The real modules live under `modules/` and `modules-application/`.
+
 **`modules/` vs `modules-application/` is the key distinction**: don't put runnable app code in `modules/`, and don't reimplement library code in `modules-application/`. Each app in `modules-application/` typically depends on one matching library in `modules/`.
+
+> Java 17 is the default, but `learn/` and `module-base-core/` override `java.version` back to 11 — they compile at 11 while everything else compiles at 17.
 
 ## Build & run
 

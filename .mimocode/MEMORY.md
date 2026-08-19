@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-多模块 Maven 学习/演示项目（`cn.crabapples:learn-java`）。Java 11，Spring Boot 2.6.13，Spring Cloud 2021.0.4，Spring Cloud Alibaba 2021.0.4.0。包含独立学习代码、设计模式演示、Spring Cloud 微服务架构（module-base-core → modules → modules-application）、多个前端项目和插件。根目录 `AGENTS.md` 记录了模块布局和注意事项。
+多模块 Maven 学习/演示项目（`cn.crabapples:learn-java`）。Java 17（根 pom 默认），Spring Boot 3.2.5，Spring Cloud 2023.0.1，Spring Cloud Alibaba 2023.0.3.2。包含独立学习代码、设计模式演示、Spring Cloud 微服务架构（module-base-core → modules → modules-application）、多个前端项目和插件。根目录 `AGENTS.md` 记录了模块布局和注意事项。
 
 ## 规则
 

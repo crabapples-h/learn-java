@@ -2,7 +2,7 @@
 
 ## 项目概述
 
-多模块 Maven 学习/演示项目，用于 Java + Spring 生态实验。Group: `cn.crabapples`，Java 11，Spring Boot 2.6.13，Spring Cloud 2021.0.4，Spring Cloud Alibaba 2021.0.4.0。
+多模块 Maven 学习/演示项目，用于 Java + Spring 生态实验。Group: `cn.crabapples`，Java 17（根 pom 默认），Spring Boot 3.2.5，Spring Cloud 2023.0.1，Spring Cloud Alibaba 2023.0.3.2。
 
 ## 模块布局
 
@@ -44,7 +44,7 @@ cd frontend/frontend-vue3 && npm install && npm run build
 
 ## 关键约束
 
-- **Java 11** 必需（根 pom.xml `<java.version>11</java.version>`）
+- **Java 17** 必需（根 pom.xml `<java.version>17</java.version>`；`learn/`、`module-base-core` 单独覆盖为 11）
 - Maven profile 控制环境配置（主要是 `nacos.server-addr`），默认 profile 为 `mac`（localhost:8848）
 - `module-base-core` 的父 POM 是 `modules`，不是 root — 注意层级关系
 - `modules/` = 库代码，`modules-application/` = 可部署应用 — 命名相似但职责不同
