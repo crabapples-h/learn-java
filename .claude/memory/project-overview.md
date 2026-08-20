@@ -16,6 +16,7 @@ metadata:
 - 前端 lockfile（package-lock.json/yarn.lock）被 gitignore，构建前必须 `npm install`
 - `frontend-react` 模块在 `frontend/pom.xml` 中已注释掉
 - `redis-server`、`camunda-server`（Boot 3.5.5）不在根 reactor 中
+- **认证方式**：自定义 `JwtInterceptor`（HandlerInterceptor，`JwtInterceptorConfigure` 实现 `WebMvcConfigurer` 注册，拦截 `/api/**`），**没有 Spring Security / WebSecurityConfigurerAdapter**——「Security 重构」任务不适用
 
 相关：[[pom-build-gotchas]]、[[backend-startup]]、[[build-requires-jdk17]]、[[frontend-projects]]、[[known-security-issues]]
 

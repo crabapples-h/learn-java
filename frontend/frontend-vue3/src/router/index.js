@@ -1,9 +1,9 @@
-import { h } from 'vue'
-import { createRouter, createWebHistory, RouterView } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { Modal } from 'ant-design-vue'
 import storage from '@/store/storage'
+import ManageIndex from '@/views/manage/Index.vue'
 
 NProgress.configure({ showSpinner: false })
 
@@ -76,7 +76,7 @@ const resolveView = filePath => {
 const layoutRoute = {
   path: '/',
   name: 'dynamic-layout',
-  component: { render: () => h(RouterView) },
+  component: ManageIndex,
   children: [],
 }
 
@@ -109,6 +109,18 @@ router.beforeEach((to, from, next) => {
   NProgress.start()
 
   const token = storage.getToken()
+
+  // 刷新/直达场景：动态路由未注册，先从 storage 恢复菜单并重建路由。
+  // 注意 catch-all 会先把目标重定向到 /404，需从 redirectedFrom 取回原始路径再回跳。
+  if (token && !router.hasRoute('dynamic-layout')) {
+    const menus = storage.getUserMenusList()
+    if (Array.isArray(menus) && menus.length) {
+      initRouter(menus)
+      next({ path: to.redirectedFrom?.path || to.path, replace: true })
+      return
+    }
+  }
+
   if (whiteList.includes(to.path)) {
     NProgress.done()
     next()

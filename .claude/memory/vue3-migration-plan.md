@@ -3,6 +3,17 @@
 > 生成时间：2026-08-19  
 > 目标：基于现有 vue3 代码基础，实现对齐 frontend-vue2 的全部功能
 
+> **进度更新（2026-08-19）**：
+> - ✅ **P0 已完成**：Apis.js/CommonApi.js 路径全部改为 `/api/system/*`（对照后端 Controller 与 vue2 权威路径）；`v-auth` 全局指令已注册（`utils/permission.js` + main.js `app.use(permission)`）
+> - ✅ **P1 核心已完成**：C-PageMenus.vue 增加搜索框 + `filteredMenus` 递归过滤 + 展开状态维护（@openChange + localStorage 持久化）；退出登录、路由守卫、刷新后路由重建原本已具备
+> - ✅ **构建通过**：`npm run build` 成功（vite 7.3.6）
+> - ✅ **P2 已完成**（2026-08-19 子代理迁移）：19 个 manage 页面 + 3 个公共组件（c-pop-button/c-file-upload-v2/c-icon-select）+ `utils/useSystem.js` 组合式函数，`npm run build` 通过
+> - ✅ **布局修复**：`router/index.js` 的 `dynamic-layout` 改用 `ManageIndex`（Index.vue）作组件（原为裸 RouterView → 无菜单/header/footer）；`sys-depart/add.vue` 的 `saveDicts` → `saveDeparts`
+> - ✅ **刷新 404 修复**：catch-all 重定向到 /404 发生在守卫**之前**（守卫拿到 `to.path=/404`、`redirectedFrom=原始路径`）；守卫改为恢复动态路由先于白名单检查，并用 `next({path: to.redirectedFrom?.path, replace:true})` 回跳（Node 模拟验证通过）
+> - ✅ **列表页自动加载数据**：`useSystem.js` 加 `onMounted` 自动 `getList()`（有 `url.list` 时）
+> - ✅ **示例页**：迁移 `views/example/SseExample.vue`、`WebSocketExample.vue`，安装 `event-source-polyfill`
+> - ⚠️ **遗留**：vue3 `request.js` 拦截器 + 页面 `message.error` 会重复报错提示；`sys-depart/list.vue` 的 add-item 模板被注释、`sys-tenant/detail.vue` 是死代码（均继承自 vue2）
+
 ---
 
 ## 一、当前状态评估
