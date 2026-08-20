@@ -4,15 +4,15 @@
 - [构建需 JDK 17](build-requires-jdk17.md) — module-ai 硬性要求 17，构建命令与 JDK 路径
 - [POM 构建坑](pom-build-gotchas.md) — relativePath、库模块 repackage、system-app skip、SB3 starter 换装（mybatis-plus/druid boot3）
 - [Spring Boot 3 升级进度](springboot3-upgrade-progress.md) — ✅ 已完成（2026-08-19）：5 应用全部启动成功，修复清单与启动命令见内
-- [Spring Boot 3 迁移总结](springboot3-upgrade-final.md) — 已完成：依赖/命名空间迁移/Sentinel/启动验证
+- [多机协作同步](multi-machine-sync.md) — 2026-08-20：Windows+JDK21 完成 SB3 升级并推送，本机 Mac+JDK17 已同步
 - [远程 Nacos](remote-nacos-hw.md) — hw.crabapples.cn 凭据与 namespace，启动注入参数
 - [Maven 本地仓库](maven-local-repo.md) — $MAVEN_HOME/repo 而非 ~/.m2/repository
 - [本机基础设施](local-infra.md) — MySQL/Redis/JDK/登录账号
-- [后端启动](backend-startup.md) — 4 应用端口、启动命令、验证链路
+- [后端启动](backend-startup.md) — 5 应用端口、启动命令、验证链路
 - [前端用 vue2](frontend-vue2.md) — frontend-vue2 可用，vue3 Apis.js 旧路径
 - [前端项目清单](frontend-projects.md) — frontend/ 下各子项目技术栈
 - [Vue3 重构规划](vue3-migration-plan.md) — P0 路径修复+v-auth、P1 菜单/退出/守卫、P2 组件/页面，3 阶段 ~6 天
-- [ai-app 运行注意](ai-app-not-runnable.md) — Boot2 起不来；Boot3 已可启动（需排除 DataSource 自动配置）
+- [ai-app Boot3 启动设置](ai-app-boot3-setup.md) — Boot3 已可启动（需排除 DataSource 自动配置）
 - [cu-* 容器栈](cu-docker-stack.md) — 另一项目的 docker 栈，勿混淆
 - [已知安全问题](known-security-issues.md) — 前后端安全分析报告结论（JWT/MD5/CSRF 等）
 - [多数据源](multi-datasource.md) — DynamicDataSourceRegister + @DataSourceChange 切换
