@@ -13,4 +13,7 @@ public interface UserRolesMapper {
 
     @Insert("insert into sys_user_roles values (#{userId}, #{roleId})")
     void saveUserRoles(@Param("userId") String userId, String roleId);
+
+    @Delete("delete from sys_user_roles where role_id = #{roleId}")
+    void deleteByRoleId(@Param("roleId") String roleId);
 }

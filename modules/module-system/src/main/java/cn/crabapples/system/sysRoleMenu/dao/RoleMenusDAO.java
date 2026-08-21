@@ -3,6 +3,7 @@ package cn.crabapples.system.sysRoleMenu.dao;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import cn.crabapples.system.sysRoleMenu.dao.mybatis.mapper.RoleMenusMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,7 @@ public class RoleMenusDAO  {
         return mapper.getRoleListMenusList(ids);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void saveRoleMenus(String id, List<String> menusList) {
         mapper.deleteRoleMenus(id);
         if (!menusList.isEmpty())
@@ -91,5 +93,9 @@ public class RoleMenusDAO  {
 
     public void delByMenuId(String pid) {
         mapper.delByMenuId(pid);
+    }
+
+    public void delByRoleId(String roleId) {
+        mapper.delByRoleId(roleId);
     }
 }

@@ -35,8 +35,8 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
     }
 
     public List<SysMenu> getRoleMenusTree(String roleId) {
-        // 查找所有菜单树
-        List<SysMenu> menusTree = menusDAO.findMenusTreeList();
+        // 用 CTE 一次全量拉菜单树（修复 P0-3：避免 N+1 递归）
+        List<SysMenu> menusTree = menusDAO.findAllMenusFlat();
         // 获取当前角色拥有的菜单
         List<SysMenu> hasMenus = roleMenusDAO.getRoleMenusList(roleId);
         List<String> hasMenuIds = hasMenus.stream().map(SysMenu::getId).collect(Collectors.toList());
@@ -65,5 +65,10 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
     @Override
     public void delByMenuId(String pid) {
         roleMenusDAO.delByMenuId(pid);
+    }
+
+    @Override
+    public void delByRoleId(String roleId) {
+        roleMenusDAO.delByRoleId(roleId);
     }
 }

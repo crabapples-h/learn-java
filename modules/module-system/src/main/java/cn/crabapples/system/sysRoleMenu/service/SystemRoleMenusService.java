@@ -18,6 +18,8 @@ public interface SystemRoleMenusService extends BaseService {
 
     void delByMenuId(String pid);
 
+    void delByRoleId(String roleId);
+
     List<SysMenu> getRoleMenusTree(String id);
 
     //    /**

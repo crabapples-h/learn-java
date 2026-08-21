@@ -13,7 +13,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -49,13 +53,8 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     }
 
     /**
-     * 获取当前用户拥有的菜单树
-     * 读取用户所拥有的所有角色，将所有角色拥有的菜单id放入一个集合，然后去重
-     * 最后用这个去重后的集合过滤生成菜单树
-     *
-     * @return 当前用户拥有的菜单
+     * 获取当前用户拥有的菜单树（修复 P0-3：全量查一次 + Java 组装树，避免 N+1）
      */
-    //    @Cacheable(value = "crabapples:sysMenus", key = "#auth")
     @Override
     public List<SysMenu> getUserMenusTree() {
         log.debug("获取用户拥有的所有菜单");
@@ -63,8 +62,9 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         List<SysMenu> userMenus = systemMenusDAO.getUserMenus(user.getId());
         List<String> userMenuIds = userMenus.stream()
                 .map(SysMenu::getId).collect(Collectors.toList());
-        List<SysMenu> allRootMenuTree = systemMenusDAO.findMenusTreeList();
-        List<SysMenu> list = filterRootMenusTree(userMenuIds, allRootMenuTree);
+        // 一次全量查询所有菜单，在 Java 层组装树（避免 MyBatis collection 递归的 N+1）
+        List<SysMenu> allMenus = systemMenusDAO.findAllMenusFlat();
+        List<SysMenu> list = buildMenuTree(allMenus, userMenuIds);
         log.debug("用户拥有的所有菜单[{}]", list);
         return list;
     }
@@ -72,6 +72,8 @@ public class SystemMenusServiceImpl implements SystemMenusService {
 
     @Override
     public boolean removeMenus(String id) {
+        // 级联删除该菜单在角色-菜单关联表中的记录（修复 P0-2）
+        roleMenusService.delByMenuId(id);
         return systemMenusDAO.remove(id);
     }
 
@@ -84,12 +86,50 @@ public class SystemMenusServiceImpl implements SystemMenusService {
         return systemMenusDAO.saveOrUpdate(form.toEntity());
     }
 
-    /**
-     * 获取菜单列表(全部)
-     */
     @Override
     public List<SysMenu> getMenusTreeList() {
-        return systemMenusDAO.findMenusTreeList();
+        return buildMenuTree(systemMenusDAO.findAllMenusFlat(), Collections.emptyList());
+    }
+
+    /**
+     * 在 Java 层按 pid 组装树结构（O(n) 一次遍历），替代 MyBatis collection 递归的 N+1
+     */
+    private List<SysMenu> buildMenuTree(List<SysMenu> allMenus, List<String> userMenuIds) {
+        Map<String, SysMenu> menuMap = new HashMap<>();
+        for (SysMenu m : allMenus) {
+            menuMap.put(m.getId(), m);
+        }
+        List<SysMenu> roots = new ArrayList<>();
+        for (SysMenu m : allMenus) {
+            if (m.getPid() == null) {
+                roots.add(m);
+            } else {
+                SysMenu parent = menuMap.get(m.getPid());
+                if (parent != null) {
+                    parent.getChildren().add(m);
+                } else {
+                    roots.add(m);
+                }
+            }
+        }
+        if (userMenuIds.isEmpty()) {
+            return roots;
+        }
+        return filterTree(roots, userMenuIds);
+    }
+
+    private List<SysMenu> filterTree(List<SysMenu> nodes, List<String> userMenuIds) {
+        List<SysMenu> result = new ArrayList<>();
+        for (SysMenu node : nodes) {
+            List<SysMenu> children = filterTree(node.getChildren(), userMenuIds);
+            node.setChildren(children);
+            boolean hasMenu = userMenuIds.contains(node.getId());
+            boolean hasChild = !children.isEmpty();
+            if (hasMenu || hasChild) {
+                result.add(node);
+            }
+        }
+        return result;
     }
 
     @Override

@@ -52,6 +52,15 @@ public class SystemMenusDAO extends ServiceImpl<MenusMapper, SysMenu> {
         return baseMapper.findMenusTree(null);
     }
 
+    /**
+     * 一次全量查询所有菜单，在 Java 层组装树（修复 P0-3：避免 N+1）
+     */
+    public List<SysMenu> findAllMenusFlat() {
+        return baseMapper.selectList(new LambdaQueryWrapper<SysMenu>()
+                .eq(SysMenu::getDelFlag, DIC.NOT_DEL)
+                .orderByAsc(SysMenu::getSort));
+    }
+
     public Page<SysMenu> getMenuTreePage(Page<SysMenu> page) {
         return baseMapper.findMenusTreePage(page, null);
     }

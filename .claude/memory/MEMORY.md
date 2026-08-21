@@ -4,6 +4,7 @@
 - [构建需 JDK 17](build-requires-jdk17.md) — module-ai 硬性要求 17，构建命令与 JDK 路径
 - [POM 构建坑](pom-build-gotchas.md) — relativePath、库模块 repackage、system-app skip、SB3 starter 换装（mybatis-plus/druid boot3）
 - [Spring Boot 3 升级进度](springboot3-upgrade-progress.md) — ✅ 已完成（2026-08-19）：5 应用全部启动成功，修复清单与启动命令见内
+- [Docker Compose](docker-compose.md) — 根 docker-compose.yml 9 服务全栈编排（基础设施 + 5 微服务）
 - [多机协作同步](multi-machine-sync.md) — 2026-08-20：Windows+JDK21 完成 SB3 升级并推送，本机 Mac+JDK17 已同步
 - [远程 Nacos](remote-nacos-hw.md) — hw.crabapples.cn 凭据与 namespace，启动注入参数
 - [Maven 本地仓库](maven-local-repo.md) — $MAVEN_HOME/repo 而非 ~/.m2/repository
@@ -16,6 +17,8 @@
 - [cu-* 容器栈](cu-docker-stack.md) — 另一项目的 docker 栈，勿混淆
 - [已知安全问题](known-security-issues.md) — 前后端安全分析报告结论（JWT/MD5/CSRF 等）
 - [多数据源](multi-datasource.md) — DynamicDataSourceRegister + @DataSourceChange 切换
+- [RBAC Bug 分析](rbac-bug-analysis.md) — 角色/权限/菜单三模块代码审查：3 个 P0（Jwt 不验状态、级联删缺失、菜单全表扫描）+ 9 个其他问题。**P0-1/0-2/0-3 + P1 已全部修复验证（2026-08-20）**
+- [P0-1 修复记录](p0-1-jwt-interceptor-fix.md) — JwtInterceptor 用户态校验已修（接口反转，3 个文件）
 - [用户偏好](feedback-output-and-memory.md) — 中文输出、记忆存 .claude/memory
 - [JVM 笔记](learning-jvm.md) — 内存模型、GC、CPU/堆诊断
 - [设计模式清单](learning-design-patterns.md) — create/structure/doing 各模式

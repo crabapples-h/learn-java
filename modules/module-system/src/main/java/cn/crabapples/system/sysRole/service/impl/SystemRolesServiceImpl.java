@@ -10,6 +10,7 @@ import cn.crabapples.system.sysRole.service.SystemRolesService;
 import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.service.SystemUserService;
+import cn.crabapples.system.sysUserRole.dao.UserRolesDAO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -39,14 +40,17 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     private final SystemMenusDAO systemMenusDAO;
     private final SystemUserService userService;
     private final SystemRoleMenusService roleMenusService;
+    private final UserRolesDAO userRolesDAO;
 
     public SystemRolesServiceImpl(RolesDAO rolesDAO, SystemMenusDAO systemMenusDAO, StringRedisTemplate redisTemplate,
-                                  HttpServletRequest request, SystemUserService userService, SystemRoleMenusService roleMenusService) {
+                                  HttpServletRequest request, SystemUserService userService, SystemRoleMenusService roleMenusService,
+                                  UserRolesDAO userRolesDAO) {
         this.rolesDAO = rolesDAO;
         this.systemMenusDAO = systemMenusDAO;
         this.request = request;
         this.userService = userService;
         this.roleMenusService = roleMenusService;
+        this.userRolesDAO = userRolesDAO;
     }
 
     // 获取当前用户的角色信息
@@ -112,10 +116,15 @@ public class SystemRolesServiceImpl implements SystemRolesService {
     }
 
     /**
-     * 删除角色
+     * 删除角色（修复 P0-2：级联删除 sys_user_roles 和 sys_role_menus）
      */
     @Override
     public boolean removeRoles(String id) {
+        // 删除该角色关联的所有用户-角色关系
+        userRolesDAO.deleteByRoleId(id);
+        // 删除该角色关联的所有角色-菜单关系
+        roleMenusService.delByRoleId(id);
+        // 删除角色本身
         return rolesDAO.deleteById(id);
     }
 }

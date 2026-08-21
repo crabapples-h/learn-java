@@ -1,0 +1,243 @@
+# =============================================================
+# learn-java 全栈开发编排（Spring Boot 3.2.5 + JDK 17）
+# 包含：MySQL、Nacos（单机+鉴权）、Redis、Sentinel Dashboard、
+#       Gateway、System、Socket、FileUpload、AI 5 个微服务
+# 启动：docker compose up -d
+# 停止：docker compose down
+# 日志：docker compose logs -f [service]
+# =============================================================
+
+networks:
+  crabapples:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  mysql_data:
+  nacos_data:
+  redis_data:
+  logs:
+
+services:
+  # ====================== 基础设施 ======================
+
+  mysql:
+    image: mysql:8.4.0
+    container_name: crabapples-mysql
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.10
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: learn
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./document/mysql/init:/docker-entrypoint-initdb.d:ro
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  nacos:
+    image: nacos/nacos-server:v2.4.3
+    container_name: crabapples-nacos
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.20
+    environment:
+      MODE: standalone
+      JVM_XMS: 512m
+      JVM_XMX: 512m
+      JVM_XMN: 256m
+      # 鉴权（必须开启，nacos / BestLoveBaby! 登录）
+      NACOS_AUTH_ENABLE: "true"
+      NACOS_AUTH_TOKEN: "bXJDYUJrM3ZqVldLaGYyemV2T0F5SFo2Y0wyNGJVUW4="
+      NACOS_AUTH_IDENTITY_KEY: "custom_server_identity_key"
+      NACOS_AUTH_IDENTITY_VALUE: "custom_server_identity_value"
+      TZ: Asia/Shanghai
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+      - ./docker-compose/nacos/conf/application.properties:/home/nacos/conf/application.properties:ro
+      - ./docker-compose/nacos/conf/mysql-schema.sql:/home/nacos/conf/mysql-schema.sql:ro
+      - nacos_data:/home/nacos/data
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: crabapples-redis
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.30
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  sentinel-dashboard:
+    image: openjdk:17-jdk-slim
+    container_name: crabapples-sentinel
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.40
+    working_dir: /opt
+    volumes:
+      - ./docker-compose/sentinel-dashboard/sentinel-dashboard-1.8.9.jar:/opt/sentinel-dashboard.jar:ro
+    ports:
+      - "8080:8080"
+    command: ["java", "-jar", "sentinel-dashboard.jar"]
+    environment:
+      JAVA_OPTS: "-Dserver.port=8080 -Dcsp.sentinel.dashboard.server=localhost:8080"
+      TZ: Asia/Shanghai
+
+  # ====================== 微服务（5 个） ======================
+
+  gateway-app:
+    image: eclipse-temurin:17-jre
+    container_name: crabapples-gateway
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.50
+    working_dir: /opt
+    volumes:
+      - ./modules-application/gateway-app/target/gateway-app-1.0-SNAPSHOT.jar:/opt/app.jar:ro
+    ports:
+      - "9093:9093"
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: >-
+        -Xms256m -Xmx512m
+        -Dspring.cloud.nacos.server-addr=crabapples-nacos:8848
+        -Dspring.cloud.nacos.username=nacos
+        -Dspring.cloud.nacos.password=BestLoveBaby!
+        -Dspring.cloud.compatibility-verifier.enabled=false
+    depends_on:
+      nacos:
+        condition: service_started
+
+  system-app:
+    image: eclipse-temurin:17-jre
+    container_name: crabapples-system
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.51
+    working_dir: /opt
+    volumes:
+      - ./modules-application/system-app/target/system-app-1.0-SNAPSHOT.jar:/opt/app.jar:ro
+      - logs:/var/logs
+    ports:
+      - "19093:19093"
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: >-
+        -Xms256m -Xmx512m
+        -Dspring.cloud.nacos.server-addr=crabapples-nacos:8848
+        -Dspring.cloud.nacos.username=nacos
+        -Dspring.cloud.nacos.password=BestLoveBaby!
+        -Dspring.datasource.url=jdbc:mysql://crabapples-mysql:3306/learn?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+        -Dspring.datasource.druid.username=root
+        -Dspring.datasource.druid.password=root
+        -Dspring.redis.host=crabapples-redis
+        -Dspring.redis.password=
+    depends_on:
+      nacos:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  socket-app:
+    image: eclipse-temurin:17-jre
+    container_name: crabapples-socket
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.52
+    working_dir: /opt
+    volumes:
+      - ./modules-application/socket-app/target/socket-app-1.0-SNAPSHOT.jar:/opt/app.jar:ro
+    ports:
+      - "19095:19095"
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: >-
+        -Xms256m -Xmx512m
+        -Dspring.cloud.nacos.server-addr=crabapples-nacos:8848
+        -Dspring.cloud.nacos.username=nacos
+        -Dspring.cloud.nacos.password=BestLoveBaby!
+    depends_on:
+      nacos:
+        condition: service_started
+
+  file-upload-app:
+    image: eclipse-temurin:17-jre
+    container_name: crabapples-upload
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.53
+    working_dir: /opt
+    volumes:
+      - ./modules-application/file-upload-app/target/file-upload-app-1.0-SNAPSHOT.jar:/opt/app.jar:ro
+      - /var/upFiles:/var/upFiles
+    ports:
+      - "19094:19094"
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: >-
+        -Xms256m -Xmx512m
+        -Dspring.cloud.nacos.server-addr=crabapples-nacos:8848
+        -Dspring.cloud.nacos.username=nacos
+        -Dspring.cloud.nacos.password=BestLoveBaby!
+    depends_on:
+      nacos:
+        condition: service_started
+
+  ai-app:
+    image: eclipse-temurin:17-jre
+    container_name: crabapples-ai
+    restart: unless-stopped
+    networks:
+      crabapples:
+        ipv4_address: 172.20.0.54
+    working_dir: /opt
+    volumes:
+      - ./modules-application/ai-app/target/ai-app-1.0-SNAPSHOT.jar:/opt/app.jar:ro
+    ports:
+      - "19096:19096"
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: >-
+        -Xms256m -Xmx512m
+        -Dspring.cloud.nacos.server-addr=crabapples-nacos:8848
+        -Dspring.cloud.nacos.username=nacos
+        -Dspring.cloud.nacos.password=BestLoveBaby!
+    depends_on:
+      nacos:
+        condition: service_started
