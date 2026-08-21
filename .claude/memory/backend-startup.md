@@ -13,7 +13,7 @@ metadata:
 | gateway-app | 9093 | 网关，前端入口（9093 路径走 `/api/{serviceId}/**`） |
 | file-upload-app | 19094 | 文件上传 |
 | socket-app | 19095 | websocket |
-| ai-app | 19096 | Spring AI；需排除 DataSource 自动配置，详见 [[ai-app-not-runnable]] |
+| ai-app | 19096 | Spring AI；需排除 DataSource 自动配置，详见 [[ai-app-boot3-setup]] |
 
 **启动命令**（JDK 17 + 远程 Nacos 凭据 + Redis 覆盖）：
 ```bash
@@ -27,7 +27,7 @@ metadata:
 参数说明：
 - system-app 必须加 Redis 覆盖（`bootstrap.yml` 写死 192.168.31.166:6379 + 密码 123456789）
 - **gateway-app 必须加** `-Dspring.cloud.compatibility-verifier.enabled=false`（Boot 3.2.5 不在 2023.0.1 train 兼容范围，验证器误报）
-- ai-app 启动参考 [[ai-app-not-runnable]]
+- ai-app 启动参考 [[ai-app-boot3-setup]]
 
 **验证链路**：前端 8080 → gateway 9093 → Nacos 路由 `/api/system/**` → system-app → MySQL → JWT
 登录接口：`POST /api/system/login`（admin/admin）。

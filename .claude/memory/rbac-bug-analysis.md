@@ -244,4 +244,3 @@ System.err.println(menu);   // ← 死代码 + 影响日志格式
 
 - [[known-security-issues]]（JWT/MD5/CSRF 等已记录安全风险）
 - [[multi-datasource]]（多租户相关）
-- [[bug-fix-plan-123]] 历史 bug 修复方案参考

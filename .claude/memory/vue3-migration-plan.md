@@ -11,7 +11,8 @@
 > - ✅ **布局修复**：`router/index.js` 的 `dynamic-layout` 改用 `ManageIndex`（Index.vue）作组件（原为裸 RouterView → 无菜单/header/footer）；`sys-depart/add.vue` 的 `saveDicts` → `saveDeparts`
 > - ✅ **刷新 404 修复**：catch-all 重定向到 /404 发生在守卫**之前**（守卫拿到 `to.path=/404`、`redirectedFrom=原始路径`）；守卫改为恢复动态路由先于白名单检查，并用 `next({path: to.redirectedFrom?.path, replace:true})` 回跳（Node 模拟验证通过）
 > - ✅ **列表页自动加载数据**：`useSystem.js` 加 `onMounted` 自动 `getList()`（有 `url.list` 时）
-> - ✅ **示例页**：迁移 `views/example/SseExample.vue`、`WebSocketExample.vue`，安装 `event-source-polyfill`
+> - ✅ **示例页**：迁移 `views/example/SseExample.vue`、`WebSocketExample.vue`
+> - ✅ **SSE 包升级**（2026-08-21）：`event-source-polyfill`（已停更）→ **`@microsoft/fetch-event-source@^2.0.1`**（微软官方、活跃维护）；SseExample 的第二种连接方式改用 `fetchEventSource`（`onmessage` 回调 + `AbortController`），构建后 chunk 从 14.33kB 降到 4.67kB。三种方式：原生 EventSource（无请求头）/ fetchEventSource（自定义请求头）/ axios onDownloadProgress
 > - ⚠️ **遗留**：vue3 `request.js` 拦截器 + 页面 `message.error` 会重复报错提示；`sys-depart/list.vue` 的 add-item 模板被注释、`sys-tenant/detail.vue` 是死代码（均继承自 vue2）
 
 ---

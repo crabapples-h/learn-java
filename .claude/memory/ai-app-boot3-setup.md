@@ -1,5 +1,5 @@
 ---
-name: ai-app-not-runnable
+name: ai-app-boot3-setup
 description: ai-app 启动注意（Boot2 起不来；Boot3 已可启动，但需排除 DataSource 自动配置）
 metadata:
   type: project

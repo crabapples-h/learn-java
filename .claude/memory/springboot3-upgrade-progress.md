@@ -60,5 +60,5 @@ java -Dspring.cloud.nacos.server-addr=hw.crabapples.cn:8848 \
 - Maven 本地仓库 = `D:\developer\apache-maven-3.9.16\repo`（非 ~/.m2）
 
 ## 相关记忆
-- [[springboot3-upgrade-final]] — 迁移总结（已完成）
+- [[multi-machine-sync]] — 多机协作同步记录
 - [[pom-build-gotchas]]、[[build-requires-jdk17]]、[[backend-startup]]、[[remote-nacos-hw]]

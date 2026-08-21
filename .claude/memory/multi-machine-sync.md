@@ -71,4 +71,4 @@ metadata:
 - JDK 17 在 `/Users/mshe/developer/java/jdk-17.0.17.jdk/Contents/Home`
 - 启动命令已标准化（见 [[springboot3-upgrade-progress]] 和 [[backend-startup]]）
 
-相关：[[springboot3-upgrade-progress]]、[[springboot3-upgrade-final]]、[[pom-build-gotchas]]、[[backend-startup]]、[[remote-nacos-hw]]、[[local-infra]]、[[maven-local-repo]]
+相关：[[springboot3-upgrade-progress]]、[[pom-build-gotchas]]、[[backend-startup]]、[[remote-nacos-hw]]、[[local-infra]]、[[maven-local-repo]]
