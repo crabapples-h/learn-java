@@ -97,6 +97,8 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     private List<SysMenu> buildMenuTree(List<SysMenu> allMenus, List<String> userMenuIds) {
         Map<String, SysMenu> menuMap = new HashMap<>();
         for (SysMenu m : allMenus) {
+            // children 实体字段默认是不可变 EMPTY_LIST，组装树前先初始化为可变集合
+            m.setChildren(new ArrayList<>());
             menuMap.put(m.getId(), m);
         }
         List<SysMenu> roots = new ArrayList<>();
