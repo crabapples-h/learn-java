@@ -74,4 +74,4 @@ docker compose config --services  # 列出 9 个服务
 - [[backend-startup]]（宿主机启动方式）
 - [[remote-nacos-hw]]（Nacos 凭据）
 - [[local-infra]]（本机基础设施）
-- [[springboot3-upgrade-progress]]（构建产物）
+- [[multi-machine-sync]]（构建产物）

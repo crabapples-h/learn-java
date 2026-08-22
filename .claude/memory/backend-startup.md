@@ -5,15 +5,16 @@ metadata:
   type: project
 ---
 
-后端 5 个可运行应用（Spring Boot 3.2.5 升级后全部可启动，含 ai-app）：
+后端 6 个可运行应用（Spring Boot 3.2.5，全部可启动）：
 
 | 应用 | 端口 | 说明 |
 |------|------|------|
 | system-app | 19093 | 主业务，需 MySQL+Redis |
-| gateway-app | 9093 | 网关，前端入口（9093 路径走 `/api/{serviceId}/**`） |
+| gateway-app | 9093 | 网关，前端入口（走 `/api/{serviceId}/**`，**不 strip 前缀**，见 [[webflux-sse-app]]） |
 | file-upload-app | 19094 | 文件上传 |
 | socket-app | 19095 | websocket |
 | ai-app | 19096 | Spring AI；需排除 DataSource 自动配置，详见 [[ai-app-boot3-setup]] |
+| webflux-sse-app | 19097 | WebFlux 响应式 SSE 演示（Netty），详见 [[webflux-sse-app]] |
 
 **启动命令**（JDK 17 + 远程 Nacos 凭据 + Redis 覆盖）：
 ```bash
@@ -29,7 +30,7 @@ metadata:
 - **gateway-app 必须加** `-Dspring.cloud.compatibility-verifier.enabled=false`（Boot 3.2.5 不在 2023.0.1 train 兼容范围，验证器误报）
 - ai-app 启动参考 [[ai-app-boot3-setup]]
 
-**验证链路**：前端 8080 → gateway 9093 → Nacos 路由 `/api/system/**` → system-app → MySQL → JWT
+**验证链路**：前端 5173（vue3）→ gateway 9093 → Nacos 路由 `/api/system/**` → system-app → MySQL → JWT
 登录接口：`POST /api/system/login`（admin/admin）。
 
-Nacos 凭据见 [[remote-nacos-hw]]；前端启动见 [[frontend-vue2]]；SB3 升级期间所有坑修复见 [[springboot3-upgrade-progress]]。
+Nacos 凭据见 [[remote-nacos-hw]]；前端启动见 [[frontend-vue2]]；SB3 升级期间所有坑修复见 [[multi-machine-sync]]。

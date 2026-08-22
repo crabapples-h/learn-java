@@ -21,4 +21,4 @@ mvn clean install \
   -am -Dmaven.test.skip=true
 ```
 
-注意用 `-Dmaven.test.skip=true`（跳过测试编译）；仅 `-DskipTests` 不够（file-upload-app 测试引用 spring-boot-test 但 POM 未加依赖）。相关：[[pom-build-gotchas]]、[[springboot3-upgrade-progress]]
+注意用 `-Dmaven.test.skip=true`（跳过测试编译）；仅 `-DskipTests` 不够（file-upload-app 测试引用 spring-boot-test 但 POM 未加依赖）。相关：[[pom-build-gotchas]]、[[multi-machine-sync]]

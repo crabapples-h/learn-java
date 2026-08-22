@@ -18,7 +18,7 @@ metadata:
 - 无 CSRF 防护（request.js 仅带 crabapples-token 头）
 
 **🟡 中风险**
-- JWT 认证只验 token 格式未验用户状态（`JwtInterceptor.java:56-58`）
+- ~~JWT 认证只验 token 格式未验用户状态~~ → **已修复（2026-08-20，P0-1）**：JwtInterceptor 通过 UserAuthChecker 校验用户 status/delFlag，见 [[p0-1-jwt-interceptor-fix]]
 - 登录接口 `Thread.sleep(500)` 固定延时可被 DoS
 - 缺少细粒度权限注解（整个 controller 层）
 - Token 存 localStorage 易受 XSS；依赖版本过旧（vue 2.6.14 等）；devServer host 0.0.0.0

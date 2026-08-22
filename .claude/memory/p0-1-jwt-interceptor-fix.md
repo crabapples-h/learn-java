@@ -58,7 +58,7 @@ public interface UserAuthChecker {
 ## 相关
 
 - [[rbac-bug-analysis]] — 完整 bug 清单
-- [[springboot3-upgrade-progress]] — 当前 Boot 3.2.5 状态
+- [[multi-machine-sync]] — 当前 Boot 3.2.5 状态
 
 ## 后续修复
 

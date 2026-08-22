@@ -8,8 +8,8 @@ metadata:
 来源：各 `frontend/*/README.md` 与 `frontend/pom.xml`。
 
 **在 reactor 中（frontend/pom.xml 子模块）**：
-- `frontend-vue2`：Vue 2.6.14 + Ant Design Vue + Vuex + Vue Router，Vue CLI 5，**当前可用前端**（见 [[frontend-vue2]]）
-- `frontend-vue3`：Vue 3 + Vite + Vue Router 4 + Pinia + Ant Design Vue 4，基于 vue2 结构搭建，**Apis.js 旧路径暂不可用**
+- `frontend-vue2`：Vue 2.6.14 + Ant Design Vue + Vuex + Vue Router，Vue CLI 5，稳定可用（见 [[frontend-vue2]]）
+- `frontend-vue3`：Vue 3 + Vite + Vue Router 4 + Pinia + Ant Design Vue 4，**已迁移完成（2026-08-22，主推）**，P0/P1/P2 + SSE 5 方式均完成（见 [[vue3-migration-plan]]）
 - `frontend-mpvue`：Mpvue 小程序项目（vue init mpvue/mpvue-quickstart）
 - `frontend-hbuildx`：HBuilderX 相关
 - `frontend-electron`：Electron 桌面应用

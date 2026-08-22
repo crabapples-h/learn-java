@@ -63,12 +63,12 @@ metadata:
 1. **记忆以 git 同步**：本项目 `.claude/memory/` 通过 git 跟踪，两台机器可共享记忆
 2. **路径差异标记**：JDK / Maven 仓库等本地路径信息在记忆里**标注本机** vs **另一台**
 3. **环境配置在应用启动时注入**：Nacos 凭据、Redis 覆盖、compatibility-verifier 开关都通过 `-D` 参数传递，不写死在代码
-4. **关键修复写进代码 + 记忆**：构建坑、starter 换装、邮件坐标等都同步到 [[pom-build-gotchas]] 和 [[springboot3-upgrade-progress]]
+4. **关键修复写进代码 + 记忆**：构建坑、starter 换装、邮件坐标等都同步到 [[pom-build-gotchas]] 和 [[multi-machine-sync]]
 
 ## 本机（Mac）后续可执行
 
 - 代码已同步，可直接 `mvn package` + 启动验证
 - JDK 17 在 `/Users/mshe/developer/java/jdk-17.0.17.jdk/Contents/Home`
-- 启动命令已标准化（见 [[springboot3-upgrade-progress]] 和 [[backend-startup]]）
+- 启动命令已标准化（见 [[multi-machine-sync]] 和 [[backend-startup]]）
 
-相关：[[springboot3-upgrade-progress]]、[[pom-build-gotchas]]、[[backend-startup]]、[[remote-nacos-hw]]、[[local-infra]]、[[maven-local-repo]]
+相关：[[multi-machine-sync]]、[[pom-build-gotchas]]、[[backend-startup]]、[[remote-nacos-hw]]、[[local-infra]]、[[maven-local-repo]]

@@ -240,7 +240,16 @@ System.err.println(menu);   // ← 死代码 + 影响日志格式
 | 🟡 P2 | ⏳ 待修复 | 缓存失效、getChildList null、日志密码 |
 | 🟢 P3 | ⏳ 待修复 | 调试代码、字段重复、软删除、死代码 |
 
-## 五、相关记忆
+## 五、后续回归 Bug（2026-08-22）
+
+### 🔴 P0-3 修复引入回归：`buildMenuTree` 菜单树 500
+
+`SystemMenusServiceImpl.buildMenuTree`（第 109 行 `parent.getChildren().add(m)`）抛 `UnsupportedOperationException`：
+- **根因**：`SysMenu.children` 字段默认值是 `Collections.EMPTY_LIST`（**不可变**），P0-3 改成 Java 层组装树后直接 `.add()` 失败
+- **修复**：组装树前先 `m.setChildren(new ArrayList<>())` 初始化可变集合
+- **教训**：MyBatis 实体字段若用不可变集合作默认值，Java 层组装必须初始化
+
+## 六、相关记忆
 
 - [[known-security-issues]]（JWT/MD5/CSRF 等已记录安全风险）
 - [[multi-datasource]]（多租户相关）

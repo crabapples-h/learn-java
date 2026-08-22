@@ -6,10 +6,17 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
+  servlet.multipart:
+    max-file-size: 100MB # 最大文件大小
+    max-request-size: 100MB # 最大请求大小
   cloud:
     nacos:
-      # Maven 占位符，由 profile 控制（mac→127.0.0.1:8848 / windows、linux→172.16.8.70:8850）
-      server-addr: @nacos.server-addr@
+      server-addr: @nacos.server-addr@ # nacos根配置
+      config:
+        namespace: @nacos.namespace@
+      discovery:
+        namespace: @nacos.namespace@
+        service: ai
       username: @nacos.username@
       password: @nacos.password@
   ai:

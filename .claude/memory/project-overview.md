@@ -7,10 +7,10 @@ metadata:
 
 `cn.crabapples:learn-java`，Java 17（根 pom 默认），Spring Boot 3.2.5，Spring Cloud 2023.0.1，Spring Cloud Alibaba 2023.0.3.2。Reactor 模块：learn、design-pattern、frontend、plugins、learn-byte-buddy、module-base-core、modules、modules-application。
 
-- `modules/` = 库模块（module-system/ai/gateway/socket/file-upload）；`modules-application/` = 可部署 Spring Boot 应用（system-app/gateway-app/ai-app/file-upload-app/socket-app）——命名相似但职责不同
+- `modules/` = 库模块（module-system/ai/gateway/socket/file-upload/webflux-sse）；`modules-application/` = 可部署 Spring Boot 应用（system-app/gateway-app/ai-app/file-upload-app/socket-app/webflux-sse-app）——命名相似但职责不同
 - `module-base-core` 父 POM 是 `modules` 而非 root
 - `learn/` 是独立 Java 学习代码，非 Spring Boot 应用
-- 默认 Maven profile 为 `mac`（activeByDefault，nacos 127.0.0.1:8848）
+- 默认 Maven profile 为 `mac`（activeByDefault，nacos **hw.crabapples.cn:8848**，namespace `namespace-learn-java`）——远程 Nacos，非本地
 - `modules-application` surefire `skipTests=true`
 - `lib/` 本地 JAR 通过 build resources 打包进 fat JAR 的 BOOT-INF/lib
 - 前端 lockfile（package-lock.json/yarn.lock）被 gitignore，构建前必须 `npm install`

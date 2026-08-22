@@ -19,4 +19,4 @@ metadata:
   - `module-socket` 对 mybatis-plus 的 exclusion 需同步改名
 - **`learn/` 资源过滤损坏二进制**：`fonts/*.ttf/ttc/otf`、`intelbth.dll` → 加 maven-resources-plugin nonFilteredFileExtensions（与 modules-application 一致）
 
-构建需 JDK 17，见 [[build-requires-jdk17]]。升级启动相关见 [[springboot3-upgrade-progress]]。
+构建需 JDK 17，见 [[build-requires-jdk17]]。升级启动相关见 [[multi-machine-sync]]。
