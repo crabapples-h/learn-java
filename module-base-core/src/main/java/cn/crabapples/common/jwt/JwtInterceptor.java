@@ -61,6 +61,10 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }
         String token = request.getHeader(jwtTokenUtils.getAuthKey());
+        // 兼容 SSE/EventSource 等无法自定义请求头的场景：允许通过 URL 查询参数携带 token
+        if (StringUtils.isBlank(token)) {
+            token = request.getParameter(jwtTokenUtils.getAuthKey());
+        }
         log.debug("授权Token:[{}]", token);
         if (StringUtils.isBlank(token)) {
             log.warn("token认证失败");

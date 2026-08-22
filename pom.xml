@@ -28,7 +28,7 @@
             <properties>
                 <yarn>yarn</yarn>
                 <nacos.server-addr>hw.crabapples.cn:8848</nacos.server-addr>
-                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.namespace>namespace-learn-java</nacos.namespace>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>BestLoveBaby!</nacos.password>
             </properties>
@@ -38,7 +38,7 @@
             <properties>
                 <yarn>yarn</yarn>
                 <nacos.server-addr>172.16.8.70:8850</nacos.server-addr>
-                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.namespace>namespace-learn-java</nacos.namespace>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>BestLoveBaby!</nacos.password>
             </properties>
@@ -48,7 +48,7 @@
             <properties>
                 <yarn>yarn</yarn>
                 <nacos.server-addr>hw.crabapples.cn:8848</nacos.server-addr>
-                <nacos.namespace>3dc5f842-09a4-4db0-b6ee-f4aa95199c71</nacos.namespace>
+                <nacos.namespace>namespace-learn-java</nacos.namespace>
                 <nacos.username>nacos</nacos.username>
                 <nacos.password>BestLoveBaby!</nacos.password>
             </properties>

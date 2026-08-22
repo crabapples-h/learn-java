@@ -16,6 +16,7 @@
         <module>gateway-app</module>
         <module>socket-app</module>
         <module>system-app</module>
+        <module>webflux-sse-app</module>
     </modules>
     <build>
         <plugins>

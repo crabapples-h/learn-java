@@ -16,6 +16,7 @@
     "jsrsasign": "10.5.25",
     "nprogress": "^0.2.0",
     "pinia": "^3.0.4",
+    "sse.js": "^2.8.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },

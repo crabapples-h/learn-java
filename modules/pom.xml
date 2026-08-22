@@ -16,5 +16,6 @@
         <module>module-gateway</module>
         <module>module-socket</module>
         <module>module-system</module>
+        <module>module-webflux-sse</module>
     </modules>
 </project>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
@@ -7,19 +8,15 @@
         <artifactId>modules-application</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>ai-app</artifactId>
-
+    <artifactId>webflux-sse-app</artifactId>
     <dependencies>
         <dependency>
             <groupId>cn.crabapples</groupId>
-            <artifactId>module-ai</artifactId>
+            <artifactId>module-webflux-sse</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
-    <repositories>
 
-    </repositories>
     <build>
         <plugins>
             <plugin>
@@ -28,5 +25,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -1,0 +1,18 @@
+server.port: 19097
+
+logging:
+  file.name: logs/${spring.application.name}
+  level:
+    root: info
+    cn.crabapples.webflux: DEBUG
+
+spring.application.name: webflux-sse-service
+spring.cloud.nacos:
+  username: @nacos.username@
+  password: @nacos.password@
+  server-addr: @nacos.server-addr@
+  discovery:
+    namespace: @nacos.namespace@
+    service: webflux-sse
+  config:
+    namespace: @nacos.namespace@
