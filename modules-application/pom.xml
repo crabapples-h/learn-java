@@ -12,6 +12,7 @@
     <artifactId>modules-application</artifactId>
     <modules>
         <module>ai-app</module>
+        <module>camunda-app</module>
         <module>file-upload-app</module>
         <module>gateway-app</module>
         <module>socket-app</module>

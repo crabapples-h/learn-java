@@ -12,6 +12,7 @@
     <artifactId>modules</artifactId>
     <modules>
         <module>module-ai</module>
+        <module>module-camunda</module>
         <module>module-file-upload</module>
         <module>module-gateway</module>
         <module>module-socket</module>

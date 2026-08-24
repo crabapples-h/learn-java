@@ -34,11 +34,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     private final JwtTokenUtils jwtTokenUtils;
 
-    /**
-     * 用户态校验器（可选注入）。
-     * - module-system 会提供实现（{@code sysUserAuthCheckerImpl}），校验 status=0 && delFlag=0
-     * - socket-app / file-upload-app / ai-app 等不提供实现时为 null，仅校验 token 格式（向后兼容）
-     */
     @Autowired(required = false)
     private UserAuthChecker userAuthChecker;
 

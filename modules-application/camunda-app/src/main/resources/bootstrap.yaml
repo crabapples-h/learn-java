@@ -1,0 +1,47 @@
+dataBaseParam: 'useUnicode=true
+&characterEncoding=utf-8
+&serverTimezone=Asia/Shanghai
+&zeroDateTimeBehavior=convertToNull
+&allowPublicKeyRetrieval=true
+&nullDatabaseMeansCurrent=true'
+server:
+  port: 19098
+spring:
+  application:
+    name: camunda
+  config.import: optional:nacos:${spring.application.name}.yaml
+  cloud:
+    nacos:
+      server-addr: @nacos.server-addr@ # nacos根配置
+      config:
+        namespace: @nacos.namespace@
+      discovery:
+        namespace: @nacos.namespace@
+        service: camunda
+      username: @nacos.username@
+      password: @nacos.password@
+  servlet.multipart:
+    max-file-size: 100MB # 最大文件大小
+    max-request-size: 100MB # 最大请求大小
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource:
+    url: jdbc:mysql://localhost:3306/learn?${dataBaseParam}
+    username: root
+    password: root
+
+camunda.bpm:
+  # 自动部署 resources 目录下的 bpmn 文件
+  auto-deployment-enabled: true
+  # 历史记录级别：full, audit, none, activity
+  history-level: audit
+  database:
+    schema-update: true
+    # 数据库表前缀（默认无）
+    table-prefix:
+  # 管理员账号配置（Webapp使用）
+  admin-user:
+    id: admin
+    password: admin
+    first-name: Admin
+    last-name: User

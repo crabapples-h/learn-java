@@ -7,21 +7,20 @@
         <artifactId>modules-application</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>ai-app</artifactId>
-
+    <artifactId>camunda-app</artifactId>
     <dependencies>
         <dependency>
             <groupId>cn.crabapples</groupId>
-            <artifactId>module-ai</artifactId>
+            <artifactId>module-camunda</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <repositories></repositories>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.5.5</version>
             </plugin>
         </plugins>
     </build>

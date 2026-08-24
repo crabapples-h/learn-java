@@ -1,4 +1,4 @@
-package cn.crabapples.common.elasticsearch;//package cn.crabapples.a.common.utils.elasticsearch;
+package cn.crabapples.common.elasticsearch;
 //
 //import com.alibaba.fastjson.JSONObject;
 //import lombok.Getter;
