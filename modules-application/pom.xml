@@ -15,6 +15,7 @@
         <module>camunda-app</module>
         <module>file-upload-app</module>
         <module>gateway-app</module>
+        <module>redis-server</module>
         <module>socket-app</module>
         <module>system-app</module>
         <module>webflux-sse-app</module>
