@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import Antd from 'ant-design-vue'
-import axios from 'axios'
 import App from './App.vue'
 import router from '@/router'
 import { pinia } from '@/store'
@@ -18,7 +17,6 @@ app.use(pinia)
 app.use(router)
 app.use(Antd)
 app.use(permission)
-app.config.globalProperties.$http = request
-app.config.globalProperties.$axios = axios
+app.config.globalProperties.$axios = request
 
 app.mount('#app')

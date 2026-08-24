@@ -25,6 +25,13 @@
 - **SSE 500 修复**：原生 EventSource 无法带 token 却连 `/auth` → 401 + 异常处理器对 `text/event-stream` 无法序列化 → 500；改用 `/unAuth`；`JwtInterceptor` 支持 URL 查询参数 token 兜底
 - 后端 WebFlux 见 [[webflux-sse-app]]
 
+## 登录页优化 + 全局请求别名（2026-08-24）
+
+- ✅ **main.js 清理**：移除 `import axios from 'axios'` 和 `$http` 注册；统一为 `app.config.globalProperties.$axios = request`（带拦截器的封装实例）。`$axios`/`$http` 此前均无任何组件使用（grep 验证）
+- ✅ **登录页重做**（`views/base/Login.vue`）：深蓝渐变背景 + 浮动光晕动画、毛玻璃卡片、logo+标题、内联 SVG 图标输入框（不依赖图标库）、"记住我"+忘记密码、渐变登录按钮
+- ✅ **依赖补齐**：`@microsoft/fetch-event-source`、`sse.js` 未装导致 vite build 失败（SseExample.vue），`npm install` 补齐后构建通过
+- 验证：`vite build` 通过；dev server 5173 `/login` 返回 200
+
 ## 技术栈与坑
 
 - 技术栈：Vue 3.5 + Vite 7 + Pinia 3 + Vue Router 4 + Ant Design Vue 4.2

@@ -11,7 +11,7 @@
 - [后端启动](backend-startup.md) — 6 应用端口、启动命令、验证链路
 - [前端用 vue2](frontend-vue2.md) — frontend-vue2 稳定可用；**frontend-vue3 已迁移完成（主推，5173）**
 - [前端项目清单](frontend-projects.md) — frontend/ 下各子项目技术栈
-- [Vue3 重构规划](vue3-migration-plan.md) — ✅ 已完成：P0 路径+v-auth、P1 菜单/守卫、P2 页面组件、SSE 5 种方式
+- [Vue3 重构规划](vue3-migration-plan.md) — ✅ 已完成：P0 路径+v-auth、P1 菜单/守卫、P2 页面组件、SSE 5 种方式；2026-08-24 登录页重做 + $axios 统一
 - [ai-app Boot3 启动设置](ai-app-boot3-setup.md) — Boot3 已可启动（配置走 Nacos ai-service.yaml，需排除 DataSource + bootstrap starter）
 - [WebFlux SSE 应用](webflux-sse-app.md) — 端口19097，gateway discovery-locator 不 strip 前缀的坑
 - [cu-* 容器栈](cu-docker-stack.md) — 另一项目的 docker 栈，勿混淆
