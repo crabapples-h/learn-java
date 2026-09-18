@@ -27,7 +27,7 @@ metadata:
 
 参数说明：
 - system-app 必须加 Redis 覆盖（`bootstrap.yml` 写死 192.168.31.166:6379 + 密码 123456789）
-- **gateway-app 必须加** `-Dspring.cloud.compatibility-verifier.enabled=false`（Boot 3.2.5 不在 2023.0.1 train 兼容范围，验证器误报）
+- ~~gateway-app 必须加 compatibility-verifier.enabled=false~~ **2026-09-18 升级 SC 2025.0.0 后已不需要**（Boot 3.5.13 在认证范围内）
 - ai-app 启动参考 [[ai-app-boot3-setup]]
 
 **验证链路**：前端 5173（vue3）→ gateway 9093 → Nacos 路由 `/api/system/**` → system-app → MySQL → JWT

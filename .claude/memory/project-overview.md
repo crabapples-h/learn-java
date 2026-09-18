@@ -5,7 +5,7 @@ metadata:
   type: project
 ---
 
-`cn.crabapples:learn-java`，Java 17（根 pom 默认），Spring Boot 3.2.5，Spring Cloud 2023.0.1，Spring Cloud Alibaba 2023.0.3.2。Reactor 模块：learn、design-pattern、frontend、plugins、learn-byte-buddy、module-base-core、modules、modules-application。
+`cn.crabapples:learn-java`，Java 17（根 pom 默认），**Spring Boot 3.5.13，Spring Cloud 2025.0.0，Spring Cloud Alibaba 2025.0.0.0**（2026-09-18 从 3.2.5/2023.0.1/2023.0.3.2 升级，因 spring-ai 需 Boot 3.5；nacos-client 3.0.3/sentinel 1.8.9，7 应用全部构建+启动验证通过，见 [[camunda-app-setup]]）。Reactor 模块：learn、design-pattern、frontend、plugins、learn-byte-buddy、module-base-core、modules、modules-application。
 
 - `modules/` = 库模块（module-system/ai/gateway/socket/file-upload/webflux-sse）；`modules-application/` = 可部署 Spring Boot 应用（system-app/gateway-app/ai-app/file-upload-app/socket-app/webflux-sse-app）——命名相似但职责不同
 - `module-base-core` 父 POM 是 `modules` 而非 root

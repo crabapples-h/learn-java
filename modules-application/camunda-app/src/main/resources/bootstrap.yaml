@@ -3,7 +3,8 @@ dataBaseParam: 'useUnicode=true
 &serverTimezone=Asia/Shanghai
 &zeroDateTimeBehavior=convertToNull
 &allowPublicKeyRetrieval=true
-&nullDatabaseMeansCurrent=true'
+&nullDatabaseMeansCurrent=true
+&sessionVariables=transaction_isolation=''READ-COMMITTED'''
 server:
   port: 19098
 spring:
@@ -25,7 +26,6 @@ spring:
     max-request-size: 100MB # 最大请求大小
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#  datasource:
     url: jdbc:mysql://localhost:3306/learn?${dataBaseParam}
     username: root
     password: root

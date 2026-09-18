@@ -14,6 +14,7 @@
 - [Vue3 重构规划](vue3-migration-plan.md) — ✅ 已完成：P0 路径+v-auth、P1 菜单/守卫、P2 页面组件、SSE 5 种方式；2026-08-24 登录页重做 + $axios 统一
 - [ai-app Boot3 启动设置](ai-app-boot3-setup.md) — Boot3 已可启动（配置走 Nacos ai-service.yaml，需排除 DataSource + bootstrap starter）
 - [WebFlux SSE 应用](webflux-sse-app.md) — 端口19097，gateway discovery-locator 不 strip 前缀的坑
+- [Camunda 应用](camunda-app-setup.md) — Camunda 7.24；已随全栈升级 Boot 3.5.13/SC 2025.0.0/SCA 2025.0.0.0；版本混搭/校验器/隔离级别三坑全修，启动验证通过
 - [cu-* 容器栈](cu-docker-stack.md) — 另一项目的 docker 栈，勿混淆
 - [已知安全问题](known-security-issues.md) — 前后端安全分析报告结论（JWT/MD5/CSRF 等，P0-1 已修复）
 - [多数据源](multi-datasource.md) — DynamicDataSourceRegister + @DataSourceChange 切换
